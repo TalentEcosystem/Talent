@@ -23,7 +23,7 @@ public class User
 	private Date udate;
 	private String test;
 	private int test1;
-
+	private int test2;
 	public User()
 	{
 	}
