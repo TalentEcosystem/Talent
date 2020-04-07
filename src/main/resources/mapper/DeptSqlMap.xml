@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.great.talent.mapper.DeptMapper">
+
+    <select id="userLogin" resultType="User" parameterType="User">
+		select * from tbl_user where UACCOUNT = #{uaccount} and UPASSWORD = #{upassword}
+	</select>
+
+</mapper>
