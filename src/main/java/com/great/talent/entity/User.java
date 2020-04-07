@@ -21,6 +21,7 @@ public class User
 	private String uschool;
 	private String uscore;
 	private Date udate;
+	private String username；
 
 	public User()
 	{
