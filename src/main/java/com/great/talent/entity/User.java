@@ -22,6 +22,7 @@ public class User
 	private String uscore;
 	private Date udate;
 	private String test;
+	private int test1;
 
 	public User()
 	{
