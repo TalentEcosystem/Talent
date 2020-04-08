@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>知识库管理</title>
+	<title>用户管理</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/js/layui/css/layui.css">
 	<script charset="UTF-8" src="${pageContext.request.contextPath}/js/jquery-3.4.1.js"></script>
 	<script charset="UTF-8" src="${pageContext.request.contextPath}/js/layui/layui.js" media="all"></script>
@@ -14,20 +14,17 @@
 <input type="hidden" id="path" value="<%=path%>">
 <!-- 增加搜索条件 -->
 <div class="demoTable" style="margin-top: 10px">
-	&nbsp;&nbsp;<label>领域</label>&nbsp;&nbsp;
+	&nbsp;&nbsp;<label>状态</label>&nbsp;&nbsp;
 	<select id="domainid" name="domainid" style="height: 35px">
 		<option value="0">全部</option>
-		<option value="1">IT互联网</option>
-		<option value="2">房地产</option>
-		<option value="3">金融</option>
-		<option value="4">服务业</option>
+		<option value="启用">启用</option>
+		<option value="禁用">禁用</option>
 	</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<label>名称</label>&nbsp;&nbsp;
+	<label>高校名称</label>&nbsp;&nbsp;
 	<div class="layui-input-inline">
 		<input type="text" name="knowname" id="knowname" required lay-verify="required" placeholder="请输入知识库名称" autocomplete="off" class="layui-input">
 	</div>
 	<button class="layui-btn" data-type="reload">查询</button>
-	<button data-method="dialog" class="layui-btn">增加</button>
 </div>
 
 <table id="demo" lay-filter="test"></table>
@@ -129,30 +126,6 @@
 		});
 		return obj;
 	};
-
-	layui.use(['layer','form','table'], function(){
-		var layer = layui.layer, $ = layui.jquery;
-		var table = layui.table;
-		var path=$("#path").val();
-		$('.layui-btn').on('click', function(){
-
-			var othis = $(this), //othis当前button对象
-				method = othis.data('method');//data-method="dialog"中的值
-
-			if(method == "dialog") {
-				layer.open({
-					type: 2,
-					title:"新增知识库",
-					area: ['800px', '400px'],
-					content: path + "/admin/path/AddKnow" //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-					, success: function (layero, index) {
-					}
-				});
-			}
-		});
-
-
-	});
 
 </script>
 </body>
