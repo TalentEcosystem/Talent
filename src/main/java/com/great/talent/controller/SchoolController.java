@@ -1,9 +1,9 @@
 package com.great.talent.controller;
 
 import com.google.gson.Gson;
-import com.great.talent.entity.Diagis;
 import com.great.talent.entity.UserTalent;
 import com.great.talent.service.SchoolService;
+import com.great.talent.util.Diagis;
 import com.great.talent.util.ResponseUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
