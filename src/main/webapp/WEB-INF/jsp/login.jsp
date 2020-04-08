@@ -46,7 +46,7 @@
 						success: function (msg) {
 							if (msg == "success") {
 								alert("登录成功");
-								<%--location.href = "${pageContext.request.contextPath}/user/path/menu";--%>
+								location.href = "${pageContext.request.contextPath}/Enterprise/path/EnterpriseManager";
 							} else{
 								alert("账号密码错误");
 							}
