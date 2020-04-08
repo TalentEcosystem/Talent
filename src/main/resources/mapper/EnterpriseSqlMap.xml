@@ -18,38 +18,41 @@
 	</select>
 
     <select id="findPosition" resultType="Position" parameterType="java.util.Map">
-        select * from tbl_position
+        select p.*,a.name,i.indname,d.degreename,pro.professname from tbl_position p,tbl_admin a,tbl_industry i,tbl_degree d, tbl_profession pro
         <where>
+        p.aid = a.aid and p.industryid = i.industryid and p.degreeid = d.degreeid and p.professid = pro.professid
             <if test="industryid != null">
-                and industryid = #{industryid}
+                and p.industryid = #{industryid}
             </if>
             <if test="positionname != null">
-                and positionname = #{positionname}
+                and p.positionname = #{positionname}
             </if>
             <if test="degreeid != null">
-                and degreeid = #{degreeid}
+                and p.degreeid = #{degreeid}
             </if>
             <if test="professid != null">
-                and professid = #{professid}
+                and p.professid = #{professid}
             </if>
         </where>
+        order by positiontime desc
         limit #{pageInts},#{limitInt}
     </select>
 
     <select id="findPositionNum" resultType="java.lang.Integer" parameterType="java.util.Map">
-        select count(*) from tbl_position
+        select count(*) from tbl_position p,tbl_admin a,tbl_industry i,tbl_degree d, tbl_profession pro
         <where>
+            p.aid = a.aid and p.industryid = i.industryid and p.degreeid = d.degreeid and p.professid = pro.professid
             <if test="industryid != null">
-                and industryid = #{industryid}
+                and p.industryid = #{industryid}
             </if>
             <if test="positionname != null">
-                and positionname = #{positionname}
+                and p.positionname = #{positionname}
             </if>
             <if test="degreeid != null">
-                and degreeid = #{degreeid}
+                and p.degreeid = #{degreeid}
             </if>
             <if test="professid != null">
-                and professid = #{professid}
+                and p.professid = #{professid}
             </if>
         </where>
     </select>

@@ -31,6 +31,11 @@ public class EnterpriseService {
         map1.put("positionList",positionList);
         return map1;
     }
+
+    /**
+     * 查询岗位管理查询条件下拉框的内容
+     * @return
+     */
     public Map findPositionInfo(){
         List<Degree> degreeList = enterpriseMapper.findDegree();
         List<Industry> industryList = enterpriseMapper.findIndustry();
@@ -41,5 +46,6 @@ public class EnterpriseService {
         map.put("professionList",professionList);
         return map;
     }
+
 
 }
