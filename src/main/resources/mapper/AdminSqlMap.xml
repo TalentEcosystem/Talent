@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.great.talent.mapper.AdminMapper">
+
+    <select id="findKnow" resultType="Know" parameterType="java.util.Map">
+		select * from tbl_knowledge a left join tbl_domain b on a.domainid=b.domainid
+		<where>
+			<if test="knowname!=null">
+				a.knowname like concat('%',#{knowname},'%')
+			</if>
+			<if test="domainid!=null and domainid!=0">
+				and a.domainid=#{domainid}
+			</if>
+			and a.knowstate='正常'
+		</where>
+		limit #{begin},#{end}
+	</select>
+
+	<select id="findCountKnow" resultType="int" parameterType="java.util.Map">
+		select count(*) from tbl_knowledge a left join tbl_domain b on a.domainid=b.domainid
+		<where>
+			<if test="knowname!=null">
+				a.knowname like concat('%',#{knowname},'%')
+			</if>
+			<if test="domainid!=null and domainid!=0">
+				and a.domainid=#{domainid}
+			</if>
+			and a.knowstate='正常'
+		</where>
+	</select>
+
+	<update id="updateKnow" parameterType="Know">
+		update tbl_knowledge set knowname=#{knowname},knowintro=#{knowintro},domainid=#{domainid} where knowledgeid=#{knowledgeid}
+	</update>
+
+	<insert id="addKnow" parameterType="Know">
+		insert into tbl_knowledge (knowname,knowintro,domainid,knowstate) values (#{knowname},#{knowintro},#{domainid},'正常')
+	</insert>
+
+	<delete id="deleteKnow" parameterType="java.lang.String">
+		update tbl_knowledge set knowstate='已删除' where knowledgeid=#{knowledgeid}
+	</delete>
+</mapper>
