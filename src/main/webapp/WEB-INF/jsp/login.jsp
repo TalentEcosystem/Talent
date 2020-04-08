@@ -15,6 +15,59 @@
 	<script src=<%=path+"/js/jquery-3.4.1.js" %>></script>
 	<link rel="stylesheet" href=<%=path+"/css/login.css" %>>
 	<script type="text/javascript" src=<%=path+"/js/front/login.js" %>></script>
+
+	<script>
+		//Demo
+		// layui.use('form', function(){
+		// 	var form = layui.form;
+		//
+		// 	//监听提交
+		// 	form.on('submit(formDemo)', function(data){
+		// 		layer.msg(JSON.stringify(data.field));
+		// 		return false;
+		// 	});
+		// });
+
+		function reg() {
+			var path=$("#path").val();
+			location.href=path+"/jsp/reg.jsp";
+		}
+
+		function login() {
+			var account=$("#uaccount").val();
+			var password=$("#upassword").val();
+			var path=$("#path").val();
+			if(""!=account&&null!=account&&""!=password&&null!=password){
+				$.ajax({
+						url: path+"/user/loginAjax",
+						type: "POST",
+						data: {"uaccount":account,"upassword":password},
+						datatype: "text",
+						success: function (msg) {
+							if (msg == "success") {
+								alert("登录成功");
+								location.href = "${pageContext.request.contextPath}/Enterprise/path/EnterpriseManager";
+							} else{
+								alert("账号密码错误");
+							}
+						},
+						error: function () {
+							alert("网络繁忙！")
+						}
+					}
+				);
+			}else{
+				alert("账号密码不能为空")
+			}
+		}
+	</script>
+	<style>
+		.layui-form{
+			margin-left: 550px;
+			margin-top: 100px;
+		}
+	</style>
+>>>>>>> 36c6a6bec3525d376f32111364ad016966cb8f1e
 </head>
 <body>
 <input type="hidden" id="path" value="<%=path%>">

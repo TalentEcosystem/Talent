@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.great.talent.mapper.EnterpriseMapper">
+<!-- 登录的sql   -->
+    <select id="adminLogin" resultMap="userMap" parameterType="java.lang.String">
+		select * from tbl_admin where ACCOUNT = #{account}
+	</select>
+
+    <resultMap id="userMap" type="Admin">
+        <association property="role" javaType="role" select="selectRole"
+                     column="roleid"></association>
+    </resultMap>
+<!--查询账号角色-->
+    <select id="selectRole" parameterType="java.lang.Integer" resultType="Role">
+		select * from tbl_role where roleid = #{roleid}
+	</select>
+
+    <select id="findPosition" resultType="Position" parameterType="java.util.Map">
+        select * from tbl_position
+        <where>
+            <if test="industryid != null">
+                and industryid = #{industryid}
+            </if>
+            <if test="positionname != null">
+                and positionname = #{positionname}
+            </if>
+            <if test="degreeid != null">
+                and degreeid = #{degreeid}
+            </if>
+            <if test="professid != null">
+                and professid = #{professid}
+            </if>
+        </where>
+        limit #{pageInts},#{limitInt}
+    </select>
+
+    <select id="findPositionNum" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) from tbl_position
+        <where>
+            <if test="industryid != null">
+                and industryid = #{industryid}
+            </if>
+            <if test="positionname != null">
+                and positionname = #{positionname}
+            </if>
+            <if test="degreeid != null">
+                and degreeid = #{degreeid}
+            </if>
+            <if test="professid != null">
+                and professid = #{professid}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
