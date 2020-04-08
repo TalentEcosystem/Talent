@@ -21,7 +21,7 @@ public class User
 	private String uschool;
 	private String uscore;
 	private Date udate;
-	private String username；
+	private String test;
 
 	public User()
 	{
@@ -145,6 +145,16 @@ public class User
 	public void setUdate(Date udate)
 	{
 		this.udate = udate;
+	}
+
+	public String getTest()
+	{
+		return test;
+	}
+
+	public void setTest(String test)
+	{
+		this.test = test;
 	}
 
 	@Override
