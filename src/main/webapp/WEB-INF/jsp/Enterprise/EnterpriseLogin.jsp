@@ -22,7 +22,7 @@
 
     <div class="intro">
         <div class="wrap">
-            <div class="loginForm" style="position: absolute;margin-top: -15%;">
+            <div class="loginForm" style="position: absolute;margin-top: 5%;">
                 <form class="layui-form">
                     <div class="logoHead">
                         <B><h2 style="width: 250px;margin-top: 15px;font-size:20px">人才网平台管理系统</h2></B>
@@ -31,7 +31,7 @@
                         <div class="usernameLabel">
                             <label>账号:</label>
                         </div>
-                        <div class="usernameSDiv">
+                        <div class="usernameDiv">
                             <i class="layui-icon layui-icon-username adminIcon"></i>
                             <input id="account" class="layui-input adminInput" type="text" name="account"
                                    lay-verType="tips" lay-verify="required" autocomplete="off" value="" placeholder="请输入账号">
@@ -90,7 +90,7 @@
             form.on('submit(login)',function (data) {
                 $.ajax({
                     type: "POST",
-                    url:  path + "/Enterprise/login",
+                    url:  path + "/Enterprise/adminLogin",
                     dataType: "text",
                     data: data.field,
                     success: function (msg){
@@ -100,12 +100,26 @@
                             $("#password").val('');
                             $("#code").val('');
                             $('#verifyCode').attr('src',  path + '/Enterprise/CodeServlet?' + Math.random());
-                            window.location.href = path + '/Enterprise/EnterpriseManager';
+                            window.location.href = path + '/Enterprise/path/EnterpriseManager';
                         }else if (msg == 'noCode'){
                             layer.msg('<a style =color:black >验证码不正确，请重新输入</a>', {icon: 2});
+                        }else if (msg == 'noAccount'){
+                            layer.msg('<a style =color:black >账号不存在，请重新输入</a>', {icon: 2});
+                        }else if(msg == "error"){
+                            layer.msg('<a style =color:black >密码输入不正确，请重新输入</a>', {icon: 2});
+                        }else if(msg == 'forbidden'){
+                            layer.msg('<a style =color:black >该账号已被禁用，请联系管理员</a>', {icon: 2});
+                        }else if(msg == 'delete'){
+                            layer.msg('<a style =color:black >该账号已被删除，请重新注册或联系管理员</a>', {icon: 2});
                         }
+                        $("#code").val('');
+                        $('#verifyCode').attr('src',  path + '/Enterprise/CodeServlet?' + Math.random());
+                    },
+                    error:function () {
+                          layer.msg("服务器繁忙")
                     }
                 })
+                return false;
             })
         })
 

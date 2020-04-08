@@ -34,7 +34,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    欢迎您,${sessionScope.admin.name} ${sessionScope.admin.roleid.rolename}
+                    欢迎您,${sessionScope.admin.name} ${sessionScope.admin.role.rolename}
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
