@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.great.talent.mapper.SchoolMapper">
+
+    <select id="findTalent" resultType="UserTalent">
+        select u.uid,u.uaccount,r.rename,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
+         <where>
+             u.uid=r.uid  and r.professid=p.professid and r.sid=s.sid
+            <if test="mindate!=null and mindate !=''">
+                and u.udate &gt;=#{mindate}
+            </if>
+            <if test="maxdate!=null and maxdate !=''">
+                and u.udate &lt;=#{maxdate}
+            </if>
+            <if test="schoolname!=null and schoolname !=''">
+                and s.schoolname LIKE '%' #{schoolname} '%'
+            </if>
+            <if test="pro!=null and pro !=''">
+                and p.professname LIKE '%' #{pro} '%'
+            </if>
+            and u.uid limit #{pageInt},#{limitInt}
+        </where>
+    </select>
+    <select id="findTalentCount" resultType="int">
+        select count(*) from (select u.uid,u.uaccount,r.rename,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
+        <where>
+            u.uid=r.uid and r.professid=p.professid and r.sid=s.sid
+             <if test="mindate!=null and mindate !=''">
+                 and u.udate &gt;=#{mindate}
+             </if>
+             <if test="maxdate!=null and maxdate !=''">
+                 and u.udate &lt;=#{maxdate}
+             </if>
+             <if test="schoolname!=null and schoolname !=''">
+                 and s.schoolname LIKE '%' #{schoolname} '%'
+             </if>
+             <if test="pro!=null and pro !=''">
+                 and p.professname LIKE '%' #{pro} '%'
+             </if>
+         </where>
+        )t
+    </select>
+    <select id="findUserResume" parameterType="UserTalent">
+
+    </select>
+
+
+
+</mapper>
