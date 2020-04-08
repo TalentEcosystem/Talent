@@ -162,19 +162,20 @@ public class EnterpriseController {
         String positionname = request.getParameter("positionname");
         String degreeid = request.getParameter("degreeid");
         String professid = request.getParameter("professid");
+        System.out.println("industryid="+industryid+"positionname="+positionname+"degreeid="+degreeid+"professid="+professid);
         int pageInt = Integer.valueOf(page);
         int limitInt = Integer.parseInt(limit);
         HashMap<String,Object> condition = new HashMap<>();
-        if (null!=industryid&&!"".equals((industryid.trim()))){
-            condition.put("inudstryid",industryid);
+        if (null!=industryid&&!"".equals((industryid.trim()))&&!"0".equals(industryid.trim())){
+            condition.put("industryid",industryid);
         }
         if (null!=positionname&&!"".equals((positionname.trim()))){
             condition.put("positionname",positionname);
         }
-        if (null!=degreeid&&!"".equals((degreeid.trim()))){
+        if (null!=degreeid&&!"".equals((degreeid.trim()))&&!"0".equals(degreeid.trim())){
             condition.put("degreeid",degreeid);
         }
-        if (null!=professid&&!"".equals((professid.trim()))){
+        if (null!=professid&&!"".equals((professid.trim()))&&!"0".equals(professid.trim())){
             condition.put("professid",professid);
         }
         int pageInts = (pageInt-1)*limitInt;
