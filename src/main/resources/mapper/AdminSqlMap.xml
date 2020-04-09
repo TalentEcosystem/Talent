@@ -42,4 +42,76 @@
 	<delete id="deleteKnow" parameterType="java.lang.String">
 		update tbl_knowledge set knowstate='已删除' where knowledgeid=#{knowledgeid}
 	</delete>
+
+    <select id="findUser" resultType="User" parameterType="java.util.Map">
+        select * from tbl_user a left join tbl_school b on a.sid=b.sid
+        <where>
+            <if test="schoolname!=null">
+                b.schoolname like concat('%',#{schoolname},'%')
+            </if>
+            <if test="ustate!=null and ustate!='全部'">
+                and a.ustate=#{ustate}
+            </if>
+        </where>
+        order by a.udate desc limit #{begin},#{end}
+    </select>
+
+    <select id="findCountUser" resultType="int" parameterType="java.util.Map">
+        select count(*) from tbl_user a left join tbl_school b on a.sid=b.sid
+        <where>
+            <if test="schoolname!=null">
+                b.schoolname like concat('%',#{schoolname},'%')
+            </if>
+            <if test="ustate!=null and ustate!='全部'">
+                and a.ustate=#{ustate}
+            </if>
+        </where>
+    </select>
+
+    <update id="userForbid" parameterType="java.lang.String">
+		update tbl_user set ustate='禁用' where uid=#{uid}
+	</update>
+
+    <update id="userEnable" parameterType="java.lang.String">
+		update tbl_user set ustate='启用' where uid=#{uid}
+	</update>
+
+
+
+	<select id="findAllIndustry" resultType="Industry">
+		select * from tbl_industry
+	</select>
+
+	<select id="findPost" resultType="Post" parameterType="java.util.Map">
+		select * from tbl_post a left join tbl_industry b on a.industryid=b.industryid
+		<where>
+			<if test="industryid!=null and industryid!=0">
+				a.industryid = #{industryid}
+			</if>
+			and a.poststate='正常'
+		</where>
+		limit #{begin},#{end}
+	</select>
+
+	<select id="findCountPost" resultType="int" parameterType="java.util.Map">
+		select count(*) from tbl_post a left join tbl_industry b on a.industryid=b.industryid
+		<where>
+			<if test="industryid!=null and industryid!=0">
+				a.industryid = #{industryid}
+			</if>
+			and a.poststate='正常'
+		</where>
+	</select>
+
+	<insert id="addPost" parameterType="Post">
+		insert into tbl_post (postname,industryid,poststate) values (#{postname},#{industryid},'正常')
+	</insert>
+
+	<update id="updatePost" parameterType="Post">
+		update tbl_post set postname=#{postname},industryid=#{industryid} where postid=#{postid}
+	</update>
+
+	<update id="deletePost" parameterType="java.lang.String">
+		update tbl_post set poststate='已删除' where postid=#{postid}
+	</update>
 </mapper>

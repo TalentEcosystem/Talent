@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>用户管理</title>
+	<title>岗位管理</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/js/layui/css/layui.css">
 	<script charset="UTF-8" src="${pageContext.request.contextPath}/js/jquery-3.4.1.js"></script>
 	<script charset="UTF-8" src="${pageContext.request.contextPath}/js/layui/layui.js" media="all"></script>
@@ -14,24 +15,24 @@
 <input type="hidden" id="path" value="<%=path%>">
 <!-- 增加搜索条件 -->
 <div class="demoTable" style="margin-top: 10px">
-	&nbsp;&nbsp;<label>状态</label>&nbsp;&nbsp;
-	<select id="ustate" name="ustate" style="height: 35px">
-		<option value="全部">全部</option>
-		<option value="启用">启用</option>
-		<option value="禁用">禁用</option>
+	&nbsp;&nbsp;<label>行业</label>&nbsp;&nbsp;
+	<select id="industryid" name="industryid" style="height: 35px">
+		<option value="0">全部</option>
+		<c:if test="${not empty industryList}">
+			<c:forEach items="${industryList}" var="industry">
+				<option value="${industry.industryid}">${industry.indname}</option>
+			</c:forEach>
+		</c:if>
 	</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<label>高校名称</label>&nbsp;&nbsp;
-	<div class="layui-input-inline">
-		<input type="text" name="schoolname" id="schoolname" placeholder="请输入高校名称" class="layui-input">
-	</div>
-	<button class="layui-btn" data-type="reload">查询</button>
+	<button class="layui-btn" data-type="reload">搜索</button>
+	<button class="layui-btn" data-type="add">添加岗位</button>
 </div>
 
 <table id="demo" lay-filter="test"></table>
 <script type="text/html" id="barDemo">
 	<div class="layui-btn-group">
-		<button type="button" class="layui-btn layui-btn-sm" lay-event="forbid">禁用</button>
-		<button type="button" class="layui-btn layui-btn-sm" lay-event="enable">启用</button>
+		<button type="button" class="layui-btn layui-btn-sm" lay-event="update">修改</button>
+		<button type="button" class="layui-btn layui-btn-sm" lay-event="delete">删除</button>
 	</div>
 </script>
 <script type="text/html" id="zizeng">
@@ -47,16 +48,13 @@
 		table.render({
 			elem: '#demo'
 			,height: 600
-			,url: path+"/admin/userManager" //数据接口
+			,url: path+"/admin/postManager" //数据接口
 			,page: true //开启分页
 			,id: 'demotable'
 			,cols: [[ //表头
 				{field: 'zizeng', title: '序号', width:100, sort: true, fixed: 'left',templet:'#zizeng'}
-				,{field: 'uname', title: '用户名', width:100}
-				,{field: 'utel', title: '联系方式', width:250}
-				,{field: 'schoolname', title: '学校名称', width:250}
-				,{field: 'udate', title: '注册时间', width:250}
-				,{field: 'ustate', title: '帐号状态', width:100}
+				,{field: 'postname', title: '岗位名称', width:200}
+				,{field: 'indname', title: '上级行业', width:200}
 				,{field: 'right', title: '操作', width:200, align:'center', toolbar:'#barDemo'}
 			]]
 		});
@@ -65,14 +63,22 @@
 			if(type == 'reload'){
 				//执行重载
 				table.reload('demotable', {
-					url: path+"/admin/userManager" ,//数据接口
+					url: path+"/admin/postManager" ,//数据接口
 					page: {
 						curr: 1 //重新从第 1 页开始
 					}
 					,
 					where: {
-						ustate: $("#ustate").val(),
-						schoolname: $("#schoolname").val()
+						industryid: $("#industryid").val(),
+					}
+				});
+			}else if(type == 'add'){
+				layer.open({
+					type: 2,
+					title:"新增知识库",
+					area: ['500px', '300px'],
+					content: path + "/admin/path/AddPost" //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					, success: function (layero, index) {
 					}
 				});
 			}
@@ -80,31 +86,27 @@
 
 		table.on('tool(test)',function(obj){
 			var data = obj.data;
-			if(obj.event === 'forbid'){
-				layer.confirm('确认禁用?', function(index){
-					// obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-					layer.close(index);
-					//向服务端发送禁用指令
-					$.ajax({
-						url: path + "/admin/userForbid?uid="+data.uid,
-						async: true,
-						type: "POST",
-						success: function (msg) {
-							layer.msg(msg);
-							window.location.reload();
-						},
-						error: function () {
-							alert("网络繁忙！")
-						}
-					})
+			if(obj.event === 'update'){
+				layer.open({
+					type:2
+					,title:"修改"
+					,area:['500px','300px']
+					,shadeClose: true //点击遮罩不会关闭
+					,content:path+"/admin/path/UpdatePost"
+					,success : function(layero, index) {
+						var body = layer.getChildFrame('body',index);
+						body.find("#postname").val(data.postname);
+						body.find("#industryid").val(data.industryid);
+						body.find("#postid").val(data.postid);
+					}
 				});
-			}else if(obj.event === 'enable'){ //删除
-				layer.confirm('确认启用?', function(index){
+			}else if(obj.event === 'delete'){ //删除
+				layer.confirm('确认删除?', function(index){
 					// obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 					layer.close(index);
 					//向服务端发送启用指令
 					$.ajax({
-						url: path + "/admin/userEnable?uid="+data.uid,
+						url: path + "/admin/deletePost?postid="+data.postid,
 						async: true,
 						type: "POST",
 						success: function (msg) {
