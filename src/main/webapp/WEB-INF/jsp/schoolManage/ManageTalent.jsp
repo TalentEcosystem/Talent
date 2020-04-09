@@ -61,7 +61,7 @@
 			,url: "${pageContext.request.contextPath}/school/showTalent" //数据接口
 			,page: true //开启分页
 			,dataType : "json"
-			,limit:1
+			,limit:3
 			,id:'demotable'
 			,cols: [[ //表头
 				{field: 'zizeng', title: '序列', width:80, sort: true, fixed: 'left',templet:'#zizeng'},
@@ -124,8 +124,7 @@
 					},
 					content: 'useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					,success: function(layero, index){
-
-
+						layer.msg('查看用户简历');
 					}
 				});
 
