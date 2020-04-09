@@ -68,7 +68,6 @@
 			$.ajax({
 				url: path + "/admin/updateKnow",
 				type: 'post',
-				async: false,
 				data: {"knowname":knowname,"knowintro":knowintro,"domainid":domainid,"knowledgeid":knowledgeid},
 				success: function (msg) {
 					alert(msg);

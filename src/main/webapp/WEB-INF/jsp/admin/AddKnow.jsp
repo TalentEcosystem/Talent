@@ -66,7 +66,6 @@
 			$.ajax({
 				url: path + "/admin/addKnow",
 				type: 'post',
-				async: false,
 				data: {"knowname":knowname,"knowintro":knowintro,"domainid":domainid},
 				success: function (msg) {
 					alert(msg);

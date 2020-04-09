@@ -18,12 +18,10 @@ public class User
 	private String utel;
 	private String ustate;
 	private String uaddress;
-	private String schoolname;
+	private String uschool;
 	private String uscore;
 	private Date udate;
 	private String test;
-	private int sid;
-
 
 	public User()
 	{
@@ -121,12 +119,12 @@ public class User
 
 	public String getUschool()
 	{
-		return schoolname;
+		return uschool;
 	}
 
 	public void setUschool(String uschool)
 	{
-		this.schoolname = uschool;
+		this.uschool = uschool;
 	}
 
 	public String getUscore()
@@ -159,19 +157,9 @@ public class User
 		this.test = test;
 	}
 
-	public int getSid()
-	{
-		return sid;
-	}
-
-	public void setSid(int sid)
-	{
-		this.sid = sid;
-	}
-
 	@Override
 	public String toString()
 	{
-		return "User{" + "uid=" + uid + ", uaccount='" + uaccount + '\'' + ", upassword='" + upassword + '\'' + ", uname='" + uname + '\'' + ", usex='" + usex + '\'' + ", uage='" + uage + '\'' + ", utel='" + utel + '\'' + ", ustate='" + ustate + '\'' + ", uaddress='" + uaddress + '\'' + ", schoolname='" + schoolname + '\'' + ", uscore='" + uscore + '\'' + ", udate=" + udate + ", test='" + test + '\'' + ", sid=" + sid + '}';
+		return "User{" + "uid=" + uid + ", uaccount='" + uaccount + '\'' + ", upassword='" + upassword + '\'' + ", uname='" + uname + '\'' + ", usex='" + usex + '\'' + ", uage='" + uage + '\'' + ", utel='" + utel + '\'' + ", ustate='" + ustate + '\'' + ", uaddress='" + uaddress + '\'' + ", uschool='" + uschool + '\'' + ", uscore='" + uscore + '\'' + ", udate=" + udate + '}';
 	}
 }

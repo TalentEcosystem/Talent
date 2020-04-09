@@ -141,7 +141,7 @@
 			if(method == "dialog") {
 				layer.open({
 					type: 2,
-					title:"新增知识库",
+					title:"新增知识包",
 					area: ['800px', '400px'],
 					content: path + "/admin/path/AddKnow" //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					, success: function (layero, index) {
@@ -151,7 +151,14 @@
 		});
 
 
+
+
 	});
+
+function update(domainid) {
+	console.log(domainid);
+}
+
 
 </script>
 </body>
