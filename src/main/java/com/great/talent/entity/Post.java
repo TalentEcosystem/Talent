@@ -6,6 +6,7 @@ public class Post
 	private String postname;
 	private int industryid;
 	private String indname;
+	private String poststate;
 
 	public Post()
 	{
@@ -51,9 +52,19 @@ public class Post
 		this.indname = indname;
 	}
 
+	public String getPoststate()
+	{
+		return poststate;
+	}
+
+	public void setPoststate(String poststate)
+	{
+		this.poststate = poststate;
+	}
+
 	@Override
 	public String toString()
 	{
-		return "Post{" + "postid=" + postid + ", postname='" + postname + '\'' + ", industryid=" + industryid + ", indname='" + indname + '\'' + '}';
+		return "Post{" + "postid=" + postid + ", postname='" + postname + '\'' + ", industryid=" + industryid + ", indname='" + indname + '\'' + ", poststate='" + poststate + '\'' + '}';
 	}
 }
