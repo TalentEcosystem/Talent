@@ -28,7 +28,7 @@ public class AdminController
 	//跳转网页只用来测试功能
 	@RequestMapping("/test")
 	public String Test(){
-		return "/admin/knowledge";
+		return "/admin/UserManager";
 	}
 
 	/**
