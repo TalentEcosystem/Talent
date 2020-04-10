@@ -96,7 +96,6 @@
 						body.find("#knowledgeid").val(data.knowledgeid);
 					}
 				});
-				layer.msg('修改');
 			}else if(obj.event === 'del'){ //删除
 				layer.confirm('确认删除?', function(index){
 					obj.del(); //删除对应行（tr）的DOM结构，并更新缓存

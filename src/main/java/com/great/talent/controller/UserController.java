@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Random;
 
 @Controller
@@ -25,14 +26,22 @@ public class UserController
 
 	@Resource
 	private UserService userService;
-
+    //用户登录页面
 	@RequestMapping("/login")
 	public String Welcome(){
-		return "login";
+		return "user/login";
 	}
-
+	//首页页面
+	@RequestMapping("/index")
+	public String Index(){
+		return "homepage/index";
+	}
+	//用户注册页面
+	@RequestMapping("/registered")
+	public String Registered(){ return "user/userRegistered"; }
+	//用户协议页面
 	@RequestMapping("/registeragreement")
-	public String Registeragreement(){ return "registeragreement"; }
+	public String Registeragreement(){ return "user/registeragreement"; }
 
 	@RequestMapping("/userLogin")
 	@ResponseBody
@@ -107,4 +116,28 @@ public class UserController
 			e.printStackTrace();
 		}
 	}
+
+	@RequestMapping("/userReg")
+	@ResponseBody
+	public void userReg(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		String msg = request.getParameter("User");
+		User user = g.fromJson(msg,User.class);
+		user.setUname(user.getUaccount());
+		user.setUstate("启用");
+		user.setUdate(new Date());
+		String uaccount = user.getUaccount();
+		Integer uaccount1 = userService.userNameCheck(uaccount);
+		if (uaccount1==0){
+			Boolean flag = userService.addUser(user);
+			if (flag){
+				response.getWriter().print("1111");
+			}else {
+				response.getWriter().print("error");
+			}
+		}else {
+			response.getWriter().print("UserAlreadyExists");
+		}
+	}
+
+
 }

@@ -22,13 +22,13 @@
 <form class="layui-form" action="">
 	<div class="layui-form-item">
 		<label class="layui-form-label">岗位名称</label>
-		<div class="layui-input-block">
+		<div class="layui-input-inline">
 			<input type="text" name="postname" id="postname" placeholder="请输入岗位名称" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">选择行业</label>
-		<div class="layui-input-block">
+		<div class="layui-input-inline">
 			<select name="industryid" id="industryid" lay-verify="required">
 				<c:if test="${not empty industryList}">
 					<c:forEach items="${industryList}" var="industry">
