@@ -3,6 +3,8 @@ package com.great.talent.controller;
 import com.google.gson.Gson;
 import com.great.talent.entity.User;
 import com.great.talent.service.UserService;
+import com.great.talent.util.MD5Utils;
+import com.great.talent.util.PhoneCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,6 +44,27 @@ public class UserController
 	//用户协议页面
 	@RequestMapping("/registeragreement")
 	public String Registeragreement(){ return "user/registeragreement"; }
+	//找回密码页面
+	@RequestMapping("/rpassword")
+	public String rpassword(){
+		return "user/retrievePassword_1";
+	}
+	//找回密码页面2
+	@RequestMapping("/rpassword2")
+	public String rpassword2(){
+		return "user/retrievePassword_2";
+	}
+	//找回密码页面3
+	@RequestMapping("/rpassword3")
+	public String rpassword3(){
+		return "user/retrievePassword_3";
+	}
+	//找回密码页面4
+	@RequestMapping("/rpassword4")
+	public String rpassword4(){
+		return "user/retrievePassword_4";
+	}
+
 
 	@RequestMapping("/userLogin")
 	@ResponseBody
@@ -50,6 +73,8 @@ public class UserController
 		User user = g.fromJson(msg,User.class);
 		String test = user.getTest();
 		if (vcode.equalsIgnoreCase(test)){
+			String userPassword = MD5Utils.md5(user.getUpassword());
+			user.setUpassword(userPassword);
 		    User user1 = userService.login(user);
 		    if (null != user1){
 		    	if (user1.getUstate().equals("启用")){
@@ -122,6 +147,8 @@ public class UserController
 	public void userReg(HttpServletRequest request, HttpServletResponse response)throws IOException{
 		String msg = request.getParameter("User");
 		User user = g.fromJson(msg,User.class);
+		String userPassword = MD5Utils.md5(user.getUpassword());
+		user.setUpassword(userPassword);
 		user.setUname(user.getUaccount());
 		user.setUstate("启用");
 		user.setUdate(new Date());
@@ -139,5 +166,51 @@ public class UserController
 		}
 	}
 
+	@RequestMapping("/findPhoneByAccount")
+	@ResponseBody
+	public void findPhoneByAccount(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		String uaccount = request.getParameter("username");
+		String test = request.getParameter("test");
+		if (vcode.equalsIgnoreCase(test)){
+			String utel = userService.findPhoneByAccount(uaccount);
+			if (null!=utel){
+//				String phone = utel; //发送短信验证码
+//				PhoneCode.getPhonemsg(phone);
+				response.getWriter().print("1111");
+				request.getSession().setAttribute("retrieveName",uaccount);
+				request.getSession().setAttribute("retrievePhone",utel);
+			}else {
+				response.getWriter().print("error");
+			}
+		}else {
+			response.getWriter().print("testError");
+		}
+	}
+    //获取短信验证码
+	@RequestMapping("/sendMsg")
+	@ResponseBody
+	public void sendMsg(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		String phone = request.getParameter("utel"); //发送短信验证码
+		PhoneCode.getPhonemsg(phone);
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().print(PhoneCode.code);
+	}
 
+	//找回-新密码修改
+	@RequestMapping("/updatePwd")
+	@ResponseBody
+	public void updatePwd(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		String uaccount = request.getParameter("retrieveName");
+		String upassword = MD5Utils.md5(request.getParameter("newPwd"));
+		User user = new User();
+		user.setUpassword(upassword);
+		user.setUaccount(uaccount);
+		Boolean flag = userService.updateUser(user);
+		if (flag){
+			response.getWriter().print("1111");
+		}else {
+			response.getWriter().print("error");
+		}
+	}
 }

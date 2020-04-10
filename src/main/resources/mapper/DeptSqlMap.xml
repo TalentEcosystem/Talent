@@ -17,4 +17,12 @@
 		insert into tbl_user (uaccount,upassword,uname,usex,uage,utel,ustate,uaddress,udate) values (#{uaccount},#{upassword},#{uname},#{usex},#{uage},#{utel},#{ustate},#{uaddress},#{udate})
 	</insert>
 
+    <!--    密码找回-根据账号查手机号-->
+    <select id="findPhoneByAccount" resultType="java.lang.String" parameterType="java.lang.String">
+        select utel from tbl_user where uaccount = #{uaccount}
+    </select>
+    <!--    密码找回-修改新密码-->
+    <update id="updateUser" parameterType="User">
+		update tbl_user set upassword=#{upassword} where uaccount=#{uaccount}
+	</update>
 </mapper>

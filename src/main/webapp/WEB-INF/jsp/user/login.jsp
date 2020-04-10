@@ -64,7 +64,7 @@
 				<div class="autoLogo">
 <%--					<span class="CheckBox"></span>--%>
 <%--					<span>七天内自动登录</span>--%>
-					<a href="password.html" class="pasd">忘记密码？</a>
+					<a href=<%=path+"/user/rpassword" %> class="pasd">忘记密码？</a>
 				</div>
 				<div class="autoLogo">
 					<span class="CheckBox Yes"></span>

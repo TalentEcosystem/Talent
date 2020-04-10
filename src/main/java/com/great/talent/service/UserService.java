@@ -27,4 +27,14 @@ public class UserService
 	public Boolean addUser(User user){
 		return deptMapper.addUser(user);
 	}
+
+	@Transactional
+	public String findPhoneByAccount(String uaccount){
+		return deptMapper.findPhoneByAccount(uaccount);
+	}
+
+	@Transactional
+	public Boolean updateUser(User user){
+		return deptMapper.updateUser(user);
+	}
 }
