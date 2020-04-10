@@ -31,6 +31,11 @@ public class UserController
 	public String Welcome(){
 		return "user/login";
 	}
+	//首页页面
+	@RequestMapping("/index")
+	public String Index(){
+		return "homepage/index";
+	}
 	//用户注册页面
 	@RequestMapping("/registered")
 	public String Registered(){ return "user/userRegistered"; }

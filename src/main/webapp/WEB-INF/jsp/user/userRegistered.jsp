@@ -25,7 +25,7 @@
 			<div class="r1">手机触屏版<a href="">m.diefeirencai.com</a></div>
 			<div class="r2"><a href="">Android客户端下载</a></div>
 			<div class="r3"><a href=<%=path+"/user/login" %>>用户登录</a></div>
-			<div class="r4"><a href="index.html">返回首页</a></div>
+			<div class="r4"><a href=<%=path+"/user/index" %>>返回首页</a></div>
 		</div>
 	</div>
 </div>

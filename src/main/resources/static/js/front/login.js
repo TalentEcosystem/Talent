@@ -89,7 +89,7 @@ $(function () {
 			{
 				if(msg === "success")
 				{
-					location.href=path+"/user/main";
+					location.href=path+"/user/index";
 				}else if (msg === "stateError"){
 					alert("该账号已被冻结")
 				} else if (msg === "userError"){
