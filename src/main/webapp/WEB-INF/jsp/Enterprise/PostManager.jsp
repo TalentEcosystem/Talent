@@ -23,7 +23,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">招聘行业：</label>
             <div class="layui-input-inline">
-                <select name="position2" id="position" lay-filter="choosePosition"  >
+                <select name="industryid" id="industryid" lay-filter="choosePosition"  >
                     <option value="0" >请选择行业</option>
                     <c:if test="${industry!=null}">
                         <c:forEach items="${industry}" begin="0" var="i">
@@ -36,7 +36,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">招聘岗位：</label>
             <div class="layui-input-block">
-                <input type="text" name="positionname" placeholder="请输入岗位" class="layui-input">
+                <input type="text" name="positionname" id="positionname" placeholder="请输入岗位" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
@@ -67,11 +67,19 @@
         </div>
         <div class="layui-inline">
             <button class="layui-btn" lay-submit="search_submits" lay-filter="search">查询</button>
+            <button class="layui-btn" lay-submit="search_submits" lay-filter="release">发布</button>
         </div>
     </div>
 </form>
 <table id="demo" lay-filter="test"></table>
 </body>
+<script type="text/html" id="barDemo">
+    <button lay-event="update" type="button" class="layui-btn layui-btn-xs layui-btn-radius">修改</button>
+    <button lay-event="delete" type="button" class="layui-btn layui-btn-xs layui-btn-radius layui-btn layui-btn-danger">删除</button>
+</script>
+
+
+
 <script type="text/javascript">
     var path=$('#path').val();
 
@@ -85,7 +93,7 @@
 
         var tableinf = table.render({
                 elem: '#demo'
-                ,height: 280
+                ,height: 300
                 //设置查询刷新的ID
                 ,id:'table1'
                 ,url: path+"/Enterprise/findPositions" //数据接口
@@ -94,16 +102,110 @@
                 ,limits:[5,10,20,50,100]
                 ,cols: [[ //表头
                     {field: 'positionid', title: 'ID', width: 80,hide:true}
-                    ,{field: 'industryid', title: '招聘行业', width:150}
+                    ,{field: 'industryid', title: '招聘行业', width:150,hide:true}
+                    ,{field: 'indname', title: '招聘行业', width:150}
                     ,{field: 'positionname', title: '招聘岗位', width:200}
-                    ,{field: 'aid', title: '发布者', width:200}
-                    ,{field: 'positiontime', title: '发布时间', width:100,templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+                    ,{field: 'aid', title: '发布者', width:200,hide:true}
+                    ,{field: 'name', title: '发布者', width:100}
+                    ,{field: 'positiontime', title: '发布时间', width:200,}//templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
                     ,{field: 'money', title: '参考薪资(元)', width:150}
+                    ,{field: 'degreename', title: '学历要求', width:150}
+                    ,{field: 'professname', title: '专业要求', width:150}
                     ,{field: 'maxnum', title: '招聘人数', width: 120, sort: true}
                     ,{field: 'positionstate', title: '发布状态', width: 110}
-                    // ,{fixed: 'right', width: 320, align:'center', toolbar: '#barDemo'}
+                    ,{fixed: 'right',title:'操作', width: 150, align:'center', toolbar: '#barDemo'}
                 ]]
             });
+        table.on('tool(test)', function(obj){
+            var data = obj.data,
+                event = obj.event;
+            if (event === 'update') {
+                layer.open({
+                    type: 2
+                    , title: "修改当前信息"
+                    , area: ['600px','400px']
+                    , shade: 0.3
+                    , shadeClose: true //点击遮罩不会关闭
+                    , content: path + '/Enterprise/path/UpdateDialog'
+                    , success: function (layero, index) {
+                        var body = layer.getChildFrame('body',index);
+                        var iframeWindow = layero.find('iframe')[0].contentWindow;
+                        body.find("#positionid").val(data.positionid);
+                        body.find("#industryid").val(data.industryid).attr("selected",true);
+                        // console.log("data.industryid="+data.industryid)
+                        body.find("#post").val(data.positionname).attr("selected",true);
+                        // console.log("data.positionname="+data.positionname)
+                        body.find("#degree").val(data.degreeid).attr("selected",true);
+                        // console.log("data.degreeid="+data.degreeid)
+                        body.find("#profession").val(data.professid).attr("selected",true);
+                        // console.log("data.professid="+data.professid)
+                        body.find("#positionexper").val(data.positionexper);
+                        body.find("#money").val(data.money);
+                        body.find("#beginTime").val(data.positiontime);
+                        body.find("input[id=wuxian] [value = "+data.welname+"]").attr("checked","checked");
+                        body.find("input[id=gongjijin] [value = "+data.welname+"]").attr("checked","checked");
+                        body.find("input[id=jiangjin] [value = "+data.welname+"]").attr("checked","checked");
+                        body.find("input[id=zhusu] [value = "+data.welname+"]").attr("checked","checked");
+                        body.find("#maxnum").val(data.maxnum);
+                        body.find("#request").val(data.request);
+                        body.find("#positioncontent").val(data.positioncontent);
+                        iframeWindow.layui.form.render();
+                    }
+                })
+            }if(event === 'delete'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+                    $.ajax({
+                        url: path + "/Enterprise/updatePositionState?positionid=" + data.positionid,
+                        async: true,
+                        type: "POST",
+                        success: function (msg) {
+                            if (msg == 1111) {
+                                layer.msg('删除成功');
+                            }else {
+                                layer.msg('删除失败');
+                            }
+                        },
+                        error: function () {
+                            alert("网络繁忙！")
+                        }
+                    })
+                })
+            }
+        });
+        form.on('submit(search)',function (data) {
+            var myselect=document.getElementById("industryid");
+            var index=myselect.selectedIndex;
+            var industryid = myselect.options[index].value;
+
+            var myselect1=document.getElementById("degree");
+            var index1=myselect1.selectedIndex;
+            var degree = myselect.options[index1].value;
+
+            var myselect2=document.getElementById("profession");
+            var index2=myselect2.selectedIndex;
+            var profession = myselect.options[index2].value;
+
+            var positionname = $("#positionname").val();
+
+            console.log("industryid="+industryid+"degree="+degree+"profession="+profession+"positionname="+positionname)
+            tableinf.reload({
+                url:path+"/Enterprise/findPositions",
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                },
+                where:{
+                    industryid:industryid,
+                    degreeid:degree,
+                    professid:profession,
+                    positionname:positionname
+                }
+            });
+        });
+        form.on('submit(release)',function () {
+            window.location.href = path+'Enterprise/path/EnterpriseDialog';
+        });
 
     })
 
