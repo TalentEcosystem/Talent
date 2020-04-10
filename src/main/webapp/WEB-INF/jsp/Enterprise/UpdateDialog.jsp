@@ -19,7 +19,7 @@
     <form class="layui-form" action="" style="border: #dedede solid 1px;background-color: #f3f3f3;">
         <div class="layui-form-item" style="background-color: #d2d2d2 ;width: 720px">
             <h3><label class="layui-form-label" style="width: 80px;text-align: left">行业信息:</label></h3>
-            <input id="positionid" name="positionid" type="hidden" >
+            <input id="positionid" name="positionid" type="label" class="layui-form-label"  disabled>
             <input type="hidden" id="path" value="<%=path%>">
         </div>
         <div class="layui-inline">
@@ -51,7 +51,7 @@
         <div class="layui-form-item" >
             <label class="layui-form-label" >发布日期：</label>
             <div class="layui-input-inline">
-                <input name="beginTime" id="beginTime"  class="layui-input"  type="text" placeholder="yyyy-MM-dd HH-mm-ss" autocomplete="off" lay-verify="date">
+                <input name="beginTime" id="beginTime"  class="layui-input"  type="text" placeholder="yyyy-MM-dd HH-mm-ss" autocomplete="off" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
@@ -115,7 +115,7 @@
         <div class="layui-form-item" >
             <label class="layui-form-label" >工作地点：</label>
             <div class="layui-input-inline" >
-            <input type="text" name="positionaddress" id="positionaddress" required  lay-verify="required"  placeholder="地址" autocomplete="on" class="layui-input" value="${sessionScope.admin.address}" disabled>
+            <input type="text" name="positionaddress" id="positionaddress" required  lay-verify="required"  placeholder="地址" autocomplete="on" class="layui-input" value="${sessionScope.companyAdd}" disabled>
         </div>
         </div>
         <div class="layui-form-item">
@@ -177,14 +177,12 @@
         var form = layui.form;
         var layer = layui.layer;
         var $ = layui.jquery;
-        var myselect1=document.getElementById("industryid");
-        var index1=myselect1.selectedIndex;
-        var industryid1 = myselect1.options[index1].value;
-        console.log(industryid1);
         form.on('select(chooseIndustry)', function(data){
             var myselect=document.getElementById("industryid");
             var index=myselect.selectedIndex;
             var industryid = myselect.options[index].value;
+            var positionid = $("#positionid").val()
+            console.log(positionid);
             console.log(industryid);
             if (industryid != "" && industryid != 0){
                 $.ajax({
@@ -231,6 +229,8 @@
 
             var positionid = $("#positionid").val();
 
+            var positiontime = $("#beginTime").val();
+
             var myselect2=document.getElementById("degree");
             var index2=myselect2.selectedIndex;
             var degreeid = myselect2.options[index2].value;
@@ -261,14 +261,14 @@
 
             var positioncontent = $("#positioncontent").val();
 
-            var postInfo = {"industryid":industryid,"positionname":positionname,"companyname":companyname,"name":name,"positionexper":positionexper,
-            "degreeid":degreeid,"professid":professid,"positionaddress":positionaddress,"money":money,"maxnum":maxnum,"request":request,"positionstate":'发布',
+            var postInfo = {"industryid":industryid,"positionname":positionname,"companyname":companyname,"name":name,"positionexper":positionexper,"positionid":positionid,
+            "degreeid":degreeid,"professid":professid,"positionaddress":positionaddress,"money":money,"maxnum":maxnum,"request":request,"positionstate":'发布',"positiontime":positiontime,
             "positioncontent":positioncontent};
             console.log("postInfo="+postInfo);
             console.log("welname="+welname)
             postInfo = JSON.stringify(postInfo);
             $.ajax({
-                url: path + "/Enterprise/",
+                url: path + "/Enterprise/updatePositionState",
                 async: true,
                 type: "POST",
                 data: {"postInfo":postInfo,"welname":welname},
@@ -284,7 +284,9 @@
                     $("#maxnum").empty();
                     $("#request").empty();
                     $("#positioncontent").empty();
-                    window.location.href=path+'/Enterprise/findPositionInfo'
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);//关闭弹出的子页面窗口 layer.index表示当前层
+                    window.location.reload();
                     }else{
                    alert("修改失败")
                     }

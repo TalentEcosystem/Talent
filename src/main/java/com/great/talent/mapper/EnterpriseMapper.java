@@ -13,6 +13,8 @@ import java.util.Map;
 @Mapper
 public interface EnterpriseMapper {
     public Admin adminLogin(String account);
+    public int addAdmin(Admin admin);
+    public int addCompany(Map map);
     public List<Position> findPosition(Map map);
     public Integer findPositionNum(Map map);
 
@@ -20,7 +22,12 @@ public interface EnterpriseMapper {
 
     public int addWelfare(Map map);
 
-    public int updatePositionState(Integer positionid);
+    public int updatePositionState(Position position);
+
+    public int deleteWelfare(Map map);
+    @Select("select * from tbl_admin where tel = #{tel}")
+    public Admin checkAdminTel(String tel);
+
 
     /**
      * 查询公司名
@@ -59,7 +66,14 @@ public interface EnterpriseMapper {
     @Select("select p.* from tbl_industry i,tbl_post p where i.industryid = p.industryid and i.industryid = #{industryid} and p.poststate ='正常'")
     public List<Post> findPostName(Integer industryid);
 
+    /**
+     * 查询福利
+     * @param positionid
+     * @return
+     */
     @Select("select * from tbl_welfare where positionid = #{positionid}")
     public List<Position> findWelfName(Integer positionid);
 
+    @Select("select companyadd from tbl_company c,tbl_admin a where a.cid = c.cid and a.cid = #{cid}")
+    public String findCompanyAdd(Integer cid);
 }

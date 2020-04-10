@@ -7,7 +7,6 @@
     <select id="adminLogin" resultMap="userMap" parameterType="java.lang.String">
 		select * from tbl_admin where ACCOUNT = #{account}
 	</select>
-
     <resultMap id="userMap" type="Admin">
         <association property="role" javaType="role" select="selectRole"
                      column="roleid"></association>
@@ -16,6 +15,23 @@
     <select id="selectRole" parameterType="java.lang.Integer" resultType="Role">
 		select * from tbl_role where roleid = #{roleid}
 	</select>
+
+    <insert id="addAdmin" parameterType="Admin">
+    insert into tbl_admin (aid, account, password,
+      roleid, name, tel,
+      state, address, cid,
+      sid, date,
+      money)
+    values (#{aid}, #{account}, #{password},
+      #{roleid}, #{name}, #{tel},
+      #{state}, #{address}, #{cid},
+      #{sid}, #{date},
+      #{money})
+  </insert>
+
+    <insert id="addCompany" parameterType="java.util.Map">
+        insert into tbl_company(companyname,permit)values (#{companyname},#{permit})
+    </insert>
 
     <select id="findPosition" resultType="Position" parameterType="java.util.Map">
         select p.*,a.name,i.*,d.*,pro.* from tbl_position p,tbl_admin a,tbl_industry i,tbl_degree d, tbl_profession pro
@@ -75,7 +91,9 @@
     <insert id="addWelfare" parameterType="java.util.Map" >
         insert into tbl_welfare(welname,positionid)values (#{welname},#{positionid})
     </insert>
-
+    <delete id="deleteWelfare" parameterType="java.util.Map" >
+          delete from tbl_welfare where positionid = #{positionid}
+      </delete>
     <update id="updatePositionInfo" parameterType="Position">
     update tbl_position
     set aid = #{aid},

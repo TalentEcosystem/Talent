@@ -27,9 +27,6 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -140,6 +137,67 @@ public class EnterpriseController {
     }
 
     /**
+     * 查重账号
+     * @param admin
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/doAccount")
+    @ResponseBody
+    public void doAccount(Admin admin,HttpServletResponse response) throws IOException{
+       if (enterpriseService.adminLogin(admin.getAccount()) != null){
+           response.getWriter().print("error");
+       }else{
+           response.getWriter().print("success");
+       }
+    }
+
+    /**
+     * 查重手机
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/checkAdminTel")
+    @ResponseBody
+    public void checkAdminTel(HttpServletRequest request,HttpServletResponse response) throws IOException{
+        String tel = request.getParameter("phone");
+        System.out.println(tel);
+        if (enterpriseService.checkAdminTel(tel) != null){
+            response.getWriter().print("noPhone");
+        }else{
+            response.getWriter().print("phone");
+        }
+    }
+    @RequestMapping("/RegisterAdmin")
+    @ResponseBody
+    public void RegisterAdmin(Admin admin,HttpServletRequest request,HttpServletResponse response) throws IOException{
+        admin.setRoleid(2);
+        admin.setState("启用");
+        admin.setDate(new Date());
+        admin.setMoney(0);
+        String pwd = MD5Utils.md5(admin.getPassword());
+        admin.setPassword(pwd);
+        Map map = new HashMap();
+        map.put("companyname",admin.getCompanyname());
+        map.put("permit",admin.getPermit());
+        String sessionCode = (String) request.getSession().getAttribute("vcode");
+        String regCode = request.getParameter("code");
+        System.out.println("sessionCode="+sessionCode+"regCode="+regCode);
+        if (regCode.equalsIgnoreCase(sessionCode)){
+            System.out.println(1111);
+            if (enterpriseService.addAdmin(admin) != 0){
+                System.out.println(2222);
+                enterpriseService.addCompany(map);
+                response.getWriter().print("success");
+            }else{
+                response.getWriter().print("error");
+            }
+        }else{
+            response.getWriter().print("noCode");
+        }
+    }
+    /**
      * 查询下拉框的信息
      * @param request
      * @return
@@ -150,6 +208,7 @@ public class EnterpriseController {
         Map map = enterpriseService.findPositionInfo();
         Admin admin = (Admin) request.getSession().getAttribute("admin");
         String companyName = enterpriseService.findCompanyName(admin.getAid());
+        String companyAdd = enterpriseService.findCompanyAdd(admin.getCid());
         List<Degree> degree = (List<Degree>) map.get("degreeList");
         List<Degree> industry = (List<Degree>) map.get("industryList");
         List<Degree> profession = (List<Degree>) map.get("professionList");
@@ -157,53 +216,12 @@ public class EnterpriseController {
         request.getSession().setAttribute("industry",industry);
         request.getSession().setAttribute("profession",profession);
         request.getSession().setAttribute("companyName",companyName);
+        request.getSession().setAttribute("companyAdd",companyAdd);
+
         mv.setViewName("/Enterprise/PostManager");
         return mv;
     }
 
-//    /**
-//     *发布信息下拉框信息查询
-//     * @param request
-//     * @return
-//     */
-//    @RequestMapping("/findUpPositionInfo")
-//    public ModelAndView findUpPositionInfo(HttpServletRequest request){
-//        ModelAndView mvs = new ModelAndView();
-//        Admin admin = (Admin) request.getSession().getAttribute("admin");
-//        Map map = enterpriseService.findPositionInfo();
-//        List<Degree> degree = (List<Degree>) map.get("degreeList");
-//        List<Degree> industry = (List<Degree>) map.get("industryList");
-//        List<Degree> profession = (List<Degree>) map.get("professionList");
-//        String companyName = enterpriseService.findCompanyName(admin.getAid());
-//        request.setAttribute("degree",degree);
-//        request.setAttribute("industry",industry);
-//        request.setAttribute("profession",profession);
-//        request.setAttribute("companyName",companyName);
-//        mvs.setViewName("/Enterprise/EnterpriseDialog");
-//        return mvs;
-//    }
-//
-//    /**
-//     *修改信息下拉框信息查询
-//     * @param request
-//     * @return
-//     */
-//    @RequestMapping("/updatePositions")
-//    public ModelAndView updatePositions(HttpServletRequest request){
-//        ModelAndView mvs = new ModelAndView();
-//        Admin admin = (Admin) request.getSession().getAttribute("admin");
-//        Map map = enterpriseService.findPositionInfo();
-//        List<Degree> degree = (List<Degree>) map.get("degreeList");
-//        List<Degree> industry = (List<Degree>) map.get("industryList");
-//        List<Degree> profession = (List<Degree>) map.get("professionList");
-//        String companyName = enterpriseService.findCompanyName(admin.getAid());
-//        request.setAttribute("degree",degree);
-//        request.setAttribute("industry",industry);
-//        request.setAttribute("profession",profession);
-//        request.setAttribute("companyName",companyName);
-//        mvs.setViewName("/Enterprise/UpdateDialog");
-//        return mvs;
-//    }
     @RequestMapping("/findPostInfo")
     @ResponseBody
     public void findPostInfo(HttpServletRequest request,HttpServletResponse response) throws IOException {
@@ -304,9 +322,24 @@ public class EnterpriseController {
     @RequestMapping("/updatePositionState")
     @ResponseBody
     public void updatePositionState(HttpServletRequest request, HttpServletResponse response)throws IOException{
-        String positionid = request.getParameter("positionid");
-        int flag = enterpriseService.updatePositionState(Integer.valueOf(positionid));
-        if (flag>0){
+        int flags = 0;
+        String jsonStr = request.getParameter("postInfo");
+        Gson gson = new Gson();
+        Position position = gson.fromJson(jsonStr,Position.class);
+        System.out.println(position.toString());
+        String [] params = request.getParameterValues("welname");
+        int flag = enterpriseService.updatePositionState(position);
+        if (flag>0) {
+            for (int i = 0; i < params.length; i++) {
+                String welname = params[i];
+                Map map = new HashMap();
+                map.put("positionid", position.getPositionid());
+                map.put("welname", welname);
+                flags = enterpriseService.deleteWelfare(map);
+                enterpriseService.addWelfare(map);
+            }
+        }
+        if (flags>0){
             response.getWriter().print(1111);
         }else{
             response.getWriter().print(2222);
