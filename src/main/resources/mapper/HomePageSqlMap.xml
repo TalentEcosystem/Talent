@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.great.talent.mapper.HomePageMapper">
+
+
+<!--    得到最新发布的职位信息-->
+    <select id="getGoodNews" resultType="GoodNews" >
+select t.positionname,t.maxnum,t.request,t.money,c.companyname,t.positionaddress
+from tbl_admin a,tbl_company c,(select * from tbl_position )t where a.cid=c.cid
+and t.aid=a.aid order by t.positiontime desc limit 3
+</select>
+
+    <select id="getSchoolNews" resultType="SchoolNews" >
+
+select c.*, t.Num  from tbl_school as c
+left join (select sid,COUNT(*) AS Num from tbl_resume   group by sid) as t on c.sid= t.sid
+
+</select>
+
+
+
+</mapper>

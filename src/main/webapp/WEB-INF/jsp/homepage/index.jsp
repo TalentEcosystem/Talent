@@ -256,7 +256,7 @@
 			font-size: 20px;
 			font-weight: normal;
 			position: absolute;
-			bottom: 220px;
+			bottom: 250px;
 		}
 		.childss p{
 			font-family: Segoe UI;
@@ -361,7 +361,7 @@
 			background-color:#dbdbdb;
 			width: 150px;
 			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
+			 ;
 			background-size: 150px 150px;
 			margin-left: 120px;
 			float: left;
@@ -515,7 +515,7 @@
 			font-size: 20px;
 			font-weight: normal;
 			position: absolute;
-			bottom: 220px;
+			bottom: 250px;
 		}
 		.childss1 p{
 			font-family: Segoe UI;
@@ -774,7 +774,7 @@
 			font-size: 20px;
 			font-weight: normal;
 			position: absolute;
-			bottom: 220px;
+			bottom: 250px;
 		}
 		.childss2 p{
 			font-family: Segoe UI;
@@ -1033,7 +1033,7 @@
 			font-size: 20px;
 			font-weight: normal;
 			position: absolute;
-			bottom: 220px;
+			bottom: 250px;
 		}
 		.childss3 p{
 			font-family: Segoe UI;
@@ -1063,7 +1063,7 @@
 			background:#EBEEF7;
 			position:relative;
 			overflow:hidden;
-			width:600px;
+			width:690px;
 			height:36px;
 			float: right;
 			line-height:36px;
@@ -1072,6 +1072,7 @@
 
 		#content_small_tip{
 			position:absolute;
+			font-size: 18px;
 			left:0;
 			top:0;
 			white-space:nowrap;
@@ -1082,30 +1083,108 @@
 	</style>
 </head>
 <body>
+<input type="hidden" id="userno">
+<input type="hidden" value="<%=path%>" id="path">
 <div class="topDiv">
 	<div class="mainWarp">
 		<div class="topLeft">
-			<span>地区频道：</span>
-			<a href="javascript:void()">广州</a>
-			<a href="javascript:void()">深圳</a>
-			<a href="javascript:void()">珠海</a>
-			<a href="javascript:void()">汕头</a>
-			<a href="javascript:void()">韶关</a>
-			<a href="javascript:void()">河源</a>
-			<a href="javascript:void()">广州</a>
-			<a href="javascript:void()">深圳</a>
-			<a href="javascript:void()">珠海</a>
-			<label style="float: right;font-size: 18px">好消息：</label>
+			<span style="font-size:18px;padding-left: 50px">好消息：</span>
+			<div id="container_small_tip">
+				<div id="content_small_tip"></div>
+			</div>
 		</div>
 		<div class="topRight  ">
 
 
-			<div id="container_small_tip">
-
-				<div id="content_small_tip"></div>
-			</div>
+<%--			webscoket 实时发消息给客户端--%>
 			<script type="text/javascript">
-				$("#content_small_tip")[0].innerHTML = "北京第三区交通委提醒您：道路千万条，安全第一条，行车不规范，亲人两行泪。";
+
+
+				//这里面的userno是我自己拿的毫秒数//可修改成登录用户的账号或者ID 唯一就行
+				var strTime = (new Date()).valueOf();
+				document.getElementById('userno').innerHTML=strTime;
+				var websocket = null;
+				var userno=document.getElementById('userno').innerHTML;
+				//判断当前浏览器是否支持WebSocket
+				if ('WebSocket' in window) {
+					websocket = new WebSocket("ws://localhost:8300/talent/websocket/"+userno);
+				}
+				else {
+					alert('当前浏览器 Not support websocket')
+				}
+
+				//连接发生错误的回调方法
+				websocket.onerror = function () {
+					console.log("WebSocket连接发生错误");
+
+					// setMessageInnerHTML("WebSocket连接发生错误");
+				};
+
+				//连接成功建立的回调方法
+				websocket.onopen = function () {
+					console.log("WebSocket连接成功");
+					// setMessageInnerHTML("WebSocket连接成功");
+				}
+
+				//接收到消息的回调方法
+				websocket.onmessage = function (event) {
+					$("#content_small_tip")[0].innerHTML = event.data.toString();
+
+					// setMessageInnerHTML(event.data);
+				}
+
+				//连接关闭的回调方法
+				websocket.onclose = function () {
+					console.log("WebSocket连接关闭");
+					// setMessageInnerHTML("WebSocket连接关闭");
+				}
+
+				//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+				window.onbeforeunload = function () {
+					closeWebSocket();
+				}
+
+				//将消息显示在网页上
+				function setMessageInnerHTML(sendMessage) {
+					document.getElementById('message').innerHTML += sendMessage + '<br/>';
+				}
+
+				//关闭WebSocket连接
+				function closeWebSocket() {
+					websocket.close();
+				}
+
+				//发送消息
+				function send() {
+					var message = document.getElementById('text').value;//要发送的消息内容
+					var now=getNowFormatDate();//获取当前时间
+					document.getElementById('message').innerHTML += (now+"发送人："+userno+'<br/>'+"---"+message) + '<br/>';
+					document.getElementById('message').style.color="red";
+					var ToSendUserno="4567";//接收人编号：4567
+					message=message+"|"+ToSendUserno//将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
+					websocket.send(message);
+				}
+				//获取当前时间
+				function getNowFormatDate() {
+					var date = new Date();
+					var seperator1 = "-";
+					var seperator2 = ":";
+					var month = date.getMonth() + 1;
+					var strDate = date.getDate();
+					if (month >= 1 && month <= 9) {
+						month = "0" + month;
+					}
+					if (strDate >= 0 && strDate <= 9) {
+						strDate = "0" + strDate;
+					}
+					var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+						+ " " + date.getHours() + seperator2 + date.getMinutes()
+						+ seperator2 + date.getSeconds();
+					return currentdate;
+				}
+			</script>
+<%--			实现好消息的动画--%>
+			<script type="text/javascript">
 				(function ($) {
 					$.fn.extend({
 						roll: function (options) {
@@ -1260,12 +1339,12 @@
 			<div class="ads">
 				<!--            <div class="floatL" id="left"></div>-->
 				<div class="adBox0">
-					<div class="layui-carousel " id="test10">
+					<div class="layui-carousel " lay-filter="carofilter" id="test10">
 						<div carousel-item="">
-							<div style="background:url(<%=path+"/images/1.jpg"%>);background-size: 800px;background-repeat: no-repeat;background-position: center"></div>
-							<div style="background:url(<%=path+"/images/2.jpg"%>);background-size: cover;background-repeat: no-repeat;background-position: center"></div>
-							<div style="background:url(<%=path+"/images/3.gif"%>);background-size: cover;background-repeat: no-repeat;background-position: center"></div>
-
+							<a href="${pageContext.request.contextPath}/user/homePage" style="background:url(<%=path+"/images/1.jpg"%>);background-size: 800px;background-repeat: no-repeat;background-position: center;"></a>
+							<a href="${pageContext.request.contextPath}/user/homePage" style="background:url(<%=path+"/images/2.jpg"%>);background-size: cover;background-repeat: no-repeat;background-position: center;"></a>
+							<a href="${pageContext.request.contextPath}/user/homePage" style="background:url(<%=path+"/images/3.gif"%>);background-size: cover;background-repeat: no-repeat;background-position: center;"></a>
+							<a href="${pageContext.request.contextPath}/user/homePage" style="background:url(<%=path+"/images/30.jpg"%>);background-size: cover;background-repeat: no-repeat;background-position: center;"></a>
 						</div>
 					</div>
 					<script>
@@ -1279,25 +1358,16 @@
 								,height: '272px'
 								,interval: 1500
 							});
+							carousel.on('change(carofilter)', function (obj) { //test1来源于对应HTML容器的 lay-filter="test1" 属性值
+								// console.log(obj.index);     //当前条目的索引
+								// console.log(obj.prevIndex); //上一个条目的索引
+								// console.log(obj.item);      //当前条目的元素对象
+							});
 
 						});
 					</script>
 
-
-					<!--              <ul style="margin-left: 0px; overflow: hidden">-->
-					<!--                <li>-->
-					<!--                  <a href="javascript:void()"><div style="background:url(images/1.jpg);background-size: cover;background-repeat: no-repeat;background-position: center"></div></a>-->
-					<!--                </li>-->
-					<!--                <li>-->
-					<!--                  <a href="javascript:void()"><div style="background:url(images/2.jpg);background-size: cover;background-repeat: no-repeat;background-position: center"></div></a>-->
-					<!--                </li>-->
-					<!--                <li>-->
-					<!--                  <a href="javascript:void()"><div style="background:url(images/3.gif);background-size: cover;background-repeat: no-repeat;background-position: center"></div></a>-->
-					<!--                </li>-->
-					<!--              </ul>-->
 				</div>
-				<!--            <div class="floatR" id="right"></div>-->
-				<!--            <div class="clear"> </div>-->
 			</div>
 
 
@@ -1633,101 +1703,105 @@
 						<div class="product-cont1">
 							<div class="scene2">
 								<div class="out1">
-									<div class="in1 clearFix1" style="left: -1100px;">
-										<div class="pic0">
-											<div class="childss1 test0">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic11">
-											<div class="childss1 test11">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic21">
-											<div class="childss1 test21">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<!-- 第二组 -->
-										<div class="pic31">
-											<div class="childss1 test31">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic41">
-											<div class="childss1 test41">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic51">
-											<div class="childss1 test51">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<!-- 第三组 -->
-										<div class="pic61">
-											<div class="childss1 test61">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic71">
-											<div class="childss1 test71">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic81">
-											<div class="childss1 test81">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<!-- 第四组 -->
-										<div class="pic91">
-											<div class="childss1 test91">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic101">
-											<div class="childss1 test101">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic111">
-											<div class="childss1 test111">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<!-- 第五组 -->
-										<div class="pic121">
-											<div class="childss1 test121">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic131">
-											<div class="childss1 test131">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic141">
-											<div class="childss1 test141">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
+									<div class="in1 clearFix1" id="school" style="left: -1100px;">
+<%--										<div class="pic0" style="background-image: url(<%=path+"/images/2.png"%>)">--%>
+<%--											<div class="childss1 test0" >--%>
+<%--												<h>集美大学</h>--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div></div>--%>
+<%--										<div class="pic11">--%>
+<%--											<div class="childss1 test11">--%>
+<%--												<h>集美大学</h>--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<div class="pic21">--%>
+<%--											<div class="childss1 test21">--%>
+<%--												<h>集美大学</h>--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<!-- 第二组 -->--%>
+<%--										<div class="pic31">--%>
+<%--											<div class="childss1 test31">--%>
+<%--												<h>集美大学</h>--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<div class="pic41">--%>
+<%--											<div class="childss1 test41">--%>
+<%--												<h>集美大学</h>--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<div class="pic51">--%>
+<%--											<div class="childss1 test51">--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<!-- 第三组 -->--%>
+<%--										<div class="pic61">--%>
+<%--											<div class="childss1 test61">--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<div class="pic71">--%>
+<%--											<div class="childss1 test71">--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<div class="pic81">--%>
+<%--											<div class="childss1 test81">--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<!-- 第四组 -->--%>
+<%--										<div class="pic91">--%>
+<%--											<div class="childss1 test91">--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<div class="pic101">--%>
+<%--											<div class="childss1 test101">--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<div class="pic111">--%>
+<%--											<div class="childss1 test111">--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<!-- 第五组 -->--%>
+<%--										<div class="pic121">--%>
+<%--											<div class="childss1 test121">--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<div class="pic131">--%>
+<%--											<div class="childss1 test131">--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--										<div class="pic141">--%>
+<%--											<div class="childss1 test141">--%>
+<%--												<p>就业总数</p>--%>
+<%--												<i>1999</i>--%>
+<%--											</div>--%>
+<%--										</div>--%>
 
 									</div>
 									<div class="shodow1"></div>
@@ -1737,6 +1811,47 @@
 							<div class="right1"></div>
 							<div class="lunbo1"></div>
 						</div>
+						<script>
+							var path=$("#path").val();
+							$.ajax({
+								type: "post",
+								url: path+"/HomePage/getSchoolNews",
+								// dataType: "json",
+								async:true,
+								success: function (data) {
+									var d=JSON.parse(data);
+									console.log(d.length);
+									for (var i = 0; i <d.length ; i++) {
+										$("#school").append(
+										"<a href='' class='pic0' style='background-image: url("+path+"/"+d[i].schoolpic+")'>"+
+											"<div class='childss1 test0' >"+
+											"<h>"+d[i].schoolname+"</h>"+
+											"<p>就业总数</p>"+
+											"<i>"+d[i].num+"</i>"+
+											"</div>"+
+										"</a>"
+
+									);
+										$(".pic0").mouseenter(function () {
+											$(".test0").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
+										});
+										$(".pic0").mouseleave(function () {
+											$(".test0").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
+										})
+										console.log(d[i].schoolname)
+									}
+
+								},
+								error: function (data) {
+									console.log(data);
+								}
+
+							});
+
+
+
+
+						</script>
 						<script>
 
 							//轮播
@@ -1808,22 +1923,20 @@
 								timer11 = setInterval(right1.onclick, 3000);
 							};
 
-
-
 							// 鼠标移进一出
 							$(document).ready(function () {
 								var animated = false;
 								$(".pic0").mouseenter(function () {
-									$(".test0").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
+									$(".test0").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
 								});
 								$(".pic0").mouseleave(function () {
-									$(".test0").stop().animate({ 'height': '0px', opacity: '0' },"slow");
+									$(".test0").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
 								})
 								$(".pic11").mouseenter(function () {
-									$(".test11").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
+									$(".test11").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
 								});
 								$(".pic11").mouseleave(function () {
-									$(".test11").stop().animate({ 'height': '0px', opacity: '0' },"slow");
+									$(".test11").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
 								})
 								$(".pic21").mouseenter(function () {
 									$(".test21").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
@@ -2225,6 +2338,7 @@
 							});
 						</script>
 					</ul>
+
 					<ul style="display:block;">
 						<div class="product-cont3">
 							<div class="scene2">
@@ -2518,6 +2632,38 @@
 		</div>
 	</div>
 	<div class="clear"></div>
+	<div class="mainCon1">
+		<div class="imgbox1">
+			<div class="box1"><img src="${pageContext.request.contextPath}/images/1.gif" height="71" width="546" /></div>
+			<div class="box1"><img src="${pageContext.request.contextPath}/images/2.gif" height="71" width="546" /></div>
+		</div>
+		<div class="clear"></div>
+		<div class="imgbox1">
+			<div class="box2"><img src="${pageContext.request.contextPath}/images/4.gif" height="71" width="362" /></div>
+			<div class="box2"><img src="${pageContext.request.contextPath}/images/5.gif" height="71" width="362" /></div>
+			<div class="box2"><img src="${pageContext.request.contextPath}/images/6.gif" height="71" width="362" /></div>
+		</div>
+		<div class="clear"></div>
+		<div class="imgbox1">
+			<div class="box2"><img src="${pageContext.request.contextPath}/images/7.gif" height="71" width="362" /></div>
+			<div class="box3"><img src="${pageContext.request.contextPath}/images/8.gif" height="71" width="178" /></div>
+			<div class="box3"><img src="${pageContext.request.contextPath}/images/9.gif" height="71" width="178" /></div>
+			<div class="box3"><img src="${pageContext.request.contextPath}/images/10.gif" height="71" width="178" /></div>
+			<div class="box3"><img src="${pageContext.request.contextPath}/images/11.gif" height="71" width="178" /></div>
+		</div>
+		<div class="clear"></div>
+		<div class="imgbox1">
+			<div class="box3"><img src="${pageContext.request.contextPath}/images/12.gif" height="71" width="178" /></div>
+			<div class="box3"><img src="${pageContext.request.contextPath}/images/13.gif" height="71" width="178" /></div>
+			<div class="box3"><img src="${pageContext.request.contextPath}/images/14.gif" height="71" width="178" /></div>
+			<div class="box3"><img src="${pageContext.request.contextPath}/images/15.gif" height="71" width="178" /></div>
+			<div class="box3"><img src="${pageContext.request.contextPath}/images/16.gif" height="71" width="178" /></div>
+			<div class="box3"><img src="${pageContext.request.contextPath}/images/17.gif" height="71" width="178" /></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+
 
 	<div class="mainCon2">
 		<div class="commontitdiv">
