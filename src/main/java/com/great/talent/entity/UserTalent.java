@@ -17,7 +17,7 @@ public class UserTalent
 	private String chname;
 	private String professname;
 	private String reemploy;
-
+	private String schoolname;
 	public UserTalent()
 	{
 	}
@@ -80,6 +80,16 @@ public class UserTalent
 	public void setReemploy(String reemploy)
 	{
 		this.reemploy = reemploy;
+	}
+
+	public String getSchoolname()
+	{
+		return schoolname;
+	}
+
+	public void setSchoolname(String schoolname)
+	{
+		this.schoolname = schoolname;
 	}
 
 	@Override
