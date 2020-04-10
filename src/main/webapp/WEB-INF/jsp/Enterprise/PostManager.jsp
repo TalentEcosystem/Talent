@@ -107,7 +107,9 @@
                     ,{field: 'positionname', title: '招聘岗位', width:200}
                     ,{field: 'aid', title: '发布者', width:200,hide:true}
                     ,{field: 'name', title: '发布者', width:100}
-                    ,{field: 'positiontime', title: '发布时间', width:200,}//templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+                    ,{field: 'positiontime', title: '发布时间', width:200}// templet:function(value){
+                        //return layui.util.toDateString(value.time);
+                    //}}
                     ,{field: 'money', title: '参考薪资(元)', width:150}
                     ,{field: 'degreename', title: '学历要求', width:150}
                     ,{field: 'professname', title: '专业要求', width:150}
@@ -132,7 +134,34 @@
                         var iframeWindow = layero.find('iframe')[0].contentWindow;
                         body.find("#positionid").val(data.positionid);
                         body.find("#industryid").val(data.industryid).attr("selected",true);
-                        // console.log("data.industryid="+data.industryid)
+                        $.ajax({
+                            url: path + "/Enterprise/findPostInfo",
+                            async: true,
+                            type: "post",
+                            data: "industryid=" + data.industryid,
+                            datatype: "text",
+                            success: function (msg) {
+                                var posts = msg;
+                                var gangwei = body.find('#post');
+                                gangwei.empty();
+                                gangwei.append("<option value=''>请选择岗位</option>");
+                                for(var i = 0; i < posts.length; i++){
+                                    gangwei.append("<option value='" + posts[i].postid + "'> " + posts[i].postname + "</option>")
+                                }
+                                body.find('#post').each(function () {
+                                    $(this).children("option").each(function () {
+                                        if (this.value == posts[0].postid) {
+                                            // 进行回显
+                                            $(this).attr("selected", "selected");
+                                        }
+                                    })
+                                })
+                                    },
+                            error:function () {
+                                layer.msg("服务器繁忙",{icon:2})
+                            }
+                        })
+                        console.log("data.industryid="+data.industryid)
                         body.find("#post").val(data.positionname).attr("selected",true);
                         // console.log("data.positionname="+data.positionname)
                         body.find("#degree").val(data.degreeid).attr("selected",true);
@@ -142,10 +171,27 @@
                         body.find("#positionexper").val(data.positionexper);
                         body.find("#money").val(data.money);
                         body.find("#beginTime").val(data.positiontime);
-                        body.find("input[id=wuxian] [value = "+data.welname+"]").attr("checked","checked");
-                        body.find("input[id=gongjijin] [value = "+data.welname+"]").attr("checked","checked");
-                        body.find("input[id=jiangjin] [value = "+data.welname+"]").attr("checked","checked");
-                        body.find("input[id=zhusu] [value = "+data.welname+"]").attr("checked","checked");
+                        $.ajax({
+                            url: path + "/Enterprise/findWelfName",
+                            async: true,
+                            type: "post",
+                            data: "positionid=" + data.positionid,
+                            datatype: "text",
+                            success: function (msg) {
+                                for (var i = 0; i < msg.length; i++){
+                                    // body.find("input[name=wujin] [value = "+msg[i].welname+"]").attr("checked","checked");
+                                    body.find("#wujin").val(msg[i].welname).attr("checked",true);
+                                    body.find("#gongjijin").val(msg[i].welname).attr("checked",true);
+                                    body.find("#jiangjin").val(msg[i].welname).attr("checked",true);
+                                    body.find("#zhusu").val(msg[i].welname).attr("checked",true);
+                                    // body.find("input[name=gongjijin] [value = "+msg[i].welname+"]").attr("checked","checked");
+                                    // body.find("input[name=jiangjin] [value = "+msg[i].welname+"]").attr("checked","checked");
+                                    // body.find("input[name=zhusu] [value = "+msg[i].welname+"]").attr("checked","checked");
+                                }
+
+                            }
+                        })
+
                         body.find("#maxnum").val(data.maxnum);
                         body.find("#request").val(data.request);
                         body.find("#positioncontent").val(data.positioncontent);
@@ -204,7 +250,7 @@
             });
         });
         form.on('submit(release)',function () {
-            window.location.href = path+'Enterprise/path/EnterpriseDialog';
+            window.location.href = path+'/Enterprise/path/EnterpriseDialog';
         });
 
     })
