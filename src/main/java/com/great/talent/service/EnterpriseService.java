@@ -24,6 +24,17 @@ public class EnterpriseService {
         return enterpriseMapper.adminLogin(account);
     }
 
+    public Admin checkAdminTel(String tel){
+        return enterpriseMapper.checkAdminTel(tel);
+    }
+    @Transactional
+    public int addAdmin(Admin admin){
+         return enterpriseMapper.addAdmin(admin);
+    }
+    @Transactional
+    public int addCompany(Map map){
+        return enterpriseMapper.addCompany(map);
+    }
     public Map findPositions(HashMap map){
         Integer count = enterpriseMapper.findPositionNum(map);
         List<Position> positionList = enterpriseMapper.findPosition(map);
@@ -51,6 +62,10 @@ public class EnterpriseService {
     public String findCompanyName(Integer aid){
         return enterpriseMapper.findCompanyName(aid);
     }
+
+    public String findCompanyAdd(Integer cid){
+        return enterpriseMapper.findCompanyAdd(cid);
+    }
     /**
      * 通过行业查询岗位
      * @param industryid
@@ -67,13 +82,18 @@ public class EnterpriseService {
     public int addWelfare(Map map){
         return enterpriseMapper.addWelfare(map);
     }
+
     public List<Position> findWelfName(Integer positionid){
         return enterpriseMapper.findWelfName(positionid);
     }
 
     @Transactional
-    public int updatePositionState(Integer positionid){
-        return enterpriseMapper.updatePositionState(positionid);
+    public int updatePositionState(Position position){
+        return enterpriseMapper.updatePositionState(position);
     }
 
+    @Transactional
+    public int deleteWelfare(Map map){
+        return enterpriseMapper.deleteWelfare(map);
+    }
 }
