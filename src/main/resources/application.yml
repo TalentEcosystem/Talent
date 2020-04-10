@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://8.129.170.238/TalentEcosystem?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://8.129.170.238/TalentEcosystem?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8
     username: tuser
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource

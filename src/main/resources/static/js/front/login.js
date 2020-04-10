@@ -13,7 +13,7 @@ $(document).ready(function () {
 		  $('.normalLogin').css('display','none');
 		  $('.weixinLogin').css('display','block');
 	   }
-	})
+	});
 //
 // 	//自动登录
 // 	$('.CheckBox').click(function(){
@@ -26,17 +26,6 @@ $(document).ready(function () {
 // 	})
 //
 //
-// 	//简历
-//    $('.sex').click(function(){
-// 	   if($(this).attr("class")=="sex on"){
-// 	      $('.sex').addClass('on');
-// 		  $(this).removeClass('on');
-// 	   }else
-// 	   {
-// 		  $('.sex').removeClass('on');
-// 		  $(this).addClass('on');
-// 	   }
-// 	})
 //
 // 	//使用帮助
 // 	 var _nTimer = 0;

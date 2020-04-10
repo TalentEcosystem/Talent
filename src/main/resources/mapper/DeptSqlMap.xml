@@ -8,4 +8,13 @@
 		select * from tbl_user where UACCOUNT = #{uaccount} and UPASSWORD = #{upassword}
 	</select>
 
+    <!--    用户注册前账号检查-->
+    <select id="userNameCheck" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(*) as num from tbl_user where uaccount = #{uaccount}
+    </select>
+
+    <insert id="addUser"  parameterType="User">
+		insert into tbl_user (uaccount,upassword,uname,usex,uage,utel,ustate,uaddress,udate) values (#{uaccount},#{upassword},#{uname},#{usex},#{uage},#{utel},#{ustate},#{uaddress},#{udate})
+	</insert>
+
 </mapper>

@@ -19,7 +19,7 @@ public class User
 	private String ustate;
 	private String uaddress;
 	private String uschool;
-	private String uscore;
+	private int uscore;
 	private Date udate;
 	private String test;
 
@@ -127,12 +127,12 @@ public class User
 		this.uschool = uschool;
 	}
 
-	public String getUscore()
+	public int getUscore()
 	{
 		return uscore;
 	}
 
-	public void setUscore(String uscore)
+	public void setUscore(int uscore)
 	{
 		this.uscore = uscore;
 	}
