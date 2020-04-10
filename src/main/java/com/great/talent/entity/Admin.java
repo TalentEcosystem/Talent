@@ -18,6 +18,7 @@ public class Admin {
     private Integer money;
     private String code;
     private Role role;
+    private String companyname;
 
 
     public Admin() {
@@ -157,6 +158,16 @@ public class Admin {
 
     public void setMoney(Integer money) {
         this.money = money;
+    }
+
+    public String getCompanyname()
+    {
+        return companyname;
+    }
+
+    public void setCompanyname(String companyname)
+    {
+        this.companyname = companyname;
     }
 
     @Override

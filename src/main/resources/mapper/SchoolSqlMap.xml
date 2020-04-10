@@ -42,10 +42,41 @@
          </where>
         )t
     </select>
-    <select id="findUserResume" parameterType="UserTalent">
-
+    <select id="findUserResume" parameterType="UserTalent" resultType="Resume">
+       SELECT a.rename,a.rebirth,b.degreename,c.professname,a.retel,d.schoolname,a.repic,a.readdress,a.repol,a.reskill,a.reeva from tbl_resume a,tbl_degree b,tbl_profession c,tbl_school d
+    <where>
+        a.degreeid=b.degreeid and a.professid=c.professid and d.sid=a.sid and a.uid=#{uid};
+    </where>
     </select>
-
-
-
+    <select id="findUserSocial" parameterType="UserTalent" resultType="Social">
+        SELECT socialtime,company,content from tbl_social
+        <where>
+            uid=#{uid};
+        </where>
+    </select>
+    <select id="findUserAducation" parameterType="UserTalent" resultType="Aducational">
+        SELECT adtime,schoolname,profession from tbl_aducational
+        <where>
+            uid=#{uid}
+        </where>
+    </select>
+    <select id="findSchoolInfo" resultType="SchoolMsg" parameterType="int">
+        select schoolname,schoolinfo,schoolpic from tbl_school
+        <where>
+            sid=#{sid}
+        </where>
+    </select>
+    <update id="updateSchool" parameterType="SchoolMsg">
+        update tbl_school
+        <set>
+            schoolname=#{schoolname},
+            schoolinfo=#{schoolinfo},
+            <if test="schoolpic !=null and schoolpic !=''">
+            schoolpic=#{schoolpic}
+            </if>
+        </set>
+        <where>
+            sid=#{sid}
+        </where>
+    </update>
 </mapper>

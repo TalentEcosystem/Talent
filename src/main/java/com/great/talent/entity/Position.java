@@ -21,6 +21,8 @@ public class Position {
     private Integer professid;
     private String professname;
     private Date positiontime;
+    private Integer welfareid;
+    private String welname;
 
     public Position() {
     }
@@ -36,6 +38,22 @@ public class Position {
         this.positionaddress = positionaddress;
         this.positioncontent = positioncontent;
         this.positionstate = positionstate;
+    }
+
+    public Integer getWelfareid() {
+        return welfareid;
+    }
+
+    public void setWelfareid(Integer welfareid) {
+        this.welfareid = welfareid;
+    }
+
+    public String getWelname() {
+        return welname;
+    }
+
+    public void setWelname(String welname) {
+        this.welname = welname;
     }
 
     public String getIndname() {
@@ -198,12 +216,14 @@ public class Position {
                 ", positioncontent='" + positioncontent + '\'' +
                 ", positionstate='" + positionstate + '\'' +
                 ", industryid=" + industryid +
-                ", industryname='" + indname + '\'' +
+                ", indname='" + indname + '\'' +
                 ", degreeid=" + degreeid +
                 ", degreename='" + degreename + '\'' +
                 ", professid=" + professid +
                 ", professname='" + professname + '\'' +
                 ", positiontime=" + positiontime +
+                ", welfareid=" + welfareid +
+                ", welname='" + welname + '\'' +
                 '}';
     }
 }

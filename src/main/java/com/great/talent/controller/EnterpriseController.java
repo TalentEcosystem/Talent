@@ -1,14 +1,17 @@
 package com.great.talent.controller;
 
+import com.google.gson.Gson;
 import com.great.talent.entity.Admin;
 import com.great.talent.entity.Degree;
 import com.great.talent.entity.Position;
+import com.great.talent.entity.Post;
 import com.great.talent.service.EnterpriseService;
 import com.great.talent.util.Diagis;
 import com.great.talent.util.MD5Utils;
 import com.great.talent.util.ResponseUtils;
 import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,10 +27,11 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 @Controller
 @RequestMapping("/Enterprise")
@@ -133,18 +138,85 @@ public class EnterpriseController {
         session.setAttribute("admin",admins);
         return "success";
     }
+
+    /**
+     * 查询下拉框的信息
+     * @param request
+     * @return
+     */
     @RequestMapping("/findPositionInfo")
     public ModelAndView findPositionInfo(HttpServletRequest request){
         ModelAndView mv = new ModelAndView();
         Map map = enterpriseService.findPositionInfo();
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        String companyName = enterpriseService.findCompanyName(admin.getAid());
         List<Degree> degree = (List<Degree>) map.get("degreeList");
         List<Degree> industry = (List<Degree>) map.get("industryList");
         List<Degree> profession = (List<Degree>) map.get("professionList");
-        request.setAttribute("degree",degree);
-        request.setAttribute("industry",industry);
-        request.setAttribute("profession",profession);
+        request.getSession().setAttribute("degree",degree);
+        request.getSession().setAttribute("industry",industry);
+        request.getSession().setAttribute("profession",profession);
+        request.getSession().setAttribute("companyName",companyName);
         mv.setViewName("/Enterprise/PostManager");
         return mv;
+    }
+
+//    /**
+//     *发布信息下拉框信息查询
+//     * @param request
+//     * @return
+//     */
+//    @RequestMapping("/findUpPositionInfo")
+//    public ModelAndView findUpPositionInfo(HttpServletRequest request){
+//        ModelAndView mvs = new ModelAndView();
+//        Admin admin = (Admin) request.getSession().getAttribute("admin");
+//        Map map = enterpriseService.findPositionInfo();
+//        List<Degree> degree = (List<Degree>) map.get("degreeList");
+//        List<Degree> industry = (List<Degree>) map.get("industryList");
+//        List<Degree> profession = (List<Degree>) map.get("professionList");
+//        String companyName = enterpriseService.findCompanyName(admin.getAid());
+//        request.setAttribute("degree",degree);
+//        request.setAttribute("industry",industry);
+//        request.setAttribute("profession",profession);
+//        request.setAttribute("companyName",companyName);
+//        mvs.setViewName("/Enterprise/EnterpriseDialog");
+//        return mvs;
+//    }
+//
+//    /**
+//     *修改信息下拉框信息查询
+//     * @param request
+//     * @return
+//     */
+//    @RequestMapping("/updatePositions")
+//    public ModelAndView updatePositions(HttpServletRequest request){
+//        ModelAndView mvs = new ModelAndView();
+//        Admin admin = (Admin) request.getSession().getAttribute("admin");
+//        Map map = enterpriseService.findPositionInfo();
+//        List<Degree> degree = (List<Degree>) map.get("degreeList");
+//        List<Degree> industry = (List<Degree>) map.get("industryList");
+//        List<Degree> profession = (List<Degree>) map.get("professionList");
+//        String companyName = enterpriseService.findCompanyName(admin.getAid());
+//        request.setAttribute("degree",degree);
+//        request.setAttribute("industry",industry);
+//        request.setAttribute("profession",profession);
+//        request.setAttribute("companyName",companyName);
+//        mvs.setViewName("/Enterprise/UpdateDialog");
+//        return mvs;
+//    }
+    @RequestMapping("/findPostInfo")
+    @ResponseBody
+    public void findPostInfo(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String industryid = request.getParameter("industryid");
+        Gson gson = new Gson();
+        List<Post> plist = enterpriseService.findPostName(Integer.valueOf(industryid));
+        System.out.println(plist);
+        String msg = gson.toJson(plist);
+        if (null != msg&&""!=msg){
+           ResponseUtils.outJson1(response,msg);
+        }else{
+            response.getWriter().print("error");
+        }
     }
 
     /**
@@ -162,7 +234,7 @@ public class EnterpriseController {
         String positionname = request.getParameter("positionname");
         String degreeid = request.getParameter("degreeid");
         String professid = request.getParameter("professid");
-        System.out.println("industryid="+industryid+"positionname="+positionname+"degreeid="+degreeid+"professid="+professid);
+//        System.out.println("industryid="+industryid+"positionname="+positionname+"degreeid="+degreeid+"professid="+professid);
         int pageInt = Integer.valueOf(page);
         int limitInt = Integer.parseInt(limit);
         HashMap<String,Object> condition = new HashMap<>();
@@ -188,6 +260,56 @@ public class EnterpriseController {
             diagis.setCount((Integer) map.get("count"));
             diagis.setData((List<Position>) map.get("positionList"));
             ResponseUtils.outJson(response,diagis);
+        }
+    }
+    @RequestMapping("/addPositionInfo")
+    @ResponseBody
+    public void addPositionInfo(HttpServletRequest request, HttpServletResponse response)throws IOException{
+        int flag = 0;
+        String jsonstr = request.getParameter("postInfo");
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        String [] params = request.getParameterValues("welname");
+        Gson gson = new Gson();
+        Position position = gson.fromJson(jsonstr,Position.class);
+        Date positiontime = new Date();
+        position.setPositiontime(positiontime);
+        position.setAid(admin.getAid());
+        System.out.println(position.toString());
+        int flags = enterpriseService.addPositionInfo(position);
+        System.out.println(flags);
+        if (flags != 0){
+            for (int i=0;i<params.length;i++){
+                 String welname = params[i];
+                System.out.println(welname);
+                Map map = new HashMap();
+                map.put("positionid",position.getPositionid());
+                map.put("welname",welname);
+                flag = enterpriseService.addWelfare(map);
+            }
+        }
+        if (flag>0){
+            response.getWriter().print(1111);
+        }else{
+            response.getWriter().print(2222);
+        }
+    }
+    @RequestMapping("/findWelfName")
+    @ResponseBody
+    public List<Position> findWelfName(HttpServletRequest request){
+        String positionid = request.getParameter("positionid");
+        List<Position> positionList = enterpriseService.findWelfName(Integer.valueOf(positionid));
+//        System.out.println(positionList);
+        return positionList;
+    }
+    @RequestMapping("/updatePositionState")
+    @ResponseBody
+    public void updatePositionState(HttpServletRequest request, HttpServletResponse response)throws IOException{
+        String positionid = request.getParameter("positionid");
+        int flag = enterpriseService.updatePositionState(Integer.valueOf(positionid));
+        if (flag>0){
+            response.getWriter().print(1111);
+        }else{
+            response.getWriter().print(2222);
         }
     }
 
