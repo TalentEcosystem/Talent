@@ -314,7 +314,7 @@ public class SchoolController
 
 	//给企业推荐人才
 	@RequestMapping("/recommend")
-	public void recommend( HttpServletRequest request){
+	public void recommend( HttpServletRequest request,HttpServletResponse response){
 		//这里需要获取登录高校账号的学校id
 		//		Admin admin= (Admin) request.getSession().getAttribute("admin");
 		//		admin.getSid();
@@ -330,7 +330,7 @@ public class SchoolController
 			recomend.setUid(Integer.valueOf(ids[i]));
 			schoolService.insertRecommend(recomend);
 		}
-
+		ResponseUtils.outJson(response,"推荐成功");
 	}
 
 }
