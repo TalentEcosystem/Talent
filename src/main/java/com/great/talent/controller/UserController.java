@@ -25,12 +25,6 @@ public class UserController
 
 	@Resource
 	private UserService userService;
-
-	@RequestMapping("/homePage")
-	public String HpmePage(){
-		return "homepage/index";
-	}
-
 	@RequestMapping("/login")
 	public String Welcome(){
 		return "login";

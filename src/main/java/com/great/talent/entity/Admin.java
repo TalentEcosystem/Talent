@@ -12,6 +12,7 @@ public class Admin {
     private String state;
     private String address;
     private Integer cid;
+    private String companyname;
     private Integer sid;
     private String permit;
     private Date date;
@@ -37,6 +38,14 @@ public class Admin {
         this.permit = permit;
         this.date = date;
         this.money = money;
+    }
+
+    public String getCompanyname() {
+        return companyname;
+    }
+
+    public void setCompanyname(String companyname) {
+        this.companyname = companyname;
     }
 
     public Role getRole() {
@@ -159,24 +168,26 @@ public class Admin {
         this.money = money;
     }
 
+
     @Override
     public String toString() {
         return "Admin{" +
                 "aid=" + aid +
                 ", account='" + account + '\'' +
                 ", password='" + password + '\'' +
-                ", role='" + roleid + '\'' +
+                ", roleid=" + roleid +
                 ", name='" + name + '\'' +
                 ", tel='" + tel + '\'' +
                 ", state='" + state + '\'' +
                 ", address='" + address + '\'' +
                 ", cid=" + cid +
+                ", companyname='" + companyname + '\'' +
                 ", sid=" + sid +
                 ", permit='" + permit + '\'' +
                 ", date=" + date +
                 ", money=" + money +
                 ", code='" + code + '\'' +
-                ", roles=" + role +
+                ", role=" + role +
                 '}';
     }
 }

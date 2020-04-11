@@ -18,7 +18,7 @@
 	</select>
 
     <select id="findPosition" resultType="Position" parameterType="java.util.Map">
-        select p.*,a.name,i.indname,d.degreename,pro.professname from tbl_position p,tbl_admin a,tbl_industry i,tbl_degree d, tbl_profession pro
+        select p.*,a.name,i.*,d.*,pro.* from tbl_position p,tbl_admin a,tbl_industry i,tbl_degree d, tbl_profession pro
         <where>
         p.aid = a.aid and p.industryid = i.industryid and p.degreeid = d.degreeid and p.professid = pro.professid
             <if test="industryid != null">
@@ -33,6 +33,7 @@
             <if test="professid != null">
                 and p.professid = #{professid}
             </if>
+            and p.positionstate = '发布'
         </where>
         order by positiontime desc
         limit #{pageInts},#{limitInt}
@@ -54,8 +55,46 @@
             <if test="professid != null">
                 and p.professid = #{professid}
             </if>
+            and p.positionstate = '发布'
         </where>
     </select>
 
+    <insert id="addPositionInfo" parameterType="Position" useGeneratedKeys="true" keyProperty="positionid" keyColumn="positionid">
+    insert into tbl_position (aid, positionname,
+      maxnum, positionexper, request,
+      money, positionaddress, positioncontent,
+      positionstate, industryid, positiontime,
+      degreeid, professid)
+    values (#{aid}, #{positionname},
+      #{maxnum}, #{positionexper}, #{request},
+      #{money}, #{positionaddress}, #{positioncontent},
+      #{positionstate}, #{industryid}, #{positiontime},
+      #{degreeid}, #{professid})
+  </insert>
+
+    <insert id="addWelfare" parameterType="java.util.Map" >
+        insert into tbl_welfare(welname,positionid)values (#{welname},#{positionid})
+    </insert>
+
+    <update id="updatePositionInfo" parameterType="Position">
+    update tbl_position
+    set aid = #{aid},
+      positionname = #{positionname},
+      maxnum = #{maxnum},
+      positionexper = #{positionexper},
+      request = #{request},
+      money = #{money},
+      positionaddress = #{positionaddress},
+      positioncontent = #{positioncontent},
+      positionstate = #{positionstate},
+      industryid = #{industryid},
+      positiontime = #{positiontime},
+      degreeid = #{degreeid},
+      professid = #{professid}
+    where positionid = #{positionid}
+  </update>
+      <update id="updatePositionState" parameterType="java.lang.Integer" >
+          update tbl_position set positionstate = '删除' where positionid = #{positionid}
+      </update>
 
 </mapper>

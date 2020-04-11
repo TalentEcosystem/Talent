@@ -19,16 +19,25 @@ public class HomePageController
 
 
 	/**
+	 * 首页
+	 * @return  String
+	 */
+	@RequestMapping("/index")
+	public String Welcome(){
+		return "homepage/index";
+	}
+
+	/**
 	 *好消息，企业发布新职位
 	 * @return String
 	 */
-	@RequestMapping(value = "/goodNews" ,produces = "text/html;charset=UTF-8" )
+	@RequestMapping(value = "/getCount" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String getGoodNews( )
+	public String getGoodNews( HttpServletRequest request)
 	{
-		System.out.println("getGoodNews被调用了~~~~~~~~~~~~~~~~···");
-//		String goodStr=homePageService.getGoodNews();
-		return "";
+		System.out.println("getCount被调用了~~~~~~~~~~~~~~~~···");
+		String str = homePageService.getCount(request);
+		return str;
 	}
 
 	/**
@@ -39,8 +48,31 @@ public class HomePageController
 	@ResponseBody
 	public String getSchoolNews( )
 	{
-		System.out.println("getSchoolNews被调用了~~~~~~~~~~~~~~~~···");
 		String Str=homePageService.getSchoolNews();
+		return Str;
+	}
+	/**
+	 *得到课程和讲师的信息
+	 * @return String
+	 */
+	@RequestMapping(value = "/getStudyNews" ,produces = "text/html;charset=UTF-8" )
+	@ResponseBody
+	public String getStudyNews( )
+	{
+		System.out.println("getStudyNews被调用了~~~~~~~~~~~~~~~~···");
+		String Str=homePageService.getStudyNews();
+		return Str;
+	}
+	/**
+	 *得到课程和讲师的信息
+	 * @return String
+	 */
+	@RequestMapping(value = "/getCompanyNews" ,produces = "text/html;charset=UTF-8" )
+	@ResponseBody
+	public String getCompanyNews( )
+	{
+		System.out.println("getCompanyNews被调用了~~~~~~~~~~~~~~~~···");
+		String Str=homePageService.getCompanyNews();
 		return Str;
 	}
 

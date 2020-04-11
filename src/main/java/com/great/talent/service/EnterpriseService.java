@@ -3,6 +3,7 @@ package com.great.talent.service;
 import com.great.talent.entity.*;
 import com.great.talent.mapper.EnterpriseMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -47,5 +48,32 @@ public class EnterpriseService {
         return map;
     }
 
+    public String findCompanyName(Integer aid){
+        return enterpriseMapper.findCompanyName(aid);
+    }
+    /**
+     * 通过行业查询岗位
+     * @param industryid
+     * @return
+     */
+    public List<Post> findPostName(Integer industryid){
+        return enterpriseMapper.findPostName(industryid);
+    }
+    @Transactional
+    public int addPositionInfo(Position position){
+        return enterpriseMapper.addPositionInfo(position);
+    }
+    @Transactional
+    public int addWelfare(Map map){
+        return enterpriseMapper.addWelfare(map);
+    }
+    public List<Position> findWelfName(Integer positionid){
+        return enterpriseMapper.findWelfName(positionid);
+    }
+
+    @Transactional
+    public int updatePositionState(Integer positionid){
+        return enterpriseMapper.updatePositionState(positionid);
+    }
 
 }

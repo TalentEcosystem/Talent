@@ -82,27 +82,27 @@
 
 		}
 		.left {
-			width: 22px;
-			height: 39px;
+			width: 30px;
+			height: 58px;
 			left: 240px;
-			background-image: url(<%=path+"/images/6.jpg"%>);
+			background-image: url(<%=path+"/images/left.png"%>);
 			position: absolute;
-			margin-top: -130px;
+			margin-top: -140px;
 		}
 		.right {
-			width: 22px;
-			height: 39px;
-			background-image: url(<%=path+"/images/6.jpg"%>);
+			width: 30px;
+			height: 58px;
+			background-image: url(<%=path+"/images/right.png"%>);
 			position: absolute;
 			right: 240px;
-			margin-top: -130px;
+			margin-top: -140px;
 		}
 		.in .pic {
 			display: block;
 			background-color:#dbdbdb;
 			width: 150px;
 			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
+
 			background-size: 150px 150px;
 			margin-left: 120px;
 			float: left;
@@ -249,33 +249,39 @@
 		}
 		.childss {
 			width: 150px;
-			height: 0px;
+			height: 200px;
 			background-color:#000000;
 			opacity: 0;
 			color: #ffffff;
-			font-size: 20px;
 			font-weight: normal;
-			position: absolute;
-			bottom: 250px;
+			/*position: absolute;*/
+			bottom: 270px;
 		}
 		.childss p{
 			font-family: Segoe UI;
-			font-size: 15px;
+			font-size: 13px;
 			padding: 0px 0 0 10px;
 			margin-right: 28px;
 			font-weight: normal;
-			float: left;
 			color: #ffffff;
 			padding-bottom: 20px;
 		}
 		.childss i{
 			font-family: Segoe UI;
-			font-size: 15px;
-			padding: 0px 15px 0 0;
+			font-size: 12px;
+			padding: 0px 0px 0 10px;
 			font-weight: normal;
-			float: right;
+
 			color: white;
 			padding-bottom: 20px;
+		}
+		.childss b{
+			font-family: Segoe UI;
+			font-size: 15px;
+			padding: 0px 0px 0px 10px;
+			font-weight: normal;
+			color: white;
+			margin-bottom: 20px;
 		}
 
 	</style>
@@ -333,7 +339,7 @@
 			position: absolute;
 		}
 		.out1 {
-			width: 800px;
+			width: 1000px;
 			height: 170px;
 			overflow:hidden;
 			margin: 0px auto;
@@ -341,20 +347,20 @@
 
 		}
 		.left1 {
-			width: 22px;
-			height: 39px;
+			width: 30px;
+			height: 58px;
 			left: 240px;
-			background-image: url(<%=path+"/images/6.jpg"%>);
+			background-image: url(<%=path+"/images/left.png"%>);
 			position: absolute;
-			margin-top: -130px;
+			margin-top: -140px;
 		}
 		.right1 {
-			width: 22px;
-			height: 39px;
-			background-image: url(<%=path+"/images/6.jpg"%>);
+			width: 30px;
+			height: 58px;
+			background-image: url(<%=path+"/images/right.png"%>);
 			position: absolute;
 			right: 240px;
-			margin-top: -130px;
+			margin-top: -140px;
 		}
 		.in1 .pic0 {
 			display: block;
@@ -600,20 +606,20 @@
 
 		}
 		.left2 {
-			width: 22px;
-			height: 39px;
+			width: 30px;
+			height: 58px;
 			left: 240px;
-			background-image: url(<%=path+"/images/6.jpg"%>);
+			background-image: url(<%=path+"/images/left.png"%>);
 			position: absolute;
-			margin-top: -130px;
+			margin-top: -140px;
 		}
 		.right2 {
-			width: 22px;
-			height: 39px;
-			background-image: url(<%=path+"/images/6.jpg"%>);
+			width: 30px;
+			height: 58px;
+			background-image: url(<%=path+"/images/right.png"%>);
 			position: absolute;
 			right: 240px;
-			margin-top: -130px;
+			margin-top: -140px;
 		}
 		.in2 .pic02 {
 			display: block;
@@ -771,7 +777,7 @@
 			background-color:#000000;
 			opacity: 0;
 			color: #ffffff;
-			font-size: 20px;
+			font-size: 15px;
 			font-weight: normal;
 			position: absolute;
 			bottom: 250px;
@@ -791,7 +797,7 @@
 			font-size: 15px;
 			padding: 0px 5px 0 0;
 			font-weight: normal;
-			float: right;
+
 			color: white;
 			padding-bottom: 20px;
 		}
@@ -859,20 +865,20 @@
 
 		}
 		.left3 {
-			width: 22px;
-			height: 39px;
+			width: 30px;
+			height: 58px;
 			left: 240px;
-			background-image: url(<%=path+"/images/6.jpg"%>);
+			background-image: url(<%=path+"/images/left.png"%>);
 			position: absolute;
-			margin-top: -130px;
+			margin-top: -140px;
 		}
 		.right3 {
-			width: 22px;
-			height: 39px;
-			background-image: url(<%=path+"/images/6.jpg"%>);
+			width: 30px;
+			height: 58px;
+			background-image: url(<%=path+"/images/right.png"%>);
 			position: absolute;
 			right: 240px;
-			margin-top: -130px;
+			margin-top: -140px;
 		}
 		.in3 .pic03 {
 			display: block;
@@ -1081,6 +1087,31 @@
 
 
 	</style>
+
+	<style>
+		.spa{
+			float: left;
+			width: 250px;
+			height: 68px;
+			line-height: 68px !important;
+			margin:5px 5px 0 20px;
+			/*line-height: 50px;*/
+			/*text-align: center;*/
+			/*background-color: pink;*/
+			background-color: #6EC7FF;
+			font-size: 16px;
+			text-align: center;
+		}
+		.spa b,.spa i{
+			font-weight: bold;
+			font-style: normal;
+		}
+
+
+
+	</style>
+
+
 </head>
 <body>
 <input type="hidden" id="userno">
@@ -1265,7 +1296,7 @@
 	<a href="meetingJob.html">技术成长</a>
 	<a href="jobnews.html">就业资讯</a>
 	<a href="download.html">个人中心</a>
-	<a href="javascript:void()" class="mobile">登录</a>
+	<a href="${pageContext.request.contextPath}/user/login" class="mobile">登录</a>
 	<a href="helpJob.html">注册</a>
 </div>
 <div class="BodyMain">
@@ -1371,7 +1402,32 @@
 			</div>
 
 
+
 			<div class="login">
+
+
+				<div class="spa" style="background-color: #66D9B0;">
+					<img src="${pageContext.request.contextPath}/images/tggw.png">
+					<span>
+                        <b>提供岗位</b>
+                        <i id="tggw"></i>个
+                    </span>
+				</div>
+				<div class="spa" style="background-color: #A2AAFF;">
+					<img src="${pageContext.request.contextPath}/images/zcdw.png">
+					<span>
+                        <b>注册单位</b>
+                        <i id="zcdw"></i>家
+                    </span>
+				</div>
+				<div class="spa">
+					<img src="${pageContext.request.contextPath}/images/qzz.png">
+					<span>
+                        <b>求职人数</b>
+                        <i id="qzz"></i>位
+                    </span>
+				</div>
+
 <%--				<div class="erweima">--%>
 <%--					<div class="close"></div>--%>
 <%--					<div class="ewmimg"><img src="images/showqrcode.jpg" /></div>--%>
@@ -1428,123 +1484,103 @@
 <%--	专区模块--%>
 			<div class="tabs">
 				<ul id="tab">
-					<li class="current">技术成长专区</li>
-					<li>高校专区</li>
-					<li>名企专区</li>
-					<li  style="float: right;width: 242px">成果展示</li>
+					<li class="current" style="display: block">技术成长专区</li>
+					<li >高校专区</li>
+					<li  >名企专区</li>
+					<li  style="float: right;width: 242px;">成果展示</li>
 				</ul>
 				<div id="content">
-					<ul style="display:block;">
+<%--					左右按钮的隐藏显示--%>
+					<script>
+						var conrent=document.getElementById("content");
+						var left=document.getElementsByClassName("left").item(0);
+						var right=document.getElementsByClassName("right");
+						var left1=document.getElementsByClassName("left1").item(0);
+						var right1=document.getElementsByClassName("right1");
+						var left2=document.getElementsByClassName("left2").item(0);
+						var right2=document.getElementsByClassName("right2");
+						// 鼠标移进
+						conrent.onmousemove=function () {
+							left.style.display="block";
+							right.style.display="block";
+							left1.style.display="block";
+							right1.style.display="block";
+							left2.style.display="block";
+							right2.style.display="block";
+
+						};
+						conrent.onmouseout=function () {
+							left.style.display="none";
+							right.style.display="none";
+							left1.style.display="none";
+							right1.style.display="none";
+							left2.style.display="none";
+							right2.style.display="none";
+						}
+
+
+					</script>
+
+					<ul  >
+
 						<div class="product-cont">
 		<div class="scene2">
-			<div class="out">
-				<div class="in clearFix" style="left: -1100px;">
-					<div class="pic">
-						<div class="childss test">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<div class="pic1">
-						<div class="childss test1">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<div class="pic2">
-						<div class="childss test2">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<!-- 第二组 -->
-					<div class="pic3">
-						<div class="childss test3">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<div class="pic4">
-						<div class="childss test4">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<div class="pic5">
-						<div class="childss test5">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<!-- 第三组 -->
-					<div class="pic6">
-						<div class="childss test6">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<div class="pic7">
-						<div class="childss test7">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<div class="pic8">
-						<div class="childss test8">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<!-- 第四组 -->
-					<div class="pic9">
-						<div class="childss test9">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<div class="pic10">
-						<div class="childss test10">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<div class="pic11">
-						<div class="childss test11">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<!-- 第五组 -->
-					<div class="pic12">
-						<div class="childss test12">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<div class="pic13">
-						<div class="childss test13">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-					<div class="pic14">
-						<div class="childss test14">
-							<p>就业总数</p>
-							<i>1999</i>
-						</div>
-					</div>
-
+			<div class="out" >
+				<div class="in clearFix" id="study" style="left: -1100px;">
+<%--					课程轮播--%>
 				</div>
 				<div class="shodow"></div>
 			</div>
 		</div>
-		<div class="left"></div>
-		<div class="right"></div>
+		<div class="left" style="display: none"></div>
+		<div class="right" style="display: none"></div>
 		<div class="lunbo"></div>
 	</div>
 						<script>
+							var path=$("#path").val();
+							$.ajax({
+								type: "post",
+								url: path+"/HomePage/getStudyNews",
+								// dataType: "json",
+								async:true,
+								success: function (data) {
+									var study=JSON.parse(data);
+									console.log(study);
+									for (var i = 0; i <study.length ; i++) {
+										$("#study").append(
+											"<a href='' class='pic' style='background-image: url("+path+"/"+study[i].propic+" )'>"+
+											"<div class='childss test' >"+
+											"<div style='width: 150px;height: 100px'>"+
+											study[i].proname+"<br>"+
+											"播放量"+study[i].procount+"<br>"+
+											"讲师："+study[i].teachername+
+											"</div>"+
+											"</div>"+
+											"</a>"
+
+										);
+										$(".pic").mouseenter(function () {
+											$(".test").stop().animate({ 'height': '80px', opacity: '0.5' },"slow");
+										});
+										$(".pic").mouseleave(function () {
+											$(".test").stop().animate({ 'height': '0px', opacity: '0' },"slow");
+										})
+
+									}
+
+								},
+								error: function (data) {
+									console.log(data);
+								}
+
+							});
+
+
+						</script>
+						<script>
 
 		//轮播
+
 		var out = document.getElementsByClassName("out").item(0);
 		var left = document.getElementsByClassName("left").item(0);
 		var right = document.getElementsByClassName("right").item(0);
@@ -1579,7 +1615,7 @@
 					myin.style.left = newweizhi + 'px';
 					clearInterval(timer);
 					zt = true;
-					if (newweizhi == -4300) {
+					if (newweizhi == -3500) {
 						myin.style.left = -1100 + "px";
 					}
 					if (newweizhi == -300) {
@@ -1591,10 +1627,11 @@
 			meici();
 		}
 
-		timer1 = setInterval(right.onclick, 3000);
+		timer1 = setInterval(right.onclick, 6000);
 		out.onmouseover = function () {
 			clearInterval(timer1);
 		};
+
 		left.onmouseover = function () {
 			clearInterval(timer1);
 		};
@@ -1602,207 +1639,26 @@
 			clearInterval(timer1);
 		};
 		out.onmouseout = function () {
-			timer1 = setInterval(right.onclick, 3000);
+			timer1 = setInterval(right.onclick, 6000);
 		}
+
 		left.onmouseout = function () {
-			timer1 = setInterval(right.onclick, 3000);
+			timer1 = setInterval(right.onclick, 6000);
 		};
 		right.onmouseout = function () {
-			timer1 = setInterval(right.onclick, 3000);
+			timer1 = setInterval(right.onclick, 6000);
 		};
-		// 鼠标移进一出
-		$(document).ready(function () {
-			var animated = false;
-			$(".pic").mouseenter(function () {
-				$(".test").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic").mouseleave(function () {
-				$(".test").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
-			$(".pic1").mouseenter(function () {
-				$(".test1").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic1").mouseleave(function () {
-				$(".test1").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
-			$(".pic2").mouseenter(function () {
-				$(".test2").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic2").mouseleave(function () {
-				$(".test2").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
 
-			$(".pic4").mouseenter(function () {
-				$(".test4").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic4").mouseleave(function () {
-				$(".test4").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
-			$(".pic3").mouseenter(function () {
 
-				$(".test3").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic3").mouseleave(function () {
-				$(".test3").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
-			$(".pic5").mouseenter(function () {
-				// $('.test5').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-				$(".test5").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic5").mouseleave(function () {
-				$(".test5").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
-			$(".pic6").mouseenter(function () {
-				$(".test6").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic6").mouseleave(function () {
-				$(".test6").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
-			$(".pic7").mouseenter(function () {
-				$(".test7").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic7").mouseleave(function () {
-				$(".test7").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
-			$(".pic8").mouseenter(function () {
-				$(".test8").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic8").mouseleave(function () {
-
-				$(".test8").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
-			$(".pic9").mouseenter(function () {
-				//$('.test9').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-				$(".test9").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic9").mouseleave(function () {
-				// $('.test9').animate({ 'height': '0px', opacity: '0' }, "slow");
-				$(".test9").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
-			$(".pic10").mouseenter(function () {
-				//$('.test10').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-				$(".test10").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic10").mouseleave(function () {
-				// $('.test10').animate({ 'height': '0px', opacity: '0' }, "slow");
-				$(".test10").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
-			$(".pic11").mouseenter(function () {
-				//$('.test11').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-				$(".test11").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-			});
-			$(".pic11").mouseleave(function () {
-				// $('.test11').animate({ 'height': '0px', opacity: '0' }, "slow");
-				$(".test11").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-			})
-		});
 	</script>
 					</ul>
 
-					<ul>
+					<ul style="display: none">
 						<div class="product-cont1">
 							<div class="scene2">
 								<div class="out1">
 									<div class="in1 clearFix1" id="school" style="left: -1100px;">
-<%--										<div class="pic0" style="background-image: url(<%=path+"/images/2.png"%>)">--%>
-<%--											<div class="childss1 test0" >--%>
-<%--												<h>集美大学</h>--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div></div>--%>
-<%--										<div class="pic11">--%>
-<%--											<div class="childss1 test11">--%>
-<%--												<h>集美大学</h>--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<div class="pic21">--%>
-<%--											<div class="childss1 test21">--%>
-<%--												<h>集美大学</h>--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<!-- 第二组 -->--%>
-<%--										<div class="pic31">--%>
-<%--											<div class="childss1 test31">--%>
-<%--												<h>集美大学</h>--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<div class="pic41">--%>
-<%--											<div class="childss1 test41">--%>
-<%--												<h>集美大学</h>--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<div class="pic51">--%>
-<%--											<div class="childss1 test51">--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<!-- 第三组 -->--%>
-<%--										<div class="pic61">--%>
-<%--											<div class="childss1 test61">--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<div class="pic71">--%>
-<%--											<div class="childss1 test71">--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<div class="pic81">--%>
-<%--											<div class="childss1 test81">--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<!-- 第四组 -->--%>
-<%--										<div class="pic91">--%>
-<%--											<div class="childss1 test91">--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<div class="pic101">--%>
-<%--											<div class="childss1 test101">--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<div class="pic111">--%>
-<%--											<div class="childss1 test111">--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<!-- 第五组 -->--%>
-<%--										<div class="pic121">--%>
-<%--											<div class="childss1 test121">--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<div class="pic131">--%>
-<%--											<div class="childss1 test131">--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-<%--										<div class="pic141">--%>
-<%--											<div class="childss1 test141">--%>
-<%--												<p>就业总数</p>--%>
-<%--												<i>1999</i>--%>
-<%--											</div>--%>
-<%--										</div>--%>
-
+<%--									高校轮播--%>
 									</div>
 									<div class="shodow1"></div>
 								</div>
@@ -1820,7 +1676,6 @@
 								async:true,
 								success: function (data) {
 									var d=JSON.parse(data);
-									console.log(d.length);
 									for (var i = 0; i <d.length ; i++) {
 										$("#school").append(
 										"<a href='' class='pic0' style='background-image: url("+path+"/"+d[i].schoolpic+")'>"+
@@ -1838,7 +1693,7 @@
 										$(".pic0").mouseleave(function () {
 											$(".test0").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
 										})
-										console.log(d[i].schoolname)
+
 									}
 
 								},
@@ -1847,8 +1702,6 @@
 								}
 
 							});
-
-
 
 
 						</script>
@@ -1889,7 +1742,7 @@
 										myin1.style.left = newweizhi1 + 'px';
 										clearInterval(timer1);
 										zt1 = true;
-										if (newweizhi1 == -4300) {
+										if (newweizhi1 == -3500) {
 
 											myin1.style.left = -1100 + "px";
 										}
@@ -2029,106 +1882,12 @@
 						</script>
 					</ul>
 
-					<ul>
+					<ul style="display: none">
 						<div class="product-cont2">
 							<div class="scene2">
 								<div class="out2">
-									<div class="in2 clearFix2" style="left: -1100px;">
-										<div class="pic02">
-											<div class="childss2 test02">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<div class="pic12">
-											<div class="childss2 test12">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<div class="pic22">
-											<div class="childss2 test22">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<!-- 第二组 -->
-										<div class="pic32">
-											<div class="childss2 test32">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<div class="pic42">
-											<div class="childss2 test42">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<div class="pic52">
-											<div class="childss2 test52">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<!-- 第三组 -->
-										<div class="pic62">
-											<div class="childss2 test62">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<div class="pic72">
-											<div class="childss2 test72">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<div class="pic82">
-											<div class="childss2 test82">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<!-- 第四组 -->
-										<div class="pic92">
-											<div class="childss2 test92">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<div class="pic102">
-											<div class="childss2 test102">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<div class="pic112">
-											<div class="childss2 test112">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<!-- 第五组 -->
-										<div class="pic122">
-											<div class="childss2 test122">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<div class="pic132">
-											<div class="childss2 test132">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-										<div class="pic142">
-											<div class="childss2 test142">
-												<p>招收总人数</p>
-												<i>999</i>
-											</div>
-										</div>
-
+									<div class="in2 clearFix2" id="company" style="left: -1100px;">
+<%--									企业就业轮播--%>
 									</div>
 									<div class="shodow2"></div>
 								</div>
@@ -2137,6 +1896,44 @@
 							<div class="right2"></div>
 							<div class="lunbo2"></div>
 						</div>
+						<script>
+							var path=$("#path").val();
+							$.ajax({
+								type: "post",
+								url: path+"/HomePage/getCompanyNews",
+								// dataType: "json",
+								async:true,
+								success: function (data) {
+									var d=JSON.parse(data);
+									for (var i = 0; i <d.length ; i++) {
+										$("#company").append(
+											"<a href='' class='pic02' style='background-image: url("+path+"/"+d[i].companypic+")'>"+
+											"<div class='childss2 test02' >"+
+											"<div style='width: 150px;height: 100px'>"+
+											 d[i].companyname+  "<br>"+
+											"招收总人数"+d[i].num+" <br>"+
+											"</div>"+
+											"</div>"+
+											"</a>"
+										);
+										$(".pic02").mouseenter(function () {
+											$(".test02").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
+										});
+										$(".pic02").mouseleave(function () {
+											$(".test02").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
+										})
+
+									}
+
+								},
+								error: function (data) {
+									console.log(data);
+								}
+
+							});
+
+
+						</script>
 						<script>
 
 							//轮播
@@ -2173,7 +1970,7 @@
 										myin2.style.left = newweizhi2 + 'px';
 										clearInterval(timer2);
 										zt2 = true;
-										if (newweizhi2 == -4300) {
+										if (newweizhi2 == -3500) {
 
 											myin2.style.left = -1100 + "px";
 										}
@@ -2339,34 +2136,64 @@
 						</script>
 					</ul>
 
-					<ul style="display:block;">
+					<ul style="display:none;">
+						<script>
+
+							var path=$("#path").val();
+							$.ajax({
+								type: "post",
+								url: path+"/HomePage/getCount",
+								// dataType: "json",
+								async:true,
+								success: function (data) {
+								var map=JSON.parse(data);
+								console.log(map);
+									$("#employ").text( map.employ);
+									$("#job").text(map.job);
+									$("#post").text(map.post);
+									$("#talent").text(map.talent);
+
+									$("#zcdw").text( map.company);
+									$("#qzz").text(map.job);
+									$("#tggw").text(map.post);
+
+
+
+
+								},
+								error: function (data) {
+									console.log(data);
+								}
+
+							});
+						</script>
 						<div class="product-cont3">
 							<div class="scene2">
 								<div class="out3">
-									<div class="in3 clearFix3" style="left: -1100px;">
+									<div class="in3 clearFix3"  style="left: -1100px;">
 										<div class="pic03">
 											<div class="childss3 test03">
 												<p>就业总数</p>
-												<i>1999</i>
+												<i id="employ"></i>
 											</div>
 										</div>
 										<div class="pic13">
 											<div class="childss3 test13">
-												<p>就业总数</p>
-												<i>1999</i>
+												<p>求职总数</p>
+												<i id="post"></i>
 											</div>
 										</div>
 										<div class="pic23">
 											<div class="childss3 test23">
-												<p>就业总数</p>
-												<i>1999</i>
+												<p>岗位 总数</p>
+												<i id="job"></i>
 											</div>
 										</div>
 										<!-- 第二组 -->
 										<div class="pic33">
 											<div class="childss3 test33">
-												<p>就业总数</p>
-												<i>1999</i>
+												<p>人才总数</p>
+												<i id="talent"></i>
 											</div>
 										</div>
 										<div class="pic43">
@@ -2443,109 +2270,42 @@
 									<div class="shodow3"></div>
 								</div>
 							</div>
-							<div class="left3"></div>
-							<div class="right3"></div>
+<%--							<div class="left3"></div>--%>
+<%--							<div class="right3"></div>--%>
 							<div class="lunbo3"></div>
 						</div>
 						<script>
-
-							//轮播
-							var out3 = document.getElementsByClassName("out3").item(0);
-							var left3 = document.getElementsByClassName("left3").item(0);
-							var right3 = document.getElementsByClassName("right3").item(0);
-							var myin3 = document.getElementsByClassName("in3").item(0);
-							var zt3 = true;
-							var timer3 = null;
-							// var lilist = document.getElementsByTagName("li");
-							var index13 = 0;
-							var timer13 = null;
-							right3.onclick = function () {
-								if (zt3 == true) {
-									move3(-800);
-								}
-							};
-							left3.onclick = function () {
-								if (zt3 == true) {
-									move3(800);
-								}
-							};
-							function move3(dis) {
-								zt3 = false;
-								var newweizhi3 = parseInt(myin3.style.left) + dis;
-
-								var time3 = 1000;
-								var interval3 = 10;
-								var every3 = dis / (time3 / interval3);
-								function meici3() {
-									if (every3 < 0 && parseInt(myin3.style.left) > newweizhi3 || every3 > 0 && parseInt(myin3.style.left) < newweizhi3) {
-										myin3.style.left = parseInt(myin3.style.left) + every3 + 'px';
-										setTimeout(meici3, 10)
-									} else {
-										myin3.style.left = newweizhi3 + 'px';
-										clearInterval(timer3);
-										zt3 = true;
-										if (newweizhi3 == -4300) {
-											myin3.style.left = -1100 + "px";
-										}
-										if (newweizhi3 == -300) {
-											myin3.style.left = -1100 + "px";
-										}
-
-									}
-								}
-								meici3();
-							}
-
-							timer13 = setInterval(right3.onclick, 3000);
-							out3.onmouseover = function () {
-								clearInterval(timer13);
-							};
-							left3.onmouseover = function () {
-								clearInterval(timer13);
-							};
-							right3.onmouseover = function () {
-								clearInterval(timer13);
-							};
-							out3.onmouseout = function () {
-								timer13 = setInterval(right3.onclick, 3000);
-							}
-							left3.onmouseout = function () {
-								timer13 = setInterval(right3.onclick, 3000);
-							};
-							right3.onmouseout = function () {
-								timer13 = setInterval(right3.onclick, 3000);
-							};
 							// 鼠标移进一出
 							$(document).ready(function () {
 								var animated = false;
 								$(".pic03").mouseenter(function () {
-									$(".test03").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
+									$(".test03").stop().animate({ 'height': '67px', opacity: '0.8' },"slow");
 								});
 								$(".pic03").mouseleave(function () {
 									$(".test03").stop().animate({ 'height': '0px', opacity: '0' },"slow");
 								})
 								$(".pic13").mouseenter(function () {
-									$(".test13").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
+									$(".test13").stop().animate({ 'height': '67px', opacity: '0.8' },"slow");
 								});
 								$(".pic13").mouseleave(function () {
 									$(".test13").stop().animate({ 'height': '0px', opacity: '0' },"slow");
 								})
 								$(".pic23").mouseenter(function () {
-									$(".test23").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
+									$(".test23").stop().animate({ 'height': '67px', opacity: '0.8' },"slow");
 								});
 								$(".pic23").mouseleave(function () {
 									$(".test23").stop().animate({ 'height': '0px', opacity: '0' },"slow");
 								})
 
 								$(".pic43").mouseenter(function () {
-									$(".test43").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
+									$(".test43").stop().animate({ 'height': '67px', opacity: '0.8' },"slow");
 								});
 								$(".pic43").mouseleave(function () {
 									$(".test43").stop().animate({ 'height': '0px', opacity: '0' },"slow");
 								})
 								$(".pic33").mouseenter(function () {
 
-									$(".test33").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
+									$(".test33").stop().animate({ 'height': '67px', opacity: '0.8' },"slow");
 								});
 								$(".pic33").mouseleave(function () {
 									$(".test33").stop().animate({ 'height': '0px', opacity: '0' },"slow");
@@ -2627,6 +2387,7 @@
 							});
 						</script>
 					</ul>
+
 				</div>
 			</div>
 		</div>
