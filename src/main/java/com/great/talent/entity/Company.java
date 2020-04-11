@@ -12,6 +12,7 @@ public class Company {
     private String companybusiness;
     private String permit;
     private String company2;
+    private int num;
 
     public Company() {
     }
@@ -72,6 +73,14 @@ public class Company {
 
     public String getCompanypro() {
         return companypro;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 
     public void setCompanypro(String companypro) {

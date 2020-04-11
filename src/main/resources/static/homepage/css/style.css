@@ -107,7 +107,7 @@ body{ width:100%; min-width:1200px; margin:0 auto; font-size:12px; font-family:"
 .BodyMain .mainTop .mainTopR .tabs ul#tab{line-height: 30px; height: 34px;border-bottom: 1px #e4e4e4 solid;}
 .BodyMain .mainTop .mainTopR .tabs ul#tab li{ float:left; text-align: center;line-height: 30px;height: 35px;width:285px;font-size: 14px;color: #535353;font-family: '宋体';border-right: 1px #e4e4e4 solid;}
 .BodyMain .mainTop .mainTopR .tabs ul#tab li:last-child{ border-right:0}
-.BodyMain .mainTop .mainTopR .tabs ul#tab li.current{font-weight: bold; border-top: 3px #ef5402 solid;background: #fff;margin-top: -1px;height: 33px;}
+.BodyMain .mainTop .mainTopR .tabs ul#tab li.current{font-weight: bold; border-top: 3px #ef5402 solid;background: #fff;margin-top: -1px;height: 33px; }
 .BodyMain .mainTop .mainTopR .tabs #content{margin: 16px; height: 112px; overflow: hidden;line-height: 28px;}
 .BodyMain .mainTop .mainTopR .tabs #content .zph{ height:112px;}
 .BodyMain .mainTop .mainTopR .tabs #content .zph .zph_1{ float:left;height: 100px;width: 110px; margin: 10px 16px 0 0;}

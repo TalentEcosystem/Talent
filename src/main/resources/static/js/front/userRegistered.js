@@ -62,8 +62,9 @@ $(function () {
 		    {
 			    if(msg === "1111"){
 				    alert("注册成功！");
+				    location.href=path+"/user/login";
 			    }else if (msg === "error"){
-				    alert("注册失败！")
+				    alert("网络繁忙！")
 			    } else if (msg === "UserAlreadyExists"){
 				    alert("用户名已存在")
 			    }

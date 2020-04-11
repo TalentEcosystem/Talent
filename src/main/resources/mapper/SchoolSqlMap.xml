@@ -7,7 +7,7 @@
     <select id="findTalent" resultType="UserTalent">
         select u.uid,u.uaccount,r.rename,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
          <where>
-             u.uid=r.uid  and r.professid=p.professid and r.sid=s.sid
+             u.uid=r.uid  and r.professid=p.professid and r.sid=s.sid and u.chapterid=c.chapterid
             <if test="mindate!=null and mindate !=''">
                 and u.udate &gt;=#{mindate}
             </if>
@@ -26,7 +26,7 @@
     <select id="findTalentCount" resultType="int">
         select count(*) from (select u.uid,u.uaccount,r.rename,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
         <where>
-            u.uid=r.uid and r.professid=p.professid and r.sid=s.sid
+            u.uid=r.uid and r.professid=p.professid and r.sid=s.sid and u.chapterid=c.chapterid
              <if test="mindate!=null and mindate !=''">
                  and u.udate &gt;=#{mindate}
              </if>
@@ -79,4 +79,81 @@
             sid=#{sid}
         </where>
     </update>
+    <select id="findRcommend" resultType="Recommend" parameterType="Recommend">
+     select c.cid,b.positionid,d.indname,c.companyname,b.positionname,b.positiontime from tbl_admin a,tbl_position b,tbl_company c,tbl_industry d
+    <where>
+        a.cid=c.cid and b.industryid=d.industryid and  b.positionstate='发布' and b.aid=a.aid
+        <if test="positionname !=null and positionname !=''">
+           and b.positionname like '%' #{positionname} '%'
+        </if>
+        <if test="indname !=null and indname !=''">
+           and  d.indname like '%' #{indname} '%'
+        </if>
+        and b.positionid limit #{pageInt},#{limitInt}
+    </where>
+    </select>
+    <select id="findRcommendCount" resultType="int" parameterType="Recommend">
+        select count(*) from tbl_admin a,tbl_position b,tbl_company c,tbl_industry d
+        <where>
+            a.cid=c.cid and b.industryid=d.industryid and b.positionstate='发布' and b.aid=a.aid
+            <if test="positionname !=null and positionname !=''">
+               and b.positionname like '%' #{positionname} '%'
+            </if>
+            <if test="indname !=null and indname !=''">
+               and d.indname like '%' #{indname} '%'
+            </if>
+        </where>
+    </select>
+    <select id="findTalent1" resultType="UserTalent">
+        select u.uid,u.uaccount,r.rename,s.schoolname,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
+        <where>
+            u.uid=r.uid and r.professid=p.professid and r.sid=s.sid and r.reemploy='否' and u.chapterid=c.chapterid
+            <if test="mindate!=null and mindate !=''">
+                and u.udate &gt;=#{mindate}
+            </if>
+            <if test="maxdate!=null and maxdate !=''">
+                and u.udate &lt;=#{maxdate}
+            </if>
+            <if test="schoolname!=null and schoolname !=''">
+                and s.schoolname LIKE '%' #{schoolname} '%'
+            </if>
+            <if test="pro!=null and pro !=''">
+                and p.professname LIKE '%' #{pro} '%'
+            </if>
+            and s.sid=#{sid} and u.uid limit #{pageInt},#{limitInt}
+        </where>
+    </select>
+    <select id="findTalentCount1" resultType="int">
+        select count(*) from (select u.uid,u.uaccount,s.schoolname,r.rename,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
+        <where>
+            u.uid=r.uid and r.professid=p.professid and r.sid=s.sid and r.reemploy='否' and s.sid=#{sid} and u.chapterid=c.chapterid
+            <if test="mindate!=null and mindate !=''">
+                and u.udate &gt;=#{mindate}
+            </if>
+            <if test="maxdate!=null and maxdate !=''">
+                and u.udate &lt;=#{maxdate}
+            </if>
+            <if test="schoolname!=null and schoolname !=''">
+                and s.schoolname LIKE '%' #{schoolname} '%'
+            </if>
+            <if test="pro!=null and pro !=''">
+                and p.professname LIKE '%' #{pro} '%'
+            </if>
+        </where>
+        )t
+    </select>
+    <insert id="insertRecommend" parameterType="Recomend">
+        insert into tbl_recommend(
+            uid,
+            recommendtime,
+            positionid,
+            cid
+        )values (
+            #{uid},
+            #{recommendtime},
+            #{positionid},
+            #{cid}
+        )
+
+    </insert>
 </mapper>
