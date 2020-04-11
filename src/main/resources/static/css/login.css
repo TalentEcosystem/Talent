@@ -97,7 +97,7 @@ input{ border:0; outline:0}
 .passdBox .passpart1 .restInfo .box1  input.yzm{ width:128px;margin-right:5px}
 .passdBox .passpart1 .restInfo .box1  input.onebtn{height: 37px;background: #FF6F3D;color: #FFF;font-size: 16px; border: none;width: 140px;border-radius: 4px;cursor: pointer; margin:0 auto; float:none}
 .passdBox .passpart1 .restInfo .box2{padding: 10px 0px;}
-.passdBox .passpart1 .restInfo b.phonenum{ display:block; font-weight:normal; float:left; width:88px; height:35px; line-height:35px;background: #FFE6D7;color: #EB7351;border: 1px solid #F3CFB7;cursor: pointer;border-radius: 4px; font-size:12px}
+.passdBox .passpart1 .restInfo button.phonenum{ display:block;  color: #444444;background: #F3F3F3;border: 1px #DADADA solid;padding: 5px 10px;border-radius: 2px;font-weight: bold;font-size: 9pt;outline: none;}
 .passdBox .passpart1 .restInfo .box2 span.span1{display:block; float:left; line-height: 35px;width:70px; text-align:right}
 .passdBox .passpart1 .restInfo .box2 span.span2{display:block; float:left;width: 233px;height: 35px;line-height: 35px; }
 .passdBox .passpart1 .restInfo2{ padding-top:70px}

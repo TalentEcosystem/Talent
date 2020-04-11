@@ -7,5 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface DeptMapper
 {
 	User userLogin(User user);
+	Integer userNameCheck(String uaccount);
+	Boolean addUser(User user);
+	String findPhoneByAccount(String uaccount);
+	Boolean updateUser(User user);
 
 }

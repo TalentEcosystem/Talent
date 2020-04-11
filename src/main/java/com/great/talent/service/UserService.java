@@ -17,4 +17,24 @@ public class UserService
 	public User login(User user){
 		return deptMapper.userLogin(user);
 	}
+
+	@Transactional
+	public Integer userNameCheck(String uaccount){
+		return deptMapper.userNameCheck(uaccount);
+	}
+
+	@Transactional
+	public Boolean addUser(User user){
+		return deptMapper.addUser(user);
+	}
+
+	@Transactional
+	public String findPhoneByAccount(String uaccount){
+		return deptMapper.findPhoneByAccount(uaccount);
+	}
+
+	@Transactional
+	public Boolean updateUser(User user){
+		return deptMapper.updateUser(user);
+	}
 }

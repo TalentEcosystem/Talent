@@ -22,13 +22,13 @@
 <form class="layui-form" action="">
 	<div class="layui-form-item">
 		<label class="layui-form-label">名称</label>
-		<div class="layui-input-block">
+		<div class="layui-input-inline">
 			<input type="text" name="knowname" id="knowname" placeholder="请输入知识库名称" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">选择领域</label>
-		<div class="layui-input-block">
+		<div class="layui-input-inline">
 			<select name="domainid" id="domainid" lay-verify="required">
 				<option value="1">IT互联网</option>
 				<option value="2">房地产</option>
