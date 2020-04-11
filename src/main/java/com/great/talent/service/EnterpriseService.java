@@ -24,17 +24,40 @@ public class EnterpriseService {
         return enterpriseMapper.adminLogin(account);
     }
 
+    /**
+     * 校验手机号码
+     * @param tel
+     * @return
+     */
     public Admin checkAdminTel(String tel){
         return enterpriseMapper.checkAdminTel(tel);
     }
+
+    /**
+     * 注册用户
+     * @param admin
+     * @return
+     */
     @Transactional
     public int addAdmin(Admin admin){
          return enterpriseMapper.addAdmin(admin);
     }
+
+    /**
+     * 简易注册公司
+     * @param company
+     * @return
+     */
     @Transactional
-    public int addCompany(Map map){
-        return enterpriseMapper.addCompany(map);
+    public int addCompany(Company company){
+        return enterpriseMapper.addCompany(company);
     }
+
+    /**
+     * 查询发布岗位记录
+     * @param map
+     * @return
+     */
     public Map findPositions(HashMap map){
         Integer count = enterpriseMapper.findPositionNum(map);
         List<Position> positionList = enterpriseMapper.findPosition(map);
@@ -59,10 +82,20 @@ public class EnterpriseService {
         return map;
     }
 
+    /**
+     * 查询公司名
+     * @param aid
+     * @return
+     */
     public String findCompanyName(Integer aid){
         return enterpriseMapper.findCompanyName(aid);
     }
 
+    /**
+     * 查询公司地址
+     * @param cid
+     * @return
+     */
     public String findCompanyAdd(Integer cid){
         return enterpriseMapper.findCompanyAdd(cid);
     }
@@ -74,26 +107,58 @@ public class EnterpriseService {
     public List<Post> findPostName(Integer industryid){
         return enterpriseMapper.findPostName(industryid);
     }
+
+    /**
+     * 发布岗位
+     * @param position
+     * @return
+     */
     @Transactional
     public int addPositionInfo(Position position){
         return enterpriseMapper.addPositionInfo(position);
     }
+
+    /**
+     * 添加福利
+     * @param map
+     * @return
+     */
     @Transactional
     public int addWelfare(Map map){
         return enterpriseMapper.addWelfare(map);
     }
 
+    /**
+     * 查询福利
+     * @param positionid
+     * @return
+     */
     public List<Position> findWelfName(Integer positionid){
         return enterpriseMapper.findWelfName(positionid);
     }
 
+    /**
+     * 修改发布岗位的状态
+     * @param position
+     * @return
+     */
     @Transactional
     public int updatePositionState(Position position){
         return enterpriseMapper.updatePositionState(position);
     }
 
+    /**
+     * 删除修改福利
+     * @param map
+     * @return
+     */
     @Transactional
     public int deleteWelfare(Map map){
         return enterpriseMapper.deleteWelfare(map);
     }
+
+    public Company findCompanyInfo(Integer cid){
+        return enterpriseMapper.findCompanyInfo(cid);
+    }
+
 }

@@ -1,10 +1,7 @@
 package com.great.talent.controller;
 
 import com.google.gson.Gson;
-import com.great.talent.entity.Admin;
-import com.great.talent.entity.Degree;
-import com.great.talent.entity.Position;
-import com.great.talent.entity.Post;
+import com.great.talent.entity.*;
 import com.great.talent.service.EnterpriseService;
 import com.great.talent.util.Diagis;
 import com.great.talent.util.MD5Utils;
@@ -169,6 +166,14 @@ public class EnterpriseController {
             response.getWriter().print("phone");
         }
     }
+
+    /**
+     * 注册用户和简易注册公司
+     * @param admin
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @RequestMapping("/RegisterAdmin")
     @ResponseBody
     public void RegisterAdmin(Admin admin,HttpServletRequest request,HttpServletResponse response) throws IOException{
@@ -178,17 +183,16 @@ public class EnterpriseController {
         admin.setMoney(0);
         String pwd = MD5Utils.md5(admin.getPassword());
         admin.setPassword(pwd);
-        Map map = new HashMap();
-        map.put("companyname",admin.getCompanyname());
-        map.put("permit",admin.getPermit());
+        Company company = new Company();
+        company.setCompanyname(admin.getCompanyname());
+        company.setPermit(admin.getPermit());
         String sessionCode = (String) request.getSession().getAttribute("vcode");
         String regCode = request.getParameter("code");
         System.out.println("sessionCode="+sessionCode+"regCode="+regCode);
         if (regCode.equalsIgnoreCase(sessionCode)){
-            System.out.println(1111);
-            if (enterpriseService.addAdmin(admin) != 0){
-                System.out.println(2222);
-                enterpriseService.addCompany(map);
+            if (enterpriseService.addCompany(company) != 0){
+                admin.setCid(company.getCid());
+                enterpriseService.addAdmin(admin);
                 response.getWriter().print("success");
             }else{
                 response.getWriter().print("error");
@@ -222,6 +226,12 @@ public class EnterpriseController {
         return mv;
     }
 
+    /**
+     * 查询发布岗位记录
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @RequestMapping("/findPostInfo")
     @ResponseBody
     public void findPostInfo(HttpServletRequest request,HttpServletResponse response) throws IOException {
@@ -280,6 +290,13 @@ public class EnterpriseController {
             ResponseUtils.outJson(response,diagis);
         }
     }
+
+    /**
+     * 发布岗位记录
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @RequestMapping("/addPositionInfo")
     @ResponseBody
     public void addPositionInfo(HttpServletRequest request, HttpServletResponse response)throws IOException{
@@ -311,6 +328,12 @@ public class EnterpriseController {
             response.getWriter().print(2222);
         }
     }
+
+    /**
+     * 查询福利
+     * @param request
+     * @return
+     */
     @RequestMapping("/findWelfName")
     @ResponseBody
     public List<Position> findWelfName(HttpServletRequest request){
@@ -319,6 +342,13 @@ public class EnterpriseController {
 //        System.out.println(positionList);
         return positionList;
     }
+
+    /**
+     * 修改发布岗位记录的状态
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @RequestMapping("/updatePositionState")
     @ResponseBody
     public void updatePositionState(HttpServletRequest request, HttpServletResponse response)throws IOException{
@@ -345,5 +375,21 @@ public class EnterpriseController {
             response.getWriter().print(2222);
         }
     }
+
+    /**
+     * 查询公司信息
+     * @param session
+     * @return
+     */
+    @RequestMapping("/findCompanyInfo")
+    public ModelAndView findCompanyInfo(HttpSession session){
+        ModelAndView mv = new ModelAndView();
+        Admin admin = (Admin) session.getAttribute("admin");
+        Company company = enterpriseService.findCompanyInfo(admin.getCid());
+        session.setAttribute("company",company);
+        mv.setViewName("/Enterprise/PerfectInfo");
+        return mv;
+    }
+
 
 }
