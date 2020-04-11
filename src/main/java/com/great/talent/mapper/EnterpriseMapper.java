@@ -22,8 +22,8 @@ public interface EnterpriseMapper {
     public int addWelfare(Map map);//添加福利
     public int updatePositionState(Position position);//修改记录信息
     public int deleteWelfare(Map map);//修改删除福利信息
-    public Company findCompanyInfo(Integer cid);//查询公司信息
-
+    public Company findCompanyInfo(Integer aid);//查询公司信息
+    public int updateCompanyInfo(Company company);//修改公司信息
     /**
      * 校验用户手机是否被注册
      * @param tel
@@ -85,4 +85,5 @@ public interface EnterpriseMapper {
      */
     @Select("select companyadd from tbl_company c,tbl_admin a where a.cid = c.cid and a.cid = #{cid}")
     public String findCompanyAdd(Integer cid);
+
 }

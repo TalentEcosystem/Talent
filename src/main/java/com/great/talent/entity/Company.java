@@ -141,6 +141,7 @@ public class Company {
                 ", companybusiness='" + companybusiness + '\'' +
                 ", permit='" + permit + '\'' +
                 ", company2='" + company2 + '\'' +
+                ", num=" + num +
                 '}';
     }
 }

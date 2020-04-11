@@ -14,11 +14,12 @@
     <link rel="stylesheet" href=<%=path+"/Enterprise/css/PerfectInfoCss.css" %>>
     <script src="<%=path+"/js/jquery-3.4.1.js"%>"></script>
     <script charset="UTF-8" src="<%=path+"/js/layui/layui.js"%>"></script>
+    <script charset="UTF-8" src="<%=path+"/Enterprise/js/PerfectInfo.js"%>"></script>
 </head>
 <body>
 <input id="path" type="hidden" value="<%=path%>" />
 <div id="layout">
-    <form class="layui-form" action="${pageContext.request.contextPath}/" method="post"  enctype="multipart/form-data" accept-charset="UTF-8">
+    <form id="forms" class="layui-form" action="${pageContext.request.contextPath}/Enterprise/uplodFile" method="post"  enctype="multipart/form-data" accept-charset="UTF-8" onsubmit="return false;">
         <input id="aid" type="hidden" value="${sessionScope.admin.aid}" />
         <br>
         <div>
@@ -28,19 +29,19 @@
         <div class="layui-form-item">
             <label class="layui-form-label" >公司名称:</label>
             <div class="layui-input-inline" >
-                <label name="companyname" class="layui-form-label" style="width: 180px;text-align: left;" >${sessionScope.company.companyname}</label>
+                <input name="companyname" id="companyname" class="layui-input" type="text" placeholder="请输入" autocomplete="off"  lay-verify="required" value="${sessionScope.company.companyname}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label" >统一社会信用代码:</label>
             <div class="layui-input-inline" >
-                <label name="permit" class="layui-form-label" style="width: 180px;text-align: left;">${sessionScope.company.permit}</label>
+                <input name="permit" id="permit" class="layui-input" type="text" placeholder="请输入" autocomplete="off"  lay-verify="required" value="${sessionScope.company.permit}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">注册地址</label>
             <div class="layui-input-inline" style="width: 190px">
-                <input name="companyadd" id="qyAddress" class="layui-input" type="text" placeholder="请输入" autocomplete="off"  lay-verify="required" value="${sessionScope.company.companyadd}">
+                <input name="companyadd" id="companyadd" class="layui-input" type="text" placeholder="请输入" autocomplete="off"  lay-verify="required" value="${sessionScope.company.companyadd}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -60,7 +61,7 @@
                     <option value="外商投资企业">外商投资企业</option>
                 </select>
             </div>
-            <input id="companynature" type="hidden" value="${sessionScope.company.companynature}" />
+            <input id="companynature" type="hidden" value="${pageContext.request.contextPath}/${sessionScope.company.companynature}" />
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">经营范围</label>
@@ -83,20 +84,24 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">公司简介</label>
             <div class="layui-input-inline" style="width: 250px">
-                <textarea name="companypro" id="companypro" class="layui-textarea" placeholder="请输入内容">${sessionScope.company.companypro}</textarea>
+                <textarea name="companypro" id="companypro" class="layui-textarea" placeholder="请输入内容" >${sessionScope.company.companypro}</textarea>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-upload">
                 <label class="layui-form-label">公司图片</label>
                 <div class="layui-input-inline" style="width: 250px">
-                <textarea class="layui-textarea" style="resize:none;margin-left: 5%" id="companypic" name="companypic">
+                <textarea class="layui-textarea" style="resize:none;margin-left: 5%" id="companypics" name="companypic" lay-verify="required" lay-verType="tips">
                     ${sessionScope.company.companypic}
                 </textarea>
+<%--                    <img class="layui-upload-img" id="companypic" src="${sessionScope.company.companypic}">--%>
+<%--                 <input type="file" id="fileaot" value="${sessionScope.company.companypic}" name="fileaot" >--%>
                 </div>
                 <br/><br/><br/>
+                 <div>
                     <button type="button" style="margin-left: 2%" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
                 </div>
+            </div>
             </div>
         <div class="layui-form-item" >
             <div class="layui-input-block" id="button1">
@@ -121,49 +126,5 @@
         });
     });
 
-    layui.use(['form', 'layer','upload'], function() {
-        var form = layui.form
-            , layer = layui.layer
-        ,upload = layui.upload;
-
-        var uploadInst = upload.render({
-            elem: '#test8' //绑定元素
-            ,url: path+'/Enterprise/upload' //上传接口
-            ,auto: false
-            ,accept: 'file'
-            ,multiple:true
-            ,bindAction: '#perfect'//配合auto: false来使用，auto: true值一选中文件后就执行上传，关闭后需要根据绑定事件
-            ,before: function(obj) {
-                this.data = {//要传递的数据
-
-                }
-            }
-            // ,choose: function(obj){  //上传前选择回调方法
-            //     obj.preview(function(index, file, result){
-            //         console.log(file);            //file表示文件信息，result表示文件src地址
-            //         $("#fileNames").text(file.name)
-            //     });
-            // }
-            ,done: function(res){
-                if(res.code == 0){
-                    //上传完毕回调
-                    alert("上传成功！");
-                }
-                if(res.code == 1){
-                    //上传完毕回调
-                    alert("文件类型不匹配！");
-                }
-                if(res.code == 2){
-                    //上传完毕回调
-                    alert("文件或其他信息不能为空！");
-                }
-            }
-            ,error: function(){
-                //请求异常回调
-                alert("上传失败！");
-            }
-        });
-
-    });
 </script>
 </html>

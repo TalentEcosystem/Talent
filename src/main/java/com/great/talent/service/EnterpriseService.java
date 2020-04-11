@@ -157,8 +157,13 @@ public class EnterpriseService {
         return enterpriseMapper.deleteWelfare(map);
     }
 
-    public Company findCompanyInfo(Integer cid){
-        return enterpriseMapper.findCompanyInfo(cid);
+    public Company findCompanyInfo(Integer aid){
+        return enterpriseMapper.findCompanyInfo(aid);
     }
 
+    @Transactional
+    public int updateCompanyInfo(Company company){
+        return enterpriseMapper.updateCompanyInfo(company);
+    }
 }
+
