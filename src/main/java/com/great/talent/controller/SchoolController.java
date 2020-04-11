@@ -35,6 +35,8 @@ public class SchoolController
 	private Diagis datagridResult;
 	@Resource
 	private Recomend recomend;
+	@Resource
+	private UserTalent userTalent;
 
 	@RequestMapping("/login")
 	public String Welcome(){
@@ -331,6 +333,29 @@ public class SchoolController
 			schoolService.insertRecommend(recomend);
 		}
 		ResponseUtils.outJson(response,"推荐成功");
+	}
+	//用户端的简历显示
+	@RequestMapping("/findUserResume")
+	public String findUserResume(HttpServletRequest request){
+//		User user= (User) request.getSession().getAttribute("user");
+//		user.getUid();
+		userTalent.setUid(1);
+		Resume resume=schoolService.findUserResume(userTalent);
+		List<Social> socials=schoolService.findUserSocial(userTalent);
+		List<Aducational> aducationals=schoolService.findUserAducation(userTalent);
+		System.out.println(resume+"="+socials+"-"+aducationals);
+		request.getSession().setAttribute("resume",resume);
+		request.getSession().setAttribute("socials",socials);
+		request.getSession().setAttribute("aducationals",aducationals);
+		return "schoolManage/User_Resume";
+	}
+	@RequestMapping("/updateResume")
+	public void updateResume(@RequestParam("fileaot") MultipartFile fileaot,Resume resume,Social social,Aducational aducational, HttpServletRequest request,HttpServletResponse response){
+		System.out.println("fileaot="+fileaot+"resume="+resume+"social="+social+"aducational="+aducational);
+
+
+
+
 	}
 
 }

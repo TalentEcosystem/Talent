@@ -55,6 +55,8 @@ public class UserController
 		    	if (user1.getUstate().equals("启用")){
 				    response.getWriter().print("success");
 				    request.getSession().setAttribute("uname", user1.getUname());
+				    request.getSession().setAttribute("user", user1);
+
 			    }else {
 				    response.getWriter().print("stateError");
 			    }
