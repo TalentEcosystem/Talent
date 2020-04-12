@@ -109,4 +109,27 @@ public class AdminService
 		adminMapper.checkRefuse(aid);
 	}
 
+	@Transactional
+	public List<RoleMenu> selectAllMenu(){ return adminMapper.selectAllMenu(); }
+
+	@Transactional
+	public List<RoleMenu> selectRoleMenu(String roleid){ return adminMapper.selectRoleMenu(roleid); }
+
+	@Transactional
+	public List<RoleMenu> selectParentMenu(List list){ return adminMapper.selectParentMenu(list); }
+
+	@Transactional
+	public List<String> selectChileMenu(String roleid){ return adminMapper.selectChileMenu(roleid); }
+
+	@Transactional
+	public List<String> selectNewMenu(List list){ return adminMapper.selectNewMenu(list); }
+
+	@Transactional
+	public void deleteMenu(String roleid){ adminMapper.deleteMenu(roleid); }
+
+	@Transactional
+	public void addMenu(List list){ adminMapper.addMenu(list); }
+
+	@Transactional
+	public void deleteFirst(Map map){ adminMapper.deleteFirst(map); }
 }

@@ -29,4 +29,12 @@ public interface AdminMapper
 	public int findCountCompany(Map map);
 	public void checkConfirm(@Param("aid") String aid);
 	public void checkRefuse(@Param("aid") String aid);
+	public List<RoleMenu> selectAllMenu();
+	public List<RoleMenu> selectRoleMenu(@Param("roleid") String roleid);
+	public List<RoleMenu> selectParentMenu(List list);
+	public List<String> selectChileMenu(@Param("roleid") String roleid);
+	public List<String> selectNewMenu(List list);
+	public void deleteMenu(@Param("roleid") String roleid);
+	public void addMenu(List list);
+	public void deleteFirst(Map map);
 }

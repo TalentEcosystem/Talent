@@ -150,4 +150,46 @@
 	<update id="checkRefuse" parameterType="java.lang.String">
 		update tbl_admin set state='禁用' where aid=#{aid}
 	</update>
+
+	<select id="selectAllMenu" resultType="RoleMenu">
+		select * from tbl_menu
+	</select>
+
+	<select id="selectRoleMenu" resultType="RoleMenu" parameterType="java.lang.String">
+		select * from tbl_rolemenu a left join tbl_menu b on a.menuid=b.menuid where a.roleid=#{roleid}
+	</select>
+
+	<select id="selectParentMenu" resultType="RoleMenu" parameterType="java.util.List">
+		select * from tbl_menu where menuid in
+		<foreach item="item" index="" collection="list" open="(" separator="," close=")">
+		#{item.parentid}
+		</foreach>
+	</select>
+
+	<select id="selectChileMenu" resultType="java.lang.String" parameterType="java.lang.String">
+		select a.menuid from tbl_rolemenu a left join tbl_menu b on b.menuid=a.menuid where a.roleid=#{roleid} and b.parentid!=0
+	</select>
+
+	<select id="selectNewMenu" resultType="java.lang.String" parameterType="java.util.List">
+		select parentid from tbl_menu where menuid in
+		<foreach item="item" index="" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		group by parentid
+	</select>
+
+	<delete id="deleteMenu" parameterType="java.lang.String">
+		delete from tbl_rolemenu where roleid=#{roleid}
+	</delete>
+
+	<insert id="addMenu" parameterType="java.util.List">
+		insert into tbl_rolemenu (roleid,menuid) values
+		<foreach collection="list" index="index" separator="," item="item">
+			(#{item.roleid},#{item.menuid})
+		</foreach>
+	</insert>
+
+	<delete id="deleteFirst" parameterType="java.lang.String">
+		delete from tbl_rolemenu where roleid=#{roleid} and menuid=#{menuid}
+	</delete>
 </mapper>

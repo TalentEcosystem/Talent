@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -250,4 +252,159 @@ public class AdminController
 		adminService.checkRefuse(aid);
 		return "提交成功";
 	}
+
+	/**
+	 * 跳转权限管理页面
+	 * @param roleid
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/menuManager")
+	public ModelAndView menuManager(String roleid, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView();
+		if(roleid==null||roleid==""){
+			roleid="3";
+		}
+		List<RoleMenu> allList = adminService.selectAllMenu();
+		List<RoleMenu> hasList = adminService.selectRoleMenu(roleid);
+		List<RoleMenu> list1;
+		if(hasList.size()==allList.size()){
+			list1=new ArrayList();
+		}else if(hasList.size()==0){
+			list1=allList;
+		}else {
+
+			List<RoleMenu> has = new ArrayList<>();
+			boolean flag = true;
+			for (int i = 0; i < allList.size(); i++)
+			{
+				for (int j = 0; j < hasList.size(); j++)
+				{
+					if (hasList.get(j).getMenuid()==allList.get(i).getMenuid() || allList.get(i).getParentid()== 0)
+					{
+						flag = false;
+						break;
+					}
+				}
+				if (flag)
+				{
+					has.add(allList.get(i));
+				}
+				flag = true;
+			}
+			list1 = adminService.selectParentMenu(has);
+			for(int i=0;i<has.size();i++){
+				list1.add(has.get(i));
+			}
+		}
+		request.setAttribute("hasList",hasList);
+		request.setAttribute("allList",list1);
+		request.setAttribute("roleid",roleid);
+
+		mv.setViewName("/admin/MenuManager");
+		return mv;
+	}
+
+	/**
+	 * 权限管理(新增几条权限)
+	 * @param arr
+	 * @param roleid
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/menuManagerLeft")
+	@ResponseBody
+	public String menuManagerLeft(String[] arr,String roleid,HttpServletRequest request){
+		List<String> list = adminService.selectChileMenu(roleid);
+		for(int i=0;i<arr.length;i++){
+			list.add(arr[i]);
+		}
+		List<String> list1 = adminService.selectNewMenu(list);
+		adminService.deleteMenu(roleid);
+		for(int i=0;i<list.size();i++){
+			list1.add(list.get(i));
+		}
+		List<RoleMenu> list2=new ArrayList<>();
+		for(int i=0;i<list1.size();i++){
+			RoleMenu menu=new RoleMenu();
+			menu.setRoleid(Integer.parseInt(roleid));
+			menu.setMenuid(Integer.parseInt(list1.get(i)));
+			list2.add(menu);
+		}
+		adminService.addMenu(list2);
+		request.setAttribute("roleid",roleid);
+		return "success";
+	}
+
+	/**
+	 * 权限管理(新增全部权限)
+	 * @param roleid
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/menuManagerLeftMore")
+	@ResponseBody
+	public String menuManagerLeftMore(String roleid,HttpServletRequest request){
+		List<RoleMenu> allList = adminService.selectAllMenu();
+		adminService.deleteMenu(roleid);
+		List<RoleMenu> list1=new ArrayList<>();
+		for(int i=0;i<allList.size();i++){
+			RoleMenu menu=new RoleMenu();
+			menu.setRoleid(Integer.parseInt(roleid));
+			menu.setMenuid(allList.get(i).getMenuid());
+			list1.add(menu);
+		}
+		adminService.addMenu(list1);
+		request.setAttribute("roleid",roleid);
+		return "success";
+	}
+
+	/**
+	 * 权限管理(删除几条权限)
+	 * @param arr
+	 * @param roleid
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/menuManagerRight")
+	@ResponseBody
+	public String menuManagerRight(String[] arr,String roleid,HttpServletRequest request){
+		Map map=new HashMap();
+		map.put("roleid",roleid);
+		for(int i=0;i<arr.length;i++){
+			map.put("menuid",arr[i]);
+			adminService.deleteFirst(map);
+		}
+		List<String> list = adminService.selectChileMenu(roleid);
+		List<String> list1 = adminService.selectNewMenu(list);
+		for(int i=0;i<list.size();i++){
+			list1.add(list.get(i));
+		}
+		adminService.deleteMenu(roleid);
+		List<RoleMenu> list2=new ArrayList<>();
+		for(int i=0;i<list1.size();i++){
+			RoleMenu menu=new RoleMenu();
+			menu.setRoleid(Integer.parseInt(roleid));
+			menu.setMenuid(Integer.parseInt(list1.get(i)));
+			list2.add(menu);
+		}
+		adminService.addMenu(list2);
+		request.setAttribute("roleid",roleid);
+		return "success";
+	}
+
+	/**
+	 * 权限管理(删除全部权限)
+	 * @param roleid
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/menuManagerRightMore")
+	@ResponseBody
+	public String menuManagerRightMore(String roleid,HttpServletRequest request){
+		adminService.deleteMenu(roleid);
+		request.setAttribute("roleid",roleid);
+		return "success";
+	}
+
 }
