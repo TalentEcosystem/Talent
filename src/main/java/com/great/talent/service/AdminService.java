@@ -1,9 +1,6 @@
 package com.great.talent.service;
 
-import com.great.talent.entity.Industry;
-import com.great.talent.entity.Know;
-import com.great.talent.entity.Post;
-import com.great.talent.entity.User;
+import com.great.talent.entity.*;
 import com.great.talent.mapper.AdminMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,6 +87,26 @@ public class AdminService
 	@Transactional
 	public void deletePost(String postid){
 		adminMapper.deletePost(postid);
+	}
+
+	@Transactional
+	public List<Admin> findCompany(Map map){
+		return adminMapper.findCompany(map);
+	}
+
+	@Transactional
+	public int findCountCompany(Map map){
+		return adminMapper.findCountCompany(map);
+	}
+
+	@Transactional
+	public void checkConfirm(String aid){
+		adminMapper.checkConfirm(aid);
+	}
+
+	@Transactional
+	public void checkRefuse(String aid){
+		adminMapper.checkRefuse(aid);
 	}
 
 }

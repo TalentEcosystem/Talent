@@ -26,7 +26,7 @@ public class AdminController
 	//跳转网页只用来测试功能
 	@RequestMapping("/test")
 	public String Test(){
-		return "/admin/UserManager";
+		return "/admin/MenuManager";
 	}
 
 	@RequestMapping("path/{url}")
@@ -197,5 +197,57 @@ public class AdminController
 	public String deletePost(String postid){
 		adminService.deletePost(postid);
 		return "删除成功";
+	}
+
+	/**
+	 * 查询企业信息
+	 * @param limit
+	 * @param page
+	 * @param companyname
+	 * @param state
+	 * @return
+	 */
+	@RequestMapping("/checkManager")
+	@ResponseBody
+	public String chackManager(String limit, String page, String companyname,String state){
+		Map map=new HashMap();
+		map.put("companyname",companyname);
+		map.put("state",state);
+		map.put("begin",(Integer.parseInt(page)-1)*Integer.parseInt(limit));
+		map.put("end",Integer.parseInt(limit));
+		List<Admin> list = adminService.findCompany(map);
+		int count = adminService.findCountCompany(map);
+		Diagis diagis=new Diagis();
+		diagis.setCode(0);
+		diagis.setMsg("");
+		diagis.setCount(count);
+		diagis.setData(list);
+		Gson g=new Gson();
+		String ss=g.toJson(diagis);
+		return ss;
+	}
+
+	/**
+	 * 企业审核通过
+	 * @param aid
+	 * @return
+	 */
+	@RequestMapping("/checkConfirm")
+	@ResponseBody
+	public String checkConfirm(String aid){
+		adminService.checkConfirm(aid);
+		return "提交成功";
+	}
+
+	/**
+	 * 企业审核不通过
+	 * @param aid
+	 * @return
+	 */
+	@RequestMapping("/checkRefuse")
+	@ResponseBody
+	public String checkRefuse(String aid){
+		adminService.checkRefuse(aid);
+		return "提交成功";
 	}
 }

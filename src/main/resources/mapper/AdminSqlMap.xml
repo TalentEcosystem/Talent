@@ -114,4 +114,40 @@
 	<update id="deletePost" parameterType="java.lang.String">
 		update tbl_post set poststate='已删除' where postid=#{postid}
 	</update>
+
+
+	<select id="findCompany" parameterType="java.util.Map" resultType="Admin">
+		select * from tbl_admin a left join tbl_company b on a.cid=b.cid
+		<where>
+			<if test="companyname!=null">
+				b.companyname like concat('%',#{companyname},'%')
+			</if>
+			<if test="state!=null and state!='全部'">
+				and a.state = #{state}
+			</if>
+			and a.roleid=2
+		</where>
+		order by a.date desc limit #{begin},#{end}
+	</select>
+
+	<select id="findCountCompany" parameterType="java.util.Map" resultType="int">
+		select count(*) from tbl_admin a left join tbl_company b on a.cid=b.cid
+		<where>
+			<if test="companyname!=null">
+				b.companyname like concat('%',#{companyname},'%')
+			</if>
+			<if test="state!=null and state!='全部'">
+				and a.state = #{state}
+			</if>
+			and a.roleid=2
+		</where>
+	</select>
+
+	<update id="checkConfirm" parameterType="java.lang.String">
+		update tbl_admin set state='启用' where aid=#{aid}
+	</update>
+
+	<update id="checkRefuse" parameterType="java.lang.String">
+		update tbl_admin set state='禁用' where aid=#{aid}
+	</update>
 </mapper>
