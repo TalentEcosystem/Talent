@@ -24,6 +24,8 @@ public interface EnterpriseMapper {
     public int deleteWelfare(Map map);//修改删除福利信息
     public Company findCompanyInfo(Integer aid);//查询公司信息
     public int updateCompanyInfo(Company company);//修改公司信息
+    public List<Interview> findInterview(Map map);//查询面试信息
+    public int findInterviewNum(Map map);//查询面试信息数量
     /**
      * 校验用户手机是否被注册
      * @param tel
