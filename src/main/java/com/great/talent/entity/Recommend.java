@@ -15,6 +15,7 @@ public class Recommend
 	private String companyname;//发布人的企业名称
 	private Date positiontime;//发布时间
 
+
 	public Recommend()
 	{
 	}

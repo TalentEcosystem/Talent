@@ -1,9 +1,6 @@
 package com.great.talent.service;
 
-import com.great.talent.entity.Industry;
-import com.great.talent.entity.Know;
-import com.great.talent.entity.Post;
-import com.great.talent.entity.User;
+import com.great.talent.entity.*;
 import com.great.talent.mapper.AdminMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,4 +89,47 @@ public class AdminService
 		adminMapper.deletePost(postid);
 	}
 
+	@Transactional
+	public List<Admin> findCompany(Map map){
+		return adminMapper.findCompany(map);
+	}
+
+	@Transactional
+	public int findCountCompany(Map map){
+		return adminMapper.findCountCompany(map);
+	}
+
+	@Transactional
+	public void checkConfirm(String aid){
+		adminMapper.checkConfirm(aid);
+	}
+
+	@Transactional
+	public void checkRefuse(String aid){
+		adminMapper.checkRefuse(aid);
+	}
+
+	@Transactional
+	public List<RoleMenu> selectAllMenu(){ return adminMapper.selectAllMenu(); }
+
+	@Transactional
+	public List<RoleMenu> selectRoleMenu(String roleid){ return adminMapper.selectRoleMenu(roleid); }
+
+	@Transactional
+	public List<RoleMenu> selectParentMenu(List list){ return adminMapper.selectParentMenu(list); }
+
+	@Transactional
+	public List<String> selectChileMenu(String roleid){ return adminMapper.selectChileMenu(roleid); }
+
+	@Transactional
+	public List<String> selectNewMenu(List list){ return adminMapper.selectNewMenu(list); }
+
+	@Transactional
+	public void deleteMenu(String roleid){ adminMapper.deleteMenu(roleid); }
+
+	@Transactional
+	public void addMenu(List list){ adminMapper.addMenu(list); }
+
+	@Transactional
+	public void deleteFirst(Map map){ adminMapper.deleteFirst(map); }
 }
