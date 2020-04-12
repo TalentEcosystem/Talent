@@ -37,4 +37,5 @@ public class UserService
 	public Boolean updateUser(User user){
 		return deptMapper.updateUser(user);
 	}
+
 }

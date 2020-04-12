@@ -29,8 +29,8 @@
 		${school.schoolinfo}
 	</textarea>
 		<br/>
-		<label>选择图片：</label><input type="file" id="fileaot" value="${school.schoolpic}" name="fileaot" >
-		<input type="submit" id="update" value="确定修改" style="width: 85px;height: 35px">
+		<label>选择图片：</label><input type="file" id="fileaot" name="fileaot" >
+		<button id="update" value="确定修改" style="width: 85px;height: 35px">确定修改</button>
 	</form>
 </div>
 <script>
@@ -43,6 +43,20 @@
 			}
 		});
 	});
+	$("#update").click(function () {
+		var fileInput = $('#fileaot').get(0).files[0];
+		console.info(fileInput);
+		if(fileInput){
+			if (!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(fileInput.name)) {
+				alert("图片类型必须是.gif,jpeg,jpg,png中的一种");
+				return false;
+			}else{
+				$("#form1").submit();
+			}
+		}else{
+			alert("请选择上传文件！");
+		}
+	})
 </script>
 </body>
 </html>

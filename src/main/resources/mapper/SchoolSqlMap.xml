@@ -5,7 +5,7 @@
 <mapper namespace="com.great.talent.mapper.SchoolMapper">
 
     <select id="findTalent" resultType="UserTalent">
-        select u.uid,u.uaccount,r.rename,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
+        select u.uid,u.uaccount,r.resname,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
          <where>
              u.uid=r.uid  and r.professid=p.professid and r.sid=s.sid and u.chapterid=c.chapterid
             <if test="mindate!=null and mindate !=''">
@@ -24,7 +24,7 @@
         </where>
     </select>
     <select id="findTalentCount" resultType="int">
-        select count(*) from (select u.uid,u.uaccount,r.rename,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
+        select count(*) from (select u.uid,u.uaccount,r.resname,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
         <where>
             u.uid=r.uid and r.professid=p.professid and r.sid=s.sid and u.chapterid=c.chapterid
              <if test="mindate!=null and mindate !=''">
@@ -43,19 +43,19 @@
         )t
     </select>
     <select id="findUserResume" parameterType="UserTalent" resultType="Resume">
-       SELECT a.rename,a.rebirth,b.degreename,c.professname,a.retel,d.schoolname,a.repic,a.readdress,a.repol,a.reskill,a.reeva from tbl_resume a,tbl_degree b,tbl_profession c,tbl_school d
+       SELECT a.resname,a.rebirth,b.degreename,c.professname,a.retel,d.schoolname,a.repic,a.readdress,a.repol,a.reskill,a.reeva from tbl_resume a,tbl_degree b,tbl_profession c,tbl_school d
     <where>
         a.degreeid=b.degreeid and a.professid=c.professid and d.sid=a.sid and a.uid=#{uid};
     </where>
     </select>
     <select id="findUserSocial" parameterType="UserTalent" resultType="Social">
-        SELECT socialtime,company,content from tbl_social
+        SELECT socialid,socialtime,company,content from tbl_social
         <where>
             uid=#{uid};
         </where>
     </select>
     <select id="findUserAducation" parameterType="UserTalent" resultType="Aducational">
-        SELECT adtime,schoolname,profession from tbl_aducational
+        SELECT aducationid,adtime,sname,profession from tbl_aducational
         <where>
             uid=#{uid}
         </where>
@@ -105,7 +105,7 @@
         </where>
     </select>
     <select id="findTalent1" resultType="UserTalent">
-        select u.uid,u.uaccount,r.rename,s.schoolname,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
+        select u.uid,u.uaccount,r.resname,s.schoolname,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
         <where>
             u.uid=r.uid and r.professid=p.professid and r.sid=s.sid and r.reemploy='否' and u.chapterid=c.chapterid
             <if test="mindate!=null and mindate !=''">
@@ -143,17 +143,116 @@
         )t
     </select>
     <insert id="insertRecommend" parameterType="Recomend">
-        insert into tbl_recommend(
+        insert into tbl_interview(
             uid,
-            recommendtime,
+            sid,
+            intertime,
             positionid,
-            cid
+            presenter
         )values (
             #{uid},
+            #{sid},
             #{recommendtime},
             #{positionid},
-            #{cid}
+            #{presenter}
+
         )
 
     </insert>
+    <select id="findSchoolnameBySid" parameterType="int" resultType="java.lang.String">
+        select schoolname from tbl_school
+        <where>
+            sid=#{sid}
+        </where>
+    </select>
+    <update id="updateUserresume" parameterType="Resume">
+        update tbl_resume
+        <set>
+            resname=#{resname},
+            rebirth=#{rebirth},
+            retel=#{retel},
+            readdress=#{readdress},
+            repol=#{repol},
+            reskill=#{reskill},
+            reeva=#{reeva},
+            sid=#{sid},
+            degreeid=#{degreeid},
+            professid=#{professid}
+        </set>
+          where uid=#{uid}
+    </update>
+    <select id="findSidBySchoolName" parameterType="Resume" resultType="int">
+        select sid from tbl_school
+        <where>
+            schoolname=#{schoolname}
+        </where>
+    </select>
+    <select id="findDegreeidByDegreeName" parameterType="Resume" resultType="int">
+        select degreeid from tbl_degree
+        <where>
+            degreename=#{degreename}
+        </where>
+    </select>
+    <select id="findProfessidByProfessName" parameterType="Resume" resultType="int">
+        select professid from tbl_profession
+        <where>
+            professname=#{professname}
+        </where>
+    </select>
+
+    <update id="updateSocial" parameterType="Social">
+        update tbl_social
+        <set>
+            socialtime=#{socialtime},
+            company=#{company},
+            content=#{content}
+        </set>
+        <where>
+            uid=#{uid}
+            <if test="socialid !=null and socialid !=''">
+                and socialid=#{socialid}
+            </if>
+        </where>
+    </update>
+    <insert id="insertSocial" parameterType="Social">
+        insert into tbl_social(
+        socialtime,
+        uid,
+        company,
+        content
+        )values(
+        #{socialtime},
+        #{uid},
+        #{company},
+        #{content}
+        )
+    </insert>
+    <update id="updateAducation" parameterType="Aducational">
+        update tbl_aducational
+        <set>
+            adtime=#{adtime},
+            sname=#{sname},
+            profession=#{profession}
+        </set>
+        <where>
+            uid=#{uid}
+            <if test="aducationid !=null and aducationid !=''">
+                and aducationid=#{aducationid}
+            </if>
+        </where>
+    </update>
+    <insert id="insertAducation" parameterType="Aducational">
+        insert into tbl_aducational(
+        adtime,
+        uid,
+        sname,
+        profession
+        )values(
+        #{adtime},
+        #{uid},
+        #{sname},
+        #{profession}
+        )
+    </insert>
+
 </mapper>

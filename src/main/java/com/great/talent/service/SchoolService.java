@@ -65,5 +65,38 @@ public class SchoolService
 	public int insertRecommend(Recomend recomend){
 		return schoolMapper.insertRecommend(recomend);
 	}
+	public String findSchoolnameBySid(int sid){
+		return schoolMapper.findSchoolnameBySid(sid);
+	}
+
+	public int updateUserresume(Resume resume){
+		return schoolMapper.updateUserresume(resume);
+	}
+
+	public int findSidBySchoolName(Resume resume){
+		return schoolMapper.findSidBySchoolName(resume);
+	}
+
+	public int findDegreeidByDegreeName(Resume resume){
+		return schoolMapper.findDegreeidByDegreeName(resume);
+	}
+
+	public int findProfessidByProfessName(Resume resume){
+		return schoolMapper.findProfessidByProfessName(resume);
+	}
+
+	public int updateSocial(Social social){
+		return schoolMapper.updateSocial(social);
+	}
+	public int insertSocial(Social social){
+		return schoolMapper.insertSocial(social);
+	}
+	public int updateAducation(Aducational aducational){
+		return schoolMapper.updateAducation(aducational);
+	}
+
+	public int insertAducation(Aducational aducational){
+		return schoolMapper.insertAducation(aducational);
+	}
 
 }
