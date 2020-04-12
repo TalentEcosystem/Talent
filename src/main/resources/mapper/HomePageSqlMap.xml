@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.great.talent.mapper.HomePageMapper">
+
+
+<!--    得到最新发布的职位信息-->
+    <select id="getGoodNews" resultType="GoodNews" >
+select t.positionname,t.maxnum,t.request,t.money,c.companyname,t.positionaddress
+from tbl_admin a,tbl_company c,(select * from tbl_position )t where a.cid=c.cid
+and t.aid=a.aid and t.positionstate='发布' order by t.positiontime desc limit 3
+</select>
+<!--    学校信息-->
+    <select  id="getSchoolNews" resultType="SchoolNews" >
+
+select c.*, t.Num  from tbl_school as c
+left join (select sid,COUNT(*) AS Num from
+tbl_resume where reemploy='是' group by sid) as t on c.sid= t.sid limit 8
+
+</select>
+<!--    课程信息-->
+    <select id="getStudyNews" resultType="Study" >
+
+select p.proname,p.propic,p.prourl,p.procount,t.teachername from
+tbl_product p,tbl_teacher t where t.teacherid=p.teacherid LIMIT 8
+
+</select>
+<!--    企业信息-->
+    <select id="getCompanyNews" resultType="Company" >
+select c.companyname,c.companypic, t1.Num  from tbl_company as c
+left join(select t.*,a.cid from tbl_admin as a,
+(select aid,COUNT(maxnum) AS Num from
+tbl_position   group by aid)as t  where a.aid=t.aid)as t1 on c.cid= t1.cid limit 8
+
+</select>
+
+    <select id="getCount" resultType="map" >
+  select t.job,t1.employ,t2.post,t3.talent,t4.company from
+(select count(*)as job from tbl_resume)t,
+(select count(*)as employ from tbl_resume where reemploy='是')t1,
+(select count(*)as post from tbl_post)t2 ,
+(select count(*)as talent from tbl_user)t3,
+(select count(*)as company from tbl_company)t4
+
+    </select>
+
+</mapper>

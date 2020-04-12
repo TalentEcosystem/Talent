@@ -115,7 +115,7 @@
         <div class="layui-form-item" >
             <label class="layui-form-label" >工作地点：</label>
             <div class="layui-input-inline" >
-            <input type="text" name="positionaddress" id="positionaddress" required  lay-verify="required"  placeholder="地址" autocomplete="on" class="layui-input" value="${sessionScope.admin.address}" disabled>
+            <input type="text" name="positionaddress" id="positionaddress" required  lay-verify="required"  placeholder="地址" autocomplete="on" class="layui-input" value="${sessionScope.companyAdd}" disabled>
         </div>
         </div>
         <div class="layui-form-item">

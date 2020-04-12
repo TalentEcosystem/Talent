@@ -62,10 +62,10 @@
                     </div>
                     <div class="userDiv">
                         <div class="submitLabel">
-                            <label>若没有账号？<a href="" id="register">点击注册</a></label>
+                            <label>若没有账号？<a href=<%=path+"/Enterprise/path/EnterpriseRegister"%>>点击注册</a></label>
                         </div>
                         <div class="submitDiv">
-                            <button id="submitLogin" type="button" class="submit layui-btn layui-btn-primary" lay-submit
+                            <button id="submitLogin" type="submit" class=" layui-btn layui-btn-primary" lay-submit
                                     lay-filter="login">登录
                             </button>
                         </div>

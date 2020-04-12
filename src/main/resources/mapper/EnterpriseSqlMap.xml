@@ -7,7 +7,6 @@
     <select id="adminLogin" resultMap="userMap" parameterType="java.lang.String">
 		select * from tbl_admin where ACCOUNT = #{account}
 	</select>
-
     <resultMap id="userMap" type="Admin">
         <association property="role" javaType="role" select="selectRole"
                      column="roleid"></association>
@@ -16,7 +15,24 @@
     <select id="selectRole" parameterType="java.lang.Integer" resultType="Role">
 		select * from tbl_role where roleid = #{roleid}
 	</select>
-
+<!--注册账户-->
+    <insert id="addAdmin" parameterType="Admin">
+    insert into tbl_admin (aid, account, password,
+      roleid, name, tel,
+      state, address, cid,
+      sid, date,
+      money)
+    values (#{aid}, #{account}, #{password},
+      #{roleid}, #{name}, #{tel},
+      #{state}, #{address}, #{cid},
+      #{sid}, #{date},
+      #{money})
+  </insert>
+<!--简易公司注册-->
+    <insert id="addCompany" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="cid" keyColumn="cid">
+        insert into tbl_company(companyname,permit)values (#{companyname},#{permit})
+    </insert>
+<!--查询发布岗位记录-->
     <select id="findPosition" resultType="Position" parameterType="java.util.Map">
         select p.*,a.name,i.*,d.*,pro.* from tbl_position p,tbl_admin a,tbl_industry i,tbl_degree d, tbl_profession pro
         <where>
@@ -38,7 +54,7 @@
         order by positiontime desc
         limit #{pageInts},#{limitInt}
     </select>
-
+<!--查询发布岗位记录的数量-->
     <select id="findPositionNum" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(*) from tbl_position p,tbl_admin a,tbl_industry i,tbl_degree d, tbl_profession pro
         <where>
@@ -58,7 +74,7 @@
             and p.positionstate = '发布'
         </where>
     </select>
-
+<!--发布岗位信息-->
     <insert id="addPositionInfo" parameterType="Position" useGeneratedKeys="true" keyProperty="positionid" keyColumn="positionid">
     insert into tbl_position (aid, positionname,
       maxnum, positionexper, request,
@@ -71,11 +87,15 @@
       #{positionstate}, #{industryid}, #{positiontime},
       #{degreeid}, #{professid})
   </insert>
-
+<!--添加福利-->
     <insert id="addWelfare" parameterType="java.util.Map" >
         insert into tbl_welfare(welname,positionid)values (#{welname},#{positionid})
     </insert>
-
+<!--    删除福利-->
+    <delete id="deleteWelfare" parameterType="java.util.Map" >
+          delete from tbl_welfare where positionid = #{positionid}
+      </delete>
+<!--    修改发布岗位信息-->
     <update id="updatePositionInfo" parameterType="Position">
     update tbl_position
     set aid = #{aid},
@@ -93,8 +113,49 @@
       professid = #{professid}
     where positionid = #{positionid}
   </update>
+<!--    修改发布岗位信息的状态-->
       <update id="updatePositionState" parameterType="java.lang.Integer" >
           update tbl_position set positionstate = '删除' where positionid = #{positionid}
       </update>
-
+<!--   查询公司信息 -->
+    <select id="findCompanyInfo" resultType="Company" parameterType="java.lang.Integer">
+        select c.* from tbl_company c,tbl_admin a where a.cid = c.cid and a.aid = #{aid}
+    </select>
+<!--    修改公司信息-->
+    <update id="updateCompanyInfo" parameterType="Company">
+        update tbl_company
+        <set>
+            <if test="companyname != null">
+                companyname = #{companyname,jdbcType=VARCHAR},
+            </if>
+            <if test="companyadd != null">
+                companyadd = #{companyadd,jdbcType=VARCHAR},
+            </if>
+            <if test="companyphone != null">
+                companyphone = #{companyphone,jdbcType=VARCHAR},
+            </if>
+            <if test="companypic != null">
+                companypic = #{companypic,jdbcType=VARCHAR},
+            </if>
+            <if test="companypro != null">
+                companypro = #{companypro,jdbcType=VARCHAR},
+            </if>
+            <if test="companynature != null">
+                companynature = #{companynature,jdbcType=VARCHAR},
+            </if>
+            <if test="companynum != null">
+                companynum = #{companynum,jdbcType=INTEGER},
+            </if>
+            <if test="companybusiness != null">
+                companybusiness = #{companybusiness,jdbcType=VARCHAR},
+            </if>
+            <if test="permit != null">
+                permit = #{permit,jdbcType=VARCHAR},
+            </if>
+            <if test="company2 != null">
+                company2 = #{company2,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where cid = #{cid,jdbcType=INTEGER}
+    </update>
 </mapper>

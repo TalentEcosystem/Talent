@@ -38,12 +38,12 @@
 	<div class="con">6.2 如双方就本协议内容或其执行发生任何争议，双方应尽量友好协商解决；协商不成时，任何一方均可向本网站所在地的人民法院提起诉讼。</div>
 	<div class="con">6.3 本协议的订立、生效、解释、执行、管辖、争议的解决均适用中华人民共和国法律。</div>
 </div>
-<div class="logoRight">
-	<div class="normalLogin">
-       <div class="logobtn">
-	      <a href=<%=path+"/user/login" %>>返  回</a>
-       </div>
-    </div>
-</div>
+<%--<div class="logoRight">--%>
+<%--	<div class="normalLogin">--%>
+<%--       <div class="logobtn">--%>
+<%--	      <a href=<%=path+"/user/login" %>>返  回</a>--%>
+<%--       </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 </body>
 </html>

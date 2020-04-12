@@ -15,59 +15,6 @@
 	<script src=<%=path+"/js/jquery-3.4.1.js" %>></script>
 	<link rel="stylesheet" href=<%=path+"/css/login.css" %>>
 	<script type="text/javascript" src=<%=path+"/js/front/login.js" %>></script>
-
-	<script>
-		//Demo
-		// layui.use('form', function(){
-		// 	var form = layui.form;
-		//
-		// 	//监听提交
-		// 	form.on('submit(formDemo)', function(data){
-		// 		layer.msg(JSON.stringify(data.field));
-		// 		return false;
-		// 	});
-		// });
-
-		function reg() {
-			var path=$("#path").val();
-			location.href=path+"/jsp/reg.jsp";
-		}
-
-		function login() {
-			var account=$("#uaccount").val();
-			var password=$("#upassword").val();
-			var path=$("#path").val();
-			if(""!=account&&null!=account&&""!=password&&null!=password){
-				$.ajax({
-						url: path+"/user/loginAjax",
-						type: "POST",
-						data: {"uaccount":account,"upassword":password},
-						datatype: "text",
-						success: function (msg) {
-							if (msg == "success") {
-								alert("登录成功");
-								location.href = "${pageContext.request.contextPath}/Enterprise/path/EnterpriseManager";
-							} else{
-								alert("账号密码错误");
-							}
-						},
-						error: function () {
-							alert("网络繁忙！")
-						}
-					}
-				);
-			}else{
-				alert("账号密码不能为空")
-			}
-		}
-	</script>
-	<style>
-		.layui-form{
-			margin-left: 550px;
-			margin-top: 100px;
-		}
-	</style>
->>>>>>> 36c6a6bec3525d376f32111364ad016966cb8f1e
 </head>
 <body>
 <input type="hidden" id="path" value="<%=path%>">
@@ -78,7 +25,7 @@
 		<div class="headerright">
 			<a href="loginCompany.html">企业登录</a>
 			<span>|</span>
-			<a href="index.html">返回首页</a>
+			<a href="${pageContext.request.contextPath}/HomePage/index">返回首页</a>
 		</div>
 	</div>
 </div>
@@ -117,7 +64,7 @@
 				<div class="autoLogo">
 <%--					<span class="CheckBox"></span>--%>
 <%--					<span>七天内自动登录</span>--%>
-					<a href="password.html" class="pasd">忘记密码？</a>
+					<a href=<%=path+"/user/rpassword" %> class="pasd">忘记密码？</a>
 				</div>
 				<div class="autoLogo">
 					<span class="CheckBox Yes"></span>
@@ -127,7 +74,7 @@
 					<a id="but1">登  录</a>
 				</div>
 				<div class="zcbtn">
-					<a href="zhuce.html">还没有账号？立即注册</a>
+					<a href=<%=path+"/user/registered" %>>还没有账号？立即注册</a>
 				</div>
 <%--				<div class="thirdLogin">--%>
 <%--					<span>使用其他账号登录：</span>--%>
@@ -145,7 +92,7 @@
 					<p class="useHelp useHelpcon">使用帮助</p>
 				</div>
 				<div class="zcbtn">
-					<a href="zhuce.html">还没有账号？立即注册</a>
+					<a href=<%=path+"/user/registered" %>>还没有账号？立即注册</a>
 				</div>
 				<img src=<%=path+"/images/log16.png" %> class="usehelpimg"/>
 			</div>
