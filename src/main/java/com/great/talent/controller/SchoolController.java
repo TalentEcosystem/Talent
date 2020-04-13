@@ -370,13 +370,19 @@ public class SchoolController
 			social1.setCompany(social.getCompany().split(",")[0]);
 			social1.setContent(social.getContent().split(",")[0]);
 			social1.setSocialtime(social.getSocialtime().split(",")[0]);
+			String s=(social.getSocialid()+"").split(",")[0];
+			int socialid1=Integer.valueOf(s);
 			social1.setUid(2);
+			social1.setSocialid(socialid1);
 			schoolService.updateSocial(social1);
 			if(social3.size()>1){
 				social2.setCompany(social.getCompany().split(",")[1]);
 				social2.setContent(social.getContent().split(",")[1]);
 				social2.setSocialtime(social.getSocialtime().split(",")[1]);
 				social2.setUid(2);
+				String s1=(social.getSocialid()+"").split(",")[1];
+				int socialid2=Integer.valueOf(s);
+				social1.setSocialid(socialid2);
 				schoolService.updateSocial(social2);
 			}
 			if(social3.size()==1&&social.getCompany().split(",").length>1){
@@ -407,12 +413,18 @@ public class SchoolController
 			aducational1.setSname(aducational.getSname().split(",")[0]);
 			aducational1.setProfession(aducational.getProfession().split(",")[0]);
 			aducational1.setUid(2);
+			String s=(aducational.getAducationid()+"").split(",")[0];
+			int aducationid1=Integer.valueOf(s);
+			aducational1.setAducationid(aducationid1);
 			schoolService.updateAducation(aducational1);
 			if(aducational3.size()>1){
 				aducational2.setAdtime(aducational.getAdtime().split(",")[1]);
 				aducational2.setSname(aducational.getSname().split(",")[1]);
 				aducational2.setProfession(aducational.getProfession().split(",")[1]);
 				aducational2.setUid(2);
+				String s1=(aducational.getAducationid()+"").split(",")[1];
+				int aducationid2=Integer.valueOf(s);
+				aducational1.setAducationid(aducationid2);
 				schoolService.updateAducation(aducational2);
 			}
 			if(aducational3.size()==1&&aducational.getAdtime().split(",").length>1){
@@ -447,8 +459,34 @@ public class SchoolController
 		resume.setUid(2);
 		System.out.println(resume);
 		schoolService.updateUserresume(resume);
-
 		ResponseUtils.outJson(response,"保存成功");
+	}
+	//显示用户端的填写简历页面
+	@RequestMapping("/showUserFillResume")
+	public String showUserFillResume(HttpServletRequest request){
+		//查找一下学历的集合
+		List<Degree> degrees=schoolService.findDegreeList();
+		System.out.println(degrees);
+		request.getSession().setAttribute("degrees",degrees);
+
+
+		return "schoolManage/User_FillOutResume";
+	}
+	//用户端的简历填写
+	@RequestMapping("/fillOutResume")
+	public void fillOutResume(Resume resume,HttpServletRequest request,HttpServletResponse response){
+		System.out.println(resume);
+		//插入数据库
+		//拿到uid
+//		resume.setUid();
+		int i=schoolService.userInsertResume(resume);
+		if(i>0){
+			ResponseUtils.outJson(response,"保存成功");
+		}else{
+			ResponseUtils.outJson(response,"保存失败");
+
+		}
+
 	}
 
 }

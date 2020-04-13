@@ -11,6 +11,7 @@ public class Resume
 	private int degreeid;
 	private int sid;
 	private int professid;
+	private String resex;
 	private String resname;
 	private String rebirth;
 	private String retel;
@@ -21,8 +22,9 @@ public class Resume
 	private String professname;
 	private String schoolname;
 	private String reskill;
+	private String reexper;
 	private String reeva;
-
+	private String reset;
 
 	public Resume()
 	{
@@ -188,9 +190,39 @@ public class Resume
 		this.professid = professid;
 	}
 
+	public String getResex()
+	{
+		return resex;
+	}
+
+	public void setResex(String resex)
+	{
+		this.resex = resex;
+	}
+
+	public String getReexper()
+	{
+		return reexper;
+	}
+
+	public void setReexper(String reexper)
+	{
+		this.reexper = reexper;
+	}
+
+	public String getReset()
+	{
+		return reset;
+	}
+
+	public void setReset(String reset)
+	{
+		this.reset = reset;
+	}
+
 	@Override
 	public String toString()
 	{
-		return "Resume{" + "resumeid=" + resumeid + ", uid=" + uid + ", degreeid=" + degreeid + ", sid=" + sid + ", professid=" + professid + ", resname='" + resname + '\'' + ", rebirth='" + rebirth + '\'' + ", retel='" + retel + '\'' + ", repic='" + repic + '\'' + ", readdress='" + readdress + '\'' + ", repol='" + repol + '\'' + ", degreename='" + degreename + '\'' + ", professname='" + professname + '\'' + ", schoolname='" + schoolname + '\'' + ", reskill='" + reskill + '\'' + ", reeva='" + reeva + '\'' + '}';
+		return "Resume{" + "resumeid=" + resumeid + ", uid=" + uid + ", degreeid=" + degreeid + ", sid=" + sid + ", professid=" + professid + ", resex='" + resex + '\'' + ", resname='" + resname + '\'' + ", rebirth='" + rebirth + '\'' + ", retel='" + retel + '\'' + ", repic='" + repic + '\'' + ", readdress='" + readdress + '\'' + ", repol='" + repol + '\'' + ", degreename='" + degreename + '\'' + ", professname='" + professname + '\'' + ", schoolname='" + schoolname + '\'' + ", reskill='" + reskill + '\'' + ", reexper='" + reexper + '\'' + ", reeva='" + reeva + '\'' + ", reset='" + reset + '\'' + '}';
 	}
 }

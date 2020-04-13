@@ -190,5 +190,29 @@ public class EnterpriseService {
         return map1;
     }
 
+    /**
+     * 面试邀请
+     * @param interview
+     * @return
+     */
+    @Transactional
+    public int updateInterInvate(Interview interview){
+        return enterpriseMapper.updateInterInvate(interview);
+    }
+
+    /**
+     * 查询反馈信息
+     * @param map
+     * @return
+     */
+    public Map findFeedbackInfo(Map map){
+        Integer count = enterpriseMapper.findFeedbackNum(map);
+        List<Interview> flist = enterpriseMapper.findFeedback(map);
+        Map map1 = new HashMap();
+        map1.put("count",count);
+        map1.put("flist",flist);
+        return map1;
+    }
+
 }
 

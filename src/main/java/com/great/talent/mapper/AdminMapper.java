@@ -45,4 +45,18 @@ public interface AdminMapper
 	public void addLog(SystemLog systemLog);
 	public List<SystemLog> findLog(Map map);
 	public int findCountLog(Map map);
+
+	/**
+	 * 查询行业
+	 * @return
+	 */
+	@Select("select * from tbl_industry")
+	public List<Industry> findIndustry();
+	public List<Interview> findInterview(Map map);//查询面试信息
+	public int findInterviewNum(Map map);//查询面试信息数量
+    @Select("select * from tbl_interview where interviewid = #{interviewid} ")
+	public List<Interview> jobProgress(int interviewid);//查询求职进度
+
+	@Update("update tbl_interview set interstate = #{interstate} where interviewid = ${interviewid}")
+	public int deleteIntervier(Interview interview);
 }
