@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class Social
 {
 	private int socialid;
+	private int uid;
 	//工作时间段
 	private String socialtime;
 	//公司
@@ -63,9 +64,19 @@ public class Social
 		this.content = content;
 	}
 
+	public int getUid()
+	{
+		return uid;
+	}
+
+	public void setUid(int uid)
+	{
+		this.uid = uid;
+	}
+
 	@Override
 	public String toString()
 	{
-		return "Social{" + "socialid=" + socialid + ", socialtime='" + socialtime + '\'' + ", company='" + company + '\'' + ", content='" + content + '\'' + '}';
+		return "Social{" + "socialid=" + socialid + ", uid=" + uid + ", socialtime='" + socialtime + '\'' + ", company='" + company + '\'' + ", content='" + content + '\'' + '}';
 	}
 }

@@ -225,13 +225,13 @@
             var index=myselect.selectedIndex;
             var industryid = myselect.options[index].value;
 
-            var myselect1=document.getElementById("degree");
-            var index1=myselect1.selectedIndex;
-            var degree = myselect.options[index1].value;
+            var myselect1 = document.getElementById("degree");
+            var index1 = myselect1.selectedIndex;
+            var degree = myselect1.options[index1].value;
 
             var myselect2=document.getElementById("profession");
-            var index2=myselect2.selectedIndex;
-            var profession = myselect.options[index2].value;
+            var index2 = myselect2.selectedIndex;
+            var profession = myselect2.options[index2].value;
 
             var positionname = $("#positionname").val();
 

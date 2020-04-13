@@ -1,9 +1,6 @@
 package com.great.talent.mapper;
 
-import com.great.talent.entity.Industry;
-import com.great.talent.entity.Know;
-import com.great.talent.entity.Post;
-import com.great.talent.entity.User;
+import com.great.talent.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,4 +25,16 @@ public interface AdminMapper
 	public void addPost(Post post);
 	public void updatePost(Post post);
 	public void deletePost(@Param("postid") String postid);
+	public List<Admin> findCompany(Map map);
+	public int findCountCompany(Map map);
+	public void checkConfirm(@Param("aid") String aid);
+	public void checkRefuse(@Param("aid") String aid);
+	public List<RoleMenu> selectAllMenu();
+	public List<RoleMenu> selectRoleMenu(@Param("roleid") String roleid);
+	public List<RoleMenu> selectParentMenu(List list);
+	public List<String> selectChileMenu(@Param("roleid") String roleid);
+	public List<String> selectNewMenu(List list);
+	public void deleteMenu(@Param("roleid") String roleid);
+	public void addMenu(List list);
+	public void deleteFirst(Map map);
 }
