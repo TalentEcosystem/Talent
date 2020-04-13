@@ -23,7 +23,7 @@ public class HomePageService
 	Gson gson=new Gson();
 
 	/**
-	 * 得到企业发布的好消息，返回json字符串
+	 * 得到企业发布的好消息
 	 * @return
 	 */
 	public List<GoodNews> getGoodNews(){
@@ -40,7 +40,7 @@ public class HomePageService
 
 		List<SchoolNews> schoolNewsList=homePageMapper.getSchoolNews();
 		String Str=gson.toJson(schoolNewsList);
-		System.out.println("x学校信息"+Str);
+
 		return Str;
 	}
 	/**
@@ -51,7 +51,7 @@ public class HomePageService
 
 		List<Study> studyList=homePageMapper.getStudyNews();
 		String Str=gson.toJson(studyList);
-		System.out.println("x课程信息"+Str);
+
 		return Str;
 	}
 
@@ -63,7 +63,7 @@ public class HomePageService
 
 		List<Company> companyList=homePageMapper.getCompanyNews();
 		String Str=gson.toJson(companyList);
-		System.out.println("x课程信息"+Str);
+
 		return Str;
 	}
 
@@ -77,8 +77,21 @@ public class HomePageService
 
 
 		String str=gson.toJson(map);
-		System.out.println(str);
+
 		return str;
 	}
+
+	/**
+	 * 最新入驻的企业
+	 * @return List
+	 */
+	public List<String> getNewCompany(){
+
+		List<String> list=homePageMapper.getNewCompany();
+		System.out.println(list);
+		return list;
+	}
+
+
 
 }
