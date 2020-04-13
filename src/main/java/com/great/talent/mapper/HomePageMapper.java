@@ -41,6 +41,12 @@ public interface HomePageMapper
 	 */
 	public Map getCount();
 
+	/**
+	 * 得到最新入驻的企业名
+	 * @return Map
+	 */
+	public List<String> getNewCompany();
+
 
 
 }

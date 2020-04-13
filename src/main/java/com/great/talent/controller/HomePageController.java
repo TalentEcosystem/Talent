@@ -22,7 +22,7 @@ public class HomePageController
 	 * 首页
 	 * @return  String
 	 */
-	@RequestMapping("/index")
+	@RequestMapping(value = "/index" ,produces = "text/html;charset=UTF-8")
 	public String Welcome(){
 		return "homepage/index";
 	}
@@ -75,5 +75,17 @@ public class HomePageController
 		String Str=homePageService.getCompanyNews();
 		return Str;
 	}
+	/**
+	 *找工作页面
+	 * @return String
+	 */
+	@RequestMapping(value = "/searchJob" ,produces = "text/html;charset=UTF-8" )
+	public String 	searchJob( )
+	{
+		return "homepage/searchJob";
+	}
+
+
+
 
 }
