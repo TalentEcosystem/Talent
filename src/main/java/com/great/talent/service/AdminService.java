@@ -5,6 +5,7 @@ import com.great.talent.mapper.AdminMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -132,4 +133,36 @@ public class AdminService
 
 	@Transactional
 	public void deleteFirst(Map map){ adminMapper.deleteFirst(map); }
+
+	/**
+	 * 查询岗位管理查询条件下拉框的内容
+	 * @return
+	 */
+	public List findPositionInfo(){
+		List<Industry> industryList = adminMapper.findIndustry();
+		return industryList;
+	}
+	/**
+	 * 查询面试信息
+	 * @param map
+	 * @return
+	 */
+	public Map findInterview(HashMap map){
+		Integer count = adminMapper.findInterviewNum(map);
+		List<Interview> interviewList = adminMapper.findInterview(map);
+		Map map1 = new HashMap();
+		map1.put("count",count);
+		map1.put("interviewList",interviewList);
+		return map1;
+	}
+
+	public List<Interview> jobProgress(int interviewid){
+		return adminMapper.jobProgress(interviewid);
+	}
+
+    @Transactional
+	public int deleteIntervier(Interview interview){
+		return adminMapper.deleteIntervier(interview);
+	}
+
 }

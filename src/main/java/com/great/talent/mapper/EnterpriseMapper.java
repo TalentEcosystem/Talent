@@ -1,6 +1,7 @@
 package com.great.talent.mapper;
 
 import com.great.talent.entity.*;
+import com.sun.jdi.IntegerValue;
 import com.sun.tools.corba.se.idl.InterfaceGen;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -26,6 +27,10 @@ public interface EnterpriseMapper {
     public int updateCompanyInfo(Company company);//修改公司信息
     public List<Interview> findInterview(Map map);//查询面试信息
     public int findInterviewNum(Map map);//查询面试信息数量
+    public int updateInterInvate(Interview interview);//面试邀请
+
+    public List<Interview> findFeedback(Map map);
+    public int findFeedbackNum(Map map);
     /**
      * 校验用户手机是否被注册
      * @param tel

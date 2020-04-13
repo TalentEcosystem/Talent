@@ -7,6 +7,7 @@ public class Interview {
     private Integer uid;//用户id
     private String uname;//用户姓名
     private String utel;//用户手机号码
+    private String degreename;
     private String professid;//专业id
     private String professname;//专业名称;
     private Integer positionid;//岗位id
@@ -24,6 +25,14 @@ public class Interview {
     private Date endtime;//回复时间
     private Integer applicantsnum;//已应聘人数
 
+
+    public String getDegreename() {
+        return degreename;
+    }
+
+    public void setDegreename(String degreename) {
+        this.degreename = degreename;
+    }
 
     public String getPresenter() {
         return presenter;
@@ -192,6 +201,7 @@ public class Interview {
                 ", uid=" + uid +
                 ", uname='" + uname + '\'' +
                 ", utel='" + utel + '\'' +
+                ", degreename='" + degreename + '\'' +
                 ", professid='" + professid + '\'' +
                 ", professname='" + professname + '\'' +
                 ", positionid=" + positionid +
