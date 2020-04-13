@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.great.talent.entity.*;
 import com.great.talent.service.AdminService;
 import com.great.talent.util.Diagis;
+import com.great.talent.util.ResponseUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -515,7 +518,8 @@ public class AdminController
 	 */
 	@RequestMapping("/findInterviews")
 	@ResponseBody
-	public void findInterviews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void findInterviews(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
 		String page = request.getParameter("page");
 		String limit = request.getParameter("limit");
 		String industryid = request.getParameter("industryid");
