@@ -132,4 +132,28 @@ public class AdminService
 
 	@Transactional
 	public void deleteFirst(Map map){ adminMapper.deleteFirst(map); }
+
+	@Transactional
+	public List<Parameter> findPara(Map map){ return adminMapper.findPara(map); }
+
+	@Transactional
+	public int findCountPara(Map map){ return adminMapper.findCountPara(map); }
+
+	@Transactional
+	public void updatePara(Parameter parameter){ adminMapper.updatePara(parameter); }
+
+	@Transactional
+	public void deletePara(String paraid){ adminMapper.deletePara(paraid); }
+
+	@Transactional
+	public void addPara(Parameter parameter){ adminMapper.addPara(parameter); }
+
+	@Transactional
+	public void addLog(SystemLog systemLog){ adminMapper.addLog(systemLog); }
+
+	@Transactional
+	public List<SystemLog> findLog(Map map){ return adminMapper.findLog(map); }
+
+	@Transactional
+	public int findCountLog(Map map){ return adminMapper.findCountLog(map); }
 }

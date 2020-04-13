@@ -192,4 +192,74 @@
 	<delete id="deleteFirst" parameterType="java.lang.String">
 		delete from tbl_rolemenu where roleid=#{roleid} and menuid=#{menuid}
 	</delete>
+
+
+	<select id="findPara" resultType="Parameter" parameterType="java.util.Map">
+		select * from tbl_para a
+		<where>
+			<if test="paraname!=null">
+				a.paraname like concat('%',#{paraname},'%')
+			</if>
+			<if test="paratype!=null and paratype!='全部'">
+				and a.paratype = #{paratype}
+			</if>
+			and a.parastate='启用'
+		</where>
+		limit #{begin},#{end}
+	</select>
+
+	<select id="findCountPara" parameterType="java.util.Map" resultType="int">
+		select count(*) from tbl_para a
+		<where>
+			<if test="paraname!=null">
+				a.paraname like concat('%',#{paraname},'%')
+			</if>
+			<if test="paratype!=null and paratype!='全部'">
+				and a.paratype = #{paratype}
+			</if>
+			and a.parastate='启用'
+		</where>
+	</select>
+	
+	<update id="updatePara" parameterType="Parameter">
+		update tbl_para set paraname=#{paraname},paratype=#{paratype},paravalue=#{paravalue} where paraid=#{paraid}
+	</update>
+
+	<update id="deletePara" parameterType="java.lang.String">
+		update tbl_para set parastate='禁用' where paraid=#{paraid}
+	</update>
+
+	<insert id="addPara" parameterType="Parameter">
+		insert into tbl_para (paraname, paravalue, paratype, parastate) values (#{paraname},#{paravalue},#{paratype},'启用')
+	</insert>
+
+
+	<insert id="addLog" parameterType="SystemLog">
+        insert into tbl_log (logtype, logname, logresult, logdate) values (#{logtype},#{logname},#{logresult},#{logdate})
+    </insert>
+
+	<select id="findLog" parameterType="java.util.Map" resultType="SystemLog">
+		select * from tbl_log
+		<where>
+			<if test="beginTime!=null and beginTime!=''">
+				logdate &gt;= #{beginTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and logdate &lt;= #{endTime}
+			</if>
+		</where>
+		limit #{begin},#{end}
+	</select>
+
+	<select id="findCountLog" parameterType="java.util.Map" resultType="int">
+		select count(*) from tbl_log
+		<where>
+			<if test="beginTime!=null and beginTime!=''">
+				logdate &gt;= #{beginTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and logdate &lt;= #{endTime}
+			</if>
+		</where>
+	</select>
 </mapper>

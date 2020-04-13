@@ -407,4 +407,89 @@ public class AdminController
 		return "success";
 	}
 
+	/**
+	 * 参数管理
+	 * @param limit
+	 * @param page
+	 * @param paraname
+	 * @param paratype
+	 * @return
+	 */
+	@RequestMapping("/paraManager")
+	@ResponseBody
+	public String paraManager(String limit, String page, String paraname,String paratype){
+		Map map=new HashMap();
+		map.put("paraname",paraname);
+		map.put("paratype",paratype);
+		map.put("begin",(Integer.parseInt(page)-1)*Integer.parseInt(limit));
+		map.put("end",Integer.parseInt(limit));
+		List<Parameter> list = adminService.findPara(map);
+		int count = adminService.findCountPara(map);
+		Diagis diagis=new Diagis();
+		diagis.setCode(0);
+		diagis.setMsg("");
+		diagis.setCount(count);
+		diagis.setData(list);
+		Gson g=new Gson();
+		String ss=g.toJson(diagis);
+		return ss;
+	}
+
+	/**
+	 * 删除参数
+	 * @param paraid
+	 * @return
+	 */
+	@RequestMapping("/deletePara")
+	@ResponseBody
+	public String deletePara(String paraid){
+		adminService.deletePara(paraid);
+		return "删除成功";
+	}
+
+	/**
+	 * 修改参数
+	 * @param parameter
+	 * @return
+	 */
+	@RequestMapping("/updatePara")
+	@ResponseBody
+	public String updatePara(Parameter parameter){
+		adminService.updatePara(parameter);
+		return "修改成功";
+	}
+
+	/**
+	 * 新增参数
+	 * @param parameter
+	 * @return
+	 */
+	@RequestMapping("/addPara")
+	@ResponseBody
+	public String addPara(Parameter parameter){
+		adminService.addPara(parameter);
+		return "新增成功";
+	}
+
+	@RequestMapping("/logManager")
+	@ResponseBody
+	public String logManager(String beginTime,String endTime,String limit, String page){
+		Map map=new HashMap();
+		System.out.println("开始时间:"+beginTime);
+		System.out.println("结束时间:"+endTime);
+		map.put("beginTime",beginTime);
+		map.put("endTime",endTime);
+		map.put("begin",(Integer.parseInt(page)-1)*Integer.parseInt(limit));
+		map.put("end",Integer.parseInt(limit));
+		List<SystemLog> list = adminService.findLog(map);
+		int count = adminService.findCountLog(map);
+		Diagis diagis=new Diagis();
+		diagis.setCode(0);
+		diagis.setMsg("");
+		diagis.setCount(count);
+		diagis.setData(list);
+		Gson g=new Gson();
+		String ss=g.toJson(diagis);
+		return ss;
+	}
 }

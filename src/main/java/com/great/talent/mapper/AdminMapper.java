@@ -37,4 +37,12 @@ public interface AdminMapper
 	public void deleteMenu(@Param("roleid") String roleid);
 	public void addMenu(List list);
 	public void deleteFirst(Map map);
+	public List<Parameter> findPara(Map map);
+	public int findCountPara(Map map);
+	public void updatePara(Parameter parameter);
+	public void deletePara(@Param("paraid") String paraid);
+	public void addPara(Parameter parameter);
+	public void addLog(SystemLog systemLog);
+	public List<SystemLog> findLog(Map map);
+	public int findCountLog(Map map);
 }
