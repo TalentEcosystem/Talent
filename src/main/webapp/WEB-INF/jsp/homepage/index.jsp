@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -74,7 +75,7 @@
 			position: absolute;
 		}
 		.out {
-			width: 800px;
+			width: 1000px;
 			height: 170px;
 			overflow:hidden;
 			margin: 0px auto;
@@ -598,7 +599,7 @@
 			position: absolute;
 		}
 		.out2 {
-			width: 800px;
+			width: 1000px;
 			height: 170px;
 			overflow:hidden;
 			margin: 0px auto;
@@ -864,22 +865,7 @@
 			position: relative;
 
 		}
-		.left3 {
-			width: 30px;
-			height: 58px;
-			left: 240px;
-			background-image: url(<%=path+"/images/left.png"%>);
-			position: absolute;
-			margin-top: -140px;
-		}
-		.right3 {
-			width: 30px;
-			height: 58px;
-			background-image: url(<%=path+"/images/right.png"%>);
-			position: absolute;
-			right: 240px;
-			margin-top: -140px;
-		}
+
 		.in3 .pic03 {
 			display: block;
 			background-color:#dbdbdb;
@@ -1084,7 +1070,14 @@
 			white-space:nowrap;
 			color: #EBEEF7;/*与背景颜色相同，先隐藏，需要时再变颜色*/
 		}
-
+		.lo{
+			width: 140px;
+			height: 32px;
+			background-color: #F6F6F6;
+			float: left;
+			font-size: 20px;
+			text-align: right;
+		}
 
 	</style>
 
@@ -1111,7 +1104,35 @@
 
 	</style>
 
-
+	<style type="text/css">
+		/*样式初始化*/
+		body, dl, dd, h1, h2, h3, h4, h5, h6, p, form,ul,ol{margin:0; padding:0;}
+		ol,ul { list-style:none; }
+		.nav span{
+			float: right;
+			display: inline-block;
+			height:32px;
+			width:180px;
+			font-size: 15px;
+			background: #F6F6F6 ;
+			line-height: 32px;
+			text-align: center;
+			position: relative;
+			z-index:99999
+		}
+		.nav ul{
+			position: absolute;
+			width:180px;
+			display: none;
+			background: #F6F6F6
+		}
+		.li_yysy{
+			background:#6EC7FF;
+		}
+		.ll{
+			cursor: pointer;
+		}
+	</style>
 </head>
 <body>
 <input type="hidden" id="userno">
@@ -1126,6 +1147,39 @@
 		</div>
 		<div class="topRight  ">
 
+		<c:if test="${not empty uname}">
+			<div class="nav" style="background-color: #F6F6F6">
+        <span>
+	        <a href="">${uname}</a>
+            <ul>
+	            <a href="" ><li class="ll">个人中心</li></a>
+	             <a href=""><li class="ll">我的简历</li></a>
+	             <a href=""><li class="ll">求职反馈</li></a>
+	             <a href=""><li class="ll">收藏</li></a>
+	             <a href="" ><li class="ll">退出</li></a>
+            </ul>
+        </span>
+			</div>
+		</c:if>
+
+		<c:if test="${empty uname}">
+			<a href="${pageContext.request.contextPath}/user/login" class="lo" style="width: 200px" >用户登录</a>
+			<a href="" class="lo" style="width: 80px;text-align: center" >注册</a>
+		</c:if>
+			<script type="text/javascript">
+				//hover接收2个参数,第一个是经过,第二个是离开;
+				$('.nav span').hover(function(){
+					$(this).find('ul').show();
+				},function(){
+					$(this).find('ul').hide();
+				});
+				$('.nav  li').hover(function(){
+					$(this).addClass("li_yysy")
+				},function(){
+					$(this).removeClass("li_yysy")
+				});
+
+			</script>
 
 <%--			webscoket 实时发消息给客户端--%>
 			<script type="text/javascript">
@@ -1291,13 +1345,23 @@
 	</div>
 </div>
 <div class="menuDiv">
-	<a href="${pageContext.request.contextPath}/user/homepage" class="onnav">首页</a>
-	<a href="searchJob.html">找工作</a>
-	<a href="meetingJob.html">技术成长</a>
+	<a href="${pageContext.request.contextPath}/user/homepage" >首页</a>
+	<a href="${pageContext.request.contextPath}/HomePage/searchJob" >找工作</a>
+	<a href="meetingJob.html" >技术成长</a>
 	<a href="jobnews.html">就业资讯</a>
 	<a href="download.html">个人中心</a>
-	<a href="${pageContext.request.contextPath}/user/login" class="mobile">登录</a>
+	<a href="" >登录</a>
 	<a href="helpJob.html">注册</a>
+	<script>
+		$('.menuDiv  a').hover(function(){
+			$(this).addClass("onnav");
+
+		},function(){
+			$(this).removeClass("onnav")
+
+		});
+
+	</script>
 </div>
 <div class="BodyMain">
 	<div class="mainTop">

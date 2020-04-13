@@ -192,4 +192,38 @@
 	<delete id="deleteFirst" parameterType="java.lang.String">
 		delete from tbl_rolemenu where roleid=#{roleid} and menuid=#{menuid}
 	</delete>
+
+	<!--查询面试信息-->
+	<select id="findInterview" resultType="Interview" parameterType="java.util.Map">
+		select * from (select * from tbl_interview) a,
+		(select u.uid,u.uname,u.utel,p.professid,p.professname,s.schoolname from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s where
+		u.uid = r.uid = s.sid and r.professid = p.professid) b,
+		(select p.aid,p.positionid,p.positionname,id.industryid,id.indname from tbl_position p,tbl_industry id where p.industryid = id.industryid) c
+		<where>
+			a.uid = b.uid and a.positionid = c.positionid and a.interstate != '删除'
+			<if test="industryid != null">
+				and c.industryid = #{industryid}
+			</if>
+			<if test="positionname != null">
+				and c.positionname = #{positionname}
+			</if>
+		</where>
+		limit #{pageInts},#{limitInt}
+	</select>
+	<!--查询面试信息数量-->
+	<select id="findInterviewNum" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(*) from (select * from tbl_interview) a,
+		(select u.uid,u.uname,u.utel,p.professid,p.professname,s.schoolname from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s where
+		u.uid = r.uid = s.sid and r.professid = p.professid) b,
+		(select p.aid, p.positionid,p.positionname,id.industryid,id.indname from tbl_position p,tbl_industry id where p.industryid = id.industryid) c
+		<where>
+			a.uid = b.uid and a.positionid = c.positionid and a.interstate != '删除'
+			<if test="industryid != null">
+				and c.industryid = #{industryid}
+			</if>
+			<if test="positionname != null">
+				and c.positionname = #{positionname}
+			</if>
+		</where>
+	</select>
 </mapper>

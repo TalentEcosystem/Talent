@@ -157,13 +157,62 @@ public class EnterpriseService {
         return enterpriseMapper.deleteWelfare(map);
     }
 
+    /**
+     * 查询公司的信息
+     * @param aid
+     * @return
+     */
     public Company findCompanyInfo(Integer aid){
         return enterpriseMapper.findCompanyInfo(aid);
     }
 
+    /**
+     * 修改公司信息
+     * @param company
+     * @return
+     */
     @Transactional
     public int updateCompanyInfo(Company company){
         return enterpriseMapper.updateCompanyInfo(company);
     }
+
+    /**
+     * 查询面试信息
+     * @param map
+     * @return
+     */
+    public Map findInterview(HashMap map){
+        Integer count = enterpriseMapper.findInterviewNum(map);
+        List<Interview> interviewList = enterpriseMapper.findInterview(map);
+        Map map1 = new HashMap();
+        map1.put("count",count);
+        map1.put("interviewList",interviewList);
+        return map1;
+    }
+
+    /**
+     * 面试邀请
+     * @param interview
+     * @return
+     */
+    @Transactional
+    public int updateInterInvate(Interview interview){
+        return enterpriseMapper.updateInterInvate(interview);
+    }
+
+    /**
+     * 查询反馈信息
+     * @param map
+     * @return
+     */
+    public Map findFeedbackInfo(Map map){
+        Integer count = enterpriseMapper.findFeedbackNum(map);
+        List<Interview> flist = enterpriseMapper.findFeedback(map);
+        Map map1 = new HashMap();
+        map1.put("count",count);
+        map1.put("flist",flist);
+        return map1;
+    }
+
 }
 

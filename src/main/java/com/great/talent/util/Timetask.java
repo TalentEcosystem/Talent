@@ -13,10 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -33,14 +30,31 @@ public class Timetask
 	@Scheduled(cron = "0 */2 * * * ?")
 	public void test() throws IOException {
 		System.err.println("*********   定时任务执行   **************");
-
-		List<GoodNews> goodNewsList=homePageService.getGoodNews();
-		for (int i = 0; i <goodNewsList.size() ; i++)
+		Random random=new Random();
+		int n=random.nextInt(2);
+		if (n == 0)
 		{
-			GoodNews goodNews=goodNewsList.get(i);
-			Str+=i+1+"、"+goodNews.getCompanyname()+" |发布招聘信息 职位："+goodNews.getPositionname()+" |薪资："+goodNews.getMoney()+" |招收人数："+goodNews.getMaxnum()+"人 |要求："+goodNews.getRequest()+" |工作地点："+goodNews.getPositionaddress()+"下一条：";
+
+			List list = homePageService.getNewCompany();
+			for (int i = 1; i <= list.size(); i++)
+			{
+				Str +=i + "、热烈欢迎：|" + list.get(i-1) + "| 企业入驻本平台";
+			}
+		}else if(n == 1){
+
+				List<GoodNews> goodNewsList=homePageService.getGoodNews();
+				for (int i = 0; i <goodNewsList.size() ; i++)
+				{
+					GoodNews goodNews=goodNewsList.get(i);
+					Str+=i+1+"、"+goodNews.getCompanyname()+" |发布招聘信息 职位："+goodNews.getPositionname()+" |薪资："+goodNews.getMoney()+" |招收人数："+goodNews.getMaxnum()+"人 |要求："+goodNews.getRequest()+" |工作地点："+goodNews.getPositionaddress();
+				}
 
 		}
+
+
+
+
+
 
 
 		System.out.println(Str);
@@ -58,9 +72,6 @@ public class Timetask
 			}
 
 		}
-
-
-
 		System.err.println("/n 定时任务完成.......");
 	}
 

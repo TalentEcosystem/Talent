@@ -36,7 +36,7 @@
     <select id="findPosition" resultType="Position" parameterType="java.util.Map">
         select p.*,a.name,i.*,d.*,pro.* from tbl_position p,tbl_admin a,tbl_industry i,tbl_degree d, tbl_profession pro
         <where>
-        p.aid = a.aid and p.industryid = i.industryid and p.degreeid = d.degreeid and p.professid = pro.professid
+        p.aid = a.aid and p.industryid = i.industryid and p.degreeid = d.degreeid and p.professid = pro.professid and a.aid = #{aid}
             <if test="industryid != null">
                 and p.industryid = #{industryid}
             </if>
@@ -58,7 +58,7 @@
     <select id="findPositionNum" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(*) from tbl_position p,tbl_admin a,tbl_industry i,tbl_degree d, tbl_profession pro
         <where>
-            p.aid = a.aid and p.industryid = i.industryid and p.degreeid = d.degreeid and p.professid = pro.professid
+            p.aid = a.aid and p.industryid = i.industryid and p.degreeid = d.degreeid and p.professid = pro.professid and a.aid = #{aid}
             <if test="industryid != null">
                 and p.industryid = #{industryid}
             </if>
@@ -158,4 +158,89 @@
         </set>
         where cid = #{cid,jdbcType=INTEGER}
     </update>
+<!--查询面试信息-->
+    <select id="findInterview" resultType="Interview" parameterType="java.util.Map">
+        select * from (select * from tbl_interview) a,
+        (select u.uid,u.uname,u.utel,p.professid,p.professname,s.schoolname from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s where
+         u.uid = r.uid = s.sid and r.professid = p.professid) b,
+        (select p.aid,p.positionid,p.positionname,id.industryid,id.indname from tbl_position p,tbl_industry id where p.industryid = id.industryid) c
+        <where>
+            a.uid = b.uid and a.positionid = c.positionid and a.invate != '拒绝' and c.aid = #{aid}
+            <if test="industryid != null">
+                and c.industryid = #{industryid}
+            </if>
+            <if test="positionname != null">
+                and c.positionname = #{positionname}
+            </if>
+        </where>
+        limit #{pageInts},#{limitInt}
+    </select>
+<!--查询面试信息数量-->
+    <select id="findInterviewNum" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) from (select * from tbl_interview) a,
+        (select u.uid,u.uname,u.utel,p.professid,p.professname,s.schoolname from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s where
+        u.uid = r.uid = s.sid and r.professid = p.professid) b,
+        (select p.aid, p.positionid,p.positionname,id.industryid,id.indname from tbl_position p,tbl_industry id where p.industryid = id.industryid) c
+        <where>
+            a.uid = b.uid and a.positionid = c.positionid and a.invate != '拒绝' and c.aid = #{aid}
+            <if test="industryid != null">
+                and c.industryid = #{industryid}
+            </if>
+            <if test="positionname != null">
+                and c.positionname = #{positionname}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateInterInvate" parameterType="Interview">
+        update tbl_interview set  invate = #{invate,jdbcType=VARCHAR},endtime = #{endtime} where interviewid = #{interviewid,jdbcType=INTEGER}
+    </update>
+<!-- 查询反馈信息   -->
+    <select id="findFeedback" resultType="Interview" parameterType="java.util.Map">
+      select * from (select * from tbl_interview) a,
+        (select u.uid,u.uname,d.degreename,p.*,s.schoolname from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s,tbl_degree d where
+         u.uid = r.uid = s.sid and r.professid = p.professid and r.degreeid = d.degreeid ) b,
+        (select p.aid,p.positionid from tbl_position p ) c
+        <where>
+         a.uid = b.uid and a.positionid = c.positionid and a.invate != '拒绝' and c.aid = #{aid}
+            <if test="check != null">
+                and a.check = #{check}
+            </if>
+            <if test="invate != null">
+                and a.invate = #{invate}
+            </if>
+            <if test="interstate != null">
+                and a.interstate = #{interstate}
+            </if>
+            <if test="employ != null">
+                and a.employ = #{employ}
+            </if>
+        </where>
+        limit #{pageInts},#{limitInt}
+    </select>
+
+    <select id="findFeedbackNum" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) from (select * from tbl_interview) a,
+        (select u.uid,u.uname,d.degreename,p.*,s.schoolname from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s,tbl_degree d where
+        u.uid = r.uid = s.sid and r.professid = p.professid and r.degreeid = d.degreeid ) b,
+        (select p.aid,p.positionid from tbl_position p ) c
+        <where>
+            a.uid = b.uid and a.positionid = c.positionid and a.invate != '拒绝' and c.aid = #{aid};
+            <if test="check != null">
+                and a.check = #{check}
+            </if>
+            <if test="invate != null">
+                and a.invate = #{invate}
+            </if>
+            <if test="interstate != null">
+                and a.interstate = #{interstate}
+            </if>
+            <if test="employ != null">
+                and a.employ = #{employ}
+            </if>
+        </where>
+    </select>
+
+
+
 </mapper>

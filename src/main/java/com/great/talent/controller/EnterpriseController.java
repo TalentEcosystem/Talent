@@ -38,6 +38,7 @@ public class EnterpriseController {
 
     private Random random = new Random();
     private Diagis diagis = new Diagis();
+    private  ModelAndView mv = new ModelAndView();
     @Autowired
     private EnterpriseService enterpriseService;
 
@@ -135,7 +136,6 @@ public class EnterpriseController {
         } else if (admins.getState() == "删除") {
             return "delete";
         }
-
         session.setAttribute("admin", admins);
         return "success";
     }
@@ -213,14 +213,13 @@ public class EnterpriseController {
     }
 
     /**
-     * 查询下拉框的信息
+     * 查询下拉框的信息,并跳转查询岗位的页面
      *
      * @param request
      * @return
      */
     @RequestMapping("/findPositionInfo")
     public ModelAndView findPositionInfo(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView();
         Map map = enterpriseService.findPositionInfo();
         Admin admin = (Admin) request.getSession().getAttribute("admin");
         String companyName = enterpriseService.findCompanyName(admin.getAid());
@@ -233,14 +232,12 @@ public class EnterpriseController {
         request.getSession().setAttribute("profession", profession);
         request.getSession().setAttribute("companyName", companyName);
         request.getSession().setAttribute("companyAdd", companyAdd);
-
         mv.setViewName("/Enterprise/PostManager");
         return mv;
     }
 
     /**
-     * 查询发布岗位记录
-     *
+     * 通过行业查询岗位
      * @param request
      * @param response
      * @throws IOException
@@ -276,9 +273,10 @@ public class EnterpriseController {
         String positionname = request.getParameter("positionname");
         String degreeid = request.getParameter("degreeid");
         String professid = request.getParameter("professid");
-//        System.out.println("industryid="+industryid+"positionname="+positionname+"degreeid="+degreeid+"professid="+professid);
+        System.out.println("industryid="+industryid+"positionname="+positionname+"degreeid="+degreeid+"professid="+professid);
         int pageInt = Integer.valueOf(page);
         int limitInt = Integer.parseInt(limit);
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
         HashMap<String, Object> condition = new HashMap<>();
         if (null != industryid && !"".equals((industryid.trim())) && !"0".equals(industryid.trim())) {
             condition.put("industryid", industryid);
@@ -295,6 +293,7 @@ public class EnterpriseController {
         int pageInts = (pageInt - 1) * limitInt;
         condition.put("pageInts", pageInts);
         condition.put("limitInt", limitInt);
+        condition.put("aid",admin.getAid());
         Map map = enterpriseService.findPositions(condition);
         if (map.size() != 0) {
             diagis.setCode(0);
@@ -436,4 +435,119 @@ public class EnterpriseController {
         return "{\"code\":2, \"msg\":\"\", \"data\":{}}";
     }
 
+    /**
+     * 查询下拉框的信息,并跳转查询求职的页面
+     * @param request
+     * @return
+     */
+    @RequestMapping("/findInterviewInfo")
+    public ModelAndView findInterviewInfo(HttpServletRequest request) {
+        Map map = enterpriseService.findPositionInfo();
+        List<Degree> industry = (List<Degree>) map.get("industryList");
+        request.getSession().setAttribute("industry", industry);
+        mv.setViewName("/Enterprise/JobManager");
+        return mv;
+    }
+
+    /**
+     * 查询面试信息
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/findInterviews")
+    @ResponseBody
+    public void findInterviews(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String page = request.getParameter("page");
+        String limit = request.getParameter("limit");
+        String industryid = request.getParameter("industryid");
+        String positionname = request.getParameter("positionname");
+//        System.out.println("industryid="+industryid+"positionname="+positionname);
+        int pageInt = Integer.valueOf(page);
+        int limitInt = Integer.parseInt(limit);
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        HashMap<String, Object> condition = new HashMap<>();
+        if (null != industryid && !"".equals((industryid.trim())) && !"0".equals(industryid.trim())) {
+            condition.put("industryid", industryid);
+        }
+        if (null != positionname && !"".equals((positionname.trim()))) {
+            condition.put("positionname", positionname);
+        }
+        int pageInts = (pageInt - 1) * limitInt;
+        condition.put("pageInts", pageInts);
+        condition.put("limitInt", limitInt);
+        condition.put("aid",admin.getAid());
+        Map map = enterpriseService.findInterview(condition);
+//        System.out.println(map);
+//        System.out.println(map.get("interviewList"));
+        if (map.size() != 0) {
+            diagis.setCode(0);
+            diagis.setMsg("");
+            diagis.setCount((Integer) map.get("count"));
+            diagis.setData((List<Interview>) map.get("interviewList"));
+            ResponseUtils.outJson(response, diagis);
+        }
+    }
+    @RequestMapping("/updateInterInvate")
+    @ResponseBody
+    public String updateInterInvate(Interview interview){
+//          interview.setInvate("邀请");
+          interview.setEndtime(new Date());
+          int flag = enterpriseService.updateInterInvate(interview);
+          if (flag>0){
+              return "success";
+          }else{
+              return "error";
+          }
+    }
+
+    /**
+     * 查询面试信息
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/findFeedbackInfo")
+    @ResponseBody
+    public void findFeedbackInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String page = request.getParameter("page");
+        String limit = request.getParameter("limit");
+        String check = request.getParameter("check");
+        String invate = request.getParameter("invate");
+        String interstate = request.getParameter("interstate");
+        String employ = request.getParameter("employ");
+//        System.out.println("industryid="+industryid+"positionname="+positionname);
+        int pageInt = Integer.valueOf(page);
+        int limitInt = Integer.parseInt(limit);
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        HashMap<String, Object> condition = new HashMap<>();
+        if (null != check && !"".equals((check.trim())) && !"0".equals(check.trim())) {
+            condition.put("check", check);
+        }
+        if (null != employ && !"".equals((employ.trim()))) {
+            condition.put("employ", employ);
+        }
+        if (null != invate && !"".equals((invate.trim()))) {
+            condition.put("invate", invate);
+        }
+        if (null != interstate && !"".equals((interstate.trim()))) {
+            condition.put("interstate", interstate);
+        }
+        int pageInts = (pageInt - 1) * limitInt;
+        condition.put("pageInts", pageInts);
+        condition.put("limitInt", limitInt);
+        condition.put("aid",admin.getAid());
+        Map map = enterpriseService.findFeedbackInfo(condition);
+        System.out.println(map);
+        System.out.println(map.get("flist"));
+        if (map.size() != 0) {
+            diagis.setCode(0);
+            diagis.setMsg("");
+            diagis.setCount((Integer) map.get("count"));
+            diagis.setData((List<Interview>) map.get("flist"));
+            ResponseUtils.outJson(response, diagis);
+        }
+    }
 }
