@@ -99,4 +99,12 @@ public class SchoolService
 		return schoolMapper.insertAducation(aducational);
 	}
 
+	public List<Degree> findDegreeList(){
+		return schoolMapper.findDegreeList();
+	}
+
+	public int userInsertResume(Resume resume){
+		return schoolMapper.userInsertResume(resume);
+	}
+
 }

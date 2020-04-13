@@ -63,4 +63,8 @@ public interface SchoolMapper
 
 	public int insertAducation(Aducational aducational);
 
+	public List<Degree> findDegreeList();
+
+	public int userInsertResume(Resume resume);
+
 }
