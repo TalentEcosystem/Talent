@@ -254,5 +254,26 @@
         #{profession}
         )
     </insert>
-
+    <select id="findDegreeList" resultType="Degree">
+        select * from tbl_degree
+    </select>
+    <insert id="userInsertResume" parameterType="Resume">
+        insert into tbl_resume(
+        uid,
+        resname,
+        resex,
+        degreeid,
+        reexper,
+        retel,
+        reset
+        )values (
+        #{uid},
+        #{resname},
+        #{resex},
+        #{degreeid},
+        #{reexper},
+        #{retel},
+        #{reset}
+        )
+    </insert>
 </mapper>

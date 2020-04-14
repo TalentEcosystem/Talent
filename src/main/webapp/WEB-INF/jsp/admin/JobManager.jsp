@@ -46,28 +46,25 @@
 <table id="demo" lay-filter="test"></table>
 </body>
 <script type="text/html" id="barDemo">
-    <button lay-event="detail" type="button" class="layui-btn layui-btn-xs layui-btn-radius">查看简历</button>
-    <button lay-event="update" type="button" class="layui-btn layui-btn-xs layui-btn-radius">面试邀请</button>
-    <button lay-event="updates" type="button" class="layui-btn layui-btn-xs layui-btn-radius">拒绝邀请</button>
-    <button lay-event="derived" type="button" class="layui-btn layui-btn-xs layui-btn-radius layui-btn layui-btn-danger">导出信息</button>
+    <button lay-event="detail" type="button" class="layui-btn layui-btn-xs layui-btn-radius">查看求职进度</button>
+    <button lay-event="delete" type="button" class="layui-btn layui-btn-xs layui-btn-radius layui-btn layui-btn-danger">删除</button>
 </script>
 <script>
     var path=$('#path').val();
 
-    layui.use(['form', 'layer', 'jquery','table','layedit', 'laydate'], function(){
+    layui.use(['form', 'layer', 'jquery','table'], function(){
         var form = layui.form;
         var layer = layui.layer;
         var $ = layui.jquery;
         var table = layui.table;
-        var layedit = layui.layedit;
-        var laydate = layui.laydate;
+
 
         var tableinf = table.render({
             elem: '#demo'
             ,height: 300
             //设置查询刷新的ID
             ,id:'table1'
-            ,url: path+"/Enterprise/findInterviews" //数据接口
+            ,url: path+"/admin/findInterviews"//数据接口
             ,page: true //开启分页
             ,limit:5
             ,limits:[5,10,20,50,100]
@@ -85,73 +82,53 @@
                 ,{field: 'invate', title: '是否邀请', width:150}
                 ,{field: 'presenter', title: '推荐者', width:150}
                 ,{field: 'check', title: '是否查看', width:200,hide:true}
-                ,{field: 'interstate', title: '是否面试', width:200,hide:true}
-                ,{field: 'employ', title: '是否录用', width:200,hide:true}
                 ,{field: 'sid', title: '高校ID', width:200,hide:true}
                 ,{field: 'schoolname', title: '高校名称', width:150}
-                ,{fixed: 'right',title:'操作', width: 200, align:'center', toolbar: '#barDemo'}
+                ,{fixed: 'right',title:'操作', width: 350, align:'center', toolbar: '#barDemo'}
             ]]
         })
         table.on('tool(test)', function(obj){
             var data = obj.data,
                 event = obj.event;
             if (event === 'detail') {
-
+                layer.open({
+                    type: 2
+                    , title: "修改当前信息"
+                    , area: ['600px', '400px']
+                    , shade: 0.3
+                    , shadeClose: true //点击遮罩不会关闭
+                    , content:path+'/admin/path/jobProgress?interviewid='+data.interviewid,
+                    success:function (layero, index) {
+                        var body = layer.getChildFrame('body',index);
+                        body.find("#interviewid").val(data.interviewid);
+                    }
+                });
             }
-            else if(event === 'update'){
-              var interviewid = data.interviewid;
-              var check = data.check;
-              if (check ==='已查看'){
-              console.log(interviewid);
-              $.ajax({
-                  type:"POST",
-                  url:path+"/Enterprise/updateInterInvate",
-                  dataType:"text",
-                  data:{"interviewid":interviewid,"invate":'邀请'},
-                  success:function (msg) {
-                      if (msg ==='success') {
-                          alert("面试邀请成功！");
-                          window.location.reload()
-                      }else {
-                          layer.msg("面试邀请失败！")
-                      }
-                  },
-                  error:function () {
-                      alert("服务器繁忙!");
-                  }
-              })
-            }else{
-                alert("需要先查看简历才能决定是否进行面试邀请")
-              }
-            }
-            else if(event === 'updates'){
-                var interviewid = data.interviewid;
-                var check = data.check;
-                if (check ==='已查看'){
+              if (event === 'delete'){
+                layer.confirm('真的删除行么', function(index) {
+                    var interviewid = data.interviewid;
                     console.log(interviewid);
                     $.ajax({
-                        type:"POST",
-                        url:path+"/Enterprise/updateInterInvate",
-                        dataType:"text",
-                        data:{"interviewid":interviewid,"invate":'拒绝'},
-                        success:function (msg) {
-                            if (msg ==='success') {
-                                alert("拒绝邀请成功！");
-                                window.location.reload()
+                        url: path+"/admin/deleteInterview?interviewid="+interviewid,
+                        async: true,
+                        type: "POST",
+                        datatype: "text",
+                        success: function (msg) {
+                            if (msg == 1111) {
+                                layer.msg('删除成功');
+                                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                             }else {
-                                layer.msg("拒绝邀请失败！")
+                                layer.msg('删除失败');
                             }
                         },
-                        error:function () {
-                            alert("服务器繁忙!");
+                        error: function () {
+                            alert("网络繁忙！")
                         }
                     })
-                }else{
-                    alert("需要先查看简历才能决定是否进行面试邀请")
-                }
-            }
-            else if (event === 'derived'){
+                    console.log(interviewid);
+                    layer.close(index);
 
+                })
             }
 
         })
@@ -164,7 +141,7 @@
 
             console.log("industryid="+industryid+"positionname="+positionname)
             tableinf.reload({
-                url:path+"/Enterprise/findInterviews",
+                url:path+"/admin/findInterviews",
                 page: {
                     curr: 1 //重新从第 1 页开始
                 },

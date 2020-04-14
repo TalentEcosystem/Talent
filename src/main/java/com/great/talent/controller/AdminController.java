@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.great.talent.entity.*;
 import com.great.talent.service.AdminService;
 import com.great.talent.util.Diagis;
+import com.great.talent.util.ResponseUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -406,5 +409,174 @@ public class AdminController
 		request.setAttribute("roleid",roleid);
 		return "success";
 	}
+
+	/**
+	 * 参数管理
+	 * @param limit
+	 * @param page
+	 * @param paraname
+	 * @param paratype
+	 * @return
+	 */
+	@RequestMapping("/paraManager")
+	@ResponseBody
+	public String paraManager(String limit, String page, String paraname,String paratype){
+		Map map=new HashMap();
+		map.put("paraname",paraname);
+		map.put("paratype",paratype);
+		map.put("begin",(Integer.parseInt(page)-1)*Integer.parseInt(limit));
+		map.put("end",Integer.parseInt(limit));
+		List<Parameter> list = adminService.findPara(map);
+		int count = adminService.findCountPara(map);
+		Diagis diagis=new Diagis();
+		diagis.setCode(0);
+		diagis.setMsg("");
+		diagis.setCount(count);
+		diagis.setData(list);
+		Gson g=new Gson();
+		String ss=g.toJson(diagis);
+		return ss;
+	}
+
+	/**
+	 * 删除参数
+	 * @param paraid
+	 * @return
+	 */
+	@RequestMapping("/deletePara")
+	@ResponseBody
+	public String deletePara(String paraid){
+		adminService.deletePara(paraid);
+		return "删除成功";
+	}
+
+	/**
+	 * 修改参数
+	 * @param parameter
+	 * @return
+	 */
+	@RequestMapping("/updatePara")
+	@ResponseBody
+	public String updatePara(Parameter parameter){
+		adminService.updatePara(parameter);
+		return "修改成功";
+	}
+
+	/**
+	 * 新增参数
+	 * @param parameter
+	 * @return
+	 */
+	@RequestMapping("/addPara")
+	@ResponseBody
+	public String addPara(Parameter parameter){
+		adminService.addPara(parameter);
+		return "新增成功";
+	}
+
+	@RequestMapping("/logManager")
+	@ResponseBody
+	public String logManager(String beginTime,String endTime,String limit, String page){
+		Map map=new HashMap();
+		System.out.println("开始时间:"+beginTime);
+		System.out.println("结束时间:"+endTime);
+		map.put("beginTime",beginTime);
+		map.put("endTime",endTime);
+		map.put("begin",(Integer.parseInt(page)-1)*Integer.parseInt(limit));
+		map.put("end",Integer.parseInt(limit));
+		List<SystemLog> list = adminService.findLog(map);
+		int count = adminService.findCountLog(map);
+		Diagis diagis=new Diagis();
+		diagis.setCode(0);
+		diagis.setMsg("");
+		diagis.setCount(count);
+		diagis.setData(list);
+		Gson g=new Gson();
+		String ss=g.toJson(diagis);
+		return ss;
+	}
+	/**
+	 * 查询下拉框的信息,并跳转查询求职的页面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/findInterviewInfo")
+	public ModelAndView findInterviewInfo(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		List<Degree> industry  = adminService.findPositionInfo();
+		request.getSession().setAttribute("industry", industry);
+		mv.setViewName("/admin/JobManager");
+		return mv;
+	}
+
+	/**
+	 * 查询面试信息
+	 *
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping("/findInterviews")
+	@ResponseBody
+	public void findInterviews(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		String page = request.getParameter("page");
+		String limit = request.getParameter("limit");
+		String industryid = request.getParameter("industryid");
+		String positionname = request.getParameter("positionname");
+        System.out.println("industryid="+industryid+"positionname="+positionname);
+		int pageInt = Integer.valueOf(page);
+		int limitInt = Integer.parseInt(limit);
+		Admin admin = (Admin) request.getSession().getAttribute("admin");
+		HashMap<String, Object> condition = new HashMap<>();
+		if (null != industryid && !"".equals((industryid.trim())) && !"0".equals(industryid.trim())) {
+			condition.put("industryid", industryid);
+		}
+		if (null != positionname && !"".equals((positionname.trim()))) {
+			condition.put("positionname", positionname);
+		}
+		int pageInts = (pageInt - 1) * limitInt;
+		condition.put("pageInts", pageInts);
+		condition.put("limitInt", limitInt);
+		condition.put("aid",admin.getAid());
+		Map map = adminService.findInterview(condition);
+        System.out.println(map);
+        System.out.println(map.get("interviewList"));
+		Diagis diagis = new Diagis();
+		if (map.size() != 0) {
+			diagis.setCode(0);
+			diagis.setMsg("");
+			diagis.setCount((Integer) map.get("count"));
+			diagis.setData((List<Interview>) map.get("interviewList"));
+			ResponseUtils.outJson(response, diagis);
+		}
+	}
+
+	@RequestMapping("/jobProgress")
+	@ResponseBody
+   public void jobProgress(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String interviewid = request.getParameter("interviewid");
+		List<Interview> interview = adminService.jobProgress(Integer.parseInt(interviewid));
+		Diagis diagis = new Diagis();
+        if (interview != null){
+			diagis.setCode(0);
+			diagis.setMsg("");
+			diagis.setCount(1);
+			diagis.setData(interview);
+			ResponseUtils.outJson(response, diagis);
+		}
+   }
+
+	@RequestMapping("/deleteInterview")
+	@ResponseBody
+    public void deleteInterview(Interview interview, HttpServletResponse response) throws IOException {
+	   interview.setInterstate("删除");
+	   int flag = adminService.deleteIntervier(interview);
+	   if (flag > 0){
+	   	response.getWriter().print(1111);
+	   }else {
+	   	response.getWriter().print(2222);
+	   }
+   }
 
 }

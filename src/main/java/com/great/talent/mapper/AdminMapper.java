@@ -3,6 +3,8 @@ package com.great.talent.mapper;
 import com.great.talent.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -37,4 +39,26 @@ public interface AdminMapper
 	public void deleteMenu(@Param("roleid") String roleid);
 	public void addMenu(List list);
 	public void deleteFirst(Map map);
+	public List<Parameter> findPara(Map map);
+	public int findCountPara(Map map);
+	public void updatePara(Parameter parameter);
+	public void deletePara(@Param("paraid") String paraid);
+	public void addPara(Parameter parameter);
+	public void addLog(SystemLog systemLog);
+	public List<SystemLog> findLog(Map map);
+	public int findCountLog(Map map);
+
+	/**
+	 * 查询行业
+	 * @return
+	 */
+	@Select("select * from tbl_industry")
+	public List<Industry> findIndustry();
+	public List<Interview> findInterview(Map map);//查询面试信息
+	public int findInterviewNum(Map map);//查询面试信息数量
+    @Select("select * from tbl_interview where interviewid = #{interviewid} ")
+	public List<Interview> jobProgress(int interviewid);//查询求职进度
+
+	@Update("update tbl_interview set interstate = #{interstate} where interviewid = ${interviewid}")
+	public int deleteIntervier(Interview interview);
 }

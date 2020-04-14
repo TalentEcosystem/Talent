@@ -12,35 +12,35 @@
 		String path=request.getContextPath();
 	%>
 	<meta charset="utf-8">
-	<title>新增知识库</title>
+	<title>修改参数</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/layui/css/layui.css"/>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/layui/layui.js"></script>
 </head>
 <body>
 <input type="hidden" id="path" value="<%=path%>">
-<input type="hidden" id="knowledgeid" name="knowledgeid">
+<input type="hidden" id="paraid">
 <form class="layui-form" action="">
 	<div class="layui-form-item">
-		<label class="layui-form-label">名称</label>
+		<label class="layui-form-label">参数名称</label>
 		<div class="layui-input-inline">
-			<input type="text" name="knowname" id="knowname" placeholder="请输入知识库名称" class="layui-input">
+			<input type="text" name="paraname" id="paraname" placeholder="请输入参数名称" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">选择领域</label>
+		<label class="layui-form-label">参数类型</label>
 		<div class="layui-input-inline">
-			<select name="domainid" id="domainid" lay-verify="required">
-				<option value="1">IT互联网</option>
-				<option value="2">房地产</option>
-				<option value="3">金融</option>
-				<option value="4">服务业</option>
+			<select name="paratype" id="paratype" lay-verify="required">
+				<option value="用户参数">用户参数</option>
+				<option value="企业参数">企业参数</option>
+				<option value="高校参数">高校参数</option>
+				<option value="系统参数">系统参数</option>
 			</select>
 		</div>
 	</div>
-	<div class="layui-form-item layui-form-text">
-		<label class="layui-form-label">文本域</label>
-		<div class="layui-input-block">
-			<textarea name="knowintro" id="knowintro" placeholder="请填写知识库介绍" class="layui-textarea"></textarea>
+	<div class="layui-form-item">
+		<label class="layui-form-label">参数值</label>
+		<div class="layui-input-inline">
+			<input type="text" name="paravalue" id="paravalue" placeholder="请输入参数值" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -60,16 +60,16 @@
 
 	function s() {
 		var path=$("#path").val();
-		var knowname=$("#knowname").val();
-		var knowintro=$("#knowintro").val();
-		var domainid=$("#domainid").val();
-		var knowledgeid=$("#knowledgeid").val();
-		if(knowname!=null&&knowname!=""&&knowintro!=null&&knowintro!=""&&domainid!=null&&domainid!=""){
+		var paraname=$("#paraname").val();
+		var paratype=$("#paratype").val();
+		var paravalue=$("#paravalue").val();
+		var paraid=$("#paraid").val();
+		if(paraname!=null&&paraname!=""&&paratype!=null&&paratype!=""&&paravalue!=null&&paravalue!=""){
 			$.ajax({
-				url: path + "/admin/updateKnow",
+				url: path + "/admin/updatePara",
 				type: 'post',
 				async: false,
-				data: {"knowname":knowname,"knowintro":knowintro,"domainid":domainid,"knowledgeid":knowledgeid},
+				data: {"paraname":paraname,"paratype":paratype,"paravalue":paravalue,"paraid":paraid},
 				success: function (msg) {
 					alert(msg);
 					var index = parent.layer.getFrameIndex(window.name);
