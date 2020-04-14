@@ -11,6 +11,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>职位搜索</title>
+	<% String path=request.getContextPath();%>
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/js/layui/css/layui.css" charset="UTF-8" />
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/layui/layui.js" charset="UTF-8"></script>
 
@@ -18,15 +19,22 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/homepage/js/searchJob.js"></script>
 </head>
+<style>
+	.layui-table-cell{
 
+		height:35px;
+		line-height: 35px;
+	}
+</style>
 <body>
+<input type="hidden" value="<%=path%>" id="path">
 <div class="topDiv">
 	<div class="topL">
 		<div class="logo">
-			<img src="images/LOGO.png" />
-			<img src="images/view_logo40.png" class="img1"/>
+			<img src="${pageContext.request.contextPath}/images/LOGO.png" />
+			<img src="${pageContext.request.contextPath}/images/view_logo40.png" class="img1"/>
 		</div>
-		<img src="images/spirit_40.png" />
+		<img src="${pageContext.request.contextPath}/images/spirit_40.png" />
 	</div>
 	<div class="topR">
 		<div class="topR0 topR1"><a href="zhuceCompany.html">企业招聘</a></div>
@@ -65,18 +73,36 @@
 <div class="searchDiv">
 	<div class="search1">
 		<div class="sea1_1">
-			<input name="" type="text" placeholder="请填写关键词或选择职位" class="keyword"/>
+			<input name="" id="gangwei" type="text" autocomplete="off" placeholder="请填写关键词或选择职位" class="keyword"/>
 			<span class="jiantou"></span>
 		</div>
 
-		<div class="sea1_2">
+		<div class="sea1_2" style="width: 180px">
 <%--			<input name="" type="text" placeholder="广东省" class="addtxt"/>--%>
 	<div class="layui-form-item">
-		<script>
-			layui.use('form', function(){
-				var form = layui.form;
+		<select name="modules"   class="provinceTarget" lay-filter="provinceTarget" id="province" >
+			<option value="" data-index="-1" >选择省份</option>
+		</select>
+	</div>
 
-				/*json数据*/
+
+		</div>
+
+		<div class="sea1_3" style="width: 180px">
+			<div class="layui-form-item">
+
+				<select name="modules"  class="cityTarget"  id="city" >
+					<option value="" data-index="-1" >选择城市</option>
+				</select>
+			</div>
+		</div>
+		<script>
+			layui.use(['form','table','layer',], function(){
+				var form = layui.form;
+				var table=layui.table;
+				var layer=layui.layer;
+				var path=$("#path").val();
+				/*省市二级联动json数据*/
 				var jsonList=[
 					{"provice":"北京市","city":["东城区", "西城区", "朝阳区", "丰台区", "石景山区", "海淀区", "门头沟区", "房山区", "通州区", "顺义区", "昌平区", "大兴区", "怀柔区", "平谷区", "密云区", "延庆区"]},
 					{"provice":"天津市","city":["和平区", "河东区", "河西区", "南开区", "河北区", "红桥区", "东丽区", "西青区", "津南区", "北辰区", "武清区", "宝坻区", "滨海新区", "宁河区", "静海区", "蓟州区"]},
@@ -114,51 +140,144 @@
 				/*    资料添加*/
 				var provice="";
 				var city="";
+				for(var i=0;i<jsonList.length;i++){
+					provice+="<option data-index="+i+" value='"+jsonList[i].provice+"'>"+jsonList[i].provice+"</option>";
+				}
+				$(".provinceTarget").append(provice);
+				//薪资下拉框
+				var money='';
+				var moneyList=[
+					{"name":"不限","value":"不限"},
+					{"name":"1k-2k","value":"1000-2000"},
+					{"name":"2k-3k","value":"2000-3000"},
+					{"name":"3k-6k","value":"3000-6000"},
+					{"name":"6k-10k","value":"6000-10000"},
+					{"name":"10k-15k","value":"10000-15000"},
+					{"name":"15k以上","value":"15000"},
+					{"name":"面议","value":"面议"},
+				];
+				for(var i=0;i<moneyList.length;i++){
+					money+="<option data-index="+i+" value='"+moneyList[i].value+"'>"+moneyList[i].name+"</option>";
+				}
+				$("#money").append(money);
+				//学历下拉框
+				var degreeid='';
+				var degreeidList=[
+					{"name":"不限","value":8},
+					{"name":"小学","value":7},
+					{"name":"初中","value":6},
+					{"name":"高中、中技、中专","value":5},
+					{"name":"专科","value":4},
+					{"name":"本科","value":3},
+					{"name":"硕士","value":2},
+					{"name":"博士及以上","value":1},
+				];
+				for(var i=0;i<degreeidList.length;i++){
+					degreeid+="<option data-index="+i+" value='"+degreeidList[i].value+"'>"+degreeidList[i].name+"</option>";
+				}
+				$("#degreeid").append(degreeid);
 
-					for(var i=0;i<jsonList.length;i++){
-						provice+="<option data-index="+i+" value='"+jsonList[i].provice+"'>"+jsonList[i].provice+"</option>";
-						// $("#").append(provice);
+				//企业规模下拉框
+				var companynum='';
+				var companynumList=[
+					{"name":"不限","value":"不限"},
+					{"name":"少于50人","value":'0-50'},
+					{"name":"50~100人","value":'51-100'},
+					{"name":"101~200人","value":'101-200'},
+					{"name":"201~500人","value":'201-500'},
+					{"name":"501~1000","value":'501-1000'},
+					{"name":"1000以上","value":'1001-99999999'}
+
+				];
+				for(var i=0;i<companynumList.length;i++){
+					companynum+="<option data-index="+i+" value='"+companynumList[i].value+"'>"+companynumList[i].name+"</option>";
+				}
+				$("#companynum").append(companynum);
+
+				// 获取行业、工作经验 下拉框的数据
+				$.ajax({
+					type: "post",
+					url: path+"/HomePage/getSelect",
+					dataType: "json",
+					async:true,
+					success: function (data) {
+						console.log(data);
+						var html = '<option value ="-1">'+"不限"+  '</option>';
+						if (data.length == 0){
+							html += "<option value='-1'>不限</option>";
+							$("#industryid").empty().append(html);
+						}else{
+							for(var x in data){
+								html += '<option value = "' + data[x].industryid + '">' + data[x].indname + '</option>'
+							}
+							$("#industryid").empty().append(html);
+						}
+						$.ajax({
+							type: "post",
+							url: path+"/HomePage/getExperSelect",
+							dataType: "json",
+							async:true,
+							success: function (data) {
+								console.log(data);
+								var html = '<option value ="不限">'+"不限"+  '</option>';
+								if (data.length == 0){
+									html += "<option value='不限'>不限</option>";
+									$("#positionexper").empty().append(html);
+								}else{
+									for(var x in data){
+										html += '<option value = "' + data[x]+ '">' + data[x] + '</option>'
+									}
+									$("#positionexper").empty().append(html);
+								}
+
+
+
+
+
+								form.render('select');
+							},
+							error: function (data) {
+								layer.msg("数据获取失败,重新刷新");
+							}
+
+						});
+
+
+
+
+						form.render();
+					},
+					error: function (data) {
+							layer.msg("数据获取失败,重新刷新");
 					}
 
-				$(".provinceTarget").append(provice);
-				form.on('select(provinceTarget)', function(data){
-					$(".xzdivC").empty();
-					var opt=$(".provinceTarget option:selected").attr("data-index");
+				});
 
+
+
+				form.on('select(provinceTarget)', function(data){
+					$(".cityTarget").empty();
+					var opt=$(".provinceTarget option:selected").attr("data-index");
 					if(opt == "-1"){
-						city="<span data-index='-1' value='城市'>城市</span>";
-						$("#xzdivC").append(city);
+						console.log(opt);
+						city="<option  data-index='-1' value='城市'>选择城市</option >";
+						$(".cityTarget").append(city);
 					}else{
 						var length=jsonList[opt].city.length;
 
 						for(var j=0;j<length;j++){
-							city="<span data-index="+j+" value="+jsonList[opt].city[j]+">"+jsonList[opt].city[j]+"</span>";
-							$("#xzdivC").append(city);
+							city="<option  data-index="+j+" value="+jsonList[opt].city[j]+">"+jsonList[opt].city[j]+"</option >";
+							$(".cityTarget").append(city);
 						}
 					}
+					form.render('select');
 				});
-
 				form.render('select');
-
 			});
 		</script>
 
-		<select name="modules"  class="provinceTarget" lay-filter="provinceTarget" >
-			<option value="">直接选择或搜索选择</option>
-		</select>
-		<script type="text/javascript">
-
-
-		</script>
-	</div>
-
-
-		</div>
-		<div class="sea1_3">
-			<input name="" type="text" placeholder="请选择行业" class="hytxt"/>
-		</div>
 		<div class="sea1_4">
-			<a href="javascript:void()">搜工作</a>
+			<input id="searchJob" type="button" style="color: #FFF;width: 116px;height: 37px;background-color:transparent" value="搜工作" />
 		</div>
 		<div class="sea1_5">
 			<span class="span1"><a href="javascript:void()">历史记录</a></span>
@@ -166,163 +285,105 @@
 		</div>
 	</div>
 	<div class="search2">
-		<div class="xzdiv">
-			<div class="xzdivL">工作地点：</div>
-			<div class="xzdivC" id="xzdivC">
-				<span>广州市</span>
-				<span>深圳市</span>
-				<span>佛山市</span>
-				<span>东莞市</span>
-				<span>肇庆市</span>
-				<span>珠海市</span>
-				<span>江门市</span>
-				<span>惠州市</span>
-				<span>中山市</span>
-				<span>阳江市</span>
-				<span>湛江市</span>
-				<span>河源市</span>
-				<span>云浮市</span>
-				<span>汕尾市</span>
-				<span>茂名市</span>
-				<span>汕头市</span>
-				<span>清远市</span>
-				<span>揭阳市</span>
-			</div>
-			<div class="xzdivB"><img src="images/11.png" class="imgshow"/><img src="images/10.png" class="imghidden"/></div>
-			<div class="clear"></div>
-		</div>
-		<div class="xzdiv">
-			<div class="xzdivL">职位类别：</div>
-			<div class="xzdivC">
-				<span>销售人员</span>
-				<span>技工/普工</span>
-				<span>行政/后勤</span>
-				<span>生产制造/运营</span>
-				<span>销售管理</span>
-				<span>贸易/采购</span>
-				<span>客服/技术支持</span>
-				<span>IT产品/运营/设</span>
-				<span>教育/培训</span>
-				<span>影视/媒体</span>
-				<span>软硬件开发/系统集</span>
-				<span>餐饮/娱乐/旅游</span>
-				<span>财务/审计/税务</span>
-				<span>艺术设计</span>
-				<span>市场/策划/公关</span>
-				<span>销售行政/商务</span>
-				<span>人力资源</span>
-				<span>实习生/社工/科研</span>
-				<span>证券/期货/投资</span>
-				<span>质量/安全管理</span>
-				<span>IT品质/运维/技</span>
-				<span>经营管理</span>
-				<span>翻译</span>
-				<span>广告</span>
-				<span>物流/交通/仓储</span>
-				<span>汽车</span>
-				<span>其他</span>
-				<span>机械</span>
-				<span>新闻/出版</span>
-				<span>百货/零售</span>
-				<span>保安/家政</span>
-				<span>电子/半导体/电器</span>
-				<span>通信</span>
-				<span>保险</span>
-				<span>法律</span>
-				<span>化工</span>
-				<span>房地产</span>
-				<span>咨询</span>
-				<span>物业管理</span>
-				<span>电气/电力/能源</span>
-				<span>服装/纺织品</span>
-				<span>医院/医疗</span>
-				<span>美容/健身</span>
-				<span>环保</span>
-				<span>农/林/牧/渔业</span>
-				<span>IT管理</span>
-			</div>
-			<div class="xzdivB"><img src="images/11.png" class="imgshow"/><img src="images/10.png" class="imghidden"/></div>
-			<div class="clear"></div>
-		</div>
 <%--		<div class="xzdiv">--%>
-<%--			<div class="xzdivL">月薪范围：</div>--%>
-<%--			<div class="xzdivC">--%>
-<%--				<span>1K-2K</span>--%>
-<%--				<span>2K-3K</span>--%>
-<%--				<span>3K-4K</span>--%>
-<%--				<span>4K-5K</span>--%>
-<%--				<span>5K-6K</span>--%>
-<%--				<span>6K-8K</span>--%>
-<%--				<span>8K-10K</span>--%>
-<%--				<span>10K-15K</span>--%>
-<%--				<span>15K-20K</span>--%>
-<%--				<span>20K以上</span>--%>
-<%--				<span>面议</span>--%>
+<%--			<div class="xzdivL">工作地点：</div>--%>
+<%--			<div class="xzdivC" id="xzdivC">--%>
+<%--				<span>广州市</span>--%>
+<%--				<span>深圳市</span>--%>
+<%--				<span>佛山市</span>--%>
+<%--				<span>东莞市</span>--%>
+<%--				<span>肇庆市</span>--%>
+<%--				<span>珠海市</span>--%>
+<%--				<span>江门市</span>--%>
+<%--				<span>惠州市</span>--%>
+<%--				<span>中山市</span>--%>
+<%--				<span>阳江市</span>--%>
+<%--				<span>湛江市</span>--%>
+<%--				<span>河源市</span>--%>
+<%--				<span>云浮市</span>--%>
+<%--				<span>汕尾市</span>--%>
+<%--				<span>茂名市</span>--%>
+<%--				<span>汕头市</span>--%>
+<%--				<span>清远市</span>--%>
+<%--				<span>揭阳市</span>--%>
 <%--			</div>--%>
-<%--			<div class="xzdivB"></div>--%>
+<%--			<div class="xzdivB"><img src="images/11.png" class="imgshow"/><img src="images/10.png" class="imghidden"/></div>--%>
 <%--			<div class="clear"></div>--%>
 <%--		</div>--%>
+<%--		<div class="xzdiv">--%>
+<%--			<div class="xzdivL">职位类别：</div>--%>
+<%--			<div class="xzdivC">--%>
+<%--				<span>销售人员</span>--%>
+<%--				<span>技工/普工</span>--%>
+<%--				<span>行政/后勤</span>--%>
+<%--				<span>生产制造/运营</span>--%>
+<%--				<span>销售管理</span>--%>
+<%--				<span>贸易/采购</span>--%>
+<%--				<span>客服/技术支持</span>--%>
+<%--				<span>IT产品/运营/设</span>--%>
+<%--				<span>教育/培训</span>--%>
+<%--				<span>影视/媒体</span>--%>
+<%--				<span>软硬件开发/系统集</span>--%>
+<%--				<span>餐饮/娱乐/旅游</span>--%>
+<%--				<span>财务/审计/税务</span>--%>
+<%--				<span>艺术设计</span>--%>
+<%--				<span>市场/策划/公关</span>--%>
+<%--				<span>销售行政/商务</span>--%>
+<%--				<span>人力资源</span>--%>
+<%--				<span>实习生/社工/科研</span>--%>
+<%--				<span>证券/期货/投资</span>--%>
+<%--				<span>质量/安全管理</span>--%>
+<%--				<span>IT品质/运维/技</span>--%>
+<%--				<span>经营管理</span>--%>
+<%--				<span>翻译</span>--%>
+<%--				<span>广告</span>--%>
+<%--				<span>物流/交通/仓储</span>--%>
+<%--				<span>汽车</span>--%>
+<%--				<span>其他</span>--%>
+<%--				<span>机械</span>--%>
+<%--				<span>新闻/出版</span>--%>
+<%--				<span>百货/零售</span>--%>
+<%--				<span>保安/家政</span>--%>
+<%--				<span>电子/半导体/电器</span>--%>
+<%--				<span>通信</span>--%>
+<%--				<span>保险</span>--%>
+<%--				<span>法律</span>--%>
+<%--				<span>化工</span>--%>
+<%--				<span>房地产</span>--%>
+<%--				<span>咨询</span>--%>
+<%--				<span>物业管理</span>--%>
+<%--				<span>电气/电力/能源</span>--%>
+<%--				<span>服装/纺织品</span>--%>
+<%--				<span>医院/医疗</span>--%>
+<%--				<span>美容/健身</span>--%>
+<%--				<span>环保</span>--%>
+<%--				<span>农/林/牧/渔业</span>--%>
+<%--				<span>IT管理</span>--%>
+<%--			</div>--%>
+<%--			<div class="xzdivB"><img src="images/11.png" class="imgshow"/><img src="images/10.png" class="imghidden"/></div>--%>
+<%--			<div class="clear"></div>--%>
+<%--		</div>--%>
+
 <%--		<div class="xzdiv hidden">--%>
-<%--			<div class="xzdivL">学历要求：</div>--%>
+<%--			<div class="xzdivL">工作性质：</div>--%>
 <%--			<div class="xzdivC">--%>
-<%--				<span>初中(134)</span>--%>
-<%--				<span>高中、中技、中专(321)</span>--%>
-<%--				<span>大专(442)</span>--%>
-<%--				<span>本科(102)</span>--%>
-<%--				<span>硕士(4)</span>--%>
-<%--				<span>不限(138)</span>--%>
+<%--				<span>全职(1056)</span>--%>
+<%--				<span>兼职(53)</span>--%>
+<%--				<span>实习(32)</span>--%>
 <%--			</div>--%>
 <%--			<div class="xzdivB"></div>--%>
 <%--			<div class="clear"></div>--%>
 <%--		</div>--%>
-<%--		<div class="xzdiv hidden">--%>
-<%--			<div class="xzdivL">工作年限：</div>--%>
-<%--			<div class="xzdivC">--%>
-<%--				<span>不限(539)</span>--%>
-<%--				<span>1~2年(365)</span>--%>
-<%--				<span>3~5年(135)</span>--%>
-<%--				<span>6~10年(19)</span>--%>
-<%--				<span>10年以上(6)</span>--%>
-<%--				<span>应届毕业生(77)</span>--%>
-<%--			</div>--%>
-<%--			<div class="xzdivB"></div>--%>
-<%--			<div class="clear"></div>--%>
-<%--		</div>--%>
-		<div class="xzdiv hidden">
-			<div class="xzdivL">工作性质：</div>
-			<div class="xzdivC">
-				<span>全职(1056)</span>
-				<span>兼职(53)</span>
-				<span>实习(32)</span>
-			</div>
-			<div class="xzdivB"></div>
-			<div class="clear"></div>
-		</div>
-<%--		<div class="xzdiv hidden">--%>
-<%--			<div class="xzdivL">企业规模：</div>--%>
-<%--			<div class="xzdivC">--%>
-<%--				<span>少于50人(384)</span>--%>
-<%--				<span>50~100人(362)</span>--%>
-<%--				<span>101~200人(160)</span>--%>
-<%--				<span>201~500人(113)</span>--%>
-<%--				<span>501~1000人(64)</span>--%>
-<%--				<span>1000人以上(58)</span>--%>
-<%--			</div>--%>
-<%--			<div class="xzdivB"></div>--%>
-<%--			<div class="clear"></div>--%>
-<%--		</div>--%>
+
 		<div class="xzdiv">
 
 			<div class="search1" style="background: white">
 				<div class="sea1_1" style="width: 200px;border: #F6F6F6;margin-left: 10px;font-family: '微软雅黑';">
-					<i style="float: left;padding-top: 10px;font-size: 18px">职业类别：</i>
-					<div class="layui-input-inline" style="width: 100px;float: right">
+					<i style="float: left;padding-top: 10px;font-size: 18px">行业类别：</i>
+					<div class="layui-input-inline" style="width: 100px;float: right" >
 
-						<select name="quiz1"  >
-							<option value="">请选择省</option>
-							<option value="浙江" selected="">浙江省</option>
-							<option value="你的工号">江西省</option>
-							<option value="你最喜欢的老师">福建省</option>
+						<select name="quiz1" autocomplete="off"  lay-filter="industryid" id="industryid">
+
 						</select>
 					</div>
 				</div>
@@ -332,19 +393,8 @@
 					<i style="float: left;padding-top: 10px;font-size: 18px">月薪范围：</i>
 					<div class="layui-input-inline" style="width: 100px;float: right">
 
-						<select name="quiz1"  >
-							<option value="不限">不限</option>
-							<option value="1000-2000" selected="">1K-2K</option>
-							<option value="2000-3000">2K-3K</option>
-							<option value="3000-4000">3K-4K</option>
-							<option value="4000-5000" selected="">4K-5K</option>
-							<option value="5000-6000">5K-6K</option>
-							<option value="6000-8000">6K-8K</option>
-							<option value="8000-10000" selected="">8K-10K</option>
-							<option value="10000-15000">10K-15K</option>
-							<option value="15000-20000">15K-20K</option>
-							<option value="20000">20K以上</option>
-							<option value="面议">面议</option>
+						<select name="quiz1" id="money"  lay-filter="money">
+
 						</select>
 					</div>
 
@@ -357,29 +407,16 @@
 					<i style="float: left;padding-top: 10px;font-size: 18px">学历要求：</i>
 					<div class="layui-input-inline" style="width: 100px;float: right">
 
-						<select name="quiz1"  >
-							<option value="不限">不限</option>
-							<option value="初中" selected="">初中</option>
-							<option value="高中">高中</option>
-							<option value="中专">中专</option>
-							<option value="大专">大专</option>
-							<option value="本科" selected="">本科</option>
-							<option value="硕士">硕士</option>
-							<option value="博士">博士</option>
+						<select name="quiz1"  id="degreeid" lay-filter="degreeid">
+
 						</select>
 					</div>
 				</div>
 				<div class="sea1_4" style="background-color:white;font-size:12px;width: 200px;border: #F6F6F6;margin-top: 10px;padding-top: 0">
-					<i style="float: left;font-size: 18px">工作年限：</i>
+					<i style="float: left;font-size: 18px">工作经验：</i>
 					<div class="layui-input-inline" style="width: 100px;float: right">
+						<select name="quiz1"  id="positionexper"  lay-filter="positionexper">
 
-						<select name="quiz1"  >
-							<option value="不限">不限</option>
-							<option value="1-2" selected="">1-2年</option>
-							<option value="3-5">3-5年</option>
-							<option value="6-10">6~10年</option>
-							<option value="10">10年以上</option>
-							<option value="应届毕业生">应届毕业生</option>
 						</select>
 					</div>
 
@@ -388,58 +425,14 @@
 					<i style="float: left;padding-top: 10px;font-size: 18px">企业规模：</i>
 					<div class="layui-input-inline" style="width: 100px;float: right">
 
-						<select name="quiz1"  >
-							<option value="不限">不限</option>
-							<option value="50" selected="">少于50人</option>
-							<option value="50-100">50~100人</option>
-							<option value="101-200">101~200人</option>
-							<option value="201-500" selected="">201~500人</option>
-							<option value="501-1000">501~1000人</option>
-							<option value="1000">1000人以上</option>
+						<select name="quiz1" id="companynum"  lay-filter="companynum" >
+
 						</select>
 					</div>
 
 				</div>
 			</div>
 
-
-
-
-
-<%--			<div class="xzdivC" >--%>
-<%--				<div class="dydiv" >--%>
-<%--					<select name="modules"  class="provinceTarget" lay-filter="provinceTarget" >--%>
-<%--						<option value="">直接选择或搜索选择</option>--%>
-<%--						<option value="">直接选择或搜索选择</option>--%>
-<%--						<option value="">直接选择或搜索选择</option>--%>
-<%--					</select>--%>
-<%--				</div>--%>
-<%--				<div class="dydiv">--%>
-<%--					<select name="modules"  class="provinceTarget" lay-filter="provinceTarget" >--%>
-<%--						<option value="">直接选择或搜索选择</option>--%>
-<%--						<option value="">直接选择或搜索选择</option>--%>
-<%--						<option value="">直接选择或搜索选择</option>--%>
-<%--					</select>--%>
-<%--				</div>--%>
-<%--				<div class="dydiv">--%>
-<%--					<input name="" type="checkbox" value="" />--%>
-<%--					<span>奖金提成</span>--%>
-<%--				</div>--%>
-<%--				<div class="dydiv">--%>
-<%--					<input name="" type="checkbox" value="" />--%>
-<%--					<span>双休</span>--%>
-<%--				</div>--%>
-<%--				<div class="dydiv">--%>
-<%--					<input name="" type="checkbox" value="" />--%>
-<%--					<span>8小时工作制</span>--%>
-<%--				</div>--%>
-<%--				<div class="dydiv">--%>
-<%--					<input name="" type="checkbox" value="" />--%>
-<%--					<span>提供住宿</span>--%>
-<%--				</div>--%>
-<%--			</div>--%>
-<%--			<div class="xzdivB"></div>--%>
-<%--			<div class="clear"></div>--%>
 		</div>
 	</div>
 
@@ -447,6 +440,7 @@
 		<span class="down">更多选项</span>
 	</div>
 </div>
+
 </form>
 
 <div class="clear"></div>
@@ -465,315 +459,588 @@
 			<span>只显示有环境照片 </span>
 		</div>
 		<div class="tj3">
-			<span>共1141条  第1/39页</span>
+
 		</div>
 	</div>
 	<div class="clear"></div>
 	<div class="listcon">
-		<table border="0" width="100%" cellpadding="0" cellspacing="0" class="listtab">
-			<thead>
-			<tr>
-				<th width="24%" style="padding-left:17px">职位名称</th>
-				<th width="30%">企业名称</th>
-				<th width="8%">企业答复率</th>
-				<th width="16%">工作地点</th>
-				<th width="8%">薪水</th>
-				<th width="10%">刷新时间</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>
-					<input name="" type="checkbox" value="" />
-					<a href="javascript:void()" class="jobname"><img src="images/Top.gif" />后勤文员<img src="images/qq.gif" /></a>
-				</td>
-				<td>
-					<div class="company">
-						<a href="javascript:void()">广东同源科技发展有限公司</a>
-						<span><img src="images/16.png" /></span>
-					</div>
-				</td>
-				<td><font style="color: red">100.0%</font></td>
-				<td>广东佛山南海区</td>
-				<td><span>2.5K-3.5K</span></td>
-				<td>1小时</td>
-			</tr>
-			<tr class="xxdetail none">
-				<td colspan="5">
-					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />
-						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />
-						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>
-				</td>
-				<td>
-					<div class="applydiv">
-						<a href="" class="ljsqbtn">立即申请</a>
-						<span class="ygz">已关注</span>
-					</div>
-				</td>
-			</tr>
-			<tr style="background: rgb(247, 248, 250)">
-				<td>
-					<input name="" type="checkbox" value="" />
-					<a href="javascript:void()" class="jobname">国际贸易专员<img src="images/qq.gif" /></a>
-				</td>
-				<td>
-					<div class="company">
-						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>
-						<span><img src="images/16.png" /></span>
-					</div>
-				</td>
-				<td></td>
-				<td>广东深圳福田区</td>
-				<td>3.5K-6K</td>
-				<td>刚刚</td>
-			</tr>
-			<tr style="background: rgb(247, 248, 250)" class="xxdetail none">
-				<td colspan="5">
-					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />
-						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />
-						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>
-				</td>
-				<td>
-					<div class="applydiv">
-						<a href="" class="ljsqbtn">立即申请</a>
-						<span>关注</span>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input name="" type="checkbox" value="" />
-					<a href="javascript:void()" class="jobname">外贸业务员</a>
-				</td>
-				<td>
-					<div class="company">
-						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>
-						<span><img src="images/16.png" /></span>
-					</div>
-				</td>
-				<td></td>
-				<td>广东深圳福田区</td>
-				<td>3.5K-6K</td>
-				<td>刚刚</td>
-			</tr>
-			<tr class="xxdetail none">
-				<td colspan="5">
-					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />
-						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />
-						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>
-				</td>
-				<td>
-					<div class="applydiv">
-						<a href="" class="ljsqbtn">立即申请</a>
-						<span>关注</span>
-					</div>
-				</td>
-			</tr>
-			<tr style="background: rgb(247, 248, 250)">
-				<td>
-					<input name="" type="checkbox" value="" />
-					<a href="javascript:void()" class="jobname">家具设计师</a>
-				</td>
-				<td>
-					<div class="company">
-						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>
-						<span><img src="images/16.png" /></span>
-					</div>
-				</td>
-				<td></td>
-				<td>广东深圳福田区</td>
-				<td>3.5K-6K</td>
-				<td>刚刚</td>
-			</tr>
-			<tr style="background: rgb(247, 248, 250)" class="xxdetail none">
-				<td colspan="5">
-					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />
-						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />
-						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>
-				</td>
-				<td>
-					<div class="applydiv">
-						<a href="" class="ljsqbtn">立即申请</a>
-						<span>关注</span>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input name="" type="checkbox" value="" />
-					<a href="javascript:void()" class="jobname">项目客户代表<img src="images/qq.gif" /></a>
-				</td>
-				<td>
-					<div class="company">
-						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>
-						<span><img src="images/16.png" /></span>
-					</div>
-				</td>
-				<td></td>
-				<td>广东深圳福田区</td>
-				<td>3.5K-6K</td>
-				<td>30分钟</td>
-			</tr>
-			<tr class="xxdetail none">
-				<td colspan="5">
-					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />
-						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />
-						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>
-				</td>
-				<td>
-					<div class="applydiv">
-						<a href="" class="ljsqbtn">立即申请</a>
-						<span>关注</span>
-					</div>
-				</td>
-			</tr>
-			<tr style="background: rgb(247, 248, 250)">
-				<td>
-					<input name="" type="checkbox" value="" />
-					<a href="javascript:void()" class="jobname">项目客户代表</a>
-				</td>
-				<td>
-					<div class="company">
-						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>
-						<span><img src="images/16.png" /></span>
-					</div>
-				</td>
-				<td></td>
-				<td>广东深圳福田区</td>
-				<td>3.5K-6K</td>
-				<td>30分钟</td>
-			</tr>
-			<tr style="background: rgb(247, 248, 250)" class="xxdetail none">
-				<td colspan="5">
-					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />
-						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />
-						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>
-				</td>
-				<td>
-					<div class="applydiv">
-						<a href="" class="ljsqbtn">立即申请</a>
-						<span>关注</span>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input name="" type="checkbox" value="" />
-					<a href="javascript:void()" class="jobname">车险续约客服</a>
-				</td>
-				<td>
-					<div class="company">
-						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>
-						<span><img src="images/16.png" /></span>
-					</div>
-				</td>
-				<td></td>
-				<td>广东深圳福田区</td>
-				<td>3.5K-6K</td>
-				<td>30分钟</td>
-			</tr>
-			<tr class="xxdetail none">
-				<td colspan="5">
-					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />
-						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />
-						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>
-				</td>
-				<td>
-					<div class="applydiv">
-						<a href="" class="ljsqbtn">立即申请</a>
-						<span>关注</span>
-					</div>
-				</td>
-			</tr>
-			<tr style="background: rgb(247, 248, 250)">
-				<td>
-					<input name="" type="checkbox" value="" />
-					<a href="javascript:void()" class="jobname">项目编写专员</a>
-				</td>
-				<td>
-					<div class="company">
-						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>
-						<span><img src="images/16.png" /></span>
-					</div>
-				</td>
-				<td></td>
-				<td>广东深圳福田区</td>
-				<td>3.5K-6K</td>
-				<td>30分钟</td>
-			</tr>
-			<tr style="background: rgb(247, 248, 250)" class="xxdetail none">
-				<td colspan="5">
-					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />
-						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />
-						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>
-				</td>
-				<td>
-					<div class="applydiv">
-						<a href="" class="ljsqbtn">立即申请</a>
-						<span>关注</span>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input name="" type="checkbox" value="" />
-					<a href="javascript:void()" class="jobname">电话客服<img src="images/qq.gif" /></a>
-				</td>
-				<td>
-					<div class="company">
-						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>
-						<span><img src="images/16.png" /></span>
-					</div>
-				</td>
-				<td></td>
-				<td>广东深圳福田区</td>
-				<td>3.5K-6K</td>
-				<td>30分钟</td>
-			</tr>
-			<tr class="xxdetail none">
-				<td colspan="5">
-					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />
-						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />
-						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>
-				</td>
-				<td>
-					<div class="applydiv">
-						<a href="" class="ljsqbtn">立即申请</a>
-						<span>关注</span>
-					</div>
-				</td>
-			</tr>
-			<tr style="background: rgb(247, 248, 250)">
-				<td>
-					<input name="" type="checkbox" value="" />
-					<a href="javascript:void()" class="jobname">跟单人员</a>
-				</td>
-				<td>
-					<div class="company">
-						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>
-						<span><img src="images/16.png" /></span>
-					</div>
-				</td>
-				<td></td>
-				<td>广东深圳福田区</td>
-				<td>3.5K-6K</td>
-				<td>30分钟</td>
-			</tr>
-			<tr style="background: rgb(247, 248, 250)" class="xxdetail none">
-				<td colspan="5">
-					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />
-						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />
-						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>
-				</td>
-				<td>
-					<div class="applydiv">
-						<a href="" class="ljsqbtn">立即申请</a>
-						<span>关注</span>
-					</div>
-				</td>
-			</tr>
-			</tbody>
-		</table>
+		<input type="hidden" value="${sypositionname}" id="sypositionname">
+		<input type="hidden" value="${sypositionaddress}" id="sypositionaddress">
+		<table class="layui-hide" id="test" > </table>
+		<script type="text/html" id="bar">
+
+			<button class="layui-btn  layui-btn-danger" lay-event="shen">
+				<i class="layui-icon ">申请</i>
+			</button>
+
+		</script>
+		<script>
+			layui.use(['table','form'], function(){
+				var table = layui.table;
+				var form=layui.form;
+				var path=$("#path").val();
+				var sypositionaddress=$("#sypositionaddress").val();
+				var sypositionname=$("#sypositionname").val();
+
+				console.log(sypositionaddress+sypositionname);
+				table.render({
+					elem: '#test'
+					,url:path+ '/HomePage/getJobTableNews/'
+					,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+					,id:'serviceCode'
+					,skin:'nob'
+					,even: true //开启隔行背景
+					,cols: [[
+						{field:'positionname', width:'10%', title: '职位名称',style:''}
+						,{field:'companyname', width:'20%', title: '企业名称',}
+						,{field:'positionaddress', width:'25%', title: '工作地点',}
+						,{field:'money', title: '薪水', width: '10%', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+						,{field:'positiontime', title: '发布时间', width: '18%', minWidth: 100,
+						templet:"<div>{{layui.util.toDateString(d.positiontime,'MM月dd号 ')}}</div>"
+					} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+						,{field:'j', title: '职位申请',toolbar:"#bar", width: '17%', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+
+					]]
+					,page: true,
+					limit:10,
+					curr: 1,
+					limits: [10,20,30], //一页选择显示3,5或10条数据
+					where: {
+						sypositionname: sypositionname,
+						sypositionaddress:sypositionaddress
+					}
+					,parseData: function(res) { //将原始数据解析成 table 组件所规定的数据，res为从url中get到的数据
+						console.log(res);
+					}
+					,done : function(res, curr, count){
+
+						tableList=res.data;
+						$('th').css({'background-color': '#5792c6', 'color': '#fff','font-weight':'bold','border-bottom': '1px #F7B8A6 solid'});
+						$('tr').css({})
+
+					}
+
+
+
+
+				});
+				// table.reload('serviceCode', {
+				// 	page: {
+				// 		curr: 1
+				// 	}
+				// 	,where: {
+				// 		sypositionname: sypositionname,
+				// 		sypositionaddress:sypositionaddress
+				// 	}
+				// });
+
+				$('#searchJob').on('click', function(){
+
+					var positionname = $('#gangwei').val();
+
+					var positionaddress = $("#province").find("option:selected").val()+$("#city").find("option:selected").val();
+					console.log(positionname+positionaddress);
+					console.log(positionaddress);
+					//执行重载
+					table.reload('serviceCode', {
+						page: {
+							curr: 1
+						}
+						,where: {
+							sypositionname: sypositionname,
+							sypositionaddress: sypositionaddress,
+							positionname:positionname,
+							positionaddress:positionaddress
+						}
+					});
+					// }
+				});
+
+				form.on('select(industryid)', function(data){
+					var positionname = $('#gangwei').val();//岗位的名称
+					var positionaddress = $("#province").find("option:selected").val()+$("#city").find("option:selected").val();//工作的地址
+					var industryid=data.value;//行业id
+					var money=$("#money").find("option:selected").val();//资薪
+					var degreeid=$("#degreeid").find("option:selected").val();//学历的id
+					var positionexper=$("#positionexper").find("option:selected").val();//工作经验
+					var companynum=$("#companynum").find("option:selected").val();//企业规模
+
+					// console.log(data.elem); //得到select原始DOM对象
+					console.log(data.value); //得到被选中的值
+					// console.log(data.othis); //得到美化后的DOM对象
+					table.reload('serviceCode', {
+						page: {
+							curr: 1
+						}
+						,where: {
+							sypositionname: sypositionname,
+							sypositionaddress: sypositionaddress,
+							positionname:positionname,
+							positionaddress:positionaddress,
+							industryid:industryid,
+							money:money,
+							degreeid:degreeid,
+							positionexper:positionexper,
+							companynum:companynum
+
+
+
+						}
+					});
+
+
+
+				});
+				form.on('select(money)', function(data){
+					var positionname = $('#gangwei').val();//岗位的名称
+					var positionaddress = $("#province").find("option:selected").val()+$("#city").find("option:selected").val();//工作的地址
+					var industryid=$("#industryid").find("option:selected").val();//行业id
+					var money=data.value;//资薪
+					var degreeid=$("#degreeid").find("option:selected").val();//学历的id
+					var positionexper=$("#positionexper").find("option:selected").val();//工作经验
+					var companynum=$("#companynum").find("option:selected").val();//企业规模
+
+					// console.log(data.elem); //得到select原始DOM对象
+					console.log(data.value); //得到被选中的值
+					// console.log(data.othis); //得到美化后的DOM对象
+					table.reload('serviceCode', {
+						page: {
+							curr: 1
+						}
+						,where: {
+							sypositionname: sypositionname,
+							sypositionaddress: sypositionaddress,
+							positionname:positionname,
+							positionaddress:positionaddress,
+							industryid:industryid,
+							money:money,
+							degreeid:degreeid,
+							positionexper:positionexper,
+							companynum:companynum
+
+
+
+						}
+					});
+
+
+
+				});
+				form.on('select(degreeid)', function(data){
+					var positionname = $('#gangwei').val();//岗位的名称
+					var positionaddress = $("#province").find("option:selected").val()+$("#city").find("option:selected").val();//工作的地址
+					var industryid=$("#industryid").find("option:selected").val();//行业id
+					var money=$("#money").find("option:selected").val();//资薪
+					var degreeid=data.value;//学历的id
+					var positionexper=$("#positionexper").find("option:selected").val();//工作经验
+					var companynum=$("#companynum").find("option:selected").val();//企业规模
+
+					// console.log(data.elem); //得到select原始DOM对象
+					console.log(data.value); //得到被选中的值
+					console.log(data.value); //得到被选中的值
+					// console.log(data.othis); //得到美化后的DOM对象
+					table.reload('serviceCode', {
+						page: {
+							curr: 1
+						}
+						,where: {
+							sypositionname: sypositionname,
+							sypositionaddress: sypositionaddress,
+							positionname:positionname,
+							positionaddress:positionaddress,
+							industryid:industryid,
+							money:money,
+							degreeid:degreeid,
+							positionexper:positionexper,
+							companynum:companynum
+
+
+
+						}
+					});
+
+
+
+				});
+				form.on('select(positionexper)', function(data){
+					var positionname = $('#gangwei').val();//岗位的名称
+					var positionaddress = $("#province").find("option:selected").val()+$("#city").find("option:selected").val();//工作的地址
+					var industryid=$("#industryid").find("option:selected").val();//行业id
+					var money=$("#money").find("option:selected").val();//资薪
+					var degreeid=$("#degreeid").find("option:selected").val();//学历的id
+					var positionexper=data.value;//工作经验
+					var companynum=$("#companynum").find("option:selected").val();//企业规模
+
+					// console.log(data.elem); //得到select原始DOM对象
+					console.log(data.value); //得到被选中的值
+					// console.log(data.othis); //得到美化后的DOM对象
+					table.reload('serviceCode', {
+						page: {
+							curr: 1
+						}
+						,where: {
+							sypositionname: sypositionname,
+							sypositionaddress: sypositionaddress,
+							positionname:positionname,
+							positionaddress:positionaddress,
+							industryid:industryid,
+							money:money,
+							degreeid:degreeid,
+							positionexper:positionexper,
+							companynum:companynum
+
+
+
+						}
+					});
+
+
+
+				});
+				form.on('select(companynum)', function(data){
+					var positionname = $('#gangwei').val();//岗位的名称
+					var positionaddress = $("#province").find("option:selected").val()+$("#city").find("option:selected").val();//工作的地址
+					var industryid=$("#industryid").find("option:selected").val();//行业id
+					var money=$("#money").find("option:selected").val();//资薪
+					var degreeid=$("#degreeid").find("option:selected").val();//学历的id
+					var positionexper=$("#positionexper").find("option:selected").val();//工作经验
+					var companynum=data.value;//企业规模
+
+					// console.log(data.elem); //得到select原始DOM对象
+					console.log(data.value); //得到被选中的值
+					// console.log(data.othis); //得到美化后的DOM对象
+					table.reload('serviceCode', {
+						page: {
+							curr: 1
+						}
+						,where: {
+							sypositionname: sypositionname,
+							sypositionaddress: sypositionaddress,
+							positionname:positionname,
+							positionaddress:positionaddress,
+							industryid:industryid,
+							money:money,
+							degreeid:degreeid,
+							positionexper:positionexper,
+							companynum:companynum
+
+
+
+						}
+					});
+
+
+
+				});
+
+			});
+		</script>
+
+
+<%--		<table border="0" width="100%" cellpadding="0" cellspacing="0" class="listtab">--%>
+<%--			<thead>--%>
+<%--			<tr>--%>
+<%--				<th width="24%" style="padding-left:17px">职位名称</th>--%>
+<%--				<th width="30%">企业名称</th>--%>
+<%--				<th width="8%">企业答复率</th>--%>
+<%--				<th width="16%">工作地点</th>--%>
+<%--				<th width="8%">薪水</th>--%>
+<%--				<th width="10%">刷新时间</th>--%>
+<%--			</tr>--%>
+<%--			</thead>--%>
+<%--			<tbody>--%>
+<%--			<tr>--%>
+<%--				<td>--%>
+<%--					<input name="" type="checkbox" value="" />--%>
+<%--					<a href="javascript:void()" class="jobname"><img src="images/Top.gif" />后勤文员<img src="images/qq.gif" /></a>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="company">--%>
+<%--						<a href="javascript:void()">广东同源科技发展有限公司</a>--%>
+<%--						<span><img src="images/16.png" /></span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--				<td><font style="color: red">100.0%</font></td>--%>
+<%--				<td>广东佛山南海区</td>--%>
+<%--				<td><span>2.5K-3.5K</span></td>--%>
+<%--				<td>1小时</td>--%>
+<%--			</tr>--%>
+<%--			<tr class="xxdetail none">--%>
+<%--				<td colspan="5">--%>
+<%--					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />--%>
+<%--						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />--%>
+<%--						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="applydiv">--%>
+<%--						<a href="" class="ljsqbtn">立即申请</a>--%>
+<%--						<span class="ygz">已关注</span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			<tr style="background: rgb(247, 248, 250)">--%>
+<%--				<td>--%>
+<%--					<input name="" type="checkbox" value="" />--%>
+<%--					<a href="javascript:void()" class="jobname">国际贸易专员<img src="images/qq.gif" /></a>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="company">--%>
+<%--						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>--%>
+<%--						<span><img src="images/16.png" /></span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--				<td></td>--%>
+<%--				<td>广东深圳福田区</td>--%>
+<%--				<td>3.5K-6K</td>--%>
+<%--				<td>刚刚</td>--%>
+<%--			</tr>--%>
+<%--			<tr style="background: rgb(247, 248, 250)" class="xxdetail none">--%>
+<%--				<td colspan="5">--%>
+<%--					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />--%>
+<%--						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />--%>
+<%--						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="applydiv">--%>
+<%--						<a href="" class="ljsqbtn">立即申请</a>--%>
+<%--						<span>关注</span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			<tr>--%>
+<%--				<td>--%>
+<%--					<input name="" type="checkbox" value="" />--%>
+<%--					<a href="javascript:void()" class="jobname">外贸业务员</a>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="company">--%>
+<%--						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>--%>
+<%--						<span><img src="images/16.png" /></span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--				<td></td>--%>
+<%--				<td>广东深圳福田区</td>--%>
+<%--				<td>3.5K-6K</td>--%>
+<%--				<td>刚刚</td>--%>
+<%--			</tr>--%>
+<%--			<tr class="xxdetail none">--%>
+<%--				<td colspan="5">--%>
+<%--					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />--%>
+<%--						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />--%>
+<%--						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="applydiv">--%>
+<%--						<a href="" class="ljsqbtn">立即申请</a>--%>
+<%--						<span>关注</span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			<tr style="background: rgb(247, 248, 250)">--%>
+<%--				<td>--%>
+<%--					<input name="" type="checkbox" value="" />--%>
+<%--					<a href="javascript:void()" class="jobname">家具设计师</a>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="company">--%>
+<%--						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>--%>
+<%--						<span><img src="images/16.png" /></span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--				<td></td>--%>
+<%--				<td>广东深圳福田区</td>--%>
+<%--				<td>3.5K-6K</td>--%>
+<%--				<td>刚刚</td>--%>
+<%--			</tr>--%>
+<%--			<tr style="background: rgb(247, 248, 250)" class="xxdetail none">--%>
+<%--				<td colspan="5">--%>
+<%--					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />--%>
+<%--						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />--%>
+<%--						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="applydiv">--%>
+<%--						<a href="" class="ljsqbtn">立即申请</a>--%>
+<%--						<span>关注</span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			<tr>--%>
+<%--				<td>--%>
+<%--					<input name="" type="checkbox" value="" />--%>
+<%--					<a href="javascript:void()" class="jobname">项目客户代表<img src="images/qq.gif" /></a>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="company">--%>
+<%--						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>--%>
+<%--						<span><img src="images/16.png" /></span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--				<td></td>--%>
+<%--				<td>广东深圳福田区</td>--%>
+<%--				<td>3.5K-6K</td>--%>
+<%--				<td>30分钟</td>--%>
+<%--			</tr>--%>
+<%--			<tr class="xxdetail none">--%>
+<%--				<td colspan="5">--%>
+<%--					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />--%>
+<%--						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />--%>
+<%--						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="applydiv">--%>
+<%--						<a href="" class="ljsqbtn">立即申请</a>--%>
+<%--						<span>关注</span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			<tr style="background: rgb(247, 248, 250)">--%>
+<%--				<td>--%>
+<%--					<input name="" type="checkbox" value="" />--%>
+<%--					<a href="javascript:void()" class="jobname">项目客户代表</a>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="company">--%>
+<%--						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>--%>
+<%--						<span><img src="images/16.png" /></span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--				<td></td>--%>
+<%--				<td>广东深圳福田区</td>--%>
+<%--				<td>3.5K-6K</td>--%>
+<%--				<td>30分钟</td>--%>
+<%--			</tr>--%>
+<%--			<tr style="background: rgb(247, 248, 250)" class="xxdetail none">--%>
+<%--				<td colspan="5">--%>
+<%--					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />--%>
+<%--						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />--%>
+<%--						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="applydiv">--%>
+<%--						<a href="" class="ljsqbtn">立即申请</a>--%>
+<%--						<span>关注</span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			<tr>--%>
+<%--				<td>--%>
+<%--					<input name="" type="checkbox" value="" />--%>
+<%--					<a href="javascript:void()" class="jobname">车险续约客服</a>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="company">--%>
+<%--						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>--%>
+<%--						<span><img src="images/16.png" /></span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--				<td></td>--%>
+<%--				<td>广东深圳福田区</td>--%>
+<%--				<td>3.5K-6K</td>--%>
+<%--				<td>30分钟</td>--%>
+<%--			</tr>--%>
+<%--			<tr class="xxdetail none">--%>
+<%--				<td colspan="5">--%>
+<%--					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />--%>
+<%--						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />--%>
+<%--						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="applydiv">--%>
+<%--						<a href="" class="ljsqbtn">立即申请</a>--%>
+<%--						<span>关注</span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			<tr style="background: rgb(247, 248, 250)">--%>
+<%--				<td>--%>
+<%--					<input name="" type="checkbox" value="" />--%>
+<%--					<a href="javascript:void()" class="jobname">项目编写专员</a>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="company">--%>
+<%--						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>--%>
+<%--						<span><img src="images/16.png" /></span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--				<td></td>--%>
+<%--				<td>广东深圳福田区</td>--%>
+<%--				<td>3.5K-6K</td>--%>
+<%--				<td>30分钟</td>--%>
+<%--			</tr>--%>
+<%--			<tr style="background: rgb(247, 248, 250)" class="xxdetail none">--%>
+<%--				<td colspan="5">--%>
+<%--					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />--%>
+<%--						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />--%>
+<%--						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="applydiv">--%>
+<%--						<a href="" class="ljsqbtn">立即申请</a>--%>
+<%--						<span>关注</span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			<tr>--%>
+<%--				<td>--%>
+<%--					<input name="" type="checkbox" value="" />--%>
+<%--					<a href="javascript:void()" class="jobname">电话客服<img src="images/qq.gif" /></a>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="company">--%>
+<%--						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>--%>
+<%--						<span><img src="images/16.png" /></span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--				<td></td>--%>
+<%--				<td>广东深圳福田区</td>--%>
+<%--				<td>3.5K-6K</td>--%>
+<%--				<td>30分钟</td>--%>
+<%--			</tr>--%>
+<%--			<tr class="xxdetail none">--%>
+<%--				<td colspan="5">--%>
+<%--					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />--%>
+<%--						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />--%>
+<%--						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="applydiv">--%>
+<%--						<a href="" class="ljsqbtn">立即申请</a>--%>
+<%--						<span>关注</span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			<tr style="background: rgb(247, 248, 250)">--%>
+<%--				<td>--%>
+<%--					<input name="" type="checkbox" value="" />--%>
+<%--					<a href="javascript:void()" class="jobname">跟单人员</a>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="company">--%>
+<%--						<a href="javascript:void()">深圳市鼎润轻纺进出口有限公司</a>--%>
+<%--						<span><img src="images/16.png" /></span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--				<td></td>--%>
+<%--				<td>广东深圳福田区</td>--%>
+<%--				<td>3.5K-6K</td>--%>
+<%--				<td>30分钟</td>--%>
+<%--			</tr>--%>
+<%--			<tr style="background: rgb(247, 248, 250)" class="xxdetail none">--%>
+<%--				<td colspan="5">--%>
+<%--					<div class="yaoqiu">学历要求：中专 | 工作经验：1~2年 | 公司规模：少于50人 | 招聘方式：全职<br />--%>
+<%--						岗位职责：1、 负责公司资产管理、办公用品采购及劳保用品的管理工作,避免公司资产流失和浪费； 2、 负责书刊资料印刷、快递、物流及办公室的其他事情； 3、 ...<br />--%>
+<%--						岗位要求：1、1年以上行政工作经验； 2、熟悉行政工作流程，办公用品采购流程，企业资产管理； 3、较强的责任心和敬业精神，良好的组织协调能力及沟通能力，较...</div>--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<div class="applydiv">--%>
+<%--						<a href="" class="ljsqbtn">立即申请</a>--%>
+<%--						<span>关注</span>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			</tbody>--%>
+<%--		</table>--%>
 	</div>
 	<div class="clear"></div>
 	<div class="listbottom">

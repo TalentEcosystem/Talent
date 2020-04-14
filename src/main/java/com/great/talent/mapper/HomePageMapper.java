@@ -48,5 +48,31 @@ public interface HomePageMapper
 	public List<String> getNewCompany();
 
 
+	/**
+	 * s首页找工作
+	 * @param Map
+	 * @return List<Position>
+	 */
+	public List<SerachJob> getJobNews(Map map);
+
+
+	/**
+	 * s首页找工作
+	 * @param map
+	 * @return int
+	 */
+	public int getJobNewsCount(Map map);
+
+	/**
+	 * 行业下拉框的信息
+	 * @return List<Map>
+	 */
+	public List<Industry> getInSelect();
+	/**
+	 * 行业下拉框的信息
+	 * @return List<Map>
+	 */
+	public List<String> getJobExper();
+
 
 }
