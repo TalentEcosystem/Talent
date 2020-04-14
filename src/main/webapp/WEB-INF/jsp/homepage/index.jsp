@@ -10,7 +10,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>首页</title>
-	<% String path=request.getContextPath();%>
+	<% String path=request.getContextPath(); %>
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/js/layui/css/layui.css" charset="UTF-8" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/homepage/css/style.css" charset="UTF-8" />
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.js" charset="UTF-8"></script>
@@ -1181,11 +1181,11 @@
 	</div>
 </div>
 <div class="menuDiv">
-	<a href="${pageContext.request.contextPath}/user/homepage" class="onnav">首页</a>
+	<a href="${pageContext.request.contextPath}/user/index" class="onnav">首页</a>
 	<a href="searchJob.html">找工作</a>
 	<a href="meetingJob.html">技术成长</a>
 	<a href="jobnews.html">就业资讯</a>
-	<a href="download.html">个人中心</a>
+	<a href="${pageContext.request.contextPath}/user/personal" id="personal">个人中心</a>
 	<a href="javascript:void()" class="mobile">登录</a>
 	<a href="helpJob.html">注册</a>
 </div>

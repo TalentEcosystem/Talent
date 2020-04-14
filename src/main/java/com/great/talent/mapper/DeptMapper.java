@@ -11,5 +11,7 @@ public interface DeptMapper
 	Boolean addUser(User user);
 	String findPhoneByAccount(String uaccount);
 	Boolean updateUser(User user);
-
+	Boolean updatePersonal(User user);
+	Boolean updatePhone(User user);
+	Boolean uheadUpLoad(User user);
 }

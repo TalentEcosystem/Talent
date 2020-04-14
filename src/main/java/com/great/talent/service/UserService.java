@@ -37,4 +37,19 @@ public class UserService
 	public Boolean updateUser(User user){
 		return deptMapper.updateUser(user);
 	}
+
+	@Transactional
+	public Boolean updatePersonal(User user){
+		return deptMapper.updatePersonal(user);
+	}
+
+	@Transactional
+	public Boolean updatePhone(User user){
+		return deptMapper.updatePhone(user);
+	}
+
+	@Transactional
+	public Boolean uheadUpLoad(User user){
+		return deptMapper.uheadUpLoad(user);
+	}
 }
