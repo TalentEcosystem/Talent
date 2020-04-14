@@ -25,7 +25,7 @@
 		<div class="headerright">
 			<a href="loginCompany.html">企业登录</a>
 			<span>|</span>
-			<a href="index.html">返回首页</a>
+			<a href="${pageContext.request.contextPath}/HomePage/index">返回首页</a>
 		</div>
 	</div>
 </div>

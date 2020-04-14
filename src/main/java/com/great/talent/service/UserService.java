@@ -52,4 +52,5 @@ public class UserService
 	public Boolean uheadUpLoad(User user){
 		return deptMapper.uheadUpLoad(user);
 	}
+
 }

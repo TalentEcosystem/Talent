@@ -35,6 +35,12 @@ public class SchoolController
 	private Diagis datagridResult;
 	@Resource
 	private Recomend recomend;
+	@Resource
+	private UserTalent userTalent;
+	@Resource
+	private Social social1,social2;
+	@Resource
+	private Aducational aducational1,aducational2;
 
 	@RequestMapping("/login")
 	public String Welcome(){
@@ -321,16 +327,166 @@ public class SchoolController
 		String[] ids=request.getParameterValues("ids");
 		String cid=request.getParameter("cid");
 		String positionid=request.getParameter("positionid");
-		String uid="";
+		recomend.setSid(1);
 		recomend.setCid(Integer.valueOf(cid));
 		recomend.setPositionid(Integer.valueOf(positionid));
 		recomend.setRecommendtime(new Date());
+		recomend.setPresenter(schoolService.findSchoolnameBySid(1));
 		for (int i = 0; i <ids.length ; i++)
 		{
 			recomend.setUid(Integer.valueOf(ids[i]));
 			schoolService.insertRecommend(recomend);
 		}
 		ResponseUtils.outJson(response,"推荐成功");
+	}
+	//用户端的简历显示
+	@RequestMapping("/findUserResume")
+	public String findUserResume(HttpServletRequest request){
+//		User user= (User) request.getSession().getAttribute("user");
+//		user.getUid();
+		userTalent.setUid(2);
+		Resume resume=schoolService.findUserResume(userTalent);
+		List<Social> socials=schoolService.findUserSocial(userTalent);
+		List<Aducational> aducationals=schoolService.findUserAducation(userTalent);
+		System.out.println(resume+"="+socials+"-"+aducationals);
+		request.getSession().setAttribute("resume",resume);
+		request.getSession().setAttribute("socials",socials);
+		request.getSession().setAttribute("aducationals",aducationals);
+		return "schoolManage/User_Resume";
+	}
+	@RequestMapping("/updateResume")
+	public void updateResume(Resume resume,Social social,Aducational aducational, HttpServletRequest request,HttpServletResponse response){
+		//		User user= (User) request.getSession().getAttribute("user");
+		//		user.getUid();
+		List<Social> social3= (List<Social>) request.getSession().getAttribute("socials");
+		List<Aducational> aducational3= (List<Aducational>) request.getSession().getAttribute("aducationals");
+		System.out.println("resume="+resume);
+		System.out.println("social="+social+"aducational="+aducational);
+		System.out.println(social.getCompany().split(",")[0]);
+		System.out.println(aducational.getSname().split(",")[0]);
+//		System.out.println(social3.get(0).getCompany()+","+aducational3.get(0).getSname());
+		if(social3.size()!=0){
+			//社会关系更新
+			social1.setCompany(social.getCompany().split(",")[0]);
+			social1.setContent(social.getContent().split(",")[0]);
+			social1.setSocialtime(social.getSocialtime().split(",")[0]);
+			String s=(social.getSocialid()+"").split(",")[0];
+			int socialid1=Integer.valueOf(s);
+			social1.setUid(2);
+			social1.setSocialid(socialid1);
+			schoolService.updateSocial(social1);
+			if(social3.size()>1){
+				social2.setCompany(social.getCompany().split(",")[1]);
+				social2.setContent(social.getContent().split(",")[1]);
+				social2.setSocialtime(social.getSocialtime().split(",")[1]);
+				social2.setUid(2);
+				String s1=(social.getSocialid()+"").split(",")[1];
+				int socialid2=Integer.valueOf(s);
+				social1.setSocialid(socialid2);
+				schoolService.updateSocial(social2);
+			}
+			if(social3.size()==1&&social.getCompany().split(",").length>1){
+				social2.setCompany(social.getCompany().split(",")[1]);
+				social2.setContent(social.getContent().split(",")[1]);
+				social2.setSocialtime(social.getSocialtime().split(",")[1]);
+				social2.setUid(2);
+				schoolService.insertSocial(social2);
+			}
+		}else{
+			//插入
+			social1.setCompany(social.getCompany().split(",")[0]);
+			social1.setContent(social.getContent().split(",")[0]);
+			social1.setSocialtime(social.getSocialtime().split(",")[0]);
+			social1.setUid(2);
+			schoolService.insertSocial(social1);
+			if(!"".equals(social.getCompany().split(",")[1])){
+				social2.setCompany(social.getCompany().split(",")[1]);
+				social2.setContent(social.getContent().split(",")[1]);
+				social2.setSocialtime(social.getSocialtime().split(",")[1]);
+				social2.setUid(2);
+				schoolService.insertSocial(social2);
+			}
+		}
+		if(aducational3.size()!=0){
+			//学校更新
+			aducational1.setAdtime(aducational.getAdtime().split(",")[0]);
+			aducational1.setSname(aducational.getSname().split(",")[0]);
+			aducational1.setProfession(aducational.getProfession().split(",")[0]);
+			aducational1.setUid(2);
+			String s=(aducational.getAducationid()+"").split(",")[0];
+			int aducationid1=Integer.valueOf(s);
+			aducational1.setAducationid(aducationid1);
+			schoolService.updateAducation(aducational1);
+			if(aducational3.size()>1){
+				aducational2.setAdtime(aducational.getAdtime().split(",")[1]);
+				aducational2.setSname(aducational.getSname().split(",")[1]);
+				aducational2.setProfession(aducational.getProfession().split(",")[1]);
+				aducational2.setUid(2);
+				String s1=(aducational.getAducationid()+"").split(",")[1];
+				int aducationid2=Integer.valueOf(s);
+				aducational1.setAducationid(aducationid2);
+				schoolService.updateAducation(aducational2);
+			}
+			if(aducational3.size()==1&&aducational.getAdtime().split(",").length>1){
+				aducational2.setAdtime(aducational.getAdtime().split(",")[1]);
+				aducational2.setSname(aducational.getSname().split(",")[1]);
+				aducational2.setProfession(aducational.getProfession().split(",")[1]);
+				aducational2.setUid(2);
+				schoolService.insertAducation(aducational2);
+			}
+		}else{
+			//插入
+			aducational1.setAdtime(aducational.getAdtime().split(",")[0]);
+			aducational1.setSname(aducational.getSname().split(",")[0]);
+			aducational1.setProfession(aducational.getProfession().split(",")[0]);
+			aducational1.setUid(2);
+			schoolService.insertAducation(aducational1);
+			if(aducational3.size()==1&&aducational.getAdtime().split(",")[1].length()>1){
+				aducational2.setAdtime(aducational.getAdtime().split(",")[1]);
+				aducational2.setSname(aducational.getSname().split(",")[1]);
+				aducational2.setProfession(aducational.getProfession().split(",")[1]);
+				aducational2.setUid(2);
+				schoolService.insertAducation(aducational2);
+			}
+		}
+		//简历就更新就行
+		int degreeid=schoolService.findDegreeidByDegreeName(resume);
+		int professid=schoolService.findProfessidByProfessName(resume);
+		int sid=schoolService.findSidBySchoolName(resume);
+		resume.setDegreeid(degreeid);
+		resume.setSid(sid);
+		resume.setProfessid(professid);
+		resume.setUid(2);
+		System.out.println(resume);
+		schoolService.updateUserresume(resume);
+		ResponseUtils.outJson(response,"保存成功");
+	}
+	//显示用户端的填写简历页面
+	@RequestMapping("/showUserFillResume")
+	public String showUserFillResume(HttpServletRequest request){
+		//查找一下学历的集合
+		List<Degree> degrees=schoolService.findDegreeList();
+		System.out.println(degrees);
+		request.getSession().setAttribute("degrees",degrees);
+
+
+		return "schoolManage/User_FillOutResume";
+	}
+	//用户端的简历填写
+	@RequestMapping("/fillOutResume")
+	public void fillOutResume(Resume resume,HttpServletRequest request,HttpServletResponse response){
+		System.out.println(resume);
+		//插入数据库
+		//拿到uid
+//		resume.setUid();
+		int i=schoolService.userInsertResume(resume);
+		if(i>0){
+			ResponseUtils.outJson(response,"保存成功");
+		}else{
+			ResponseUtils.outJson(response,"保存失败");
+
+		}
+
 	}
 
 }

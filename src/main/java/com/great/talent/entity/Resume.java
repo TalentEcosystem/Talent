@@ -7,7 +7,12 @@ package com.great.talent.entity;
 public class Resume
 {
 	private int resumeid;
-	private String rename;
+	private int uid;
+	private int degreeid;
+	private int sid;
+	private int professid;
+	private String resex;
+	private String resname;
 	private String rebirth;
 	private String retel;
 	private String repic;
@@ -17,8 +22,9 @@ public class Resume
 	private String professname;
 	private String schoolname;
 	private String reskill;
+	private String reexper;
 	private String reeva;
-
+	private String reset;
 
 	public Resume()
 	{
@@ -34,14 +40,14 @@ public class Resume
 		this.resumeid = resumeid;
 	}
 
-	public String getRename()
+	public String getResname()
 	{
-		return rename;
+		return resname;
 	}
 
-	public void setRename(String rename)
+	public void setResname(String resname)
 	{
-		this.rename = rename;
+		this.resname = resname;
 	}
 
 	public String getRebirth()
@@ -144,9 +150,79 @@ public class Resume
 		this.reeva = reeva;
 	}
 
+	public int getUid()
+	{
+		return uid;
+	}
+
+	public void setUid(int uid)
+	{
+		this.uid = uid;
+	}
+
+	public int getDegreeid()
+	{
+		return degreeid;
+	}
+
+	public void setDegreeid(int degreeid)
+	{
+		this.degreeid = degreeid;
+	}
+
+	public int getSid()
+	{
+		return sid;
+	}
+
+	public void setSid(int sid)
+	{
+		this.sid = sid;
+	}
+
+	public int getProfessid()
+	{
+		return professid;
+	}
+
+	public void setProfessid(int professid)
+	{
+		this.professid = professid;
+	}
+
+	public String getResex()
+	{
+		return resex;
+	}
+
+	public void setResex(String resex)
+	{
+		this.resex = resex;
+	}
+
+	public String getReexper()
+	{
+		return reexper;
+	}
+
+	public void setReexper(String reexper)
+	{
+		this.reexper = reexper;
+	}
+
+	public String getReset()
+	{
+		return reset;
+	}
+
+	public void setReset(String reset)
+	{
+		this.reset = reset;
+	}
+
 	@Override
 	public String toString()
 	{
-		return "Resume{" + "resumeid=" + resumeid + ", rename='" + rename + '\'' + ", rebirth='" + rebirth + '\'' + ", retel='" + retel + '\'' + ", repic='" + repic + '\'' + ", readdress='" + readdress + '\'' + ", repol='" + repol + '\'' + ", degreename='" + degreename + '\'' + ", professname='" + professname + '\'' + ", schoolname='" + schoolname + '\'' + ", reskill='" + reskill + '\'' + ", reeva='" + reeva + '\'' + '}';
+		return "Resume{" + "resumeid=" + resumeid + ", uid=" + uid + ", degreeid=" + degreeid + ", sid=" + sid + ", professid=" + professid + ", resex='" + resex + '\'' + ", resname='" + resname + '\'' + ", rebirth='" + rebirth + '\'' + ", retel='" + retel + '\'' + ", repic='" + repic + '\'' + ", readdress='" + readdress + '\'' + ", repol='" + repol + '\'' + ", degreename='" + degreename + '\'' + ", professname='" + professname + '\'' + ", schoolname='" + schoolname + '\'' + ", reskill='" + reskill + '\'' + ", reexper='" + reexper + '\'' + ", reeva='" + reeva + '\'' + ", reset='" + reset + '\'' + '}';
 	}
 }
