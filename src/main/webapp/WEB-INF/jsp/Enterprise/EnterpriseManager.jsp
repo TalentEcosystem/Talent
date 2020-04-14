@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>企业管理页</title>
@@ -51,19 +52,23 @@
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <c:if test="${not empty menuMap}">
                     <c:forEach items="${menuMap}" step="1" var="i">
+                        <c:if test="${i.parentid == 0}">
                         <li class="layui-nav-item layui-nav-itemed">
-                            <a class="" href="javascript:;">${i.key}</a>
+                            <a class="" href="javascript:;">${i.mname}</a>
                             <dl class="layui-nav-child">
-                                <c:forEach items="${i.value}" step="1" var="j">
+                                <c:forEach items="${menuMap}" step="1" var="j">
+                                    <c:if test="${j.parentid == i.menuid}">
                                     <dd>
                                         <a href="javascript:void(0)"
-                                           title="${pageContext.request.contextPath}/${j.menuurl}"
-                                           onclick="changePath(this)">${j.menuname}
+                                           title="${pageContext.request.contextPath}/${j.url}"
+                                           onclick="changePath(this)">${j.mname}
                                         </a>
                                     </dd>
+                                </c:if>
                                 </c:forEach>
                             </dl>
                         </li>
+                        </c:if>
                     </c:forEach>
                 </c:if>
             </ul>

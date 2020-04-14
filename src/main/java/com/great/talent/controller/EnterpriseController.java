@@ -140,6 +140,7 @@ public class EnterpriseController {
         }
         session.setAttribute("admin", admins);
         List<RoleMenu> list=adminService.selectRoleMenu(admins.getRole().getRoleid()+"");
+        System.out.println(list);
         session.setAttribute("menuMap",list);
         return "success";
     }
