@@ -189,4 +189,12 @@ public class AdminService
 		return adminMapper.deleteIntervier(interview);
 	}
 
+	@Transactional
+	public void addAdmin(Admin admin){ adminMapper.addAdmin(admin);}
+
+	@Transactional
+	public void addSchool(SchoolMsg schoolMsg){ adminMapper.addSchool(schoolMsg);}
+
+	@Transactional
+	public void addSchoolAccount(Admin admin){ adminMapper.addSchoolAccount(admin);}
 }

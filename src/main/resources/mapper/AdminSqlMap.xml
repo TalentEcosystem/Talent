@@ -296,4 +296,20 @@
 			</if>
 		</where>
 	</select>
+
+	<insert id="addAdmin" parameterType="Admin">
+		insert into tbl_admin (account, password, roleid, name, tel, state, address, date, money)
+		values (#{account},#{password},#{roleid},#{name},#{tel},'启用',#{address},#{date},'0')
+	</insert>
+
+	<insert id="addSchool" parameterType="SchoolMsg" useGeneratedKeys="true" keyProperty="sid" keyColumn="sid">
+		insert into tbl_school (schoolname) values (#{schoolname})
+	</insert>
+
+	<insert id="addSchoolAccount" parameterType="Admin">
+		insert into tbl_admin (account, password, roleid, name, tel, state, address, date, money,cid)
+		values (#{account},#{password},#{roleid},#{name},#{tel},'启用',#{address},#{date},'0',#{cid})
+	</insert>
+
+
 </mapper>

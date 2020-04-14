@@ -61,4 +61,8 @@ public interface AdminMapper
 
 	@Update("update tbl_interview set interstate = #{interstate} where interviewid = ${interviewid}")
 	public int deleteIntervier(Interview interview);
+
+	public void addAdmin(Admin admin);
+	public void addSchool(SchoolMsg schoolMsg);
+	public void addSchoolAccount(Admin admin);
 }

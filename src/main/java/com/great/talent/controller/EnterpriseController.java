@@ -2,6 +2,7 @@ package com.great.talent.controller;
 
 import com.google.gson.Gson;
 import com.great.talent.entity.*;
+import com.great.talent.service.AdminService;
 import com.great.talent.service.EnterpriseService;
 import com.great.talent.util.Diagis;
 import com.great.talent.util.MD5Utils;
@@ -41,7 +42,8 @@ public class EnterpriseController {
     private  ModelAndView mv = new ModelAndView();
     @Autowired
     private EnterpriseService enterpriseService;
-
+    @Resource
+    private AdminService adminService;
     /**
      * 企业路径跳转
      *
@@ -137,6 +139,8 @@ public class EnterpriseController {
             return "delete";
         }
         session.setAttribute("admin", admins);
+        List<RoleMenu> list=adminService.selectRoleMenu(admins.getRole().getRoleid()+"");
+        session.setAttribute("menuMap",list);
         return "success";
     }
 
