@@ -59,6 +59,4 @@ public interface AdminMapper
     @Select("select * from tbl_interview where interviewid = #{interviewid} ")
 	public List<Interview> jobProgress(int interviewid);//查询求职进度
 
-	@Update("update tbl_interview set interstate = #{interstate} where interviewid = ${interviewid}")
-	public int deleteIntervier(Interview interview);
 }

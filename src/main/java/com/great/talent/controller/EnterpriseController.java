@@ -409,6 +409,15 @@ public class EnterpriseController {
         return mv;
     }
 
+    /**
+     * 图片上传
+     * @param file
+     * @param company
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/uplodFile")
     @ResponseBody
     public String uplodFile(MultipartFile file, Company company, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -451,7 +460,6 @@ public class EnterpriseController {
 
     /**
      * 查询面试信息
-     *
      * @param request
      * @param response
      * @throws IOException
@@ -547,6 +555,47 @@ public class EnterpriseController {
             diagis.setMsg("");
             diagis.setCount((Integer) map.get("count"));
             diagis.setData((List<Interview>) map.get("flist"));
+            ResponseUtils.outJson(response, diagis);
+        }
+    }
+    @RequestMapping("/companyEmploy")
+    @ResponseBody
+    public String companyEmploy(Interview interview){
+        interview.setEndtime(new Date());
+        int flag = enterpriseService.companyEmploy(interview);
+        if (flag>0){
+            return "success";
+        }else{
+            return "error";
+        }
+    }
+
+    /**
+     * 查询录用人员信息
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/findCompanyEmployInfo")
+    @ResponseBody
+    public void findCompanyEmployInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String page = request.getParameter("page");
+        String limit = request.getParameter("limit");
+//        System.out.println("industryid="+industryid+"positionname="+positionname);
+        int pageInt = Integer.valueOf(page);
+        int limitInt = Integer.parseInt(limit);
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        HashMap<String, Object> condition = new HashMap<>();
+        int pageInts = (pageInt - 1) * limitInt;
+        condition.put("pageInts", pageInts);
+        condition.put("limitInt", limitInt);
+        condition.put("aid",admin.getAid());
+        Map map = enterpriseService.findCompanyEmployInfo(condition);
+        if (map.size() != 0) {
+            diagis.setCode(0);
+            diagis.setMsg("");
+            diagis.setCount((Integer) map.get("count"));
+            diagis.setData((List<Interview>) map.get("employList"));
             ResponseUtils.outJson(response, diagis);
         }
     }

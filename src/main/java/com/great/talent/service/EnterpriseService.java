@@ -214,5 +214,31 @@ public class EnterpriseService {
         return map1;
     }
 
+    /**
+     * 公司录用
+     * @param interview
+     * @return
+     */
+    @Transactional
+    public int companyEmploy(Interview interview){
+        return enterpriseMapper.companyEmploy(interview);
+    }
+
+    /**
+     * 查询反馈信息
+     * @param map
+     * @return
+     */
+    public Map findCompanyEmployInfo(Map map){
+        Integer count = enterpriseMapper.companyEmployInfoNum(map);
+        List<Interview> employList = enterpriseMapper.companyEmployInfo(map);
+        Map map1 = new HashMap();
+        map1.put("count",count);
+        map1.put("employList",employList);
+        return map1;
+    }
+
+
+
 }
 

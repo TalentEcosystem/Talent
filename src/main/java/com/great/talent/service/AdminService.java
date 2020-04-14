@@ -184,9 +184,4 @@ public class AdminService
 		return adminMapper.jobProgress(interviewid);
 	}
 
-    @Transactional
-	public int deleteIntervier(Interview interview){
-		return adminMapper.deleteIntervier(interview);
-	}
-
 }

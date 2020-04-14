@@ -566,17 +566,4 @@ public class AdminController
 			ResponseUtils.outJson(response, diagis);
 		}
    }
-
-	@RequestMapping("/deleteInterview")
-	@ResponseBody
-    public void deleteInterview(Interview interview, HttpServletResponse response) throws IOException {
-	   interview.setInterstate("删除");
-	   int flag = adminService.deleteIntervier(interview);
-	   if (flag > 0){
-	   	response.getWriter().print(1111);
-	   }else {
-	   	response.getWriter().print(2222);
-	   }
-   }
-
 }
