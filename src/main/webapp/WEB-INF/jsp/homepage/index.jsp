@@ -901,7 +901,7 @@
 			background-color:#dbdbdb;
 			width: 150px;
 			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
+			background-image: url(<%=path+"/images/tat.png"%>) ;
 			background-size: 150px 150px;
 			margin-left: 50px;
 			float: left;
@@ -1326,19 +1326,61 @@
 		<img src="${pageContext.request.contextPath}/images/LOGO.png" />
 		<img src="${pageContext.request.contextPath}/images/view_logo40.png" />
 	</div>
+	<form method="post" class="layui-form" action="${pageContext.request.contextPath}/HomePage/getJobNews">
 	<div class="loginAddress">
+
 		<div class="add1">
 			<!-- 在输入框加入id -->
-			<input type="text" class="cityinput layui-input city"  id="citySelect" placeholder="输入城市">
+			<input type="text" name="sypositionaddress" class="cityinput layui-input city"  id="citySelect" placeholder="输入城市" autocomplete="off">
 			<script type="text/javascript">
 				var test=new Vcity.CitySelector({input:'citySelect'});
 			</script>
 		</div>
 	</div>
 	<div class="loginC">
-		<input name="" type="text" placeholder="请填写关键词或选择职位..." />
-		<button class="layui-btn" style="margin:0 0 3px 39px;height: 44px;width: 115px;background-color:transparent"></button>
+		<input name="sypositionname" type="text" id="gang"  autocomplete="off" placeholder="请填写关键词或选择职位..." />
+		<button class="layui-btn " lay-submit style="margin:0 0 3px 39px;height: 44px;width: 115px;background-color:transparent" ></button>
 	</div>
+	</form>
+<script>
+	function searchJob() {
+		var path=$("#path").val();
+		var cit=$("#citySelect").val().trim();
+		var gang=$("#gang").val().trim();
+
+		if(cit.length === 0&& gang.length === 0){
+			console.log(cit+gang);
+			window.location.href=path+"/HomePage/searchJob1";
+		}else {
+
+			$.ajax({
+				type: "post",
+				url: path+"/HomePage/getJobNews1",
+				// dataType: "json",
+				async:true,
+				data:{
+					"sypositionaddress":cit,
+					"sypositionname":gang
+				},
+				success: function (data) {
+
+					// window.location.href=path+"/HomePage/searchJob";
+				},
+				error: function (data) {
+					console.log(data);
+				}
+
+			});
+
+return false;
+		}
+
+	}
+
+
+</script>
+
+
 
 	<div class="loginR">
 		<img src="${pageContext.request.contextPath}/images/spirit_40.png" />
@@ -2213,9 +2255,10 @@
 								var map=JSON.parse(data);
 								console.log(map);
 									$("#employ").text( map.employ);
-									$("#job").text(map.job);
-									$("#post").text(map.post);
+									$("#job").text(map.post);
+									$("#post").text(map.job);
 									$("#talent").text(map.talent);
+
 
 									$("#zcdw").text( map.company);
 									$("#qzz").text(map.job);
@@ -2258,75 +2301,6 @@
 											<div class="childss3 test33">
 												<p>人才总数</p>
 												<i id="talent"></i>
-											</div>
-										</div>
-										<div class="pic43">
-											<div class="childss3 test43">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic53">
-											<div class="childss3 test53">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<!-- 第三组 -->
-										<div class="pic63">
-											<div class="childss3 test63">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic73">
-											<div class="childss3 test73">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic83">
-											<div class="childss3 test83">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<!-- 第四组 -->
-										<div class="pic93">
-											<div class="childss3 test93">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic103">
-											<div class="childss3 test103">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic113">
-											<div class="childss3 test113">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<!-- 第五组 -->
-										<div class="pic123">
-											<div class="childss3 test123">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic133">
-											<div class="childss3 test133">
-												<p>就业总数</p>
-												<i>1999</i>
-											</div>
-										</div>
-										<div class="pic143">
-											<div class="childss3 test143">
-												<p>就业总数</p>
-												<i>1999</i>
 											</div>
 										</div>
 

@@ -1,17 +1,16 @@
 package com.great.talent.service;
 
 import com.google.gson.Gson;
-import com.great.talent.entity.Company;
-import com.great.talent.entity.GoodNews;
-import com.great.talent.entity.SchoolNews;
-import com.great.talent.entity.Study;
+import com.great.talent.entity.*;
 import com.great.talent.mapper.EnterpriseMapper;
 import com.great.talent.mapper.HomePageMapper;
+import com.great.talent.util.Diagis;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,6 +91,51 @@ public class HomePageService
 		return list;
 	}
 
+
+	/**
+	 * 首页找工作
+	 * @return List
+	 */
+	public String getJobNews(Map map){
+
+
+		Diagis dataTable=new Diagis();
+		List<SerachJob> roleList=new ArrayList<>();
+		int num=homePageMapper.getJobNewsCount(map);
+		roleList=homePageMapper.getJobNews(map);
+		dataTable.setCode(0);
+		dataTable.setMsg("");
+		dataTable.setCount(num);
+		dataTable.setData(roleList);
+		String roleStr=gson.toJson(dataTable);
+		return roleStr;
+	}
+
+	/**
+	 * 行业下拉框的信息
+	 * @return String
+	 */
+	public String getInSelect(){
+
+		//行业
+		List<Industry> list=homePageMapper.getInSelect();
+		String str=gson.toJson(list);
+
+		return str;
+	}
+	/**
+	 * 工作经验下拉框的信息
+	 * @return String
+	 */
+	public String getJobExper()
+	{
+		//工作经验
+		List<String> list1=homePageMapper.getJobExper();
+		String str=gson.toJson(list1);
+
+		return str;
+
+	}
 
 
 }

@@ -39,7 +39,7 @@ tbl_position   group by aid)as t  where a.aid=t.aid)as t1 on c.cid= t1.cid limit
   select t.job,t1.employ,t2.post,t3.talent,t4.company from
 (select count(*)as job from tbl_resume)t,
 (select count(*)as employ from tbl_resume where reemploy='是')t1,
-(select count(*)as post from tbl_post)t2 ,
+(select count(*)as post from tbl_position)t2 ,
 (select count(*)as talent from tbl_user)t3,
 (select count(*)as company from tbl_company)t4
 
@@ -50,6 +50,78 @@ tbl_position   group by aid)as t  where a.aid=t.aid)as t1 on c.cid= t1.cid limit
 SELECT c.companyname from tbl_admin a,tbl_company c
 where a.cid=c.cid ORDER BY a.date desc limit 3
 </select>
+
+<!--    搜索工作-->
+    <select id="getJobNews" resultType="SerachJob" parameterType="map" >
+
+        SELECT p.positionid,p.aid,p.positionname as sypositionname,p.positionaddress as sypositionaddress,p.maxnum,p.request,
+        p.positioncontent,p.positionstate, p.professid, p.positionname,p.positionexper,
+        p.money,p.positionaddress,p.industryid,p.degreeid,p.positiontime,c.companynum,c.companyname
+        FROM tbl_position p,tbl_company c,tbl_admin a
+        <where> 1=1 and a.aid=p.aid and a.cid=c.cid
+            <if test="cond!=null">
+                <if test=" cond.sypositionaddress != null and cond.sypositionaddress != '' ">
+                   and p.positionaddress like '%${cond.sypositionaddress}%'
+                </if>
+                <if test=" cond.sypositionname != null and cond.sypositionname != ''  ">
+                    and p.positionname like '%${cond.sypositionname}%'
+                </if>
+                <if test=" cond.industryid != null and cond.industryid != ''  ">
+                    and p.industryid = '${cond.industryid}'
+                </if>
+                <if test=" cond.moneybegin != null and cond.moneyend !=null  ">
+                    and p.money between '${cond.moneybegin}' and  '${cond.moneyend}'
+                </if>
+
+                <if test=" cond.positionexper != null and cond.positionexper !=''  ">
+                    and p.positionexper = '${cond.positionexper}'
+                </if>
+                <if test=" cond.beginNum != null and cond.endNum !=null  ">
+                    and c.companynum between '${cond.beginNum}' and  '${cond.endNum}'
+                </if>
+                order by p.positiontime desc limit #{cond.page},#{cond.limit};
+                </if>
+        </where>
+</select>
+
+    <select id="getJobNewsCount"  parameterType="map" resultType="int" >
+
+        SELECT count(*) FROM tbl_position p,tbl_company c,tbl_admin a
+        <where> 1=1 and a.aid=p.aid and a.cid=c.cid
+            <if test="cond!=null">
+            <if test=" cond.sypositionaddress != null and cond.sypositionaddress != '' ">
+              and  p.positionaddress like '%${cond.sypositionaddress}%'
+            </if>
+            <if test=" cond.sypositionname != null and cond.sypositionname != ''  ">
+                and p.positionname like '%${cond.sypositionname}%'
+            </if>
+             <if test=" cond.industryid != null and cond.industryid != ''  ">
+                    and p.industryid = '${cond.industryid}'
+             </if>
+                <if test=" cond.moneybegin != null and cond.moneyend !=null  ">
+                    and p.money between '${cond.moneybegin}' and  '${cond.moneyend}'
+                </if>
+
+                <if test=" cond.positionexper != null and cond.positionexper !=''  ">
+                    and p.positionexper = '${cond.positionexper}'
+                </if>
+                <if test=" cond.beginNum != null and cond.endNum !=null  ">
+                    and c.companynum between '${cond.beginNum}' and  '${cond.endNum}'
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+    <!--    行业下拉框信息、-->
+    <select id="getInSelect" resultType="Industry" >
+    select * from tbl_industry
+    </select>
+    <!--    工作经验下拉框信息、-->
+    <select id="getJobExper" resultType="String" >
+    select positionexper from tbl_position where positionexper!= '不限' GROUP BY positionexper
+    </select>
+
 
 
 </mapper>
