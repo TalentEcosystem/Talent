@@ -1,6 +1,7 @@
 package com.great.talent.mapper;
 
 import com.great.talent.entity.*;
+import com.sun.jdi.IntegerValue;
 import com.sun.tools.corba.se.idl.InterfaceGen;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -12,19 +13,34 @@ import java.util.Map;
 
 @Mapper
 public interface EnterpriseMapper {
-    public Admin adminLogin(String account);
-    public int addAdmin(Admin admin);
-    public int addCompany(Map map);
-    public List<Position> findPosition(Map map);
-    public Integer findPositionNum(Map map);
 
-    public int addPositionInfo(Position position);
+    public Admin adminLogin(String account);//登录
+    public int addAdmin(Admin admin);//注册用户
+    public int addCompany(Company company);//简易注册公司
+    public List<Position> findPosition(Map map);//查询公司发布岗位记录
+    public Integer findPositionNum(Map map);//查询岗位记录数量
+    public int addPositionInfo(Position position);//添加岗位发布记录
+    public int addWelfare(Map map);//添加福利
+    public int updatePositionState(Position position);//修改记录信息
+    public int deleteWelfare(Map map);//修改删除福利信息
+    public Company findCompanyInfo(Integer aid);//查询公司信息
+    public int updateCompanyInfo(Company company);//修改公司信息
+    public List<Interview> findInterview(Map map);//查询面试信息
+    public int findInterviewNum(Map map);//查询面试信息数量
+    public int updateInterInvate(Interview interview);//面试邀请
 
-    public int addWelfare(Map map);
+    public List<Interview> findFeedback(Map map);
+    public int findFeedbackNum(Map map);
 
-    public int updatePositionState(Position position);
+    public int companyEmploy(Interview interview);//公司录用
 
-    public int deleteWelfare(Map map);
+    public List<Interview> companyEmployInfo(Map map);//录用人员信息
+    public int companyEmployInfoNum(Map map);//录用人员信息数量
+    /**
+     * 校验用户手机是否被注册
+     * @param tel
+     * @return
+     */
     @Select("select * from tbl_admin where tel = #{tel}")
     public Admin checkAdminTel(String tel);
 
@@ -74,6 +90,12 @@ public interface EnterpriseMapper {
     @Select("select * from tbl_welfare where positionid = #{positionid}")
     public List<Position> findWelfName(Integer positionid);
 
+    /**
+     * 查询公司地址
+     * @param cid
+     * @return
+     */
     @Select("select companyadd from tbl_company c,tbl_admin a where a.cid = c.cid and a.cid = #{cid}")
     public String findCompanyAdd(Integer cid);
+
 }

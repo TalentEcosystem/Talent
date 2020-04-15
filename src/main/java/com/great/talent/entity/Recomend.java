@@ -14,12 +14,24 @@ import java.util.Date;
 public class Recomend
 {
 	private int uid;
+	private int sid;
 	private Date recommendtime;
 	private int positionid;
 	private int cid;
+	private String presenter;
 
 	public Recomend()
 	{
+	}
+
+	public int getSid()
+	{
+		return sid;
+	}
+
+	public void setSid(int sid)
+	{
+		this.sid = sid;
 	}
 
 	public int getUid()
@@ -65,6 +77,17 @@ public class Recomend
 	@Override
 	public String toString()
 	{
-		return "Recomend{" + "uid=" + uid + ", recommendtime=" + recommendtime + ", positionid=" + positionid + ", cid=" + cid + '}';
+		return "Recomend{" + "uid=" + uid + ", sid=" + sid + ", recommendtime=" + recommendtime + ", positionid=" + positionid + ", cid=" + cid + ", presenter='" + presenter + '\'' + '}';
 	}
+
+	public String getPresenter()
+	{
+		return presenter;
+	}
+
+	public void setPresenter(String presenter)
+	{
+		this.presenter = presenter;
+	}
+
 }

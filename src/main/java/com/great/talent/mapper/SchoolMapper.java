@@ -44,5 +44,31 @@ public interface SchoolMapper
 
 	//推荐人才
 	public int insertRecommend(Recomend recomend);
+	public String findSchoolnameBySid(int sid);
+
+	//用户端修改简历
+	public int updateUserresume(Resume resume);
+
+	public int findSidBySchoolName(Resume resume);
+
+	public int findDegreeidByDegreeName(Resume resume);
+
+	public int findProfessidByProfessName(Resume resume);
+
+	public int updateSocial(Social social);
+
+	public int insertSocial(Social social);
+
+	public int updateAducation(Aducational aducational);
+
+	public int insertAducation(Aducational aducational);
+
+	public List<Degree> findDegreeList();
+
+	public int userInsertResume(Resume resume);
+
+	public List<ResumeStatus> findUserResumeStatus(int uid);
+
+	public int findUserResumeStatusCount(int uid);
 
 }
