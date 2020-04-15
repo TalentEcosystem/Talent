@@ -9,13 +9,16 @@ import com.great.talent.util.ResponseUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -586,5 +589,117 @@ public class AdminController
 			adminService.addSchoolAccount(admin);
 		}
 		return "success";
+	}
+
+	/**
+	 * 查询下拉框的知识库名称,跳转到章节管理页面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/findKnowInfo")
+	public ModelAndView findKnowInfo(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		List<Know> list  = adminService.findAllKnow();
+		request.getSession().setAttribute("chapKnowList", list);
+		mv.setViewName("/admin/ChapterManager");
+		return mv;
+	}
+
+	/**
+	 * 查询章节信息
+	 * @param limit
+	 * @param page
+	 * @param knowledgeid
+	 * @param chname
+	 * @return
+	 */
+	@RequestMapping("/chapterManager")
+	@ResponseBody
+	public String chapterManager(String limit, String page, String knowledgeid,String chname){
+		Map map=new HashMap();
+		map.put("knowledgeid",knowledgeid);
+		map.put("chname",chname);
+		map.put("begin",(Integer.parseInt(page)-1)*Integer.parseInt(limit));
+		map.put("end",Integer.parseInt(limit));
+		List<Chapter> list = adminService.findChapter(map);
+		int count = adminService.findCountChapter(map);
+		Diagis diagis=new Diagis();
+		diagis.setCode(0);
+		diagis.setMsg("");
+		diagis.setCount(count);
+		diagis.setData(list);
+		Gson g=new Gson();
+		String ss=g.toJson(diagis);
+		return ss;
+	}
+
+	/**
+	 * 新增章节,上传视频
+	 * @param file
+	 * @param chapter
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/addChapter")
+	@ResponseBody
+	public String addChapter(@RequestParam("file") MultipartFile file,Chapter chapter,HttpServletRequest request){
+		String name=file.getOriginalFilename();
+		String savePath=request.getSession().getServletContext().getRealPath("/images");
+		String Path=savePath+"\\"+name;
+		chapter.setChapurl("images/"+name);
+		adminService.addChapter(chapter);
+		try
+		{
+			file.transferTo(new File(Path));
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		Map res=new HashMap<String,Object>();
+		Gson g=new Gson();
+		res.put("code",0);
+		res.put("msg","上传成功");
+		String str=g.toJson(res);
+		return str;
+	}
+
+	/**
+	 * 删除章节
+	 * @param chapterid
+	 * @return
+	 */
+	@RequestMapping("/deleteChapter")
+	@ResponseBody
+	public String deleteChapter(String chapterid){
+		adminService.deleteChapter(chapterid);
+		return "删除成功";
+	}
+
+	/**
+	 * 修改章节
+	 * @param chapter
+	 * @return
+	 */
+	@RequestMapping("/updateChapter")
+	@ResponseBody
+	public String updateChapter(@RequestParam("file") MultipartFile file,Chapter chapter,HttpServletRequest request){
+		String name=file.getOriginalFilename();
+		String savePath=request.getSession().getServletContext().getRealPath("/images");
+		String Path=savePath+"\\"+name;
+		chapter.setChapurl("images/"+name);
+		adminService.updateChapter(chapter);
+		try
+		{
+			file.transferTo(new File(Path));
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		Map res=new HashMap<String,Object>();
+		Gson g=new Gson();
+		res.put("code",0);
+		res.put("msg","上传成功");
+		String str=g.toJson(res);
+		return str;
 	}
 }
