@@ -292,18 +292,18 @@
      };
     function companyName(value) {
         if(/^[\u4e00-\u9fa5\(\)（）\da-zA-Z&]{2,50}$/gi.test(value)){
-            $('#tip6').val("success");
+            $('#tip7').val("success");
         }else{
             layer.alert('请输入正确的公司名称', { icon: 2, offset: "auto", time:1000 });
-            $('#tip6').val("win");
+            $('#tip7').val("win");
         }
     }
     function checkAddress(value) {
         if(/^[\u4e00-\u9fa5\(\)（）\da-zA-Z&]{2,50}$/gi.test(value)){
-            $('#tip7').val("success");
+            $('#tip6').val("success");
         }else{
             layer.alert('请输入正确的地址', { icon: 2, offset: "auto", time:1000 });
-            $('#tip7').val("win");
+            $('#tip6').val("win");
         }
     };
     function verification (Code) {

@@ -31,6 +31,11 @@ public interface EnterpriseMapper {
 
     public List<Interview> findFeedback(Map map);
     public int findFeedbackNum(Map map);
+
+    public int companyEmploy(Interview interview);//公司录用
+
+    public List<Interview> companyEmployInfo(Map map);//录用人员信息
+    public int companyEmployInfoNum(Map map);//录用人员信息数量
     /**
      * 校验用户手机是否被注册
      * @param tel

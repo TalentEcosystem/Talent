@@ -218,7 +218,7 @@
         </where>
         limit #{pageInts},#{limitInt}
     </select>
-
+<!--查询反馈信息的数量-->
     <select id="findFeedbackNum" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(*) from (select * from tbl_interview) a,
         (select u.uid,u.uname,d.degreename,p.*,s.schoolname from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s,tbl_degree d where
@@ -240,7 +240,29 @@
             </if>
         </where>
     </select>
-
+<!--录用-->
+    <update id="companyEmploy" parameterType="Interview">
+         update tbl_interview set  employ = #{employ,jdbcType=VARCHAR},endtime = #{endtime} where interviewid = #{interviewid,jdbcType=INTEGER}
+    </update>
+<!--已录用人员信息-->
+    <select id="companyEmployInfo" resultType="Interview" parameterType="java.util.Map">
+        select * from (select * from tbl_interview) a,
+        (select u.*,p.*,s.schoolname,d.* from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s,tbl_degree d where
+        u.uid = r.uid = s.sid and r.professid = p.professid and r.degreeid = d.degreeid ) b,
+        (select p.aid,p.positionid from tbl_position p ) c
+        <where>
+            a.uid = b.uid and a.positionid = c.positionid and c.aid = #{aid} and a.employ = '已录用'
+        </where>
+    </select>
+    <select id="companyEmployInfoNum" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) from (select * from tbl_interview) a,
+        (select u.*,p.*,s.schoolname,d.* from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s,tbl_degree d where
+         u.uid = r.uid = s.sid and r.professid = p.professid and r.degreeid = d.degreeid ) b,
+        (select p.aid,p.positionid from tbl_position p ) c
+        <where>
+            a.uid = b.uid and a.positionid = c.positionid and c.aid = #{aid} and a.employ = '已录用'
+        </where>
+    </select>
 
 
 </mapper>

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.great.talent.entity.*;
 import com.great.talent.service.AdminService;
 import com.great.talent.util.Diagis;
+import com.great.talent.util.MD5Utils;
 import com.great.talent.util.ResponseUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -567,16 +565,26 @@ public class AdminController
 		}
    }
 
-	@RequestMapping("/deleteInterview")
+	/**
+	 * 新增高校和管理员账号
+	 * @param admin
+	 * @return
+	 */
+	@RequestMapping("/addAccount")
 	@ResponseBody
-    public void deleteInterview(Interview interview, HttpServletResponse response) throws IOException {
-	   interview.setInterstate("删除");
-	   int flag = adminService.deleteIntervier(interview);
-	   if (flag > 0){
-	   	response.getWriter().print(1111);
-	   }else {
-	   	response.getWriter().print(2222);
-	   }
-   }
-
+	public String addAccount(Admin admin){
+		admin.setDate(new Date());
+		String pwd = MD5Utils.md5(admin.getPassword());
+		admin.setPassword(pwd);
+		if(admin.getRoleid()==3){
+			adminService.addAdmin(admin);
+		}else{
+			SchoolMsg s=new SchoolMsg();
+			s.setSchoolname(admin.getCompanyname());
+			adminService.addSchool(s);
+			admin.setCid(s.getSid());
+			adminService.addSchoolAccount(admin);
+		}
+		return "success";
+	}
 }

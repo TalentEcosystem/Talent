@@ -19,6 +19,11 @@
 	<link rel="stylesheet" href=<%=path+"/js/layui/css/layui.css" %>>
 	<script type="text/javascript" src=<%=path+"/js/layui/layui.js" %>></script>
 	<script type="text/javascript" src=<%=path+"/js/json2.js" %>></script>
+<style>
+	.layui-form-item{
+		margin-left: 35%;
+	}
+</style>
 </head>
 <body>
 <form class="layui-form" >
@@ -102,7 +107,6 @@
 	</div>
 </form>
 <script>
-
 	var resname=$("#resname").val();
 	var sex=$("input[name='sex']:checked").val();
 	var rebirth=$("#rebirth").find("option:selected").text();
@@ -110,6 +114,28 @@
 	var reexper=$("#reexper").find("option:selected").text();
 	var retel=$("#retel").val();
 	var reset=$("input[name='reset']:checked").val();
+	$("#findCode").blur(function () {
+		var retel = $("#retel").val();
+		$.ajax({
+			url:path+"/school/sendMsg",
+			async:true,
+			type:"post",
+			data:{"retel":retel},
+			datatype:"text",
+			success:function (msg) {
+				scode = msg;
+			}
+			,error:function () {
+				alert("网络繁忙！");
+			}
+		});
+	});
+	$("#code").blur(function () {
+		var code=$("#code").val();
+		if(code!=scode){
+			layer.msg("验证码输入错误");
+		}
+	});
 	layui.use('form', function(){
 		var form = layui.form;
 		var layer=layui.layer;
@@ -122,13 +148,13 @@
 				}
 			}
 
-		});  
+		});
 
 		form.on('submit(formDemo)', function(data){
 			layer.alert(JSON.stringify(data.field), {
 				title: '最终的提交信息'
 			});
-			//提交前先要判断验证码是否正确
+			//验证码框离焦先去验证是否一致提交前先要判断验证码是否正确
 
 			$.ajax({
 				url:'${pageContext.request.contextPath}/school/fillOutResume',
@@ -170,16 +196,34 @@
 
 
 	});
-
+//这里点击验证码需要访问控制层
 $("#findCode").click(function () {
 	console.log("手机号"+$("#retel").val().length);
 	if($("#retel").val().length==11){
 		$("#codeForm").css("display","block");
+		settime(this);
 	}else{
 		layer.msg("请先填写手机号！！！");
 	}
+});
 
-})
+	var countdown=60;        //初始值
+	var scode = "";
+	function settime(val) {
+		if (countdown == 0) {
+			val.innerHTML="获取验证码";
+			countdown = 60;
+			scode = "";
+			return false;
+		} else {
+			val.innerHTML="重新发送(" + countdown + ")";
+			console.log(countdown);
+			countdown--;
+		}
+		setTimeout(function() {   //设置一个定时器，每秒刷新一次
+			settime(val);
+		},1000);
+	}
 </script>
 </body>
 </html>

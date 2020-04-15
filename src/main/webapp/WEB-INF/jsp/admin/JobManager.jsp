@@ -47,7 +47,6 @@
 </body>
 <script type="text/html" id="barDemo">
     <button lay-event="detail" type="button" class="layui-btn layui-btn-xs layui-btn-radius">查看求职进度</button>
-    <button lay-event="delete" type="button" class="layui-btn layui-btn-xs layui-btn-radius layui-btn layui-btn-danger">删除</button>
 </script>
 <script>
     var path=$('#path').val();
@@ -104,33 +103,6 @@
                     }
                 });
             }
-              if (event === 'delete'){
-                layer.confirm('真的删除行么', function(index) {
-                    var interviewid = data.interviewid;
-                    console.log(interviewid);
-                    $.ajax({
-                        url: path+"/admin/deleteInterview?interviewid="+interviewid,
-                        async: true,
-                        type: "POST",
-                        datatype: "text",
-                        success: function (msg) {
-                            if (msg == 1111) {
-                                layer.msg('删除成功');
-                                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                            }else {
-                                layer.msg('删除失败');
-                            }
-                        },
-                        error: function () {
-                            alert("网络繁忙！")
-                        }
-                    })
-                    console.log(interviewid);
-                    layer.close(index);
-
-                })
-            }
-
         })
         form.on('submit(search)',function (data) {
             var myselect = document.getElementById("industryid");
