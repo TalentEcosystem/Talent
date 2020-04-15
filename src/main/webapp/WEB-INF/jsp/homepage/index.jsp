@@ -871,7 +871,7 @@
 			background-color:#dbdbdb;
 			width: 150px;
 			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
+			background-image: url(<%=path+"/images/jiuye.jpg"%>) ;
 			background-size: 150px 150px;
 			margin-left: 120px;
 			float: left;
@@ -881,7 +881,7 @@
 			background-color:#dbdbdb;
 			width: 150px;
 			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
+			background-image: url(<%=path+"/images/qiuzhi.jpg"%>) ;
 			background-size: 150px 150px;
 			margin-left: 50px;
 			float: left;
@@ -891,7 +891,7 @@
 			background-color:#dbdbdb;
 			width: 150px;
 			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
+			background-image: url(<%=path+"/images/gangwei.jpg"%>) ;
 			background-size: 150px 150px;
 			margin-left: 50px;
 			float: left;
@@ -902,116 +902,6 @@
 			width: 150px;
 			height: 369px;
 			background-image: url(<%=path+"/images/tat.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic43 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic53 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic63 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic73 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic83 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic93 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic103 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic113 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic123 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic133 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic143 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
 			background-size: 150px 150px;
 			margin-left: 50px;
 			float: left;
@@ -1104,6 +994,7 @@
 
 	</style>
 
+<%--	个人鼠标悬停显示--%>
 	<style type="text/css">
 		/*样式初始化*/
 		body, dl, dd, h1, h2, h3, h4, h5, h6, p, form,ul,ol{margin:0; padding:0;}
@@ -1166,6 +1057,7 @@
 			<a href="${pageContext.request.contextPath}/user/login" class="lo" style="width: 200px" >用户登录</a>
 			<a href="" class="lo" style="width: 80px;text-align: center" >注册</a>
 		</c:if>
+<%--			鼠标经过 用户名 显示  离开隐藏--%>
 			<script type="text/javascript">
 				//hover接收2个参数,第一个是经过,第二个是离开;
 				$('.nav span').hover(function(){
@@ -1332,6 +1224,7 @@
 		<div class="add1">
 			<!-- 在输入框加入id -->
 			<input type="text" name="sypositionaddress" class="cityinput layui-input city"  id="citySelect" placeholder="输入城市" autocomplete="off">
+<%--			城市选择器--%>
 			<script type="text/javascript">
 				var test=new Vcity.CitySelector({input:'citySelect'});
 			</script>
@@ -1342,43 +1235,7 @@
 		<button class="layui-btn " lay-submit style="margin:0 0 3px 39px;height: 44px;width: 115px;background-color:transparent" ></button>
 	</div>
 	</form>
-<script>
-	function searchJob() {
-		var path=$("#path").val();
-		var cit=$("#citySelect").val().trim();
-		var gang=$("#gang").val().trim();
 
-		if(cit.length === 0&& gang.length === 0){
-			console.log(cit+gang);
-			window.location.href=path+"/HomePage/searchJob1";
-		}else {
-
-			$.ajax({
-				type: "post",
-				url: path+"/HomePage/getJobNews1",
-				// dataType: "json",
-				async:true,
-				data:{
-					"sypositionaddress":cit,
-					"sypositionname":gang
-				},
-				success: function (data) {
-
-					// window.location.href=path+"/HomePage/searchJob";
-				},
-				error: function (data) {
-					console.log(data);
-				}
-
-			});
-
-return false;
-		}
-
-	}
-
-
-</script>
 
 
 
@@ -1394,6 +1251,7 @@ return false;
 	<a href="download.html">个人中心</a>
 	<a href="" >登录</a>
 	<a href="helpJob.html">注册</a>
+<%--	鼠标经过标题栏显示颜色改变--%>
 	<script>
 		$('.menuDiv  a').hover(function(){
 			$(this).addClass("onnav");
@@ -2308,8 +2166,7 @@ return false;
 									<div class="shodow3"></div>
 								</div>
 							</div>
-<%--							<div class="left3"></div>--%>
-<%--							<div class="right3"></div>--%>
+
 							<div class="lunbo3"></div>
 						</div>
 						<script>
@@ -2334,13 +2191,6 @@ return false;
 								$(".pic23").mouseleave(function () {
 									$(".test23").stop().animate({ 'height': '0px', opacity: '0' },"slow");
 								})
-
-								$(".pic43").mouseenter(function () {
-									$(".test43").stop().animate({ 'height': '67px', opacity: '0.8' },"slow");
-								});
-								$(".pic43").mouseleave(function () {
-									$(".test43").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
 								$(".pic33").mouseenter(function () {
 
 									$(".test33").stop().animate({ 'height': '67px', opacity: '0.8' },"slow");
@@ -2348,80 +2198,7 @@ return false;
 								$(".pic33").mouseleave(function () {
 									$(".test33").stop().animate({ 'height': '0px', opacity: '0' },"slow");
 								})
-								$(".pic53").mouseenter(function () {
-									// $('.test5').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test53").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic53").mouseleave(function () {
-									$(".test53").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic63").mouseenter(function () {
-									$(".test63").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic63").mouseleave(function () {
-									$(".test63").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic73").mouseenter(function () {
-									$(".test73").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic73").mouseleave(function () {
-									$(".test73").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic83").mouseenter(function () {
-									$(".test83").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic83").mouseleave(function () {
 
-									$(".test83").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic93").mouseenter(function () {
-									//$('.test9').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test93").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic93").mouseleave(function () {
-									// $('.test9').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test93").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic103").mouseenter(function () {
-									//$('.test10').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test103").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic103").mouseleave(function () {
-									// $('.test10').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test103").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic113").mouseenter(function () {
-									//$('.test11').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test113").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic113").mouseleave(function () {
-									// $('.test11').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test113").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic123").mouseenter(function () {
-									//$('.test9').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test123").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic123").mouseleave(function () {
-									// $('.test9').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test123").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic133").mouseenter(function () {
-									//$('.test10').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test133").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic133").mouseleave(function () {
-									// $('.test10').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test133").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic143").mouseenter(function () {
-									//$('.test11').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test143").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic143").mouseleave(function () {
-									// $('.test11').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test143").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
 							});
 						</script>
 					</ul>
