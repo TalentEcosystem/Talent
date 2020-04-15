@@ -368,7 +368,7 @@
 			background-color:#dbdbdb;
 			width: 150px;
 			height: 369px;
-			 ;
+		;
 			background-size: 150px 150px;
 			margin-left: 120px;
 			float: left;
@@ -871,7 +871,7 @@
 			background-color:#dbdbdb;
 			width: 150px;
 			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
+			background-image: url(<%=path+"/images/jiuye.jpg"%>) ;
 			background-size: 150px 150px;
 			margin-left: 120px;
 			float: left;
@@ -881,7 +881,7 @@
 			background-color:#dbdbdb;
 			width: 150px;
 			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
+			background-image: url(<%=path+"/images/qiuzhi.jpg"%>) ;
 			background-size: 150px 150px;
 			margin-left: 50px;
 			float: left;
@@ -891,7 +891,7 @@
 			background-color:#dbdbdb;
 			width: 150px;
 			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
+			background-image: url(<%=path+"/images/gangwei.jpg"%>) ;
 			background-size: 150px 150px;
 			margin-left: 50px;
 			float: left;
@@ -902,116 +902,6 @@
 			width: 150px;
 			height: 369px;
 			background-image: url(<%=path+"/images/tat.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic43 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic53 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic63 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic73 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic83 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic93 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic103 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic113 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic123 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic133 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic143 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
 			background-size: 150px 150px;
 			margin-left: 50px;
 			float: left;
@@ -1049,7 +939,7 @@
 
 	</style>
 
-<%--	公告css--%>
+	<%--	公告css--%>
 	<style type="text/css">
 		#container_small_tip{
 			background:#EBEEF7;
@@ -1104,6 +994,7 @@
 
 	</style>
 
+	<%--	个人鼠标悬停显示--%>
 	<style type="text/css">
 		/*样式初始化*/
 		body, dl, dd, h1, h2, h3, h4, h5, h6, p, form,ul,ol{margin:0; padding:0;}
@@ -1147,8 +1038,8 @@
 		</div>
 		<div class="topRight  ">
 
-		<c:if test="${not empty uname}">
-			<div class="nav" style="background-color: #F6F6F6">
+			<c:if test="${not empty uname}">
+				<div class="nav" style="background-color: #F6F6F6">
         <span>
 	        <a href="">${uname}</a>
             <ul>
@@ -1159,13 +1050,14 @@
 	             <a href="" ><li class="ll">退出</li></a>
             </ul>
         </span>
-			</div>
-		</c:if>
+				</div>
+			</c:if>
 
-		<c:if test="${empty uname}">
-			<a href="${pageContext.request.contextPath}/user/login" class="lo" style="width: 200px" >用户登录</a>
-			<a href="" class="lo" style="width: 80px;text-align: center" >注册</a>
-		</c:if>
+			<c:if test="${empty uname}">
+				<a href="${pageContext.request.contextPath}/user/login" class="lo" style="width: 200px" >用户登录</a>
+				<a href="" class="lo" style="width: 80px;text-align: center" >注册</a>
+			</c:if>
+			<%--			鼠标经过 用户名 显示  离开隐藏--%>
 			<script type="text/javascript">
 				//hover接收2个参数,第一个是经过,第二个是离开;
 				$('.nav span').hover(function(){
@@ -1181,7 +1073,7 @@
 
 			</script>
 
-<%--			webscoket 实时发消息给客户端--%>
+			<%--			webscoket 实时发消息给客户端--%>
 			<script type="text/javascript">
 
 
@@ -1268,7 +1160,7 @@
 					return currentdate;
 				}
 			</script>
-<%--			实现好消息的动画--%>
+			<%--			实现好消息的动画--%>
 			<script type="text/javascript">
 				(function ($) {
 					$.fn.extend({
@@ -1327,58 +1219,23 @@
 		<img src="${pageContext.request.contextPath}/images/view_logo40.png" />
 	</div>
 	<form method="post" class="layui-form" action="${pageContext.request.contextPath}/HomePage/getJobNews">
-	<div class="loginAddress">
+		<div class="loginAddress">
 
-		<div class="add1">
-			<!-- 在输入框加入id -->
-			<input type="text" name="sypositionaddress" class="cityinput layui-input city"  id="citySelect" placeholder="输入城市" autocomplete="off">
-			<script type="text/javascript">
-				var test=new Vcity.CitySelector({input:'citySelect'});
-			</script>
+			<div class="add1">
+				<!-- 在输入框加入id -->
+				<input type="text" name="sypositionaddress" class="cityinput layui-input city"  id="citySelect" placeholder="输入城市" autocomplete="off">
+				<%--			城市选择器--%>
+				<script type="text/javascript">
+					var test=new Vcity.CitySelector({input:'citySelect'});
+				</script>
+			</div>
 		</div>
-	</div>
-	<div class="loginC">
-		<input name="sypositionname" type="text" id="gang"  autocomplete="off" placeholder="请填写关键词或选择职位..." />
-		<button class="layui-btn " lay-submit style="margin:0 0 3px 39px;height: 44px;width: 115px;background-color:transparent" ></button>
-	</div>
+		<div class="loginC">
+			<input name="sypositionname" type="text" id="gang"  autocomplete="off" placeholder="请填写关键词或选择职位..." />
+			<button class="layui-btn " lay-submit style="margin:0 0 3px 39px;height: 44px;width: 115px;background-color:transparent" ></button>
+		</div>
 	</form>
-<script>
-	function searchJob() {
-		var path=$("#path").val();
-		var cit=$("#citySelect").val().trim();
-		var gang=$("#gang").val().trim();
 
-		if(cit.length === 0&& gang.length === 0){
-			console.log(cit+gang);
-			window.location.href=path+"/HomePage/searchJob1";
-		}else {
-
-			$.ajax({
-				type: "post",
-				url: path+"/HomePage/getJobNews1",
-				// dataType: "json",
-				async:true,
-				data:{
-					"sypositionaddress":cit,
-					"sypositionname":gang
-				},
-				success: function (data) {
-
-					// window.location.href=path+"/HomePage/searchJob";
-				},
-				error: function (data) {
-					console.log(data);
-				}
-
-			});
-
-return false;
-		}
-
-	}
-
-
-</script>
 
 
 
@@ -1394,6 +1251,7 @@ return false;
 	<a href="download.html">个人中心</a>
 	<a href="" >登录</a>
 	<a href="helpJob.html">注册</a>
+	<%--	鼠标经过标题栏显示颜色改变--%>
 	<script>
 		$('.menuDiv  a').hover(function(){
 			$(this).addClass("onnav");
@@ -1407,72 +1265,72 @@ return false;
 </div>
 <div class="BodyMain">
 	<div class="mainTop">
-<%--		<div class="mainTopL">--%>
-<%--			<ul>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme1"><b></b>销售|市场|客服|贸易</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme2"><b></b>经营管理|人事|行政|财务</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme3"><b></b>生产|质管|技工|物流</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme4"><b></b>教育|法律|咨询|翻译</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme5"><b></b>零售|家政|餐饮|旅游</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme6"><b></b>广告|媒体|艺术|出版</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme7"><b></b>IT|互联网|通信</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme8"><b></b>金融|保险</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme9"><b></b>医疗|制药|环保|化工</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme10"><b></b>建筑|房地产|物业管理</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme11"><b></b>电子|能源|机械|纺织</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="items">--%>
-<%--					<div class="itemOne">--%>
-<%--						<span class="itme12"><b></b>农业|实习生|科研</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--			</ul>--%>
-<%--		</div>--%>
+		<%--		<div class="mainTopL">--%>
+		<%--			<ul>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme1"><b></b>销售|市场|客服|贸易</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme2"><b></b>经营管理|人事|行政|财务</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme3"><b></b>生产|质管|技工|物流</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme4"><b></b>教育|法律|咨询|翻译</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme5"><b></b>零售|家政|餐饮|旅游</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme6"><b></b>广告|媒体|艺术|出版</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme7"><b></b>IT|互联网|通信</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme8"><b></b>金融|保险</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme9"><b></b>医疗|制药|环保|化工</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme10"><b></b>建筑|房地产|物业管理</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme11"><b></b>电子|能源|机械|纺织</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--				<div class="items">--%>
+		<%--					<div class="itemOne">--%>
+		<%--						<span class="itme12"><b></b>农业|实习生|科研</span>--%>
+		<%--					</div>--%>
+		<%--				</div>--%>
+		<%--			</ul>--%>
+		<%--		</div>--%>
 		<div class="mainTopR">
-<%--	中间轮播广告--%>
+			<%--	中间轮播广告--%>
 			<div class="ads">
 				<!--            <div class="floatL" id="left"></div>-->
 				<div class="adBox0">
@@ -1534,60 +1392,60 @@ return false;
                     </span>
 				</div>
 
-<%--				<div class="erweima">--%>
-<%--					<div class="close"></div>--%>
-<%--					<div class="ewmimg"><img src="images/showqrcode.jpg" /></div>--%>
-<%--					<div class="ewmtxt">使用微信扫描上方二维码登录</div>--%>
-<%--				</div>--%>
-<%--				<div class="logintop">--%>
-<%--					<div class="loginC loginA select">--%>
-<%--						<div class="smlogin"></div>--%>
-<%--						<span>个人登录</span>--%>
-<%--					</div>--%>
-<%--					<div class="loginC loginB">--%>
-<%--						<span>企业登录</span>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-<%--				<div class="loginmain">--%>
-<%--					<div class="ContentA">--%>
-<%--						<div class="txtInput"><input name="" type="text" placeholder="请输入用户名"/></div>--%>
-<%--						<div class="txtInput"><input name="" type="text" placeholder="请输入密码"/></div>--%>
-<%--						<div class="txtbtn">--%>
-<%--							<div style="float:left">--%>
-<%--								<span class="chebox yes"></span>--%>
-<%--								<a href="javascript:void()" class="a1">接受用户协议</a>--%>
-<%--								<br /><div class="clear"></div>--%>
-<%--								<span class="chebox yes"></span>--%>
-<%--								<span>记住我</span>--%>
-<%--								<a href="javascript:void()" class="a2">忘记密码</a>--%>
-<%--							</div>--%>
-<%--							<input name="" type="button" class="lobtn" value="登  录"/>--%>
-<%--						</div>--%>
-<%--						<div class="zcbox">--%>
-<%--							<div class="zc1"></div>--%>
-<%--							<div class="zc2">--%>
-<%--								<a href="javascript:void()" class="a1">一分钟填写简历</a>--%>
-<%--								<a href="javascript:void()" class="a2">注册</a>--%>
-<%--							</div>--%>
-<%--						</div>--%>
-<%--					</div>--%>
-<%--					<div class="ContentB">--%>
-<%--						<div class="qybox1">--%>
-<%--							<a href="javascript:void()">企业登录</a>--%>
-<%--							<a href="javascript:void()">企业注册</a>--%>
-<%--						</div>--%>
-<%--						<div class="qybox2">--%>
-<%--							<p>注册后可<b>免费</b>升级为<b>普通会员</b><br>不花钱也能完成中低职位的招聘</p>--%>
-<%--						</div>--%>
-<%--						<div class="qybox3">--%>
-<%--							<div class="l">企业服务热线<br><b>400-800-8*8*</b></div>--%>
-<%--							<div class="r"></div>--%>
-<%--						</div>--%>
-<%--					</div>--%>
-<%--				</div>--%>
+				<%--				<div class="erweima">--%>
+				<%--					<div class="close"></div>--%>
+				<%--					<div class="ewmimg"><img src="images/showqrcode.jpg" /></div>--%>
+				<%--					<div class="ewmtxt">使用微信扫描上方二维码登录</div>--%>
+				<%--				</div>--%>
+				<%--				<div class="logintop">--%>
+				<%--					<div class="loginC loginA select">--%>
+				<%--						<div class="smlogin"></div>--%>
+				<%--						<span>个人登录</span>--%>
+				<%--					</div>--%>
+				<%--					<div class="loginC loginB">--%>
+				<%--						<span>企业登录</span>--%>
+				<%--					</div>--%>
+				<%--				</div>--%>
+				<%--				<div class="loginmain">--%>
+				<%--					<div class="ContentA">--%>
+				<%--						<div class="txtInput"><input name="" type="text" placeholder="请输入用户名"/></div>--%>
+				<%--						<div class="txtInput"><input name="" type="text" placeholder="请输入密码"/></div>--%>
+				<%--						<div class="txtbtn">--%>
+				<%--							<div style="float:left">--%>
+				<%--								<span class="chebox yes"></span>--%>
+				<%--								<a href="javascript:void()" class="a1">接受用户协议</a>--%>
+				<%--								<br /><div class="clear"></div>--%>
+				<%--								<span class="chebox yes"></span>--%>
+				<%--								<span>记住我</span>--%>
+				<%--								<a href="javascript:void()" class="a2">忘记密码</a>--%>
+				<%--							</div>--%>
+				<%--							<input name="" type="button" class="lobtn" value="登  录"/>--%>
+				<%--						</div>--%>
+				<%--						<div class="zcbox">--%>
+				<%--							<div class="zc1"></div>--%>
+				<%--							<div class="zc2">--%>
+				<%--								<a href="javascript:void()" class="a1">一分钟填写简历</a>--%>
+				<%--								<a href="javascript:void()" class="a2">注册</a>--%>
+				<%--							</div>--%>
+				<%--						</div>--%>
+				<%--					</div>--%>
+				<%--					<div class="ContentB">--%>
+				<%--						<div class="qybox1">--%>
+				<%--							<a href="javascript:void()">企业登录</a>--%>
+				<%--							<a href="javascript:void()">企业注册</a>--%>
+				<%--						</div>--%>
+				<%--						<div class="qybox2">--%>
+				<%--							<p>注册后可<b>免费</b>升级为<b>普通会员</b><br>不花钱也能完成中低职位的招聘</p>--%>
+				<%--						</div>--%>
+				<%--						<div class="qybox3">--%>
+				<%--							<div class="l">企业服务热线<br><b>400-800-8*8*</b></div>--%>
+				<%--							<div class="r"></div>--%>
+				<%--						</div>--%>
+				<%--					</div>--%>
+				<%--				</div>--%>
 			</div>
 			<div class="clear"></div>
-<%--	专区模块--%>
+			<%--	专区模块--%>
 			<div class="tabs">
 				<ul id="tab">
 					<li class="current" style="display: block">技术成长专区</li>
@@ -1596,7 +1454,7 @@ return false;
 					<li  style="float: right;width: 242px;">成果展示</li>
 				</ul>
 				<div id="content">
-<%--					左右按钮的隐藏显示--%>
+					<%--					左右按钮的隐藏显示--%>
 					<script>
 						var conrent=document.getElementById("content");
 						var left=document.getElementsByClassName("left").item(0);
@@ -1630,18 +1488,18 @@ return false;
 					<ul  >
 
 						<div class="product-cont">
-		<div class="scene2">
-			<div class="out" >
-				<div class="in clearFix" id="study" style="left: -1100px;">
-<%--					课程轮播--%>
-				</div>
-				<div class="shodow"></div>
-			</div>
-		</div>
-		<div class="left" style="display: none"></div>
-		<div class="right" style="display: none"></div>
-		<div class="lunbo"></div>
-	</div>
+							<div class="scene2">
+								<div class="out" >
+									<div class="in clearFix" id="study" style="left: -1100px;">
+										<%--					课程轮播--%>
+									</div>
+									<div class="shodow"></div>
+								</div>
+							</div>
+							<div class="left" style="display: none"></div>
+							<div class="right" style="display: none"></div>
+							<div class="lunbo"></div>
+						</div>
 						<script>
 							var path=$("#path").val();
 							$.ajax({
@@ -1685,78 +1543,78 @@ return false;
 						</script>
 						<script>
 
-		//轮播
+							//轮播
 
-		var out = document.getElementsByClassName("out").item(0);
-		var left = document.getElementsByClassName("left").item(0);
-		var right = document.getElementsByClassName("right").item(0);
-		var myin = document.getElementsByClassName("in").item(0);
-		var zt = true;
-		var timer = null;
-		// var lilist = document.getElementsByTagName("li");
-		var index1 = 0;
-		var timer1 = null;
-		right.onclick = function () {
-			if (zt == true) {
-				move(-800);
-			}
-		};
-		left.onclick = function () {
-			if (zt == true) {
-				move(800);
-			}
-		};
-		function move(dis) {
-			zt = false;
-			var newweizhi = parseInt(myin.style.left) + dis;
+							var out = document.getElementsByClassName("out").item(0);
+							var left = document.getElementsByClassName("left").item(0);
+							var right = document.getElementsByClassName("right").item(0);
+							var myin = document.getElementsByClassName("in").item(0);
+							var zt = true;
+							var timer = null;
+							// var lilist = document.getElementsByTagName("li");
+							var index1 = 0;
+							var timer1 = null;
+							right.onclick = function () {
+								if (zt == true) {
+									move(-800);
+								}
+							};
+							left.onclick = function () {
+								if (zt == true) {
+									move(800);
+								}
+							};
+							function move(dis) {
+								zt = false;
+								var newweizhi = parseInt(myin.style.left) + dis;
 
-			var time = 1000;
-			var interval = 10;
-			var every = dis / (time / interval);
-			function meici() {
-				if (every < 0 && parseInt(myin.style.left) > newweizhi || every > 0 && parseInt(myin.style.left) < newweizhi) {
-					myin.style.left = parseInt(myin.style.left) + every + 'px';
-					setTimeout(meici, 10)
-				} else {
-					myin.style.left = newweizhi + 'px';
-					clearInterval(timer);
-					zt = true;
-					if (newweizhi == -3500) {
-						myin.style.left = -1100 + "px";
-					}
-					if (newweizhi == -300) {
-						myin.style.left = -1100 + "px";
-					}
+								var time = 1000;
+								var interval = 10;
+								var every = dis / (time / interval);
+								function meici() {
+									if (every < 0 && parseInt(myin.style.left) > newweizhi || every > 0 && parseInt(myin.style.left) < newweizhi) {
+										myin.style.left = parseInt(myin.style.left) + every + 'px';
+										setTimeout(meici, 10)
+									} else {
+										myin.style.left = newweizhi + 'px';
+										clearInterval(timer);
+										zt = true;
+										if (newweizhi == -3500) {
+											myin.style.left = -1100 + "px";
+										}
+										if (newweizhi == -300) {
+											myin.style.left = -1100 + "px";
+										}
 
-				}
-			}
-			meici();
-		}
+									}
+								}
+								meici();
+							}
 
-		timer1 = setInterval(right.onclick, 6000);
-		out.onmouseover = function () {
-			clearInterval(timer1);
-		};
+							timer1 = setInterval(right.onclick, 6000);
+							out.onmouseover = function () {
+								clearInterval(timer1);
+							};
 
-		left.onmouseover = function () {
-			clearInterval(timer1);
-		};
-		right.onmouseover = function () {
-			clearInterval(timer1);
-		};
-		out.onmouseout = function () {
-			timer1 = setInterval(right.onclick, 6000);
-		}
+							left.onmouseover = function () {
+								clearInterval(timer1);
+							};
+							right.onmouseover = function () {
+								clearInterval(timer1);
+							};
+							out.onmouseout = function () {
+								timer1 = setInterval(right.onclick, 6000);
+							}
 
-		left.onmouseout = function () {
-			timer1 = setInterval(right.onclick, 6000);
-		};
-		right.onmouseout = function () {
-			timer1 = setInterval(right.onclick, 6000);
-		};
+							left.onmouseout = function () {
+								timer1 = setInterval(right.onclick, 6000);
+							};
+							right.onmouseout = function () {
+								timer1 = setInterval(right.onclick, 6000);
+							};
 
 
-	</script>
+						</script>
 					</ul>
 
 					<ul style="display: none">
@@ -1764,7 +1622,7 @@ return false;
 							<div class="scene2">
 								<div class="out1">
 									<div class="in1 clearFix1" id="school" style="left: -1100px;">
-<%--									高校轮播--%>
+										<%--									高校轮播--%>
 									</div>
 									<div class="shodow1"></div>
 								</div>
@@ -1784,15 +1642,15 @@ return false;
 									var d=JSON.parse(data);
 									for (var i = 0; i <d.length ; i++) {
 										$("#school").append(
-										"<a href='' class='pic0' style='background-image: url("+path+"/"+d[i].schoolpic+")'>"+
+											"<a href='' class='pic0' style='background-image: url("+path+"/"+d[i].schoolpic+")'>"+
 											"<div class='childss1 test0' >"+
 											"<h>"+d[i].schoolname+"</h>"+
 											"<p>就业总数</p>"+
 											"<i>"+d[i].num+"</i>"+
 											"</div>"+
-										"</a>"
+											"</a>"
 
-									);
+										);
 										$(".pic0").mouseenter(function () {
 											$(".test0").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
 										});
@@ -1993,7 +1851,7 @@ return false;
 							<div class="scene2">
 								<div class="out2">
 									<div class="in2 clearFix2" id="company" style="left: -1100px;">
-<%--									企业就业轮播--%>
+										<%--									企业就业轮播--%>
 									</div>
 									<div class="shodow2"></div>
 								</div>
@@ -2016,7 +1874,7 @@ return false;
 											"<a href='' class='pic02' style='background-image: url("+path+"/"+d[i].companypic+")'>"+
 											"<div class='childss2 test02' >"+
 											"<div style='width: 150px;height: 100px'>"+
-											 d[i].companyname+  "<br>"+
+											d[i].companyname+  "<br>"+
 											"招收总人数"+d[i].num+" <br>"+
 											"</div>"+
 											"</div>"+
@@ -2252,8 +2110,8 @@ return false;
 								// dataType: "json",
 								async:true,
 								success: function (data) {
-								var map=JSON.parse(data);
-								console.log(map);
+									var map=JSON.parse(data);
+									console.log(map);
 									$("#employ").text( map.employ);
 									$("#job").text(map.post);
 									$("#post").text(map.job);
@@ -2308,8 +2166,7 @@ return false;
 									<div class="shodow3"></div>
 								</div>
 							</div>
-<%--							<div class="left3"></div>--%>
-<%--							<div class="right3"></div>--%>
+
 							<div class="lunbo3"></div>
 						</div>
 						<script>
@@ -2334,13 +2191,6 @@ return false;
 								$(".pic23").mouseleave(function () {
 									$(".test23").stop().animate({ 'height': '0px', opacity: '0' },"slow");
 								})
-
-								$(".pic43").mouseenter(function () {
-									$(".test43").stop().animate({ 'height': '67px', opacity: '0.8' },"slow");
-								});
-								$(".pic43").mouseleave(function () {
-									$(".test43").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
 								$(".pic33").mouseenter(function () {
 
 									$(".test33").stop().animate({ 'height': '67px', opacity: '0.8' },"slow");
@@ -2348,80 +2198,7 @@ return false;
 								$(".pic33").mouseleave(function () {
 									$(".test33").stop().animate({ 'height': '0px', opacity: '0' },"slow");
 								})
-								$(".pic53").mouseenter(function () {
-									// $('.test5').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test53").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic53").mouseleave(function () {
-									$(".test53").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic63").mouseenter(function () {
-									$(".test63").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic63").mouseleave(function () {
-									$(".test63").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic73").mouseenter(function () {
-									$(".test73").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic73").mouseleave(function () {
-									$(".test73").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic83").mouseenter(function () {
-									$(".test83").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic83").mouseleave(function () {
 
-									$(".test83").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic93").mouseenter(function () {
-									//$('.test9').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test93").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic93").mouseleave(function () {
-									// $('.test9').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test93").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic103").mouseenter(function () {
-									//$('.test10').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test103").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic103").mouseleave(function () {
-									// $('.test10').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test103").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic113").mouseenter(function () {
-									//$('.test11').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test113").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic113").mouseleave(function () {
-									// $('.test11').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test113").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic123").mouseenter(function () {
-									//$('.test9').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test123").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic123").mouseleave(function () {
-									// $('.test9').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test123").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic133").mouseenter(function () {
-									//$('.test10').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test133").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic133").mouseleave(function () {
-									// $('.test10').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test133").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
-								$(".pic143").mouseenter(function () {
-									//$('.test11').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test143").stop().animate({ 'height': '67px', opacity: '0.5' },"slow");
-								});
-								$(".pic143").mouseleave(function () {
-									// $('.test11').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test143").stop().animate({ 'height': '0px', opacity: '0' },"slow");
-								})
 							});
 						</script>
 					</ul>

@@ -79,7 +79,7 @@
 <%--            <div id="tip5" style="display: none;"></div>--%>
         </div>
         <div class="layui-form-item" >
-            <label class="layui-form-label" >所在城市：</label>
+            <label class="layui-form-label" >所在城市</label>
             <div class="layui-input-inline">
                 <input name="address" class="layui-input" type="text" lay-verType="tips" placeholder="请输入所在城市" autocomplete="off" onblur="checkAddress(this.value)">
             </div>
@@ -87,8 +87,8 @@
         </div>
         <div class="layui-form-item" >
             <label class="layui-form-label" >学校名称</label>
-            <div class="layui-input-inline" style="width:400px">
-                <input name="companyname" class="layui-input" type="text" lay-verType="tips" placeholder="请输入公司名称" autocomplete="off" onblur="companyName(this.value)">
+            <div class="layui-input-inline">
+                <input name="companyname" class="layui-input" type="text" lay-verType="tips" placeholder="请输入高校名称" autocomplete="off" onblur="companyName(this.value)">
             </div>
 <%--            <div id="tip7" style="display: none;"></div>--%>
         </div>

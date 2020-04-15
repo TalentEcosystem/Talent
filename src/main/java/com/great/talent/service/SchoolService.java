@@ -106,5 +106,12 @@ public class SchoolService
 	public int userInsertResume(Resume resume){
 		return schoolMapper.userInsertResume(resume);
 	}
+	public List<ResumeStatus> findUserResumeStatus(int uid){
+		return schoolMapper.findUserResumeStatus(uid);
+	}
+
+	public int findUserResumeStatusCount(int uid){
+		return schoolMapper.findUserResumeStatusCount(uid);
+	}
 
 }

@@ -69,6 +69,9 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
                 <if test=" cond.industryid != null and cond.industryid != ''  ">
                     and p.industryid = '${cond.industryid}'
                 </if>
+                <if test=" cond.degreeid != null and cond.degreeid != ''  ">
+                    and p.degreeid = '${cond.degreeid}'
+                </if>
                 <if test=" cond.moneybegin != null and cond.moneyend !=null  ">
                     and p.money between '${cond.moneybegin}' and  '${cond.moneyend}'
                 </if>
@@ -98,6 +101,9 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
              <if test=" cond.industryid != null and cond.industryid != ''  ">
                     and p.industryid = '${cond.industryid}'
              </if>
+                <if test=" cond.degreeid != null and cond.degreeid != ''  ">
+                    and p.degreeid = '${cond.degreeid}'
+                </if>
                 <if test=" cond.moneybegin != null and cond.moneyend !=null  ">
                     and p.money between '${cond.moneybegin}' and  '${cond.moneyend}'
                 </if>

@@ -67,4 +67,8 @@ public interface SchoolMapper
 
 	public int userInsertResume(Resume resume);
 
+	public List<ResumeStatus> findUserResumeStatus(int uid);
+
+	public int findUserResumeStatusCount(int uid);
+
 }
