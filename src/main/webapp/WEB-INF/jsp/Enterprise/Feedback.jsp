@@ -16,15 +16,7 @@
 </head>
 <body>
 <input type="hidden" id="path" value="<%=path%>">
-<form class="layui-form" lay-filter="component-form-group" id="search_submits" onsubmit="return false">
 <h1  style="background-color: #d2d2d2;font-weight:bold;text-align:center;margin-top: 15px">反馈情况</h1>
-    <div class="layui-inline">
-        <button class="layui-btn" lay-submit="search_submits" lay-filter="check">已查看</button>
-        <button class="layui-btn" lay-submit="search_submits" lay-filter="invate">已邀请</button>
-        <button class="layui-btn" lay-submit="search_submits" lay-filter="interstate">已面试</button>
-        <button class="layui-btn" lay-submit="search_submits" lay-filter="employ">已录用</button>
-    </div>
-</form>
 <table id="demo" lay-filter="test"></table>
 <script type="text/html" id="barDemo">
     <button lay-event="detail" type="button" class="layui-btn layui-btn-xs layui-btn-radius">
@@ -69,27 +61,67 @@
                 ,{fixed: 'right',title:'操作', width: 200, align:'center', toolbar: '#barDemo'}
             ]]
         })
-        form.on('submit(check)',function (obj) {
-            var data =obj.data;
-            var check = data.check;
-            console.log(check);
+        table.on('tool(test)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性
+            var data = obj.data //获得当前行数据
+                ,event = obj.event;
+            if (event ==='detail'){
+                var uid={'uid':data.uid};
+                uid=JSON.stringify(uid);
+                layer.msg('查看操作');
+                $.ajax({
+                    url:'${pageContext.request.contextPath}/school/findResume',
+                    type:'post',
+                    data:'uid='+uid,
+                    dataType:'text',
+                    success:function(msg){
+                        layer.msg(msg);
+                    },error:function (err) {
+                        console.log(err);
+                    }
+                });
+                layer.open({
+                    type: 2,
+                    area: ['80%', '80%'],
+                    offset: ['10%', '10%'],
+                    btn: ['返回'],
+                    btn1: function(index, layero){
+                        layer.close(index);
+                    },
+                    content: path+'/school/useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                    ,success: function(layero, index){
+                        layer.msg('查看用户简历');
+                    }
+                });
+            }
+            else if (event ==='update'){
+                if (data.interstate ==='未面试'){
+                    layer.msg('尚未完成面试无法应聘');
+                    return false;
+                }else if (data.employ ==='已录用'){
+                    layer.msg('已录用');
+                    return false;
+                }else{
+                    var interviewid = data.interviewid;
+                    $.ajax({
+                        url:path+"/Enterprise/companyEmploy",
+                        dataType:"text",
+                        type:"POST",
+                        data:{"interviewid":interviewid,"employ":'录用'},
+                        success:function (msg) {
+                            if (msg === 'success'){
+                                alert("应聘成功！");
+                                window.location.reload();
+                            }else{
+                                alert("录用失败")
+                            }
+                        },
+                        error:function () {
+                             alert("网络繁忙！")
+                        }
+                    })
+                }
+            }
         })
-        form.on('submit(invate)',function (obj) {
-            var data =obj.data;
-            var invate =data.invate;
-            console.log(invate);
-        })
-        form.on('submit(interstate)',function (obj) {
-            var data =obj.data;
-            var interstate =data.interstate;
-            console.log(interstate);
-        })
-        form.on('submit(employ)',function (obj) {
-            var data =obj.data;
-            var employ =data.employ;
-            console.log(employ);
-        })
-
     })
 </script>
 

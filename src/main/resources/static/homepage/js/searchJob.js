@@ -63,27 +63,27 @@ $(document).ready(function () {
      $(this).parent().parent().find('.meetcon').css('height','20px');
   })
   
-  //招聘会往期近期招聘会选项卡
-  var oLi = document.getElementById("tabmeet").getElementsByTagName("li");
-  var oUl = document.getElementById("contentmeet").getElementsByTagName("ul");	
-  for(var i = 0; i < oLi.length; i++)
-  {
-		oLi[i].index = i;
-		oLi[i].onclick = function ()
-        {			
-           for(var n = 0; n < oLi.length; n++)
-	          oLi[n].className="";		
-			  this.className = "current";		
-			  for(var n = 0; n < oUl.length; n++) 
-				 oUl[n].style.display = "none";	
-				 oUl[this.index].style.display = "block";
-				 if(oUl[this.index].title == ""){			
-					 $.parser.parse(oUl[this.index]);
-					 oUl[this.index].title = "parsed";
-				 }
-	   }	
-   }
-   
+  // //招聘会往期近期招聘会选项卡
+  // var oLi = document.getElementById("tabmeet").getElementsByTagName("li");
+  // var oUl = document.getElementById("contentmeet").getElementsByTagName("ul");
+  // for(var i = 0; i < oLi.length; i++)
+  // {
+	// 	oLi[i].index = i;
+	// 	oLi[i].onclick = function ()
+  //       {
+  //          for(var n = 0; n < oLi.length; n++)
+	//           oLi[n].className="";
+	// 		  this.className = "current";
+	// 		  for(var n = 0; n < oUl.length; n++)
+	// 			 oUl[n].style.display = "none";
+	// 			 oUl[this.index].style.display = "block";
+	// 			 if(oUl[this.index].title == ""){
+	// 				 $.parser.parse(oUl[this.index]);
+	// 				 oUl[this.index].title = "parsed";
+	// 			 }
+	//    }
+  //  }
+  //
    
 })
 

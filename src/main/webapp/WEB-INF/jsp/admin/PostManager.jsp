@@ -47,7 +47,7 @@
 		//第一个实例
 		table.render({
 			elem: '#demo'
-			,height: 600
+			,height: 500
 			,url: path+"/admin/postManager" //数据接口
 			,page: true //开启分页
 			,id: 'demotable'

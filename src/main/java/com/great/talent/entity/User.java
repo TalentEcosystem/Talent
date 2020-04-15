@@ -22,6 +22,7 @@ public class User
 	private int uscore;
 	private Date udate;
 	private String test;
+	private String uhead;
 
 	public User()
 	{
@@ -155,6 +156,16 @@ public class User
 	public void setTest(String test)
 	{
 		this.test = test;
+	}
+
+	public String getUhead()
+	{
+		return uhead;
+	}
+
+	public void setUhead(String uhead)
+	{
+		this.uhead = uhead;
 	}
 
 	@Override

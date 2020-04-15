@@ -5,9 +5,12 @@ import com.great.talent.entity.User;
 import com.great.talent.service.UserService;
 import com.great.talent.util.MD5Utils;
 import com.great.talent.util.PhoneCode;
+import com.great.talent.util.ResponseUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -15,8 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @Controller
@@ -80,8 +87,6 @@ public class UserController
 		    	if (user1.getUstate().equals("启用")){
 				    response.getWriter().print("success");
 				    request.getSession().setAttribute("uname", user1.getUname());
-				    request.getSession().setAttribute("user", user1);
-
 			    }else {
 				    response.getWriter().print("stateError");
 			    }
