@@ -26,11 +26,24 @@
 </style>
 </head>
 <body>
-<form class="layui-form" >
+<div class="layui-form-item">
+	<label class="layui-form-label" style="width: 140px">若您已有简历，可直接</label>
+	<div class="layui-input-inline">
+		<button class="layui-btn"  lay-filter="login" id="login" >登录</button>
+	</div>
+</div>
+<form class="layui-form" method="post" enctype="multipart/form-data">
 	<div class="layui-form-item">
 		<label class="layui-form-label">姓  名：</label>
 		<div class="layui-input-inline">
 			<input type="text" name="resname" id="resname"  lay-verify="resname" placeholder="请输入2-4个汉字" autocomplete="off" class="layui-input">
+		</div>
+		<div class="layui-upload-inline">
+			<div class="layui-upload-list" id="img_upload"></div>
+			<button type="button" class="layui-btn" id="test8">
+				<i class="layui-icon">&#xe67c;</i>上传图片
+			</button><%--			上传绑定按钮--%>
+			<button id="hideupload1" type="button" style="display:none;"></button>
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -91,6 +104,7 @@
 		<label class="layui-form-label">验证码：</label>
 		<div class="layui-input-inline">
 			<input type="text" id="code" required  lay-verify="required" placeholder="请输入验证码" autocomplete="on" class="layui-input">
+			<input type="text" id="scode" value="${code12}">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -102,72 +116,40 @@
 	</div>
 	<div class="layui-form-item">
 		<div class="layui-input-block">
-			<button class="layui-btn" lay-submit lay-filter="formDemo" id="submit" >立即注册</button>
+			<button class="layui-btn" lay-submit lay-filter="formDemo" id="submit" >保存并投递</button>
 		</div>
 	</div>
 </form>
 <script>
-	var resname=$("#resname").val();
-	var sex=$("input[name='sex']:checked").val();
-	var rebirth=$("#rebirth").find("option:selected").text();
-	var degree=$("#degree").find("option:selected").text();
-	var reexper=$("#reexper").find("option:selected").text();
-	var retel=$("#retel").val();
-	var reset=$("input[name='reset']:checked").val();
-	$("#findCode").blur(function () {
-		var retel = $("#retel").val();
-		$.ajax({
-			url:path+"/school/sendMsg",
-			async:true,
-			type:"post",
-			data:{"retel":retel},
-			datatype:"text",
-			success:function (msg) {
-				scode = msg;
-			}
-			,error:function () {
-				alert("网络繁忙！");
-			}
-		});
+	$("#login").click(function () {
+		window.location="${pageContext.request.contextPath}/user/login";
 	});
+
 	$("#code").blur(function () {
 		var code=$("#code").val();
-		if(code!=scode){
-			layer.msg("验证码输入错误");
+		var scode=$("#scode").val();
+		console.log(scode);
+		for (let i = 0; i < 10; i++) {
+			if(code!=scode){
+				layer.msg("验证码输入错误");
+			}else{
+				return
+			}
 		}
 	});
-	layui.use('form', function(){
+	layui.use(['form','upload','jquery'], function(){
 		var form = layui.form;
-		var layer=layui.layer;
+		var layer=layui.layer,
+			upload = layui.upload;
 		var formData = serializeObject($, $('.layui-form').serializeArray());
 		form.render();
 		form.verify({
 			 resname: function(value){
-				if(value.length < 4){
+				if(value.length < 2&&value.length>4){
 					return '请输入2至4位的用户名';
 				}
 			}
 
-		});
-
-		form.on('submit(formDemo)', function(data){
-			layer.alert(JSON.stringify(data.field), {
-				title: '最终的提交信息'
-			});
-			//验证码框离焦先去验证是否一致提交前先要判断验证码是否正确
-
-			$.ajax({
-				url:'${pageContext.request.contextPath}/school/fillOutResume',
-				data:data.field,
-				success:function (msg) {
-					layer.msg(data.field);
-					layer.msg(msg);
-				},
-				error:function (err) {
-					layer.msg(err);
-				}
-			});
-			return false;
 		});
 
 	function serializeObject($, array){
@@ -179,7 +161,40 @@
 		});
 		return obj;
 	}
-
+		var uploadInst = upload.render({
+			elem: '#test8' //绑定元素
+			,url: '${pageContext.request.contextPath}/school/fillOutResume' //上传接口
+			,auto:false
+			,async:false
+			,accept:'file'
+			,method:'POST'
+			,enctype:'multipart/form-data'
+			,bindAction: '#submit'
+			,before:function (obj) {
+				this.data = {resname:$("#resname").val(),
+				 resex:$("input[name='resex']:checked").val(),
+				 rebirth:$("#rebirth").find("option:selected").val(),
+				 degreeid:$("#degree").find("option:selected").val(),
+				 reexper:$("#reexper").find("option:selected").val(),
+				 retel:$("#retel").val(),
+				 reset:$("input[name='reset']:checked").val()
+				}
+			}
+			,choose: function(obj){
+			//预读本地文件示例，不支持ie8
+			obj.preview(function(index, file, result){
+				$('#img_upload').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" style="width: 135px;height: 80px">');
+			});
+			}
+			,done: function(res){
+				//上传完毕回调
+				layer.msg(res);
+			}
+			,error: function(){
+				//请求异常回调
+				alert("上传失败！");
+			}
+		});
 
 	});
 	$(function () {
@@ -197,11 +212,24 @@
 
 	});
 //这里点击验证码需要访问控制层
-$("#findCode").click(function () {
+	$("#findCode").click(function () {
 	console.log("手机号"+$("#retel").val().length);
 	if($("#retel").val().length==11){
 		$("#codeForm").css("display","block");
 		settime(this);
+		var retel=$("#retel").val();
+		retel=JSON.stringify(retel);
+		$.ajax({
+			url:'${pageContext.request.contextPath}/school/sendMsg',
+			type:'post',
+			data:'retel='+retel,
+			dataType:'text',
+			success:function(msg){
+				$("#scode").val(msg);
+			},error:function (err) {
+				console.log(err);
+			}
+		})
 	}else{
 		layer.msg("请先填写手机号！！！");
 	}
@@ -217,6 +245,7 @@ $("#findCode").click(function () {
 			return false;
 		} else {
 			val.innerHTML="重新发送(" + countdown + ")";
+			$("#findCode").css("disabled","disabled");
 			console.log(countdown);
 			countdown--;
 		}
