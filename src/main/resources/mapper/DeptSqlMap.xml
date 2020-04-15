@@ -25,4 +25,16 @@
     <update id="updateUser" parameterType="User">
 		update tbl_user set upassword=#{upassword} where uaccount=#{uaccount}
 	</update>
+    <!--    个人中心-修改个人信息-->
+    <update id="updatePersonal" parameterType="User">
+		update tbl_user set uname=#{uname},usex=#{usex},uage=#{uage},uaddress=#{uaddress} where uaccount=#{uaccount}
+	</update>
+    <!--    个人中心-修改手机号-->
+    <update id="updatePhone" parameterType="User">
+		update tbl_user set utel=#{utel} where uaccount=#{uaccount}
+	</update>
+    <!--    个人中心-上传头像-->
+    <update id="uheadUpLoad" parameterType="User">
+		update tbl_user set uhead=#{uhead} where uaccount=#{uaccount}
+	</update>
 </mapper>
