@@ -153,8 +153,8 @@
 					{"name":"3k-6k","value":"3000-6000"},
 					{"name":"6k-10k","value":"6000-10000"},
 					{"name":"10k-15k","value":"10000-15000"},
-					{"name":"15k以上","value":"15000"},
-					{"name":"面议","value":"面议"},
+					{"name":"15k以上","value":"15000-99999999"},
+					// {"name":"面议","value":"面议"},
 				];
 				for(var i=0;i<moneyList.length;i++){
 					money+="<option data-index="+i+" value='"+moneyList[i].value+"'>"+moneyList[i].name+"</option>";
@@ -260,7 +260,7 @@
 					var opt=$(".provinceTarget option:selected").attr("data-index");
 					if(opt == "-1"){
 						console.log(opt);
-						city="<option  data-index='-1' value='城市'>选择城市</option >";
+						city="<option  data-index='-1' value=''>选择城市</option >";
 						$(".cityTarget").append(city);
 					}else{
 						var length=jsonList[opt].city.length;
@@ -469,7 +469,7 @@
 		<table class="layui-hide" id="test" > </table>
 		<script type="text/html" id="bar">
 
-			<button class="layui-btn  layui-btn-danger" lay-event="shen">
+			<button class="layui-btn   layui-btn-danger" lay-event="shen">
 				<i class="layui-icon ">申请</i>
 			</button>
 

@@ -68,10 +68,19 @@ public class UserController
 	}
 	//找回密码页面4
 	@RequestMapping("/rpassword4")
-	public String rpassword4(){
-		return "user/retrievePassword_4";
-	}
-
+	public String rpassword4(){ return "user/retrievePassword_4"; }
+	//个人中心页面
+	@RequestMapping("/personal")
+	public String personal(){ return "user/personal"; }
+	//个人中心-修改密码
+	@RequestMapping("/updatepsd")
+	public String updatepsd(){ return "user/personal_updatepsd"; }
+	//个人中心-修改手机号
+	@RequestMapping("/updatenum")
+	public String updatenum(){ return "user/personal_updatenum"; }
+	//个人中心-修改手机号2
+	@RequestMapping("/updateComplete")
+	public String updateComplete(){ return "user/personal_updatenum2"; }
 
 	@RequestMapping("/userLogin")
 	@ResponseBody
@@ -87,6 +96,13 @@ public class UserController
 		    	if (user1.getUstate().equals("启用")){
 				    response.getWriter().print("success");
 				    request.getSession().setAttribute("uname", user1.getUname());
+				    request.getSession().setAttribute("uaccount",user1.getUaccount());
+				    request.getSession().setAttribute("usex",user1.getUsex());
+				    request.getSession().setAttribute("utel",user1.getUtel());
+				    request.getSession().setAttribute("uaddress",user1.getUaddress());
+				    request.getSession().setAttribute("uscore",user1.getUscore());
+				    request.getSession().setAttribute("uhead",user1.getUhead());
+				    request.getSession().setAttribute("uage",user1.getUage());
 			    }else {
 				    response.getWriter().print("stateError");
 			    }
@@ -218,6 +234,93 @@ public class UserController
 			response.getWriter().print("1111");
 		}else {
 			response.getWriter().print("error");
+		}
+	}
+
+	//个人中心-个人信息修改
+	@RequestMapping("/updatePersonal")
+	@ResponseBody
+	public void updatePersonal(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		String str = request.getParameter("userTAT");
+		User user = g.fromJson(str,User.class);
+		String str1 = (String) request.getSession().getAttribute("uaccount");
+		user.setUaccount(str1);
+		Boolean flag = userService.updatePersonal(user);
+		if (flag){
+			response.getWriter().print("1111");
+			request.getSession().setAttribute("uname",user.getUname());
+			request.getSession().setAttribute("usex",user.getUsex());
+			request.getSession().setAttribute("uage",user.getUage());
+			request.getSession().setAttribute("uaddress",user.getUaddress());
+		}else {
+			response.getWriter().print("error");
+		}
+	}
+
+	//个人中心-密码修改
+	@RequestMapping("/updatePsd")
+	@ResponseBody
+	public void updatePsd(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		String upsd = MD5Utils.md5(request.getParameter("upsd"));//原密码
+		String cpsd = MD5Utils.md5(request.getParameter("cpsd"));//新密码
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		User user = new User();
+		user.setUpassword(upsd);
+		user.setUaccount(str1);
+		User checkUser = userService.login(user);
+		if (null!=checkUser){
+			user.setUpassword(cpsd);
+			Boolean flag = userService.updateUser(user);
+			if (flag){
+				response.getWriter().print("1111");
+			}else {
+				response.getWriter().print("error");
+			}
+		}else {
+			response.getWriter().print("upsdError");
+		}
+
+	}
+
+	//个人中心-手机号修改
+	@RequestMapping("/updatePhone")
+	@ResponseBody
+	public void updatePhone(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		String utel = request.getParameter("utel");//新手机号
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		User user = new User();
+		user.setUtel(utel);
+		user.setUaccount(str1);
+		Boolean flag = userService.updatePhone(user);
+		if (flag){
+			response.getWriter().print("1111");
+			request.getSession().setAttribute("utel",utel);
+		}else {
+			response.getWriter().print("error");
+		}
+	}
+
+	@RequestMapping("/uheadUpLoad")
+	@ResponseBody
+	public void uheadUpLoad(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response)throws IOException {
+		if (file.getOriginalFilename()!=null&&!"".equals(file.getOriginalFilename().trim()))
+		{
+			String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+			String filename = file.getOriginalFilename(); //是得到上传时的文件名
+			String savePath = request.getSession().getServletContext().getRealPath("/images");
+			String projectPath = savePath + "\\" + filename;
+			file.transferTo(new File(projectPath));//文件存放位置
+			User user = new User();
+			user.setUaccount(str1);
+			user.setUhead("images/"+filename);
+			Boolean flag = userService.uheadUpLoad(user);
+			if (flag){
+				ResponseUtils.outHtml(response, "{\"code\":0, \"msg\":\"\", \"data\":{}}");
+			}else {
+				ResponseUtils.outHtml(response, "{\"code\":1, \"msg\":\"\", \"data\":{}}");
+			}
+		}else {
+			ResponseUtils.outHtml(response, "{\"code\":3, \"msg\":\"\", \"data\":{}}");
 		}
 	}
 }

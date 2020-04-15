@@ -193,4 +193,21 @@ public class AdminService
 	@Transactional
 	public void addSchoolAccount(Admin admin){ adminMapper.addSchoolAccount(admin);}
 
+	@Transactional
+	public List<Know> findAllKnow(){return adminMapper.findAllKnow();}
+
+	@Transactional
+	public List<Chapter> findChapter(Map map){ return adminMapper.findChapter(map);}
+
+	@Transactional
+	public int findCountChapter(Map map){ return adminMapper.findCountChapter(map);}
+
+	@Transactional
+	public void addChapter(Chapter chapter){ adminMapper.addChapter(chapter);}
+
+	@Transactional
+	public void deleteChapter(String chapterid){ adminMapper.deleteChapter(chapterid);}
+
+	@Transactional
+	public void updateChapter(Chapter chapter){ adminMapper.updateChapter(chapter);}
 }
