@@ -106,7 +106,7 @@
         <div class="layui-form-item" >
             <div class="layui-input-block" id="button1">
                 <button class="layui-btn" type="submit" lay-filter="perfect" id="perfect" lay-submit="">完善资料</button>
-                <button class="layui-btn layui-btn-primary" type="reset">返回</button>
+                <button class="layui-btn layui-btn-primary" type="reset">重置</button>
             </div>
         </div>
     </form>

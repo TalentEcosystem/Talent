@@ -43,7 +43,28 @@ public class UtilTool {
 
         return dateWeekList;
     }
+    public static List<String> half() throws ParseException {
 
+
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.MONTH, -5);
+        String before_six = c.get(Calendar.YEAR) + "-" + c.get(Calendar.MONTH);//六个月前
+        ArrayList<String> result = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");// 格式化为年月
+        Calendar min = Calendar.getInstance();
+        Calendar max = Calendar.getInstance();
+        min.setTime(sdf.parse(before_six));
+        min.set(min.get(Calendar.YEAR), min.get(Calendar.MONTH), 1);
+        max.setTime(sdf.parse(sdf.format(new Date())));
+        max.set(max.get(Calendar.YEAR), max.get(Calendar.MONTH), 2);
+        Calendar curr = min;
+        while (curr.before(max)) {
+            result.add(sdf.format(curr.getTime()));
+            curr.add(Calendar.MONTH, 1);
+        }
+
+        return result;
+    }
     public static List<String> month(String dates){
         // Java8  LocalDate
         LocalDate date = LocalDate.parse(dates);

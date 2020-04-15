@@ -71,7 +71,7 @@
         </div>
     </div>
 </form>
-<table id="demo" lay-filter="test"></table>
+<table id="demo" lay-filter="test" style="margin-top: 50px"></table>
 </body>
 <script type="text/html" id="barDemo">
     <button lay-event="update" type="button" class="layui-btn layui-btn-xs layui-btn-radius">修改</button>

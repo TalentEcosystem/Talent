@@ -35,7 +35,7 @@
 
     <div class="layui-input-inline" >
         <button type="button" class="layui-btn layui-btn-radius"
-                id="days"><i class="layui-icon">&#xe615;</i>每天
+                id="half"><i class="layui-icon">&#xe615;</i>半年
         </button>
     </div>
 
@@ -57,7 +57,7 @@
     $(function() {
         $.ajax({
             method : "POST",
-            url : path+"/Enterprise/weekJobinfo",
+            url : path+"/Enterprise/weekJobInfo",
             dataType : "text",
             success : function(msg) {
                 var list = msg.split("://");
@@ -87,7 +87,7 @@
             valueArr = [];
             $.ajax({
                 method: "POST",
-                url: Path + "/Enterprise/weekJobinfo",
+                url: Path + "/Enterprise/weekJobInfo",
                 dataType: "text",
                 // data:{role:0},
                 success: function (msg) {
@@ -114,13 +114,40 @@
 
             $.ajax({
                 method: "POST",
-                url: Path + "/Enterprise/",
+                url: path + "/Enterprise/monthJobInfo",
                 dataType: "text",
                 data: {date: new Date().format('yyyy-MM-dd')},
                 success: function (msg) {
                     var list = msg.split("://");
                     var arr = JSON.parse(list[0]);
                     $('#howlong').html('本月总新增招聘：');
+                    $('#sum').html(list[1]);
+                    for (var i = 0; i < arr.length; i++) {
+                        // 普通柱状图使用的数据
+                        nameArr.push(arr[i].name);
+                        valueArr.push(arr[i].count);
+                    }
+                    createEchars();// 创建普通柱状图
+
+                },
+                error: function () {
+                    alert("服务器正忙");
+                }
+            });
+        });
+        $("#half").click(function () {
+            nameArr = [];
+            valueArr = [];
+
+            $.ajax({
+                method: "POST",
+                url: path + "/Enterprise/halfJobInfo",
+                dataType: "text",
+                data: {date: new Date().format('yyyy-MM-dd')},
+                success: function (msg) {
+                    var list = msg.split("://");
+                    var arr = JSON.parse(list[0]);
+                    $('#howlong').html('近半年总新增招聘：');
                     $('#sum').html(list[1]);
                     for (var i = 0; i < arr.length; i++) {
                         // 普通柱状图使用的数据

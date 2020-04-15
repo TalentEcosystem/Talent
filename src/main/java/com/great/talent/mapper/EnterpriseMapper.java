@@ -38,8 +38,11 @@ public interface EnterpriseMapper {
     public int updateResumeInfo(int uid);
     public List<Interview> companyEmployInfo(Map map);//录用人员信息
     public int companyEmployInfoNum(Map map);//录用人员信息数量
-
     public int weekJobinfo(@Param("day") String day, @Param("companyid") int companyid);
+    public int monthJobinfo(@Param("day") String day,@Param("day1") String day1, @Param("companyid") int companyid);
+
+    public List<Interview> ScreeningResume(Map map);
+    public Integer ScreeningResumeNum(Map map);
     /**
      * 校验用户手机是否被注册
      * @param tel
@@ -101,5 +104,12 @@ public interface EnterpriseMapper {
      */
     @Select("select companyadd from tbl_company c,tbl_admin a where a.cid = c.cid and a.cid = #{cid}")
     public String findCompanyAdd(Integer cid);
+
+    /**
+     * 查询学校
+     * @return
+     */
+    @Select("select * from tbl_school")
+    public List<SchoolMsg> findSchool();
 
 }
