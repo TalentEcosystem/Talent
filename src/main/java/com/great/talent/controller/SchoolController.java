@@ -126,19 +126,16 @@ public class SchoolController
 		List<Social> socials=schoolService.findUserSocial(userTalent);
 		List<Aducational> aducationals=schoolService.findUserAducation(userTalent);
 		System.out.println(resume+"="+socials+"-"+aducationals);
-		request.getSession().setAttribute("resume",resume);
-		request.getSession().setAttribute("socials",socials);
-		request.getSession().setAttribute("aducationals",aducationals);
-
+		ResponseUtils.outJson1(response,g.toJson(resume)+"%"+g.toJson(socials)+"%"+g.toJson(aducationals));
 
 	}
 	//显示高校简介页面
 	@RequestMapping("/schoolInfo")
 	public String showSchoolInfo(HttpServletRequest request){
 		//这里需要获取登录高校账号的学校id
-//		Admin admin= (Admin) request.getSession().getAttribute("admin");
-//		admin.getSid();
-		SchoolMsg schoolMsg=schoolService.findSchoolInfo(2);
+		Admin admin= (Admin) request.getSession().getAttribute("admin");
+
+		SchoolMsg schoolMsg=schoolService.findSchoolInfo(admin.getSid());
 		request.getSession().setAttribute("school",schoolMsg);
 
 		return "schoolManage/IntroductionOfSchool";
@@ -276,8 +273,8 @@ public class SchoolController
 	@RequestMapping("/findTalentByState")
 	public void findTalentByState(HttpServletRequest request,HttpServletResponse response){
 		//这里需要获取登录高校账号的学校id
-		//		Admin admin= (Admin) request.getSession().getAttribute("admin");
-		//		admin.getSid();
+		Admin admin= (Admin) request.getSession().getAttribute("admin");
+
 		HashMap<String,Object> condition = new HashMap<>();
 		String mindate=request.getParameter("mindate");
 		String maxdate=request.getParameter("maxdate");
@@ -298,7 +295,7 @@ public class SchoolController
 			condition.put("pro",pro);
 		}
 		//这个要改
-		condition.put("sid",2);
+		condition.put("sid",admin.getSid());
 
 		int pageInt = Integer.valueOf(page);
 		int limitInt = Integer.valueOf(limit);
@@ -323,16 +320,16 @@ public class SchoolController
 	@RequestMapping("/recommend")
 	public void recommend( HttpServletRequest request,HttpServletResponse response){
 		//这里需要获取登录高校账号的学校id
-		//		Admin admin= (Admin) request.getSession().getAttribute("admin");
-		//		admin.getSid();
+		Admin admin= (Admin) request.getSession().getAttribute("admin");
+
 		String[] ids=request.getParameterValues("ids");
 		String cid=request.getParameter("cid");
 		String positionid=request.getParameter("positionid");
-		recomend.setSid(1);
+		recomend.setSid(admin.getSid());
 		recomend.setCid(Integer.valueOf(cid));
 		recomend.setPositionid(Integer.valueOf(positionid));
 		recomend.setRecommendtime(new Date());
-		recomend.setPresenter(schoolService.findSchoolnameBySid(1));
+		recomend.setPresenter(schoolService.findSchoolnameBySid(admin.getSid()));
 		for (int i = 0; i <ids.length ; i++)
 		{
 			recomend.setUid(Integer.valueOf(ids[i]));
@@ -343,9 +340,9 @@ public class SchoolController
 	//用户端的简历显示
 	@RequestMapping("/findUserResume")
 	public String findUserResume(HttpServletRequest request){
-//		User user= (User) request.getSession().getAttribute("user");
-//		user.getUid();
-		userTalent.setUid(2);
+		User user= (User) request.getSession().getAttribute("user");
+
+		userTalent.setUid(user.getUid());
 		Resume resume=schoolService.findUserResume(userTalent);
 		List<Social> socials=schoolService.findUserSocial(userTalent);
 		List<Aducational> aducationals=schoolService.findUserAducation(userTalent);
@@ -357,8 +354,8 @@ public class SchoolController
 	}
 	@RequestMapping("/updateResume")
 	public void updateResume(Resume resume,Social social,Aducational aducational, HttpServletRequest request,HttpServletResponse response){
-		//		User user= (User) request.getSession().getAttribute("user");
-		//		user.getUid();
+		User user= (User) request.getSession().getAttribute("user");
+
 		List<Social> social3= (List<Social>) request.getSession().getAttribute("socials");
 		List<Aducational> aducational3= (List<Aducational>) request.getSession().getAttribute("aducationals");
 		System.out.println("resume="+resume);
@@ -373,14 +370,14 @@ public class SchoolController
 			social1.setSocialtime(social.getSocialtime().split(",")[0]);
 			String s=(social.getSocialid()+"").split(",")[0];
 			int socialid1=Integer.valueOf(s);
-			social1.setUid(2);
+			social1.setUid(user.getUid());
 			social1.setSocialid(socialid1);
 			schoolService.updateSocial(social1);
 			if(social3.size()>1){
 				social2.setCompany(social.getCompany().split(",")[1]);
 				social2.setContent(social.getContent().split(",")[1]);
 				social2.setSocialtime(social.getSocialtime().split(",")[1]);
-				social2.setUid(2);
+				social2.setUid(user.getUid());
 				String s1=(social.getSocialid()+"").split(",")[1];
 				int socialid2=Integer.valueOf(s);
 				social1.setSocialid(socialid2);
@@ -398,13 +395,13 @@ public class SchoolController
 			social1.setCompany(social.getCompany().split(",")[0]);
 			social1.setContent(social.getContent().split(",")[0]);
 			social1.setSocialtime(social.getSocialtime().split(",")[0]);
-			social1.setUid(2);
+			social1.setUid(user.getUid());
 			schoolService.insertSocial(social1);
 			if(!"".equals(social.getCompany().split(",")[1])){
 				social2.setCompany(social.getCompany().split(",")[1]);
 				social2.setContent(social.getContent().split(",")[1]);
 				social2.setSocialtime(social.getSocialtime().split(",")[1]);
-				social2.setUid(2);
+				social2.setUid(user.getUid());
 				schoolService.insertSocial(social2);
 			}
 		}
@@ -413,7 +410,7 @@ public class SchoolController
 			aducational1.setAdtime(aducational.getAdtime().split(",")[0]);
 			aducational1.setSname(aducational.getSname().split(",")[0]);
 			aducational1.setProfession(aducational.getProfession().split(",")[0]);
-			aducational1.setUid(2);
+			aducational1.setUid(user.getUid());
 			String s=(aducational.getAducationid()+"").split(",")[0];
 			int aducationid1=Integer.valueOf(s);
 			aducational1.setAducationid(aducationid1);
@@ -422,9 +419,9 @@ public class SchoolController
 				aducational2.setAdtime(aducational.getAdtime().split(",")[1]);
 				aducational2.setSname(aducational.getSname().split(",")[1]);
 				aducational2.setProfession(aducational.getProfession().split(",")[1]);
-				aducational2.setUid(2);
+				aducational2.setUid(user.getUid());
 				String s1=(aducational.getAducationid()+"").split(",")[1];
-				int aducationid2=Integer.valueOf(s);
+				int aducationid2=Integer.valueOf(s1);
 				aducational1.setAducationid(aducationid2);
 				schoolService.updateAducation(aducational2);
 			}
@@ -432,7 +429,7 @@ public class SchoolController
 				aducational2.setAdtime(aducational.getAdtime().split(",")[1]);
 				aducational2.setSname(aducational.getSname().split(",")[1]);
 				aducational2.setProfession(aducational.getProfession().split(",")[1]);
-				aducational2.setUid(2);
+				aducational2.setUid(user.getUid());
 				schoolService.insertAducation(aducational2);
 			}
 		}else{
@@ -440,13 +437,13 @@ public class SchoolController
 			aducational1.setAdtime(aducational.getAdtime().split(",")[0]);
 			aducational1.setSname(aducational.getSname().split(",")[0]);
 			aducational1.setProfession(aducational.getProfession().split(",")[0]);
-			aducational1.setUid(2);
+			aducational1.setUid(user.getUid());
 			schoolService.insertAducation(aducational1);
 			if(aducational3.size()==1&&aducational.getAdtime().split(",")[1].length()>1){
 				aducational2.setAdtime(aducational.getAdtime().split(",")[1]);
 				aducational2.setSname(aducational.getSname().split(",")[1]);
 				aducational2.setProfession(aducational.getProfession().split(",")[1]);
-				aducational2.setUid(2);
+				aducational2.setUid(user.getUid());
 				schoolService.insertAducation(aducational2);
 			}
 		}
@@ -457,7 +454,7 @@ public class SchoolController
 		resume.setDegreeid(degreeid);
 		resume.setSid(sid);
 		resume.setProfessid(professid);
-		resume.setUid(2);
+		resume.setUid(user.getUid());
 		System.out.println(resume);
 		schoolService.updateUserresume(resume);
 		ResponseUtils.outJson(response,"保存成功");
@@ -469,26 +466,83 @@ public class SchoolController
 		List<Degree> degrees=schoolService.findDegreeList();
 		System.out.println(degrees);
 		request.getSession().setAttribute("degrees",degrees);
-
-
 		return "schoolManage/User_FillOutResume";
 	}
 	//发送验证码
 	@RequestMapping("/sendMsg")
 	public void sendMsg(HttpServletRequest request,HttpServletResponse response){
 		String phone = request.getParameter("retel"); //发送短信验证码
-		PhoneCode.getPhonemsg(phone);
+		Gson gson=new Gson();
+		String ph=gson.fromJson(phone,String.class);
+		PhoneCode.getPhonemsg(ph);
+		System.out.println(PhoneCode.code);
 		ResponseUtils.outJson1(response,PhoneCode.code);
 	}
 	//用户端的简历填写
 	@RequestMapping("/fillOutResume")
-	public void fillOutResume(Resume resume,HttpServletRequest request,HttpServletResponse response){
+	public void fillOutResume(@RequestParam("file") MultipartFile fileaot,Resume resume,HttpServletRequest request,HttpServletResponse response){
 		System.out.println(resume);
 //		User user= (User) request.getSession().getAttribute("user");
-		//插入数据库
-		//拿到user.getUid()
+//		//插入数据库
+//		//拿到user.getUid()
+		if(fileaot.getOriginalFilename()!=null&&!"".equals(fileaot.getOriginalFilename().trim())){
+			String filename = null;
+			// 设置上传图片的保存路径
+			String savePath = request.getServletContext().getRealPath("/images");
+			File file = new File(savePath);
+			// 判断上传文件的保存目录是否存在
+			if (!file.exists() && !file.isDirectory()) {
+				System.out.println(savePath + "目录不存在，需要创建");
+				// 创建目录
+				file.mkdir();
+			}
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			// 2、创建一个文件上传解析器
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			upload.setHeaderEncoding("UTF-8");
+			// 3、判断提交上来的数据是否是上传表单的数据
+			if (!ServletFileUpload.isMultipartContent(request)) {
+				// 按照传统方式获取数据
+				return;
+			}
+			try {
+				// 報錯 需要過濾文件名稱 java.io.FileNotFoundException:
+				// G:\测试02\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\FaceUp\WEB-INF\images\C:\Users\Ray\Pictures\2.jpeg
+				// (文件名、目录名或卷标语法不正确。)
+
+				filename = fileaot.getOriginalFilename();
+				//				System.out.print(filename);
+				if (fileaot.getOriginalFilename().split("\\.")[1].equals("png")
+						|| fileaot.getOriginalFilename().split("\\.")[1].equals("jpg")
+						|| fileaot.getOriginalFilename().split("\\.")[1].equals("jpeg")) {
+					resume.setRepic("images/"+fileaot.getOriginalFilename());
+					InputStream in = fileaot.getInputStream();// 獲得上傳的輸入流
+					FileOutputStream out = new FileOutputStream(savePath + "\\" + filename);// 指定web-inf目錄下的images文件
+					request.setAttribute("path",  "images"+"\\" + filename);
+					int len = 0;
+					byte buffer[] = new byte[1024];
+					while ((len = in.read(buffer)) > 0)// 每次讀取
+					{
+						out.write(buffer, 0, len);
+					}
+					in.close();
+					out.close();
+				} else {  //必须是图片才能上传否则失败
+					ResponseUtils.outJson(response,"上传必须是图片");
+					return ;
+				}
+
+			} catch (FileNotFoundException e)
+			{
+				e.printStackTrace();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		resume.setUid(3);
 		int i=schoolService.userInsertResume(resume);
+		System.out.println("保存=="+i);
 		if(i>0){
 			ResponseUtils.outJson(response,"保存成功");
 		}else{
@@ -497,6 +551,8 @@ public class SchoolController
 		}
 
 	}
+
+
 	@RequestMapping("/userResumeStatu")
 	public String findUserResumeStatus(){
 		return "schoolManage/User_ResumeStatus";
@@ -506,12 +562,12 @@ public class SchoolController
 	//用户端简历情况
 	@RequestMapping("/userResumeStatus")
 	public void userResumeStatus(HttpServletRequest request,HttpServletResponse response){
-		//		User user= (User) request.getSession().getAttribute("user");
+		User user= (User) request.getSession().getAttribute("user");
 		//插入数据库
 		//拿到user.getUid()
 		datagridResult.setCode(0);
 		datagridResult.setMsg("");
-		int count=schoolService.findUserResumeStatusCount(1);
+		int count=schoolService.findUserResumeStatusCount(user.getUid());
 		List<ResumeStatus> resumeStatuses=schoolService.findUserResumeStatus(1);
 		datagridResult.setCount(count);
 		datagridResult.setData(resumeStatuses);
@@ -542,6 +598,11 @@ public class SchoolController
 		}
 
 		return sb.toString();
+	}
+	@RequestMapping("/inputResumePage")
+	public String inputResume(){
+
+		return "schoolManage/InputResume";
 	}
 
 }
