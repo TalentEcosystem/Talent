@@ -4,6 +4,7 @@ import com.great.talent.entity.*;
 import com.sun.jdi.IntegerValue;
 import com.sun.tools.corba.se.idl.InterfaceGen;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import javax.swing.*;
@@ -33,9 +34,12 @@ public interface EnterpriseMapper {
     public int findFeedbackNum(Map map);
 
     public int companyEmploy(Interview interview);//公司录用
-
+    public int findCompanyEmployid(Interview interview);
+    public int updateResumeInfo(int uid);
     public List<Interview> companyEmployInfo(Map map);//录用人员信息
     public int companyEmployInfoNum(Map map);//录用人员信息数量
+
+    public int weekJobinfo(@Param("day") String day, @Param("companyid") int companyid);
     /**
      * 校验用户手机是否被注册
      * @param tel

@@ -244,6 +244,12 @@
     <update id="companyEmploy" parameterType="Interview">
          update tbl_interview set  employ = #{employ,jdbcType=VARCHAR},endtime = #{endtime} where interviewid = #{interviewid,jdbcType=INTEGER}
     </update>
+    <select id="findCompanyEmployid" parameterType="Interview" resultType="java.lang.Integer">
+        select uid  from tbl_interview where interviewid = #{interviewid,jdbcType=INTEGER}
+    </select>
+    <update id="updateResumeInfo" parameterType="java.lang.Integer">
+        update tbl_resume set reemploy = '已就业' where uid = #{uid}
+    </update>
 <!--已录用人员信息-->
     <select id="companyEmployInfo" resultType="Interview" parameterType="java.util.Map">
         select * from (select * from tbl_interview) a,
@@ -264,5 +270,10 @@
         </where>
     </select>
 
+
+    <select id="weekJobinfo" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from (select i.*,c.* from tbl_interview i,tbl_admin a,tbl_position p,tbl_company c where
+		 i.positionid = p.positionid and a.aid = p.aid and a.cid = c.cid) t where t.intertime like concat('${day}','%') and t.cid =${companyid}
+	</select>
 
 </mapper>

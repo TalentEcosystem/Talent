@@ -221,8 +221,20 @@ public class EnterpriseService {
      */
     @Transactional
     public int companyEmploy(Interview interview){
-        return enterpriseMapper.companyEmploy(interview);
+        enterpriseMapper.companyEmploy(interview);
+        return enterpriseMapper.findCompanyEmployid(interview);
     }
+
+    /**
+     * 修改简历表就业情况
+     * @param uid
+     * @return
+     */
+    @Transactional
+    public int updateResumeInfo(int uid){
+        return enterpriseMapper.updateResumeInfo(uid);
+    }
+
 
     /**
      * 查询反馈信息
@@ -237,7 +249,10 @@ public class EnterpriseService {
         map1.put("employList",employList);
         return map1;
     }
-
+    public int weekJobinfo(String day,int companyid){
+        int num = enterpriseMapper.weekJobinfo(day,companyid);
+        return num;
+    }
 
 
 }

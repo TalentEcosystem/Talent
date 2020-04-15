@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import com.great.talent.entity.*;
 import com.great.talent.service.AdminService;
 import com.great.talent.service.EnterpriseService;
-import com.great.talent.util.Diagis;
-import com.great.talent.util.MD5Utils;
-import com.great.talent.util.ResponseUtils;
+import com.great.talent.util.*;
 import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -567,7 +565,8 @@ public class EnterpriseController {
     @ResponseBody
     public String companyEmploy(Interview interview){
         interview.setEndtime(new Date());
-        int flag = enterpriseService.companyEmploy(interview);
+        int uid = enterpriseService.companyEmploy(interview);
+        int flag = enterpriseService.updateResumeInfo(uid);
         if (flag>0){
             return "success";
         }else{
@@ -604,4 +603,33 @@ public class EnterpriseController {
             ResponseUtils.outJson(response, diagis);
         }
     }
+    @RequestMapping("/weekJobinfo")
+    @ResponseBody
+    public String weekJobinfo(HttpSession session)
+    {
+        Admin admin = (Admin) session.getAttribute("admin");
+        Company company = enterpriseService.findCompanyInfo(admin.getAid());
+        ;
+        int companyid = (int) company.getCid();
+        ArrayList<CensusUtil> arrayList = new ArrayList<>();
+        List<String> dateWeekList = UtilTool.week(new Date());
+        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+        int sum = 0;
+
+        for (int i = 0; i < dateWeekList.size(); i++)
+        {
+            int count = enterpriseService.weekJobinfo(dateWeekList.get(i), companyid);
+            CensusUtil censusUtil = new CensusUtil();
+            censusUtil.setCount(count);
+            censusUtil.setName(weekDays[i]);
+            arrayList.add(censusUtil);
+            sum = count + sum;
+        }
+
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(arrayList);
+        String msg = jsonStr + "://" + sum;
+        return msg;
+    }
+
 }
