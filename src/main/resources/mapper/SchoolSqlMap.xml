@@ -276,4 +276,24 @@
         #{reset}
         )
     </insert>
+    <select id="findUserResumeStatus" parameterType="int" resultType="ResumeStatus">
+        select i.interviewid,p.positionname,c.companyname,c.companynature from tbl_interview i,tbl_position p,tbl_company c,tbl_admin b
+        <where>
+            i.positionid=p.positionid
+            and p.aid=b.aid
+            and b.cid=c.cid
+            and uid=#{uid}
+            and i.`check`='已查看'
+        </where>
+    </select>
+    <select id="findUserResumeStatusCount" parameterType="int" resultType="int">
+        select count(*) from tbl_interview i,tbl_position p,tbl_company c,tbl_admin b
+        <where>
+            i.positionid=p.positionid
+            and p.aid=b.aid
+            and b.cid=c.cid
+            and uid=#{uid}
+            and i.`check`='已查看'
+        </where>
+    </select>
 </mapper>

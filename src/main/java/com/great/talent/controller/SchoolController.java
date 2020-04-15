@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.great.talent.entity.*;
 import com.great.talent.service.SchoolService;
 import com.great.talent.util.Diagis;
+import com.great.talent.util.PhoneCode;
 import com.great.talent.util.ResponseUtils;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -42,7 +43,7 @@ public class SchoolController
 	@Resource
 	private Aducational aducational1,aducational2;
 
-	@RequestMapping("/login")
+	@RequestMapping("/findTalent")
 	public String Welcome(){
 		return "schoolManage/ManageTalent";
 	}
@@ -296,7 +297,7 @@ public class SchoolController
 		if(null!=pro&&!"".equals(pro.trim())){
 			condition.put("pro",pro);
 		}
-
+		//这个要改
 		condition.put("sid",2);
 
 		int pageInt = Integer.valueOf(page);
@@ -472,13 +473,21 @@ public class SchoolController
 
 		return "schoolManage/User_FillOutResume";
 	}
+	//发送验证码
+	@RequestMapping("/sendMsg")
+	public void sendMsg(HttpServletRequest request,HttpServletResponse response){
+		String phone = request.getParameter("retel"); //发送短信验证码
+		PhoneCode.getPhonemsg(phone);
+		ResponseUtils.outJson1(response,PhoneCode.code);
+	}
 	//用户端的简历填写
 	@RequestMapping("/fillOutResume")
 	public void fillOutResume(Resume resume,HttpServletRequest request,HttpServletResponse response){
 		System.out.println(resume);
+//		User user= (User) request.getSession().getAttribute("user");
 		//插入数据库
-		//拿到uid
-//		resume.setUid();
+		//拿到user.getUid()
+		resume.setUid(3);
 		int i=schoolService.userInsertResume(resume);
 		if(i>0){
 			ResponseUtils.outJson(response,"保存成功");
@@ -487,6 +496,52 @@ public class SchoolController
 
 		}
 
+	}
+	@RequestMapping("/userResumeStatu")
+	public String findUserResumeStatus(){
+		return "schoolManage/User_ResumeStatus";
+	}
+
+
+	//用户端简历情况
+	@RequestMapping("/userResumeStatus")
+	public void userResumeStatus(HttpServletRequest request,HttpServletResponse response){
+		//		User user= (User) request.getSession().getAttribute("user");
+		//插入数据库
+		//拿到user.getUid()
+		datagridResult.setCode(0);
+		datagridResult.setMsg("");
+		int count=schoolService.findUserResumeStatusCount(1);
+		List<ResumeStatus> resumeStatuses=schoolService.findUserResumeStatus(1);
+		datagridResult.setCount(count);
+		datagridResult.setData(resumeStatuses);
+		ResponseUtils.outJson1(response,toJson2(datagridResult));
+	}
+	protected String toJson2(Diagis datagridResult){
+		Gson gson=new Gson();
+		StringBuilder sb = new StringBuilder();
+		sb.append("{\"code\":").append(datagridResult.getCode())
+				.append(",\"msg\":\"").append(datagridResult.getMsg())
+				.append("\",\"count\":").append(datagridResult.getCount())
+				.append(",\"data\":[");
+		if(datagridResult.getData().size()!=0){
+			for(Object object : datagridResult.getData()){
+				ResumeStatus recommend = (ResumeStatus) object;
+				String sql=gson.toJson(recommend);
+				//[{"id": user.getId(), "userName": user.getUserName()},{'id': user.getId(), 'userName': user.getUserName()}]
+				sb.append(sql);
+				sb.append(",");
+			}
+			sb.delete(sb.length() - 1, sb.length());
+			sb.append("]}");
+		}else{
+			for(int i=0;i<7;i++){
+				sb.delete(sb.length(),sb.length());
+			}
+			sb.append("]}");
+		}
+
+		return sb.toString();
 	}
 
 }

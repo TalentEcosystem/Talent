@@ -1,5 +1,7 @@
 package com.great.talent.entity;
 
+import java.util.List;
+
 /**
  * @author 小和
  * 简历的实体类
@@ -25,6 +27,8 @@ public class Resume
 	private String reexper;
 	private String reeva;
 	private String reset;
+	private List<Social> socialList;
+	private List<Aducational> aducationalList;
 
 	public Resume()
 	{
@@ -220,9 +224,29 @@ public class Resume
 		this.reset = reset;
 	}
 
+	public List<Social> getSocialList()
+	{
+		return socialList;
+	}
+
+	public void setSocialList(List<Social> socialList)
+	{
+		this.socialList = socialList;
+	}
+
+	public List<Aducational> getAducationalList()
+	{
+		return aducationalList;
+	}
+
+	public void setAducationalList(List<Aducational> aducationalList)
+	{
+		this.aducationalList = aducationalList;
+	}
+
 	@Override
 	public String toString()
 	{
-		return "Resume{" + "resumeid=" + resumeid + ", uid=" + uid + ", degreeid=" + degreeid + ", sid=" + sid + ", professid=" + professid + ", resex='" + resex + '\'' + ", resname='" + resname + '\'' + ", rebirth='" + rebirth + '\'' + ", retel='" + retel + '\'' + ", repic='" + repic + '\'' + ", readdress='" + readdress + '\'' + ", repol='" + repol + '\'' + ", degreename='" + degreename + '\'' + ", professname='" + professname + '\'' + ", schoolname='" + schoolname + '\'' + ", reskill='" + reskill + '\'' + ", reexper='" + reexper + '\'' + ", reeva='" + reeva + '\'' + ", reset='" + reset + '\'' + '}';
+		return "Resume{" + "resumeid=" + resumeid + ", uid=" + uid + ", degreeid=" + degreeid + ", sid=" + sid + ", professid=" + professid + ", resex='" + resex + '\'' + ", resname='" + resname + '\'' + ", rebirth='" + rebirth + '\'' + ", retel='" + retel + '\'' + ", repic='" + repic + '\'' + ", readdress='" + readdress + '\'' + ", repol='" + repol + '\'' + ", degreename='" + degreename + '\'' + ", professname='" + professname + '\'' + ", schoolname='" + schoolname + '\'' + ", reskill='" + reskill + '\'' + ", reexper='" + reexper + '\'' + ", reeva='" + reeva + '\'' + ", reset='" + reset + '\'' + ", socialList=" + socialList + ", aducationalList=" + aducationalList + '}';
 	}
 }
