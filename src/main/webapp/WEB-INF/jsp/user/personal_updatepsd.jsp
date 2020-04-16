@@ -94,28 +94,13 @@
 				<a href="personal_jl.html" class="a2">我的简历</a>
 			</div>
 			<div class="NavLeftBox">
-				<a href="personal_zwss.html" class="a3">学习记录</a>
+				<a href=<%=path+"/user/study"%> class="a3">学习记录</a>
 			</div>
-			<div class="NavLeftBox twoNav">
-				<a class="a5">我的收藏</a>
-				<span class="up"></span>
-			</div>
-			<ul>
-				<li><a href="personal_sqzw.html">申请的职位</a></li>
-				<li><a href="personal_mygz.html">我的关注</a></li>
-			</ul>
-			<div class="NavLeftBox twoNav">
-				<a class="a6">求职反馈</a>
-				<span class="up"></span>
-			</div>
-			<ul>
-				<li><a href="personal_mainshi.html">面试通知</a></li>
-				<li><a href="personal_yaoqing.html">应聘邀请</a></li>
-				<li><a href="personal_whogz.html">谁在关注我</a></li>
-				<li><a href="personal_goutong.html">在线沟通记录</a></li>
-			</ul>
 			<div class="NavLeftBox">
-				<a href="personal_zhanghu.html" class="a7">账户管理</a>
+				<a href=<%=path+"/user/collection" %> class="a5">我的收藏</a>
+			</div>
+			<div class="NavLeftBox">
+				<a href=<%=path+"/user/requestFeedback" %> class="a6">求职反馈</a>
 			</div>
 			<div class="NavLeftBox">
 				<a href="personal_help.html" class="a8">帮助中心</a>

@@ -4,6 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.great.talent.mapper.DeptMapper">
 
+    <resultMap id="MyCollection" type="MyCollection">
+        <result column="indname" property="indname"></result>
+        <result column="companyname" property="companyname"></result>
+        <result column="positionname" property="positionname"></result>
+        <result column="positiontime" property="positiontime"></result>
+    </resultMap>
+
+    <resultMap id="RequestFeedback" type="RequestFeedback">
+        <result column="indname" property="indname"></result>
+        <result column="companyname" property="companyname"></result>
+        <result column="positionname" property="positionname"></result>
+        <result column="companyphone" property="companyphone"></result>
+        <result column="invate" property="invate"></result>
+    </resultMap>
+
     <select id="userLogin" resultType="User" parameterType="User">
 		select * from tbl_user where UACCOUNT = #{uaccount} and UPASSWORD = #{upassword}
 	</select>
@@ -11,6 +26,10 @@
     <!--    用户注册前账号检查-->
     <select id="userNameCheck" resultType="java.lang.Integer" parameterType="java.lang.String">
         select count(*) as num from tbl_user where uaccount = #{uaccount}
+    </select>
+    <!--    根据用户名查用户id-->
+    <select id="findUserIdByUaccount" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select uid from tbl_user where uaccount = #{uaccount}
     </select>
 
     <insert id="addUser"  parameterType="User">
@@ -37,4 +56,59 @@
     <update id="uheadUpLoad" parameterType="User">
 		update tbl_user set uhead=#{uhead} where uaccount=#{uaccount}
 	</update>
+    <!--查找我的收藏信息总数-->
+    <select id="findMyCollectionCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) FROM tbl_collection T1,tbl_position T2,tbl_admin T3,tbl_industry T4,tbl_company T5
+        <where>
+            T1.uid=#{uid} and T1.positionid=T2.positionid AND T2.aid=T3.aid AND T2.industryid=T4.industryid AND T3.cid=T5.cid
+            <if test="indname !='' and indname!=null">
+                and T4.indname like #{indname}
+            </if>
+            <if test="positionname !='' and positionname!=null">
+                and T2.positionname like #{positionname}
+            </if>
+        </where>
+    </select>
+    <!--查询用户收藏并分页 -->
+    <select id="findMyCollection" resultMap="MyCollection" parameterType="java.util.Map">
+        SELECT T4.indname,T5.companyname,T2.positionname,T2.positiontime FROM tbl_collection T1,tbl_position T2,tbl_admin T3,tbl_industry T4,tbl_company T5
+        <where>
+            T1.uid=#{uid} and T1.positionid=T2.positionid AND T2.aid=T3.aid AND T2.industryid=T4.industryid AND T3.cid=T5.cid
+            <if test="indname !='' and indname!=null">
+                and T4.indname like #{indname}
+            </if>
+            <if test="positionname !='' and positionname!=null">
+                and T2.positionname like #{positionname}
+            </if>
+        </where>
+        limit #{minLimit},#{maxLimit}
+    </select>
+
+    <!--查找求职反馈信息总数-->
+    <select id="findRequestFeedbackCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT count(*) FROM tbl_interview T1,tbl_company T2,tbl_industry T3,tbl_position T4,tbl_admin T5
+        <where>
+            T1.uid=#{uid} and T1.positionid=T4.positionid and T4.industryid = T3.industryid AND T4.aid=T5.aid AND T5.cid=T2.cid
+            <if test="indname !='' and indname!=null">
+                and T3.indname like #{indname}
+            </if>
+            <if test="positionname !='' and positionname!=null">
+                and T4.positionname like #{positionname}
+            </if>
+        </where>
+    </select>
+    <!--查询用户的求职反馈并分页 -->
+    <select id="findRequestFeedback" resultMap="RequestFeedback" parameterType="java.util.Map">
+        SELECT T3.indname,T4.positionname,T2.companyname,T2.companyphone,T1.invate FROM tbl_interview T1,tbl_company T2,tbl_industry T3,tbl_position T4,tbl_admin T5
+        <where>
+            T1.uid=#{uid} and T1.positionid=T4.positionid and T4.industryid = T3.industryid AND T4.aid=T5.aid AND T5.cid=T2.cid
+            <if test="indname !='' and indname!=null">
+                and T3.indname like #{indname}
+            </if>
+            <if test="positionname !='' and positionname!=null">
+                and T4.positionname like #{positionname}
+            </if>
+        </where>
+        limit #{minLimit},#{maxLimit}
+    </select>
 </mapper>
