@@ -12,7 +12,7 @@
 		String path=request.getContextPath();
 	%>
 	<meta charset="utf-8">
-	<title>新增知识库</title>
+	<title>修改知识库</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/layui/css/layui.css"/>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/layui/layui.js"></script>
 </head>
