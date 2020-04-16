@@ -67,6 +67,16 @@ public class HomePageService
 	}
 
 	/**
+	 * 得到企业的简介信息
+	 * @return Company
+	 */
+	public Company getCompanyProfile(Integer cid){
+
+		Company company=homePageMapper.getCompanyProfile(cid);
+		return company;
+	};
+
+	/**
 	 * 统计人才 就业 岗位数
 	 * @param request
 	 */
@@ -97,8 +107,6 @@ public class HomePageService
 	 * @return List
 	 */
 	public String getJobNews(Map map){
-
-
 		Diagis dataTable=new Diagis();
 		List<SerachJob> roleList=new ArrayList<>();
 		int num=homePageMapper.getJobNewsCount(map);
@@ -132,9 +140,27 @@ public class HomePageService
 		//工作经验
 		List<String> list1=homePageMapper.getJobExper();
 		String str=gson.toJson(list1);
-
 		return str;
 
+	}
+
+
+	/**
+	 * 企业发布的招聘信息
+	 * @return List
+	 */
+	public String getComJobNews(String cid){
+		Diagis dataTable=new Diagis();
+		Integer ci=Integer.valueOf(cid);
+		List<SerachJob> serachJobList=new ArrayList<>();
+		int num=homePageMapper.getComJobNewsCount(ci);
+		serachJobList=homePageMapper.getComJobNews(ci);
+		dataTable.setCode(0);
+		dataTable.setMsg("");
+		dataTable.setCount(num);
+		dataTable.setData(serachJobList);
+		String roleStr=gson.toJson(dataTable);
+		return roleStr;
 	}
 
 

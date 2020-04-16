@@ -1559,13 +1559,14 @@
 									var d=JSON.parse(data);
 									for (var i = 0; i <d.length ; i++) {
 										$("#company").append(
-											"<a href='' class='pic02' style='background-image: url("+path+"/"+d[i].companypic+")'>"+
+											"<a href='"+path+"/HomePage/getCompanyProfile?cid="+d[i].cid+"'  class='pic02' style='background-image: url("+path+"/"+d[i].companypic+")'>"+
 											"<div class='childss2 test02' >"+
 											"<div style='width: 150px;height: 100px'>"+
 											d[i].companyname+  "<br>"+
 											"招收总人数"+d[i].num+" <br>"+
 											"</div>"+
 											"</div>"+
+											// "<input type='hidden'  value='"++"'> "+
 											"</a>"
 										);
 										$(".pic02").mouseenter(function () {
@@ -1574,16 +1575,13 @@
 										$(".pic02").mouseleave(function () {
 											$(".test02").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
 										})
-
 									}
-
 								},
 								error: function (data) {
 									console.log(data);
 								}
 
 							});
-
 
 						</script>
 						<script>

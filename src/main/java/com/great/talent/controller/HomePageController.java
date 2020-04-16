@@ -1,5 +1,6 @@
 package com.great.talent.controller;
 
+import com.great.talent.entity.Company;
 import com.great.talent.entity.Position;
 import com.great.talent.entity.SerachJob;
 import com.great.talent.service.HomePageService;
@@ -72,17 +73,33 @@ public class HomePageController
 		return Str;
 	}
 	/**
-	 *得到课程和讲师的信息
+	 *得到企业信息（首页轮播）
 	 * @return String
 	 */
 	@RequestMapping(value = "/getCompanyNews" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
 	public String getCompanyNews( )
 	{
-		System.out.println("getCompanyNews被调用了~~~~~~~~~~~~~~~~···");
 		String Str=homePageService.getCompanyNews();
 		return Str;
 	}
+	/**
+	 *得到企业信息（企业的简介）
+	 * @return String
+	 */
+	@RequestMapping(value = "/getCompanyProfile" ,produces = "text/html;charset=UTF-8" )
+
+	public String getCompanyProfile(HttpServletRequest request ,String cid)
+	{
+
+		Integer c= Integer.valueOf(cid);
+		Company company=homePageService.getCompanyProfile(c);
+		System.out.println("ccc"+company);
+		request.getSession().setAttribute("CompanyProfile",company);
+		return "homepage/CompanyProfile";
+	}
+
+
 	/**
 	 *找工作页面
 	 * @return String
@@ -102,7 +119,7 @@ public class HomePageController
 	}
 
 	/**
-	 * 得到岗位结果，
+	 * 首页搜索得到岗位结果，
 	 * @return String
 	 */
 	@RequestMapping(value = "/getJobNews",produces = "text/html;charset=UTF-8"  )
@@ -110,19 +127,11 @@ public class HomePageController
 	{
 
 		System.out.println("getJobNews"+sypositionaddress);
-//		String s=homePageService.getJobNews(position);
 		ModelAndView mav = new ModelAndView();
 		//要跳转的页面
 		mav.setViewName("homepage/searchJob");
 		//传入对象
-//		mav.addObject("position",position);
 
-//		if (request.getSession().getAttribute("sypositionname")!=null){
-//			request.getSession().removeAttribute("sypositionname");
-//		}else if(request.getSession().getAttribute("sypositionaddress")!=null){
-//			request.getSession().removeAttribute("sypositionaddress");
-//
-//		}
 		request.getSession().setAttribute("sypositionname",sypositionname);
 		request.getSession().setAttribute("sypositionaddress",sypositionaddress);
 
@@ -131,16 +140,72 @@ public class HomePageController
 
 
 	/**
-	 * 得到岗位结果，
+	 * 找工作页面搜索得到岗位结果，
 	 * @return String
 	 */
 	@RequestMapping(value = "/getJobTableNews" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
 	public String getJobTableNews(@ModelAttribute SerachJob serachJob, HttpServletRequest request)
 	{
+
+				Map cond=getMap(serachJob,request);
+				String s=homePageService.getJobNews(cond);
+				System.out.println("getJobTableNews"+s);
+				return s;
+	}
+
+	/**
+	 *得到行业、下拉框的数据
+	 * @return String
+	 */
+	@RequestMapping(value = "/getSelect" ,produces = "text/html;charset=UTF-8" )
+	@ResponseBody
+	public String getSelect( )
+	{
+		String Str=homePageService.getInSelect();
+		System.out.println(Str);
+		return Str;
+	}
+	/**
+	 *得到工作经验 下拉框的数据
+	 * @return String
+	 */
+	@RequestMapping(value = "/getExperSelect" ,produces = "text/html;charset=UTF-8" )
+	@ResponseBody
+	public String getExperSelect( )
+	{
+
+		String Str=homePageService.getJobExper();
+		System.out.println(Str);
+		return Str;
+	}
+	/**
+	 * 企业发布的岗位信息，
+	 * @return String
+	 */
+	@RequestMapping(value = "/getComJobNews" ,produces = "text/html;charset=UTF-8" )
+	@ResponseBody
+	public String getComJobNews(String cid)
+	{
+		String srt=homePageService.getComJobNews(cid);
+		System.out.println("getJobTableNews"+srt);
+		return srt;
+	}
+
+
+
+
+
+
+	/**
+	 * 找工作条件的map
+	 * @param serachJob
+	 * @param request
+	 * @return
+	 */
+	public Map getMap(SerachJob serachJob,HttpServletRequest request)
+	{
 		System.out.println("getJobTableNews"+serachJob);
-//		request.getSession().removeAttribute("sypositionname");
-//		request.getSession().removeAttribute("sypositionaddress");
 		String p=request.getParameter("page");
 		String l=request.getParameter("limit");
 		int page=Integer.valueOf(p);
@@ -150,8 +215,8 @@ public class HomePageController
 		Integer beginNum=null;
 		Integer endNum=null;
 		if(serachJob.getMoney() != null&&!serachJob.getMoney().trim().equals("不限")){
-			 monrybegin= Integer.valueOf(serachJob.getMoney().split("-")[0]);
-			 monryend= Integer.valueOf(serachJob.getMoney().split("-")[1]);
+			monrybegin= Integer.valueOf(serachJob.getMoney().split("-")[0]);
+			monryend= Integer.valueOf(serachJob.getMoney().split("-")[1]);
 		}if(serachJob.getCompanynum() != null&&!serachJob.getCompanynum().trim().equals("不限")){
 			beginNum= Integer.valueOf(serachJob.getCompanynum().split("-")[0]);
 			endNum= Integer.valueOf(serachJob.getCompanynum().split("-")[1]);
@@ -186,8 +251,8 @@ public class HomePageController
 		if(serachJob.getIndustryid() != null&&serachJob.getIndustryid() != -1){
 			map.put("industryid",serachJob.getIndustryid());
 		}if(serachJob.getDegreeid() != null&& serachJob.getDegreeid() != 8 ){
-		map.put("degreeid",serachJob.getDegreeid());
-	}
+			map.put("degreeid",serachJob.getDegreeid());
+		}
 		map.put("moneybegin",monrybegin);
 		map.put("moneyend",monryend);
 		if(serachJob.getPositionexper() != null&&!serachJob.getPositionexper().trim().equals("不限")){
@@ -199,52 +264,10 @@ public class HomePageController
 		map.put("endNum",endNum);
 		map.put("page",(page-1)*limit);
 		map.put("limit",limit);
-
-
-
-
 		cond.put("cond",map);
-
 		System.out.println("Map=="+cond);
-				String s=homePageService.getJobNews(cond);
-		//		ModelAndView mav = new ModelAndView();
-		//要跳转的页面
-		//		mav.setViewName("homepage/searchJob");
-		//传入对象
-		//		mav.addObject("position",s);
-		System.out.println("getJobTableNews"+s);
-
-		return s;
-
+		return cond;
 	}
-
-	/**
-	 *得到行业、下拉框的数据
-	 * @return String
-	 */
-	@RequestMapping(value = "/getSelect" ,produces = "text/html;charset=UTF-8" )
-	@ResponseBody
-	public String getSelect( )
-	{
-
-		String Str=homePageService.getInSelect();
-		System.out.println(Str);
-		return Str;
-	}
-	/**
-	 *得到工作经验 下拉框的数据
-	 * @return String
-	 */
-	@RequestMapping(value = "/getExperSelect" ,produces = "text/html;charset=UTF-8" )
-	@ResponseBody
-	public String getExperSelect( )
-	{
-
-		String Str=homePageService.getJobExper();
-		System.out.println(Str);
-		return Str;
-	}
-
 
 
 }

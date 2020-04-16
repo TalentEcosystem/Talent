@@ -468,11 +468,9 @@
 		<input type="hidden" value="${sypositionaddress}" id="sypositionaddress">
 		<table class="layui-hide" id="test" > </table>
 		<script type="text/html" id="bar">
-
 			<button class="layui-btn   layui-btn-danger" lay-event="shen">
 				<i class="layui-icon ">申请</i>
 			</button>
-
 		</script>
 		<script>
 			layui.use(['table','form'], function(){
@@ -524,16 +522,6 @@
 
 
 				});
-				// table.reload('serviceCode', {
-				// 	page: {
-				// 		curr: 1
-				// 	}
-				// 	,where: {
-				// 		sypositionname: sypositionname,
-				// 		sypositionaddress:sypositionaddress
-				// 	}
-				// });
-
 				$('#searchJob').on('click', function(){
 
 					var positionname = $('#gangwei').val();
@@ -732,6 +720,8 @@
 
 
 				});
+
+
 
 			});
 		</script>
@@ -1044,33 +1034,35 @@
 	</div>
 	<div class="clear"></div>
 	<div class="listbottom">
-		<div class="lb1">
-			<input name="" type="checkbox" value="" />
-			<span>全选</span>
-		</div>
+<%--		<div class="lb1">--%>
+<%--			<input name="" type="checkbox" value="" />--%>
+<%--			<span>全选</span>--%>
+<%--		</div>--%>
 		<div class="lb2">
 			<a href="javascript:void()">浏览职位</a>
 			<a href="javascript:void()" class="sqzw">申请职位</a>
 			<a href="javascript:void()">关注职位</a>
 		</div>
-		<div class="lb3"><span>共1141条  第1/39页</span></div>
+		<div class="lb3">
+<%--			<span>共1141条  第1/39页</span>--%>
+		</div>
 	</div>
 	<div class="clear"></div>
 	<div class="fenyediv">
-		<a href="javascript:void()" class="fy1">首页</a>
-		<a href="javascript:void()" class="fy1">上一页</a>
-		<a href="javascript:void()" class="fy2 on">1</a>
-		<a href="javascript:void()" class="fy2">2</a>
-		<a href="javascript:void()" class="fy2">3</a>
-		<a href="javascript:void()" class="fy2">4</a>
-		<a href="javascript:void()" class="fy2">5</a>
-		<a href="javascript:void()" class="fy2">6</a>
-		<a href="javascript:void()" class="fy2">7</a>
-		<a href="javascript:void()" class="fy2">8</a>
-		<a href="javascript:void()" class="fy2">9</a>
-		<a href="javascript:void()" class="fy2">10</a>
-		<a href="javascript:void()" class="fy1">下一页</a>
-		<a href="javascript:void()" class="fy1">尾页</a>
+<%--		<a href="javascript:void()" class="fy1">首页</a>--%>
+<%--		<a href="javascript:void()" class="fy1">上一页</a>--%>
+<%--		<a href="javascript:void()" class="fy2 on">1</a>--%>
+<%--		<a href="javascript:void()" class="fy2">2</a>--%>
+<%--		<a href="javascript:void()" class="fy2">3</a>--%>
+<%--		<a href="javascript:void()" class="fy2">4</a>--%>
+<%--		<a href="javascript:void()" class="fy2">5</a>--%>
+<%--		<a href="javascript:void()" class="fy2">6</a>--%>
+<%--		<a href="javascript:void()" class="fy2">7</a>--%>
+<%--		<a href="javascript:void()" class="fy2">8</a>--%>
+<%--		<a href="javascript:void()" class="fy2">9</a>--%>
+<%--		<a href="javascript:void()" class="fy2">10</a>--%>
+<%--		<a href="javascript:void()" class="fy1">下一页</a>--%>
+<%--		<a href="javascript:void()" class="fy1">尾页</a>--%>
 	</div>
 	<div class="clear"></div>
 	<div class="RegionSearch">

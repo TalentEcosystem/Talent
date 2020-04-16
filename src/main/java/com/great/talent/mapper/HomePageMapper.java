@@ -50,7 +50,7 @@ public interface HomePageMapper
 
 	/**
 	 * s首页找工作
-	 * @param Map
+	 * @param map
 	 * @return List<Position>
 	 */
 	public List<SerachJob> getJobNews(Map map);
@@ -73,6 +73,28 @@ public interface HomePageMapper
 	 * @return List<Map>
 	 */
 	public List<String> getJobExper();
+
+
+	/**
+	 * 得到企业的简介信息
+	 * @return Company
+	 */
+	public Company getCompanyProfile(Integer cid);
+
+	/**
+	 * 企业招聘的信息
+	 * @param cid
+	 * @return List<Position>
+	 */
+	public List<SerachJob> getComJobNews(Integer cid);
+
+
+	/**
+	 * 企业招聘信息的条数
+	 * @param cid
+	 * @return int
+	 */
+	public int getComJobNewsCount(Integer cid);
 
 
 }

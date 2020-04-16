@@ -28,7 +28,7 @@ tbl_product p,tbl_teacher t where t.teacherid=p.teacherid LIMIT 8
 </select>
 <!--    企业信息-->
     <select id="getCompanyNews" resultType="Company" >
-select c.companyname,c.companypic, t1.Num  from tbl_company as c
+select c.*, t1.Num  from tbl_company as c
 left join(select t.*,a.cid from tbl_admin as a,
 (select aid,COUNT(maxnum) AS Num from
 tbl_position   group by aid)as t  where a.aid=t.aid)as t1 on c.cid= t1.cid limit 8
@@ -53,7 +53,6 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
 
 <!--    搜索工作-->
     <select id="getJobNews" resultType="SerachJob" parameterType="map" >
-
         SELECT p.positionid,p.aid,p.positionname as sypositionname,p.positionaddress as sypositionaddress,p.maxnum,p.request,
         p.positioncontent,p.positionstate, p.professid, p.positionname,p.positionexper,
         p.money,p.positionaddress,p.industryid,p.degreeid,p.positiontime,c.companynum,c.companyname
@@ -127,7 +126,34 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
     <select id="getJobExper" resultType="String" >
     select positionexper from tbl_position where positionexper!= '不限' GROUP BY positionexper
     </select>
+<!--    得到企业简介的信息-->
+    <select id="getCompanyProfile" resultType="Company" parameterType="integer" >
+select t.* from (select c.*, t1.Num  from tbl_company as c
+left join(select t.*,a.cid from tbl_admin as a,
+(select aid,COUNT(maxnum) AS Num from
+tbl_position   group by aid)as t  where a.aid=t.aid)as t1
+on c.cid= t1.cid )t where t.cid=#{cid}
+</select>
+    <!--    得到企业招聘的信息-->
+    <select id="getComJobNews" resultType="SerachJob" parameterType="integer" >
+        SELECT p.positionid,p.aid,p.positionname as sypositionname,p.positionaddress as sypositionaddress,p.maxnum,p.request,
+        p.positioncontent,p.positionstate, p.professid, p.positionname,p.positionexper,
+        p.money,p.positionaddress,p.industryid,p.degreeid,p.positiontime,c.companynum,c.companyname
+        FROM tbl_position p,tbl_company c,tbl_admin a
+        where a.aid=p.aid and a.cid=c.cid and c.cid=#{cid}
+                order by p.positiontime desc ;
 
+
+    </select>
+
+    <select id="getComJobNewsCount"  parameterType="integer" resultType="int" >
+
+        SELECT count(*) FROM tbl_position p,tbl_company c,tbl_admin a
+        where  a.aid=p.aid and a.cid=c.cid and c.cid=#{cid}
+
+
+
+    </select>
 
 
 </mapper>
