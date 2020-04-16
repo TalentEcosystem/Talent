@@ -3,6 +3,7 @@ package com.great.talent.mapper;
 import com.great.talent.entity.*;
 import com.sun.jdi.IntegerValue;
 import com.sun.tools.corba.se.idl.InterfaceGen;
+import javafx.geometry.Pos;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -38,11 +39,12 @@ public interface EnterpriseMapper {
     public int updateResumeInfo(int uid);
     public List<Interview> companyEmployInfo(Map map);//录用人员信息
     public int companyEmployInfoNum(Map map);//录用人员信息数量
-    public int weekJobinfo(@Param("day") String day, @Param("companyid") int companyid);
-    public int monthJobinfo(@Param("day") String day,@Param("day1") String day1, @Param("companyid") int companyid);
+    public int weekJobinfo(@Param("day") String day, @Param("companyid") int companyid);//周统计
+    public int monthJobinfo(@Param("day") String day,@Param("day1") String day1, @Param("companyid") int companyid);//月统计
 
-    public List<Interview> ScreeningResume(Map map);
-    public Integer ScreeningResumeNum(Map map);
+    public List<Resume> ScreeningResume(Map map);//筛选面试信息
+    public Integer ScreeningResumeNum(Map map);//筛选面试数
+    public int addInterViews(Interview interview);
     /**
      * 校验用户手机是否被注册
      * @param tel
@@ -112,4 +114,6 @@ public interface EnterpriseMapper {
     @Select("select * from tbl_school")
     public List<SchoolMsg> findSchool();
 
+    @Select("select positionid,positionname from tbl_position where aid = #{aid} and applicantsnum < maxnum")
+    public List<Position> findPositionName(Integer aid);
 }

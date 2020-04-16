@@ -455,6 +455,7 @@ public class SchoolController
 		resume.setSid(sid);
 		resume.setProfessid(professid);
 		resume.setUid(user.getUid());
+		resume.setOperationtime(new Date());
 		System.out.println(resume);
 		schoolService.updateUserresume(resume);
 		ResponseUtils.outJson(response,"保存成功");
