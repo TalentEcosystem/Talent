@@ -61,20 +61,41 @@
                 ,{fixed: 'right',title:'操作', width: 200, align:'center', toolbar: '#barDemo'}
             ]]
         })
+        var resume="";
+        var social1="";
+        var aducation1="";
+        var social2="";
+        var aducation2="";
         table.on('tool(test)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性
             var data = obj.data //获得当前行数据
                 ,event = obj.event;
             if (event ==='detail'){
                 var uid={'uid':data.uid};
                 uid=JSON.stringify(uid);
-                layer.msg('查看操作');
                 $.ajax({
                     url:'${pageContext.request.contextPath}/school/findResume',
                     type:'post',
                     data:'uid='+uid,
                     dataType:'text',
                     success:function(msg){
-                        layer.msg(msg);
+                        resume=JSON.parse(msg.split("%")[0]);
+                        console.log(resume)
+                        if(JSON.parse(msg.split("%")[1]).length!=0){
+                            if(JSON.parse(msg.split("%")[1]).length>1){
+                                social2=JSON.parse(msg.split("%")[1])[1];
+                                console.log(social2)
+                            }
+                            social1=JSON.parse(msg.split("%")[1])[0];
+                            console.log(social1)
+                        }
+                        if(JSON.parse(msg.split("%")[2]).length!=0){
+                            aducation1=JSON.parse(msg.split("%")[2])[0];
+                            console.log(aducation1)
+                            if(JSON.parse(msg.split("%")[2]).length>1){
+                                aducation2=JSON.parse(msg.split("%")[2])[1];
+                                console.log(aducation2)
+                            }
+                        }
                     },error:function (err) {
                         console.log(err);
                     }
@@ -89,7 +110,68 @@
                     },
                     content: path+'/school/useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
                     ,success: function(layero, index){
-                        layer.msg('查看用户简历');
+                        console.log(social1);
+                        var form = layui.form;
+                        var body=layer.getChildFrame('body',index);
+                        body.find("input[id=resname1]").empty();
+                        body.find("input[id=schoolname1]").empty();
+                        body.find("input[id=rebirth1]").empty();
+                        body.find("input[id=professname]").empty();
+                        body.find("input[id=repol]").empty();
+                        body.find("input[id=degreename]").empty();
+                        body.find("input[id=retel]").empty();
+                        body.find("input[id=readdress]").empty();
+                        body.find("input[id=hidepic]").empty();
+                        body.find("input[id=reskill12]").empty();
+                        body.find("input[id=reeva12]").empty();
+                        body.find("input[id=resname1]").val(resume.resname);
+                        body.find("input[id=schoolname1]").val(resume.schoolname);
+                        body.find("input[id=rebirth1]").val(resume.rebirth);
+                        body.find("input[id=professname]").val(resume.professname);
+                        body.find("input[id=repol]").val(resume.repol);
+                        body.find("input[id=degreename]").val(resume.degreename);
+                        body.find("input[id=retel]").val(resume.retel);
+                        body.find("input[id=readdress]").val(resume.readdress);
+                        body.find("input[id=hidepic]").val(resume.repic);
+                        body.find("input[id=reskill12]").val(resume.reskill);
+                        body.find("input[id=reeva12]").val(resume.reeva);
+                        if(social1 != " "){
+                            body.find("input[id=socialtime1]").val(social1.socialtime);
+                            body.find("input[id=company1]").val(social1.company);
+                            body.find("input[id=content1]").val(social1.content);
+                            if(social2 != " "){
+                                body.find("input[id=socialtime2]").val(social2.socialtime);
+                                body.find("input[id=company2]").val(social2.company);
+                                body.find("input[id=content2]").val(social2.content);
+                            }else{
+                                body.find("input[id=socialtime2]").val("");
+                                body.find("input[id=company2]").val("");
+                                body.find("input[id=content2]").val("");
+                            }
+                        }else{
+                            body.find("input[id=socialtime1]").val("");
+                            body.find("input[id=company1]").val("");
+                            body.find("input[id=content1]").val("");
+                        }
+                        if(aducation1 != " "){
+                            body.find("input[id=adtime1]").val(aducation1.adtime);
+                            body.find("input[id=sname1]").val(aducation1.sname);
+                            body.find("input[id=profession1]").val(aducation1.profession);
+                            if(aducation2 != " "){
+                                body.find("input[id=adtime2]").val(aducation2.adtime);
+                                body.find("input[id=sname2]").val(aducation2.sname);
+                                body.find("input[id=profession2]").val(aducation2.profession);
+                            }else{
+                                body.find("input[id=adtime2]").val("");
+                                body.find("input[id=sname2]").val("");
+                                body.find("input[id=profession2]").val("");
+                            }
+                        }else{
+                            body.find("input[id=adtime1]").val("");
+                            body.find("input[id=sname1]").val("");
+                            body.find("input[id=profession1]").val("");
+                        }
+                        form.render()
                     }
                 });
             }
