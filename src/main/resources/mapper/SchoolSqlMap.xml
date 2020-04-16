@@ -264,6 +264,7 @@
         resex,
         degreeid,
         reexper,
+        repic,
         retel,
         reset
         )values (
@@ -272,6 +273,7 @@
         #{resex},
         #{degreeid},
         #{reexper},
+        #{repic},
         #{retel},
         #{reset}
         )

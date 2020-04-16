@@ -312,4 +312,48 @@
 	</insert>
 
 
+	<select id="findAllKnow" resultType="Know">
+		select * from tbl_knowledge;
+	</select>
+
+	<select id="findChapter" parameterType="java.util.Map" resultType="Chapter">
+		select * from tbl_chapter a left join tbl_knowledge b on a.knowledgeid=b.knowledgeid
+		<where>
+			<if test="chname!=null">
+				a.chname like concat('%',#{chname},'%')
+			</if>
+			<if test="knowledgeid!=null and knowledgeid!=0">
+				and a.knowledgeid = #{knowledgeid}
+			</if>
+			and a.chapstate='启用'
+		</where>
+		limit #{begin},#{end}
+	</select>
+
+	<select id="findCountChapter" parameterType="java.util.Map" resultType="int">
+		select count(*) from tbl_chapter a left join tbl_knowledge b on a.knowledgeid=b.knowledgeid
+		<where>
+			<if test="chname!=null">
+				a.chname like concat('%',#{chname},'%')
+			</if>
+			<if test="knowledgeid!=null and knowledgeid!=0">
+				and a.knowledgeid = #{knowledgeid}
+			</if>
+			and a.chapstate='启用'
+		</where>
+	</select>
+
+	<insert id="addChapter" parameterType="Chapter">
+		insert into tbl_chapter (chname, chcount, chintro, chapurl, chaptime, knowledgeid, chapstate)
+		values (#{chname},0,#{chintro},#{chapurl},#{chaptime},#{knowledgeid},'启用')
+	</insert>
+
+	<update id="deleteChapter" parameterType="java.lang.String">
+		update tbl_chapter set chapstate='禁用' where chapterid=#{chapterid}
+	</update>
+
+	<update id="updateChapter" parameterType="Chapter">
+		update tbl_chapter set knowledgeid=#{knowledgeid},chname=#{chname},chintro=#{chintro},
+		 chaptime=#{chaptime},chapurl=#{chapurl} where chapterid=#{chapterid}
+	</update>
 </mapper>

@@ -101,4 +101,16 @@ public interface AdminMapper {
 	public void addSchool(SchoolMsg schoolMsg);
 
 	public void addSchoolAccount(Admin admin);
+
+	public List<Know> findAllKnow();
+
+	public List<Chapter> findChapter(Map map);
+
+	public int findCountChapter(Map map);
+
+	public void addChapter(Chapter chapter);
+
+	public void deleteChapter(@Param("chapterid") String chapterid);
+
+	public void updateChapter(Chapter chapter);
 }

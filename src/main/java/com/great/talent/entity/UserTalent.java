@@ -13,7 +13,7 @@ public class UserTalent
 {
 	private int uid;
 	private String uaccount;
-	private String rename;
+	private String resname;
 	private String chname;
 	private String professname;
 	private String reemploy;
@@ -42,14 +42,14 @@ public class UserTalent
 		this.uaccount = uaccount;
 	}
 
-	public String getRename()
+	public String getResname()
 	{
-		return rename;
+		return resname;
 	}
 
-	public void setRename(String rename)
+	public void setResname(String resname)
 	{
-		this.rename = rename;
+		this.resname = resname;
 	}
 
 	public String getChname()
@@ -95,6 +95,6 @@ public class UserTalent
 	@Override
 	public String toString()
 	{
-		return "UserTalent{" + "uid=" + uid + ", uaccount='" + uaccount + '\'' + ", rename='" + rename + '\'' + ", chname='" + chname + '\'' + ", professname='" + professname + '\'' + ", reemploy='" + reemploy + '\'' + '}';
+		return "UserTalent{" + "uid=" + uid + ", uaccount='" + uaccount + '\'' + ", resname='" + resname + '\'' + ", chname='" + chname + '\'' + ", professname='" + professname + '\'' + ", reemploy='" + reemploy + '\'' + ", schoolname='" + schoolname + '\'' + '}';
 	}
 }
