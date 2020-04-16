@@ -75,7 +75,7 @@
 			}else if(type == 'add'){
 				layer.open({
 					type: 2,
-					title:"新增知识库",
+					title:"新增岗位",
 					area: ['500px', '300px'],
 					content: path + "/admin/path/AddPost" //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					, success: function (layero, index) {
@@ -89,7 +89,7 @@
 			if(obj.event === 'update'){
 				layer.open({
 					type:2
-					,title:"修改"
+					,title:"修改岗位"
 					,area:['500px','300px']
 					,shadeClose: true //点击遮罩不会关闭
 					,content:path+"/admin/path/UpdatePost"
@@ -101,7 +101,7 @@
 					}
 				});
 			}else if(obj.event === 'delete'){ //删除
-				layer.confirm('确认删除?', function(index){
+				layer.confirm('确认删除岗位?', function(index){
 					// obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 					layer.close(index);
 					//向服务端发送启用指令

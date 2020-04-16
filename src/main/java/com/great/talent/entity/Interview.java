@@ -1,7 +1,12 @@
 package com.great.talent.entity;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 //面试信息表
+@Component(value = "Interview")
+@Scope("prototype")
 public class Interview {
     private Integer interviewid;
     private Integer uid;//用户id

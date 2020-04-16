@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.great.talent.mapper.AdminMapper">
 
+    <!--分页查询知识库-->
     <select id="findKnow" resultType="Know" parameterType="java.util.Map">
 		select * from tbl_knowledge a left join tbl_domain b on a.domainid=b.domainid
 		<where>
@@ -18,6 +19,7 @@
 		limit #{begin},#{end}
 	</select>
 
+    <!--查询知识库数据总数-->
 	<select id="findCountKnow" resultType="int" parameterType="java.util.Map">
 		select count(*) from tbl_knowledge a left join tbl_domain b on a.domainid=b.domainid
 		<where>
@@ -31,18 +33,22 @@
 		</where>
 	</select>
 
+    <!--修改知识库-->
 	<update id="updateKnow" parameterType="Know">
 		update tbl_knowledge set knowname=#{knowname},knowintro=#{knowintro},domainid=#{domainid} where knowledgeid=#{knowledgeid}
 	</update>
 
+    <!--新增知识库-->
 	<insert id="addKnow" parameterType="Know">
 		insert into tbl_knowledge (knowname,knowintro,domainid,knowstate) values (#{knowname},#{knowintro},#{domainid},'正常')
 	</insert>
 
+    <!--删除知识库,逻辑删除-->
 	<delete id="deleteKnow" parameterType="java.lang.String">
 		update tbl_knowledge set knowstate='已删除' where knowledgeid=#{knowledgeid}
 	</delete>
 
+    <!--分页查询前台用户信息-->
     <select id="findUser" resultType="User" parameterType="java.util.Map">
         select * from tbl_user a left join tbl_school b on a.sid=b.sid
         <where>
@@ -56,6 +62,7 @@
         order by a.udate desc limit #{begin},#{end}
     </select>
 
+    <!--查询前台用户总数-->
     <select id="findCountUser" resultType="int" parameterType="java.util.Map">
         select count(*) from tbl_user a left join tbl_school b on a.sid=b.sid
         <where>
@@ -68,20 +75,23 @@
         </where>
     </select>
 
+    <!--禁用用户账号-->
     <update id="userForbid" parameterType="java.lang.String">
 		update tbl_user set ustate='禁用' where uid=#{uid}
 	</update>
 
+    <!--启用用户账号-->
     <update id="userEnable" parameterType="java.lang.String">
 		update tbl_user set ustate='启用' where uid=#{uid}
 	</update>
 
 
-
+    <!--查询所有行业-->
 	<select id="findAllIndustry" resultType="Industry">
 		select * from tbl_industry
 	</select>
 
+    <!--查询所有岗位-->
 	<select id="findPost" resultType="Post" parameterType="java.util.Map">
 		select * from tbl_post a left join tbl_industry b on a.industryid=b.industryid
 		<where>
@@ -93,6 +103,7 @@
 		limit #{begin},#{end}
 	</select>
 
+    <!--查询岗位总数-->
 	<select id="findCountPost" resultType="int" parameterType="java.util.Map">
 		select count(*) from tbl_post a left join tbl_industry b on a.industryid=b.industryid
 		<where>
@@ -103,19 +114,22 @@
 		</where>
 	</select>
 
+    <!--新增岗位-->
 	<insert id="addPost" parameterType="Post">
 		insert into tbl_post (postname,industryid,poststate) values (#{postname},#{industryid},'正常')
 	</insert>
 
+    <!--修改岗位-->
 	<update id="updatePost" parameterType="Post">
 		update tbl_post set postname=#{postname},industryid=#{industryid} where postid=#{postid}
 	</update>
 
+    <!--删除岗位,逻辑删除-->
 	<update id="deletePost" parameterType="java.lang.String">
 		update tbl_post set poststate='已删除' where postid=#{postid}
 	</update>
 
-
+    <!--分页查询企业信息-->
 	<select id="findCompany" parameterType="java.util.Map" resultType="Admin">
 		select * from tbl_admin a left join tbl_company b on a.cid=b.cid
 		<where>
@@ -130,6 +144,7 @@
 		order by a.date desc limit #{begin},#{end}
 	</select>
 
+    <!--查询企业总数-->
 	<select id="findCountCompany" parameterType="java.util.Map" resultType="int">
 		select count(*) from tbl_admin a left join tbl_company b on a.cid=b.cid
 		<where>
@@ -143,22 +158,27 @@
 		</where>
 	</select>
 
+    <!--企业资质审核确认-->
 	<update id="checkConfirm" parameterType="java.lang.String">
 		update tbl_admin set state='启用' where aid=#{aid}
 	</update>
 
+    <!--企业资质审核失败-->
 	<update id="checkRefuse" parameterType="java.lang.String">
 		update tbl_admin set state='禁用' where aid=#{aid}
 	</update>
 
+    <!--查询所有菜单-->
 	<select id="selectAllMenu" resultType="RoleMenu">
 		select * from tbl_menu
 	</select>
 
+    <!--根据角色查询菜单-->
 	<select id="selectRoleMenu" resultType="RoleMenu" parameterType="java.lang.String">
 		select * from tbl_rolemenu a left join tbl_menu b on a.menuid=b.menuid where a.roleid=#{roleid}
 	</select>
 
+    <!--查询父级菜单-->
 	<select id="selectParentMenu" resultType="RoleMenu" parameterType="java.util.List">
 		select * from tbl_menu where menuid in
 		<foreach item="item" index="" collection="list" open="(" separator="," close=")">
@@ -166,10 +186,12 @@
 		</foreach>
 	</select>
 
+    <!--查询子级菜单-->
 	<select id="selectChileMenu" resultType="java.lang.String" parameterType="java.lang.String">
 		select a.menuid from tbl_rolemenu a left join tbl_menu b on b.menuid=a.menuid where a.roleid=#{roleid} and b.parentid!=0
 	</select>
 
+    <!--得到最新的菜单-->
 	<select id="selectNewMenu" resultType="java.lang.String" parameterType="java.util.List">
 		select parentid from tbl_menu where menuid in
 		<foreach item="item" index="" collection="list" open="(" separator="," close=")">
@@ -178,10 +200,12 @@
 		group by parentid
 	</select>
 
+    <!--删除菜单-->
 	<delete id="deleteMenu" parameterType="java.lang.String">
 		delete from tbl_rolemenu where roleid=#{roleid}
 	</delete>
 
+    <!--新增菜单-->
 	<insert id="addMenu" parameterType="java.util.List">
 		insert into tbl_rolemenu (roleid,menuid) values
 		<foreach collection="list" index="index" separator="," item="item">
@@ -189,11 +213,12 @@
 		</foreach>
 	</insert>
 
+    <!--删除角色对应的所有菜单-->
 	<delete id="deleteFirst" parameterType="java.lang.String">
 		delete from tbl_rolemenu where roleid=#{roleid} and menuid=#{menuid}
 	</delete>
 
-
+    <!--分页查询参数-->
 	<select id="findPara" resultType="Parameter" parameterType="java.util.Map">
 		select * from tbl_para a
 		<where>
@@ -208,6 +233,7 @@
 		limit #{begin},#{end}
 	</select>
 
+    <!--查询参数表总数据-->
 	<select id="findCountPara" parameterType="java.util.Map" resultType="int">
 		select count(*) from tbl_para a
 		<where>
@@ -221,23 +247,27 @@
 		</where>
 	</select>
 
+    <!--修改参数-->
 	<update id="updatePara" parameterType="Parameter">
 		update tbl_para set paraname=#{paraname},paratype=#{paratype},paravalue=#{paravalue} where paraid=#{paraid}
 	</update>
 
+    <!--删除参数,逻辑删除-->
 	<update id="deletePara" parameterType="java.lang.String">
 		update tbl_para set parastate='禁用' where paraid=#{paraid}
 	</update>
 
+    <!--新增参数-->
 	<insert id="addPara" parameterType="Parameter">
 		insert into tbl_para (paraname, paravalue, paratype, parastate) values (#{paraname},#{paravalue},#{paratype},'启用')
 	</insert>
 
-
+    <!--日志存到数据库-->
 	<insert id="addLog" parameterType="SystemLog">
         insert into tbl_log (logtype, logname, logresult, logdate) values (#{logtype},#{logname},#{logresult},#{logdate})
     </insert>
 
+    <!--分页查询日志-->
 	<select id="findLog" parameterType="java.util.Map" resultType="SystemLog">
 		select * from tbl_log
 		<where>
@@ -251,6 +281,7 @@
 		limit #{begin},#{end}
 	</select>
 
+    <!--查询日志表总数据数量-->
 	<select id="findCountLog" parameterType="java.util.Map" resultType="int">
 		select count(*) from tbl_log
 		<where>
@@ -297,25 +328,29 @@
 		</where>
 	</select>
 
+    <!--新增管理员账号-->
 	<insert id="addAdmin" parameterType="Admin">
 		insert into tbl_admin (account, password, roleid, name, tel, state, address, date, money)
 		values (#{account},#{password},#{roleid},#{name},#{tel},'启用',#{address},#{date},'0')
 	</insert>
 
+    <!--学校表新增数据-->
 	<insert id="addSchool" parameterType="SchoolMsg" useGeneratedKeys="true" keyProperty="sid" keyColumn="sid">
 		insert into tbl_school (schoolname) values (#{schoolname})
 	</insert>
 
+    <!--新增高校账号-->
 	<insert id="addSchoolAccount" parameterType="Admin">
-		insert into tbl_admin (account, password, roleid, name, tel, state, address, date, money,cid)
-		values (#{account},#{password},#{roleid},#{name},#{tel},'启用',#{address},#{date},'0',#{cid})
+		insert into tbl_admin (account, password, roleid, name, tel, state, address, date, money,sid)
+		values (#{account},#{password},#{roleid},#{name},#{tel},'启用',#{address},#{date},'0',#{sid})
 	</insert>
 
-
+    <!--查询知识库所有信息-->
 	<select id="findAllKnow" resultType="Know">
 		select * from tbl_knowledge;
 	</select>
 
+    <!--分页查询章节信息-->
 	<select id="findChapter" parameterType="java.util.Map" resultType="Chapter">
 		select * from tbl_chapter a left join tbl_knowledge b on a.knowledgeid=b.knowledgeid
 		<where>
@@ -330,6 +365,7 @@
 		limit #{begin},#{end}
 	</select>
 
+    <!--查询章节表数据量-->
 	<select id="findCountChapter" parameterType="java.util.Map" resultType="int">
 		select count(*) from tbl_chapter a left join tbl_knowledge b on a.knowledgeid=b.knowledgeid
 		<where>
@@ -343,17 +379,70 @@
 		</where>
 	</select>
 
+    <!--新增章节-->
 	<insert id="addChapter" parameterType="Chapter">
 		insert into tbl_chapter (chname, chcount, chintro, chapurl, chaptime, knowledgeid, chapstate)
 		values (#{chname},0,#{chintro},#{chapurl},#{chaptime},#{knowledgeid},'启用')
 	</insert>
 
+    <!--删除章节,逻辑删除-->
 	<update id="deleteChapter" parameterType="java.lang.String">
 		update tbl_chapter set chapstate='禁用' where chapterid=#{chapterid}
 	</update>
 
+    <!--修改章节-->
 	<update id="updateChapter" parameterType="Chapter">
 		update tbl_chapter set knowledgeid=#{knowledgeid},chname=#{chname},chintro=#{chintro},
 		 chaptime=#{chaptime},chapurl=#{chapurl} where chapterid=#{chapterid}
 	</update>
+
+    <!--分页查询产品包信息-->
+    <select id="findProduct" parameterType="java.util.Map" resultType="Product">
+        select * from tbl_product a left join tbl_teacher b on a.teacherid=b.teacherid
+        <where>
+            <if test="domainid!=null and domainid!=0">
+                a.domainid =#{domainid}
+            </if>
+            <if test="prostate!=null and prostate!='全部'">
+                and a.prostate = #{prostate}
+            </if>
+        </where>
+        limit #{begin},#{end}
+    </select>
+
+    <!--查询产品包总数据-->
+    <select id="findCountProduct" parameterType="java.util.Map" resultType="int">
+        select count(*) from tbl_product a left join tbl_teacher b on a.teacherid=b.teacherid
+        <where>
+            <if test="domainid!=null and domainid!=0">
+                a.domainid =#{domainid}
+            </if>
+            <if test="prostate!=null and prostate!='全部'">
+                and a.prostate = #{prostate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增产品包-->
+    <insert id="addProduct" parameterType="Product">
+        insert into tbl_product (proname, starttime, endtime, period, teacherid, prointro, procontent, prourl, procount, prostate, domainid)
+        values (#{proname},#{starttime},#{endtime},#{period},#{teacherid},#{prointro},#{procontent},#{prourl},0,'启用',#{domainid})
+    </insert>
+
+    <!--启用产品包-->
+    <update id="openProduct" parameterType="java.lang.String">
+        update tbl_product set prostate='启用' where productid=#{productid}
+    </update>
+
+    <!--停用产品包-->
+    <update id="deleteProduct" parameterType="java.lang.String">
+        update tbl_product set prostate='禁用' where productid=#{productid}
+    </update>
+
+    <!--修改产品包-->
+    <update id="updateProduct" parameterType="Product">
+        update tbl_product set proname=#{proname},endtime=#{endtime},period=#{period},teacherid=#{teacherid},
+        prointro=#{prointro}, procontent=#{procontent}, prourl=#{prourl}, procount=#{procount},domainid=#{domainid}
+        where productid=#{productid}
+    </update>
 </mapper>

@@ -113,4 +113,16 @@ public interface AdminMapper {
 	public void deleteChapter(@Param("chapterid") String chapterid);
 
 	public void updateChapter(Chapter chapter);
+
+	public List<Product> findProduct(Map map);
+
+	public int findCountProduct(Map map);
+
+	public void addProduct(Product product);
+
+	public void openProduct(@Param("productid") String productid);
+
+	public void deleteProduct(@Param("productid") String productid);
+
+	public void updateProduct(Product product);
 }

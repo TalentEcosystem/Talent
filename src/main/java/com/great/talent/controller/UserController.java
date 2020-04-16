@@ -1,8 +1,11 @@
 package com.great.talent.controller;
 
 import com.google.gson.Gson;
+import com.great.talent.entity.MyCollection;
+import com.great.talent.entity.RequestFeedback;
 import com.great.talent.entity.User;
 import com.great.talent.service.UserService;
+import com.great.talent.util.Diagis;
 import com.great.talent.util.MD5Utils;
 import com.great.talent.util.PhoneCode;
 import com.great.talent.util.ResponseUtils;
@@ -20,11 +23,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 @Controller
 @RequestMapping("/user")
@@ -71,16 +71,74 @@ public class UserController
 	public String rpassword4(){ return "user/retrievePassword_4"; }
 	//个人中心页面
 	@RequestMapping("/personal")
-	public String personal(){ return "user/personal"; }
+	public String personal(HttpServletRequest request){
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		if(null!=str1){
+		    return "user/personal";
+		}else {
+			return "user/login";
+		}
+	}
 	//个人中心-修改密码
 	@RequestMapping("/updatepsd")
-	public String updatepsd(){ return "user/personal_updatepsd"; }
+	public String updatepsd(HttpServletRequest request){
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		if(null!=str1){
+			return "user/personal_updatepsd";
+		}else {
+			return "user/login";
+		}
+	}
 	//个人中心-修改手机号
 	@RequestMapping("/updatenum")
-	public String updatenum(){ return "user/personal_updatenum"; }
+	public String updatenum(HttpServletRequest request){
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		if(null!=str1){
+			return "user/personal_updatenum";
+		}else {
+			return "user/login";
+		}
+	}
 	//个人中心-修改手机号2
 	@RequestMapping("/updateComplete")
-	public String updateComplete(){ return "user/personal_updatenum2"; }
+	public String updateComplete(HttpServletRequest request){
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		if(null!=str1){
+			return "user/personal_updatenum2";
+		}else {
+			return "user/login";
+		}
+	}
+	//个人中心-我的收藏
+	@RequestMapping("/collection")
+	public String collection(HttpServletRequest request){
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		if(null!=str1){
+			return "user/personal_collection";
+		}else {
+			return "user/login";
+		}
+	}
+	//个人中心-学习记录
+	@RequestMapping("/study")
+	public String study(HttpServletRequest request){
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		if(null!=str1){
+			return "user/personal_study";
+		}else {
+			return "user/login";
+		}
+	}
+	//个人中心-求职反馈
+	@RequestMapping("/requestFeedback")
+	public String requestFeedback(HttpServletRequest request){
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		if(null!=str1){
+			return "user/personal_requestFeedback";
+		}else {
+			return "user/login";
+		}
+	}
 
 	@RequestMapping("/userLogin")
 	@ResponseBody
@@ -316,11 +374,78 @@ public class UserController
 			Boolean flag = userService.uheadUpLoad(user);
 			if (flag){
 				ResponseUtils.outHtml(response, "{\"code\":0, \"msg\":\"\", \"data\":{}}");
+				request.getSession().setAttribute("uhead",user.getUhead());
 			}else {
 				ResponseUtils.outHtml(response, "{\"code\":1, \"msg\":\"\", \"data\":{}}");
 			}
 		}else {
 			ResponseUtils.outHtml(response, "{\"code\":3, \"msg\":\"\", \"data\":{}}");
 		}
+	}
+
+	@RequestMapping("/myCollection")
+	@ResponseBody
+	public Diagis myCollection(HttpServletRequest request, HttpServletResponse response)throws IOException {
+		int page= Integer.parseInt(request.getParameter("page"));
+		int limit= Integer.parseInt(request.getParameter("limit"));
+		String indname= request.getParameter("indname");
+		String positionname =request.getParameter("positionname");
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		int uid = userService.findUserIdByUaccount(str1);
+		Map<String,Object> map = new LinkedHashMap<>();
+		int minLimit = (page-1)*limit;
+		int maxLimit = limit;
+		map.put("uid",uid);
+		if (null!=indname && !"".equals(indname)){
+			map.put("indname","%"+indname+"%");
+		}
+		if (null!=positionname && !"".equals(positionname)){
+			map.put("positionname","%"+positionname+"%");
+		}
+		map.put("minLimit",minLimit);
+		map.put("maxLimit",maxLimit);
+		List<MyCollection> list=userService.findMyCollection(map);
+		Integer a = userService.findMyCollectionCount(map);
+		if (null!=list){
+			Diagis diagis = new Diagis();
+			diagis.setData(list);
+			diagis.setCode(0);
+			diagis.setCount(a);//总条数
+			return diagis;
+		}
+		return null;
+	}
+
+	@RequestMapping("/myRequestFeedback")
+	@ResponseBody
+	public Diagis myRequestFeedback(HttpServletRequest request, HttpServletResponse response)throws IOException {
+		int page= Integer.parseInt(request.getParameter("page"));
+		int limit= Integer.parseInt(request.getParameter("limit"));
+		String indname= request.getParameter("indname");
+		String positionname =request.getParameter("positionname");
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		int uid = userService.findUserIdByUaccount(str1);
+		Map<String,Object> map = new LinkedHashMap<>();
+		int minLimit = (page-1)*limit;
+		int maxLimit = limit;
+		map.put("uid",uid);
+		if (null!=indname && !"".equals(indname)){
+			map.put("indname","%"+indname+"%");
+		}
+		if (null!=positionname && !"".equals(positionname)){
+			map.put("positionname","%"+positionname+"%");
+		}
+		map.put("minLimit",minLimit);
+		map.put("maxLimit",maxLimit);
+		List<RequestFeedback> list=userService.findRequestFeedback(map);
+		Integer a = userService.findRequestFeedbackCount(map);
+		if (null!=list){
+			Diagis diagis = new Diagis();
+			diagis.setData(list);
+			diagis.setCode(0);
+			diagis.setCount(a);//总条数
+			return diagis;
+		}
+		return null;
 	}
 }
