@@ -221,8 +221,20 @@ public class EnterpriseService {
      */
     @Transactional
     public int companyEmploy(Interview interview){
-        return enterpriseMapper.companyEmploy(interview);
+        enterpriseMapper.companyEmploy(interview);
+        return enterpriseMapper.findCompanyEmployid(interview);
     }
+
+    /**
+     * 修改简历表就业情况
+     * @param uid
+     * @return
+     */
+    @Transactional
+    public int updateResumeInfo(int uid){
+        return enterpriseMapper.updateResumeInfo(uid);
+    }
+
 
     /**
      * 查询反馈信息
@@ -238,7 +250,41 @@ public class EnterpriseService {
         return map1;
     }
 
+    public int weekJobinfo(String day,int companyid){
+        int num = enterpriseMapper.weekJobinfo(day,companyid);
+        return num;
+    }
+    public int monthJobinfo(String day,String day1,int companyid){
+        int num = enterpriseMapper.monthJobinfo(day,day1,companyid);
+        return num;
+    }
 
+    /**
+     * 简历筛选的条件搜索
+     * @return
+     */
+    public Map findScreenInfo(){
+        List<SchoolMsg> schoolMsgList = enterpriseMapper.findSchool();
+        List<Profession> professionList = enterpriseMapper.findProfession();
+        Map map = new HashMap();
+        map.put("schoolMsgList",schoolMsgList);
+        map.put("professionList",professionList);
+        return map;
+    }
 
+    /**
+     * 筛选简历
+     * @param map
+     * @return
+     */
+    public Map findScreenResumeInfo(Map map){
+        Integer count = enterpriseMapper.ScreeningResumeNum(map);
+        System.out.println(count);
+        List<Interview> screenList = enterpriseMapper.ScreeningResume(map);
+        Map map1 = new HashMap();
+        map1.put("count",count);
+        map1.put("screenList",screenList);
+        return map1;
+    }
 }
 

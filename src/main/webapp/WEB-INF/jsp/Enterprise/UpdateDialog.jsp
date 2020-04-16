@@ -165,7 +165,7 @@
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button type="button" class="submit layui-btn layui-btn-primary" lay-submit lay-filter="update" >修改</button>
-                <button class="layui-btn layui-btn-primary" type="reset">返回</button>
+                <button class="layui-btn layui-btn-primary" type="reset">重置</button>
             </div>
         </div>
     </form>

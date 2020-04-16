@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import com.great.talent.entity.*;
 import com.great.talent.service.AdminService;
 import com.great.talent.service.EnterpriseService;
-import com.great.talent.util.Diagis;
-import com.great.talent.util.MD5Utils;
-import com.great.talent.util.ResponseUtils;
+import com.great.talent.util.*;
 import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -30,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.ParseException;
 import java.util.*;
 import java.util.List;
 
@@ -40,10 +39,11 @@ public class EnterpriseController {
     private Random random = new Random();
     private Diagis diagis = new Diagis();
     private  ModelAndView mv = new ModelAndView();
-    @Autowired
+    @Resource
     private EnterpriseService enterpriseService;
     @Resource
     private AdminService adminService;
+
     /**
      * 企业路径跳转
      *
@@ -516,7 +516,7 @@ public class EnterpriseController {
     }
 
     /**
-     * 查询面试信息
+     * 查询求职进度
      *
      * @param request
      * @param response
@@ -563,11 +563,18 @@ public class EnterpriseController {
             ResponseUtils.outJson(response, diagis);
         }
     }
+
+    /**
+     * 公司录用
+     * @param interview
+     * @return
+     */
     @RequestMapping("/companyEmploy")
     @ResponseBody
     public String companyEmploy(Interview interview){
         interview.setEndtime(new Date());
-        int flag = enterpriseService.companyEmploy(interview);
+        int uid = enterpriseService.companyEmploy(interview);
+        int flag = enterpriseService.updateResumeInfo(uid);
         if (flag>0){
             return "success";
         }else{
@@ -601,6 +608,161 @@ public class EnterpriseController {
             diagis.setMsg("");
             diagis.setCount((Integer) map.get("count"));
             diagis.setData((List<Interview>) map.get("employList"));
+            ResponseUtils.outJson(response, diagis);
+        }
+    }
+    /**
+     * 周半年统计(求职)
+     * @param session
+     * @return
+     */
+    @RequestMapping("/weekJobInfo")
+    @ResponseBody
+    public String weekJobInfo(HttpSession session)
+    {
+        Admin admin = (Admin) session.getAttribute("admin");
+        Company company = enterpriseService.findCompanyInfo(admin.getAid());
+        int companyid = company.getCid();
+        ArrayList<CensusUtil> arrayList = new ArrayList<>();
+        List<String> dateWeekList = UtilTool.week(new Date());
+        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+        int sum = 0;
+
+        for (int i = 0; i < dateWeekList.size(); i++)
+        {
+            int count = enterpriseService.weekJobinfo(dateWeekList.get(i), companyid);
+            CensusUtil censusUtil = new CensusUtil();
+            censusUtil.setCount(count);
+            censusUtil.setName(weekDays[i]);
+            arrayList.add(censusUtil);
+            sum = count + sum;
+        }
+
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(arrayList);
+        String msg = jsonStr + "://" + sum;
+        return msg;
+    }
+
+    /**
+     * 月统计(求职)
+     * @param date
+     * @param session
+     * @return
+     */
+    @RequestMapping("/monthJobInfo")
+    @ResponseBody
+    public String monthJobInfo(String date, HttpSession session)
+    {
+        Admin admin = (Admin) session.getAttribute("admin");
+        Company company = enterpriseService.findCompanyInfo(admin.getAid());
+        int companyid = company.getCid();
+        ArrayList<CensusUtil> arrayList = new ArrayList<>();
+        List<String> dateHalfList = null;
+        dateHalfList = UtilTool.month(date);
+
+        int sum = 0;
+        for (int i = 0; i < dateHalfList.size(); i++)
+        {
+            String[] time = dateHalfList.get(i).split(" ");
+            int count = enterpriseService.monthJobinfo(time[0], time[1] + " 23:59:59", companyid);
+            CensusUtil censusUtil = new CensusUtil();
+            censusUtil.setCount(count);
+            censusUtil.setName("第" + (i + 1) + "周");
+            arrayList.add(censusUtil);
+
+            sum = count + sum;
+        }
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(arrayList);
+        String msg = jsonStr + "://" + sum;
+        return msg;
+    }
+
+    /**
+     * 进半年统计(求职)
+     * @param date
+     * @param session
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/halfJobInfo")
+    @ResponseBody
+    public String halfJobInfo(String date, HttpSession session)throws ParseException {
+        Admin admin = (Admin) session.getAttribute("admin");
+        Company company = enterpriseService.findCompanyInfo(admin.getAid());
+        int companyid = company.getCid();
+        ArrayList<CensusUtil> arrayList = new ArrayList<>();
+        List<String> dateHalfList = null;
+        dateHalfList = UtilTool.half();
+        int sum = 0;
+        for (int i = 0; i < dateHalfList.size(); i++)
+        {
+            int count = enterpriseService.weekJobinfo(dateHalfList.get(i), companyid);
+            CensusUtil censusUtil = new CensusUtil();
+            censusUtil.setCount(count);
+            censusUtil.setName(dateHalfList.get(i));
+            arrayList.add(censusUtil);
+            sum = count + sum;
+        }
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(arrayList);
+
+        String msg = jsonStr + "://" + sum;
+        return msg;
+    }
+
+    /**
+     * 查询下拉框的信息,并跳转查询岗位的页面
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping("/findScreenInfo")
+    public ModelAndView findScreenInfo(HttpServletRequest request) {
+        Map map = enterpriseService.findScreenInfo();
+        List<SchoolMsg> schoolMsgList = (List<SchoolMsg>) map.get("schoolMsgList");
+        List<Profession> professionList = (List<Profession>) map.get("professionList");
+        request.getSession().setAttribute("schoolMsgList", schoolMsgList);
+        request.getSession().setAttribute("professionList", professionList);
+        mv.setViewName("/Enterprise/ScreenResume");
+        return mv;
+    }
+
+    /**
+     * 查询发布岗位信息
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/findScreenResumeInfo")
+    @ResponseBody
+    public void findScreenResumeInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String page = request.getParameter("page");
+        String limit = request.getParameter("limit");
+        String sid = request.getParameter("sid");
+        String professid = request.getParameter("professid");
+        System.out.println("sid="+sid+"professid="+professid);
+        int pageInt = Integer.valueOf(page);
+        int limitInt = Integer.parseInt(limit);
+//        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        HashMap<String, Object> condition = new HashMap<>();
+        if (null != sid && !"".equals((sid.trim())) && !"0".equals(sid.trim())) {
+            condition.put("sid", sid);
+        }
+        if (null != professid && !"".equals((professid.trim())) && !"0".equals(professid.trim())) {
+            condition.put("professid", professid);
+        }
+        int pageInts = (pageInt - 1) * limitInt;
+        condition.put("pageInts", pageInts);
+        condition.put("limitInt", limitInt);
+        Map map = enterpriseService.findScreenResumeInfo(condition);
+        if (map.size() != 0) {
+            diagis.setCode(0);
+            diagis.setMsg("");
+            diagis.setCount((Integer) map.get("count"));
+            diagis.setData((List<Interview>) map.get("screenList"));
             ResponseUtils.outJson(response, diagis);
         }
     }

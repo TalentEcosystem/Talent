@@ -24,7 +24,16 @@ public class Interview {
     private Date intertime;//投递时间
     private Date endtime;//回复时间
     private Integer applicantsnum;//已应聘人数
+    private String reset;//简历隐私设置
 
+
+    public String getReset() {
+        return reset;
+    }
+
+    public void setReset(String reset) {
+        this.reset = reset;
+    }
 
     public String getDegreename() {
         return degreename;
@@ -218,6 +227,7 @@ public class Interview {
                 ", intertime=" + intertime +
                 ", endtime=" + endtime +
                 ", applicantsnum=" + applicantsnum +
+                ", reset='" + reset + '\'' +
                 '}';
     }
 }
