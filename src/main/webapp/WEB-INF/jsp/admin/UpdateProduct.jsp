@@ -13,48 +13,63 @@
 		String path=request.getContextPath();
 	%>
 	<meta charset="utf-8">
-	<title>修改章节</title>
+	<title>修改产品包</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/layui/css/layui.css"/>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/layui/layui.js"></script>
 </head>
 <body>
 <input type="hidden" id="path" value="<%=path%>">
-<input type="hidden" id="chapterid">
+<input type="hidden" id="productid">
 <form class="layui-form" action="" onsubmit="return false">
 	<div class="layui-form-item">
-		<label class="layui-form-label">所属知识库</label>
+		<label class="layui-form-label">产品名</label>
 		<div class="layui-input-inline">
-			<select name="knowledgeid" id="knowledgeid" lay-verify="required">
-				<c:if test="${not empty chapKnowList}">
-					<c:forEach items="${chapKnowList}" var="know">
-						<option value="${know.knowledgeid}">${know.knowname}</option>
-					</c:forEach>
-				</c:if>
+			<input type="text" name="proname" id="proname" placeholder="请输入产品名" lay-verify="proname" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">领域</label>
+		<div class="layui-input-inline">
+			<select name="domainid" id="domainid" lay-verify="required">
+				<option value="1">IT互联网</option>
+				<option value="2">房地产</option>
+				<option value="3">金融</option>
+				<option value="4">服务业</option>
 			</select>
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">章节名称</label>
+		<label class="layui-form-label">学习周期</label>
 		<div class="layui-input-inline">
-			<input type="text" name="chname" id="chname" placeholder="请输入章节名称" lay-verify="chname" autocomplete="off" class="layui-input">
+			<input type="text" name="period" id="period" placeholder="请输入学习周期" lay-verify="period" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">章节描述</label>
+		<label class="layui-form-label">讲师</label>
 		<div class="layui-input-inline">
-			<input type="text" name="chintro" id="chintro" placeholder="请输入章节描述" lay-verify="chintro" autocomplete="off" class="layui-input">
+			<select name="teacherid" id="teacherid" lay-verify="required">
+				<option value="1">杨老师</option>
+				<option value="2">郭老师</option>
+				<option value="3">李老师</option>
+			</select>
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">课程时长</label>
+		<label class="layui-form-label">产品描述</label>
 		<div class="layui-input-inline">
-			<input type="text" name="chaptime" id="chaptime" placeholder="请输入课程时长" lay-verify="chaptime" autocomplete="off" class="layui-input">
+			<input type="text" name="prointro" id="prointro" placeholder="请输入产品描述" lay-verify="prointro" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">产品内容</label>
+		<div class="layui-input-inline">
+			<input type="text" name="procontent" id="procontent" placeholder="请输入产品内容" lay-verify="procontent" autocomplete="off" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<div class="layui-input-block">
 			<button type="button" class="layui-btn" id="test1">
-				<i class="layui-icon">&#xe67c;</i>重新上传
+				<i class="layui-icon">&#xe67c;</i>上传图片
 			</button>
 		</div>
 	</div>
@@ -75,39 +90,46 @@
 		var path=$("#path").val();
 
 		form.verify({
-			chname: function(value){
+			proname:function(value){
 				if(value.length < 1){
-					return '章节名称不能为空';
+					return '产品名称不能为空';
 				}
 			}
-			,chintro: function(value) {
-				if (value.length < 1) {
-					return '章节描述不能为空';
+			,period: function(value){
+				if(value.length < 1){
+					return '学习周期不能为空';
 				}
 			}
-			,chaptime: function(value){
+			,prointro: function(value) {
 				if (value.length < 1) {
-					return '课程时长不能为空';
+					return '产品描述不能为空';
+				}
+			}
+			,procontent: function(value){
+				if (value.length < 1) {
+					return '产品内容不能为空';
 				}
 			}
 		});
 
 		var uploadInst = upload.render({
 			elem: '#test1' //绑定元素
-			,accept: 'video'
+			,accept: 'image'
 			,auto: false
 			,async: false
 			,bindAction: '#btn'
 			,before:function () {
 				this.data={
-					knowledgeid:$("#knowledgeid").val(),
-					chname:$("#chname").val(),
-					chintro:$("#chintro").val(),
-					chaptime:$("#chaptime").val(),
-					chapterid:$("#chapterid").val()
+					proname:$("#proname").val(),
+					domainid:$("#domainid").val(),
+					period:$("#period").val(),
+					teacherid:$("#teacherid").val(),
+					prointro:$("#prointro").val(),
+					procontent:$("#procontent").val(),
+					productid:$("#productid").val()
 				}
 			}
-			,url: path+"/admin/UpdateChapter"
+			,url: path+"/admin/updateProduct"
 			,done: function(res){
 				alert(res.msg);
 				var index = parent.layer.getFrameIndex(window.name);

@@ -29,17 +29,19 @@ public class AdminController
 	@Resource
 	private AdminService adminService;
 
-	//跳转网页只用来测试功能
-	@RequestMapping("/test")
-	public String Test(){
-		return "/admin/MenuManager";
-	}
-
 	@RequestMapping("path/{url}")
 	public String MatchUrl(@PathVariable("url")String url){
 		return "/admin/"+url;
 	}
 
+	/**
+	 * 知识库管理,查询
+	 * @param limit
+	 * @param page
+	 * @param knowname
+	 * @param domainid
+	 * @return
+	 */
 	@RequestMapping("/findKnow")
 	@ResponseBody
 	public String findKnow(String limit,String page,String knowname,String domainid){
@@ -56,6 +58,11 @@ public class AdminController
 		return ss;
 	}
 
+	/**
+	 * 新增知识库
+	 * @param know
+	 * @return
+	 */
 	@RequestMapping("/addKnow")
 	@ResponseBody
 	public String addKnow(Know know){
@@ -63,6 +70,11 @@ public class AdminController
 		return "新增成功!";
 	}
 
+	/**
+	 * 修改知识库
+	 * @param know
+	 * @return
+	 */
 	@RequestMapping("/updateKnow")
 	@ResponseBody
 	public String updateKnow(Know know){
@@ -70,6 +82,11 @@ public class AdminController
 		return "修改成功!";
 	}
 
+	/**
+	 * 删除知识库
+	 * @param knowledgeid
+	 * @return
+	 */
 	@RequestMapping("/deleteKnow")
 	@ResponseBody
 	public String deleteKnow(String knowledgeid){
@@ -585,7 +602,7 @@ public class AdminController
 			SchoolMsg s=new SchoolMsg();
 			s.setSchoolname(admin.getCompanyname());
 			adminService.addSchool(s);
-			admin.setCid(s.getSid());
+			admin.setSid(s.getSid());
 			adminService.addSchoolAccount(admin);
 		}
 		return "success";
@@ -658,7 +675,7 @@ public class AdminController
 		Map res=new HashMap<String,Object>();
 		Gson g=new Gson();
 		res.put("code",0);
-		res.put("msg","上传成功");
+		res.put("msg","新增成功");
 		String str=g.toJson(res);
 		return str;
 	}
@@ -698,8 +715,126 @@ public class AdminController
 		Map res=new HashMap<String,Object>();
 		Gson g=new Gson();
 		res.put("code",0);
-		res.put("msg","上传成功");
+		res.put("msg","修改成功");
 		String str=g.toJson(res);
 		return str;
+	}
+
+	/**
+	 * 产品包管理
+	 * @param limit
+	 * @param page
+	 * @param domainid
+	 * @param prostate
+	 * @return
+	 */
+	@RequestMapping("/productManager")
+	@ResponseBody
+	public String productManager(String limit, String page, String domainid,String prostate){
+		Map map=new HashMap();
+		map.put("domainid",domainid);
+		map.put("prostate",prostate);
+		map.put("begin",(Integer.parseInt(page)-1)*Integer.parseInt(limit));
+		map.put("end",Integer.parseInt(limit));
+		List<Product> list = adminService.findProduct(map);
+		int count = adminService.findCountProduct(map);
+		Diagis diagis=new Diagis();
+		diagis.setCode(0);
+		diagis.setMsg("");
+		diagis.setCount(count);
+		diagis.setData(list);
+		Gson g=new Gson();
+		String ss=g.toJson(diagis);
+		return ss;
+	}
+
+	/**
+	 * 新增产品包
+	 * @param file
+	 * @param product
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/addProduct")
+	@ResponseBody
+	public String addProduct(@RequestParam("file") MultipartFile file,Product product,HttpServletRequest request){
+		String name=file.getOriginalFilename();
+		String savePath=request.getSession().getServletContext().getRealPath("/images");
+		String Path=savePath+"\\"+name;
+		product.setProurl("images/"+name);
+		Date date=new Date();
+		product.setStarttime(date);
+		product.setEndtime(date);
+		adminService.addProduct(product);
+		try
+		{
+			file.transferTo(new File(Path));
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		Map res=new HashMap<String,Object>();
+		Gson g=new Gson();
+		res.put("code",0);
+		res.put("msg","新增成功");
+		String str=g.toJson(res);
+		return str;
+	}
+
+	/**
+	 * 修改产品包
+	 * @param file
+	 * @param product
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/updateProduct")
+	@ResponseBody
+	public String updateProduct(@RequestParam("file") MultipartFile file,Product product,HttpServletRequest request){
+		String name=file.getOriginalFilename();
+		String savePath=request.getSession().getServletContext().getRealPath("/images");
+		String Path=savePath+"\\"+name;
+		product.setProurl("images/"+name);
+		Date date=new Date();
+		product.setStarttime(date);
+		product.setEndtime(date);
+		adminService.updateProduct(product);
+		try
+		{
+			file.transferTo(new File(Path));
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		Map res=new HashMap<String,Object>();
+		Gson g=new Gson();
+		res.put("code",0);
+		res.put("msg","修改成功");
+		String str=g.toJson(res);
+		return str;
+	}
+
+	/**
+	 * 启用产品包
+	 * @param productid
+	 * @return
+	 */
+	@RequestMapping("/openProduct")
+	@ResponseBody
+	public String openProduct(String productid){
+		adminService.openProduct(productid);
+		return "启用成功";
+	}
+
+	/**
+	 * 停用产品包
+	 * @param productid
+	 * @return
+	 */
+	@RequestMapping("/deleteProduct")
+	@ResponseBody
+	public String deleteProduct(String productid){
+		adminService.deleteProduct(productid);
+		return "停用成功";
 	}
 }
