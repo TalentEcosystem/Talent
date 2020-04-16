@@ -140,6 +140,21 @@ public class SchoolController
 
 		return "schoolManage/IntroductionOfSchool";
 	}
+
+	//显示高校简介页面
+	@RequestMapping("/schoolProfile")
+	public String showSchoolInf(String sid,HttpServletRequest request){
+		System.out.println("school");
+		//这里需要获取登录高校账号的学校id
+		Integer s=Integer.valueOf(sid);
+		SchoolMsg schoolMsg=schoolService.findSchoolInfo(s);
+		request.getSession().setAttribute("school",schoolMsg);
+
+		return "schoolManage/SchoolProfile";
+	}
+
+
+
 	//高校简介修改（图片上传）
 	@RequestMapping("/updateSchoolInfo")
 	public void updateSchoolInfo(@RequestParam("fileaot") MultipartFile fileaot, SchoolMsg schoolMsg, HttpServletRequest request,HttpServletResponse response){

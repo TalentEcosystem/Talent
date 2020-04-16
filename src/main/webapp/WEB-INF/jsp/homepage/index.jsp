@@ -685,18 +685,18 @@
 			<c:if test="${empty uname}">
 				<div class="log">
 
-				<a href="${pageContext.request.contextPath}/user/login" class="lo" style="width: 200px" >登录</a>
+				<a href="#" class="lo" style="width: 200px" >登录</a>
 				<ul>
-					<a href=""><li class="ll">用户登录</li></a>
-					<a href=""><li class="ll">企业登录</li></a>
+					<a href="${pageContext.request.contextPath}/user/login"><li class="ll">用户登录</li></a>
+					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin"><li class="ll">企业登录</li></a>
 				</ul>
 
 				</div>
 					<div class="reg">
-				<a href="" class="lo" style="width: 80px;text-align: center" >注册</a>
+				<a href="#" class="lo" style="width: 80px;text-align: center" >注册</a>
 						<ul>
-							<a href=""><li class="ll">用户注册</li></a>
-							<a href=""><li class="ll">企业注册</li></a>
+							<a href="${pageContext.request.contextPath}/user/registered"><li class="ll">用户注册</li></a>
+							<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseRegister"><li class="ll">企业注册</li></a>
 						</ul>
 					</div>
 
@@ -1327,9 +1327,10 @@
 								async:true,
 								success: function (data) {
 									var d=JSON.parse(data);
+									var j=1;
 									for (var i = 0; i <d.length ; i++) {
 										$("#school").append(
-											"<a href='' class='pic0' style='background-image: url("+path+"/"+d[i].schoolpic+")'>"+
+											"<a href='"+path+"/school/schoolProfile?sid="+(i+1)+"' class='pic0' style='background-image: url("+path+"/"+d[i].schoolpic+")'>"+
 											"<div class='childss1 test0' >"+
 											"<h>"+d[i].schoolname+"</h>"+
 											"<p>就业总数</p>"+
