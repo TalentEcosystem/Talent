@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Minzg
-  Date: 2020/4/14
-  Time: 17:01
+  Date: 2020/4/13
+  Time: 16:48
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,11 +11,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>个人中心-修改手机号</title>
+	<title>个人中心-个人信息</title>
 	<%
 		String path=request.getContextPath();
+		String uname = (String) session.getAttribute("uname");
+		String uaccount = (String) session.getAttribute("uaccount");
 		String utel = (String) session.getAttribute("utel");
 		String phone = utel.substring(0,3)+"****"+utel.substring(7,11);
+		String uaddress = (String) session.getAttribute("uaddress");
+		String uhead = (String) session.getAttribute("uhead");
+		String usex = (String) session.getAttribute("usex");
+		String uage = (String) session.getAttribute("uage");
 	%>
 	<link rel="stylesheet" href=<%=path+"/js/layui/css/layui.css"%>>
 	<link rel="stylesheet" href=<%=path+"/css/personal.css"%>>
@@ -85,23 +91,23 @@
 		</div>
 	</div>
 </div>
-<div class="personalBody">
+<div class="personalBody" id="searchTable">
 	<div class="perLeftnav">
 		<div class="NavLeftTop">个人中心</div>
 		<div class="NavLeftMain">
-			<div class="NavLeftBox active">
+			<div class="NavLeftBox">
 				<a href=<%=path+"/user/personal" %> class="a7">个人信息</a>
 			</div>
 			<div class="NavLeftBox">
 				<a href="personal_jl.html" class="a2">我的简历</a>
 			</div>
-			<div class="NavLeftBox">
+			<div class="NavLeftBox active">
 				<a href=<%=path+"/user/study"%> class="a3">学习记录</a>
 			</div>
 			<div class="NavLeftBox">
-				<a href=<%=path+"/user/collection" %> class="a5">我的收藏</a>
+				<a href=<%=path+"/user/collection"%> class="a5">我的收藏</a>
 			</div>
-			<div class="NavLeftBox">
+			<div class="NavLeftBox twoNav">
 				<a href=<%=path+"/user/requestFeedback" %> class="a6">求职反馈</a>
 			</div>
 			<div class="NavLeftBox">
@@ -116,32 +122,25 @@
 	</div>
 	<div class="perRightcon">
 		<div class="commonTit">
-			<h1>用户管理</h1>
+			<h1 class="fl">学习记录</h1>
 		</div>
-		<div class="TopNotice">
-			<span>修改手机号</span>
-		</div>
-		<div class="AccountMain">
-			<div class="Steps">
-				<div class="Step Step1 Active" style="width:50%">
-					<span class="StepNo">1</span>
-					<span class="StepName">确认手机号</span>
-				</div>
-				<div class="Step Step3 Active" style="width:50%">
-					<span class="StepNo"></span>
-					<span class="StepName">完成</span>
+		<div class="clear"></div>
+		<div class="zph">
+			<div class="zph_1"><a href="javascript:void()"><img src=<%=path+"/images/1.png" %> /></a></div>
+			<div class="zph_2">
+				<p class="TopTitle">
+					<a href="javascript:void()">12月20日周三龙观人才大市场综合类招聘会</a>
+				</p>
+				<div class="ContentMain">
+					<p><span>举办时间：</span> <span>&nbsp;08:00-13:00 周三 </span></p>
+					<p><span>举办场馆：</span> <span>深圳市龙观人才大市场</span></p>
+					<p><span>具体地点：</span> <span>深圳市龙华新区龙华汽车站三楼</span></p>
 				</div>
 			</div>
-			<div class="clear"></div>
-			<div class="CertifInfo">
-				<div class="SucTitle">恭喜您，您的手机号设置成功！</div>
-				<p class="yx">您的手机号：<%=phone%></p>
-				<div class="clear"></div>
-				<div class="emailrz">
-					<a id="sure" href=<%=path+"/user/personal"%>>确定</a>
-				</div>
-			</div>
-		   </div>
+		</div>
+	</div>
+	<div class="adBox" >
+		<img style="margin-left: 15px;margin-top: 10px" src=<%=path+"/images/perAD.jpg" %> width="814" />
 	</div>
 </div>
 <div class="clear"></div>
@@ -149,7 +148,7 @@
 	<p><a href="">**人才</a>旗下<img src=<%=path+"/images/logo_foot.gif" %> />蝶飞人才网版权所有 <a href="">京ICP证0******9号</a><a href=""></a>本网站所有招聘信息，未经书面授权不得转载 投诉电话：400-8**-****</p>
 </div>
 <script>
-
+	//JavaScript代码区域
 </script>
 </body>
 </html>
