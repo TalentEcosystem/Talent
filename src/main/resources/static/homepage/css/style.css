@@ -21,18 +21,18 @@ body{ width:100%; min-width:1200px; margin:0 auto; font-size:12px; font-family:"
 
 /*loginDiv*/
 .loginDiv{ width:1100px; height:54px; margin:0 auto;padding: 11px 0 10px 0;}
-.loginDiv .loginL{ float:left; width:210px; height:41px;margin-top: 9px;margin-left: 8px;}
-.loginDiv .loginAddress{ float:left; width:64px;height: 30px;border-left: 1px #535353 solid;margin-top: 12px;color: #535353;}
-.loginDiv .loginAddress .add1{width:80px;height: 30px;line-height: 30px;}
-.loginDiv .loginAddress .add1 .city{margin-left: 12px;font-family: "微软雅黑";font-size: 16px;}
+.loginDiv .loginL{ float:left; width:200px; height:41px;margin-top: 9px;margin-left: 8px;}
+.loginDiv .loginAddress{ float:left; width:140px;height: 35px;border-left: 1px #535353 solid;margin-top: 12px;color: #535353;}
+.loginDiv .loginAddress .add1{width:120px;height: 35px;line-height: 35px;}
+.loginDiv .loginAddress .add1 .city{margin-left: 10px;font-family: "微软雅黑";font-size: 16px;margin-bottom: 20px;width: 80px;float: left}
 /*.loginDiv .loginAddress .add1 span.span2{ display:inline-block;width: 14px;height: 7px;background: url(../images/bg_home.png) -9px -51px no-repeat;}*/
-.loginDiv .loginC{ float:left; width:504px;height: 54px;margin-left: 50px; background: url(../../images/bg_home.png) -10px -643px no-repeat;}
+.loginDiv .loginC{ float:left; width:504px;height: 54px;margin-left: 0px; background: url(../../images/bg_home.png) -10px -643px no-repeat;}
 .loginDiv .loginC input[type='text']{ font-size: 14px;color: #9F9F9F;margin-left: 41px;width: 300px; margin-top:20px; border:0; outline:none}
-.loginDiv .loginR{ float:left; margin-left: 40px;margin-top: 5px; max-width:200px}
+.loginDiv .loginR{ float:left; margin-left: 20px;margin-top: 5px; max-width:200px}
 
 /*menuDiv*/
 .menuDiv{width: 1100px; margin:0 auto;margin: 10px auto 8px auto;height: 34px;border-bottom: #FA5F00 solid 2px;}
-.menuDiv a{color: #000;display: block;float: left;cursor: pointer;width: 123px;text-align: center;font-size: 16px;height: 34px;line-height: 36px;font-family: "微软雅黑";}
+.menuDiv a{color: #000;display: block;float: left;cursor: pointer;width: 123px;text-align: center;font-size: 20px;height: 34px;line-height: 36px;font-family: "微软雅黑";margin-left: 70px}
 .menuDiv a.onnav{background-color: #FA5F00;color: #FFF; }
 .menuDiv a.mobile{background: url(../images/home_mobile.gif) -2px -2px no-repeat;width: 99px;height: 30px;padding-left: 10px;}
 

@@ -193,4 +193,39 @@ public class AdminService
 	@Transactional
 	public void addSchoolAccount(Admin admin){ adminMapper.addSchoolAccount(admin);}
 
+	@Transactional
+	public List<Know> findAllKnow(){return adminMapper.findAllKnow();}
+
+	@Transactional
+	public List<Chapter> findChapter(Map map){ return adminMapper.findChapter(map);}
+
+	@Transactional
+	public int findCountChapter(Map map){ return adminMapper.findCountChapter(map);}
+
+	@Transactional
+	public void addChapter(Chapter chapter){ adminMapper.addChapter(chapter);}
+
+	@Transactional
+	public void deleteChapter(String chapterid){ adminMapper.deleteChapter(chapterid);}
+
+	@Transactional
+	public void updateChapter(Chapter chapter){ adminMapper.updateChapter(chapter);}
+
+	@Transactional
+	public List<Product> findProduct(Map map){ return adminMapper.findProduct(map);}
+
+	@Transactional
+	public int findCountProduct(Map map){ return adminMapper.findCountProduct(map);}
+
+	@Transactional
+	public void addProduct(Product product){ adminMapper.addProduct(product);}
+
+	@Transactional
+	public void updateProduct(Product product){ adminMapper.updateProduct(product);}
+
+	@Transactional
+	public void openProduct(String productid){ adminMapper.openProduct(productid);}
+
+	@Transactional
+	public void deleteProduct(String productid){ adminMapper.deleteProduct(productid);}
 }

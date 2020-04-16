@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>岗位管理</title>
+	<title>章节管理</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/js/layui/css/layui.css">
 	<script charset="UTF-8" src="${pageContext.request.contextPath}/js/jquery-3.4.1.js"></script>
 	<script charset="UTF-8" src="${pageContext.request.contextPath}/js/layui/layui.js" media="all"></script>
@@ -15,17 +15,21 @@
 <input type="hidden" id="path" value="<%=path%>">
 <!-- 增加搜索条件 -->
 <div class="demoTable" style="margin-top: 10px">
-	&nbsp;&nbsp;<label>行业</label>&nbsp;&nbsp;
-	<select id="industryid" name="industryid" style="height: 35px">
+	&nbsp;&nbsp;<label>知识库</label>&nbsp;&nbsp;
+	<select id="knowledgeid" name="knowledgeid" style="height: 35px">
 		<option value="0">全部</option>
-		<c:if test="${not empty industryList}">
-			<c:forEach items="${industryList}" var="industry">
-				<option value="${industry.industryid}">${industry.indname}</option>
+		<c:if test="${not empty chapKnowList}">
+			<c:forEach items="${chapKnowList}" var="know">
+				<option value="${know.knowledgeid}">${know.knowname}</option>
 			</c:forEach>
 		</c:if>
 	</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<button class="layui-btn" data-type="reload">搜索</button>
-	<button class="layui-btn" data-type="add">添加岗位</button>
+	<label>章节名称</label>&nbsp;&nbsp;
+	<div class="layui-input-inline">
+		<input type="text" name="chname" id="chname" required lay-verify="required" placeholder="请输入企业名称" autocomplete="off" class="layui-input">
+	</div>
+	<button class="layui-btn" data-type="reload">查询</button>
+	<button class="layui-btn" data-type="add">增加</button>
 </div>
 
 <table id="demo" lay-filter="test"></table>
@@ -48,13 +52,15 @@
 		table.render({
 			elem: '#demo'
 			,height: 500
-			,url: path+"/admin/postManager" //数据接口
+			,url: path+"/admin/chapterManager" //数据接口
 			,page: true //开启分页
 			,id: 'demotable'
 			,cols: [[ //表头
 				{field: 'zizeng', title: '序号', width:100, sort: true, fixed: 'left',templet:'#zizeng'}
-				,{field: 'postname', title: '岗位名称', width:200}
-				,{field: 'indname', title: '上级行业', width:200}
+				,{field: 'knowname', title: '所属知识库', width:150}
+				,{field: 'chname', title: '章节名称', width:150}
+				,{field: 'chintro', title: '章节描述', width:400}
+				,{field: 'chaptime', title: '学习课时', width:100}
 				,{field: 'right', title: '操作', width:200, align:'center', toolbar:'#barDemo'}
 			]]
 		});
@@ -63,22 +69,25 @@
 			if(type == 'reload'){
 				//执行重载
 				table.reload('demotable', {
-					url: path+"/admin/postManager" ,//数据接口
+					url: path+"/admin/chapterManager" ,//数据接口
 					page: {
 						curr: 1 //重新从第 1 页开始
 					}
 					,
 					where: {
-						industryid: $("#industryid").val(),
+						knowledgeid: $("#knowledgeid").val(),
+						chname: $("#chname").val()
 					}
 				});
 			}else if(type == 'add'){
 				layer.open({
-					type: 2,
-					title:"新增岗位",
-					area: ['500px', '300px'],
-					content: path + "/admin/path/AddPost" //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-					, success: function (layero, index) {
+					type:2
+					,title:"新增章节"
+					,area:['600px','400px']
+					,shadeClose: true //点击遮罩不会关闭
+					,content:path+"/admin/path/AddChapter"
+					,success : function(layero, index) {
+
 					}
 				});
 			}
@@ -87,30 +96,35 @@
 		table.on('tool(test)',function(obj){
 			var data = obj.data;
 			if(obj.event === 'update'){
-				layer.open({
-					type:2
-					,title:"修改岗位"
-					,area:['500px','300px']
-					,shadeClose: true //点击遮罩不会关闭
-					,content:path+"/admin/path/UpdatePost"
-					,success : function(layero, index) {
-						var body = layer.getChildFrame('body',index);
-						body.find("#postname").val(data.postname);
-						body.find("#industryid").val(data.industryid);
-						body.find("#postid").val(data.postid);
-					}
+				layer.confirm('确认修改章节?', function(index){
+					layer.close(index);
+					//向服务端发送修改指令
+					layer.open({
+						type:2
+						,title:"修改"
+						,area:['600px','400px']
+						,shadeClose: true //点击遮罩不会关闭
+						,content:path+"/admin/path/UpdateChapter"
+						,success : function(layero, index) {
+							var body = layer.getChildFrame('body',index);
+							body.find("#knowledgeid").val(data.knowledgeid);
+							body.find("#chname").val(data.chname);
+							body.find("#chintro").val(data.chintro);
+							body.find("#chaptime").val(data.chaptime);
+							body.find("#chapterid").val(data.chapterid);
+						}
+					});
 				});
 			}else if(obj.event === 'delete'){ //删除
-				layer.confirm('确认删除岗位?', function(index){
-					// obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+				layer.confirm('确认删除章节?', function(index){
 					layer.close(index);
-					//向服务端发送启用指令
+					//向服务端发送删除指令
 					$.ajax({
-						url: path + "/admin/deletePost?postid="+data.postid,
+						url: path + "/admin/deleteChapter?chapterid="+data.chapterid,
 						async: true,
 						type: "POST",
 						success: function (msg) {
-							layer.msg(msg);
+							alert(msg);
 							window.location.reload();
 						},
 						error: function () {

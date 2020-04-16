@@ -42,7 +42,7 @@
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="${pageContext.request.contextPath}">退了</a></li>
+            <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin">退出</a></li>
         </ul>
     </div>
 

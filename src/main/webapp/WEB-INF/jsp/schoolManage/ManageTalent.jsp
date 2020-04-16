@@ -67,7 +67,7 @@
 				{field: 'zizeng', title: '序列', width:80, sort: true, fixed: 'left',templet:'#zizeng'},
 				{field: 'uid', title: 'id', width:120,hide: true },
 				{field: 'uaccount', title: '账号', width:120},
-				{field: 'rename', title: '姓名', width:80},
+				{field: 'resname', title: '姓名', width:80},
 				{field: 'chname', title: '当前学习', width:120},
 				{field: 'professname', title: '专业', width:80},
 				{
@@ -93,9 +93,27 @@
 				});
 			}else if(type=='flush'){
 				window.location.reload();
+			}else if(type=='inputfild'){
+				layer.open({
+					type: 2,
+					area: ['1000px', '100%'],
+					btn: ['返回'],
+					btn1: function(index, layero){
+						layer.close(index);
+					},
+					content: 'inputResumePage' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					,success: function(layero, index){
+						layer.msg('导出人才');
+					}
+				});
 			}
 
 		});
+		var resume="";
+		var social1="";
+		var aducation1="";
+		var social2="";
+		var aducation2="";
 		table.on('tool(demotest)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
 			console.log("按钮的方法");
 			var data = obj.data //获得当前行数据
@@ -110,7 +128,19 @@
 					data:'uid='+uid,
 					dataType:'text',
 					success:function(msg){
-						layer.msg(msg);
+						 resume=JSON.parse(msg.split("%")[0]);
+						 if(JSON.parse(msg.split("%")[1]).length!=0){
+							 if(JSON.parse(msg.split("%")[1]).length>1){
+								 social2=JSON.parse(msg.split("%")[1])[1];
+							 }
+							 social1=JSON.parse(msg.split("%")[1])[0];
+						 }
+						 if(JSON.parse(msg.split("%")[2]).length!=0){
+							 aducation1=JSON.parse(msg.split("%")[2])[0];
+							 if(JSON.parse(msg.split("%")[2]).length>1){
+								 aducation2=JSON.parse(msg.split("%")[2])[1];
+							 }
+						 }
 					},error:function (err) {
 						console.log(err);
 					}
@@ -124,7 +154,44 @@
 					},
 					content: 'useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					,success: function(layero, index){
-						layer.msg('查看用户简历');
+						console.log(social1.length);
+						var form=layui.form;
+						var body=layer.getChildFrame('body',index);
+						body.find("input[id=resname1]").val(resume.resname);
+						body.find("input[id=schoolname1]").val(resume.schoolname);
+						body.find("input[id=rebirth1]").val(resume.rebirth);
+						body.find("input[id=professname]").val(resume.professname);
+						body.find("input[id=repol]").val(resume.repol);
+						body.find("input[id=degreename]").val(resume.degreename);
+						body.find("input[id=retel]").val(resume.retel);
+						body.find("input[id=readdress]").val(resume.readdress);
+						body.find("input[id=hidepic]").val(resume.repic);
+						body.find("input[id=reskill12]").val(resume.reskill);
+						body.find("input[id=reeva12]").val(resume.reeva);
+						if(social1!=null){
+							body.find("input[id=socialtime1]").val(social1.socialtime);
+							body.find("input[id=company1]").val(social1.company);
+							body.find("input[id=content1]").val(social1.content);
+							if(social2!=null){
+								body.find("input[id=socialtime2]").val(social2.socialtime);
+								body.find("input[id=company2]").val(social2.company);
+								body.find("input[id=content2]").val(social2.content);
+							}
+						}
+						if(aducation1!=null){
+							body.find("input[id=adtime1]").val(aducation1.adtime);
+							body.find("input[id=sname1]").val(aducation1.sname);
+							body.find("input[id=profession1]").val(aducation1.profession);
+							if(aducation2!=null){
+								body.find("input[id=adtime2]").val(aducation2.adtime);
+								body.find("input[id=sname2]").val(aducation2.sname);
+								body.find("input[id=profession2]").val(aducation2.profession);
+							}
+						}
+
+
+
+
 					}
 				});
 
