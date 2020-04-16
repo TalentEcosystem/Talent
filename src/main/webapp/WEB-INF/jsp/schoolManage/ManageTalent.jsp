@@ -138,7 +138,7 @@
 						 if(JSON.parse(msg.split("%")[2]).length!=0){
 							 aducation1=JSON.parse(msg.split("%")[2])[0];
 							 if(JSON.parse(msg.split("%")[2]).length>1){
-								 aducation1=JSON.parse(msg.split("%")[2])[1];
+								 aducation2=JSON.parse(msg.split("%")[2])[1];
 							 }
 						 }
 					},error:function (err) {
