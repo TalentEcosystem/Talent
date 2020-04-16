@@ -64,7 +64,7 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
                    and p.positionaddress like '%${cond.sypositionaddress}%'
                 </if>
                 <if test=" cond.sypositionname != null and cond.sypositionname != ''  ">
-                    and p.positionname like '%${cond.sypositionname}%'
+                    and CONCAT(p.positionname,c.companyname) like '%${cond.sypositionname}%'
                 </if>
                 <if test=" cond.industryid != null and cond.industryid != ''  ">
                     and p.industryid = '${cond.industryid}'

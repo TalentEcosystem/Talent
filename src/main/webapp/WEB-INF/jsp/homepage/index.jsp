@@ -108,126 +108,6 @@
 			margin-left: 120px;
 			float: left;
 		}
-		.in .pic1 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in .pic2 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in .pic3 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in .pic4 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in .pic5 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in .pic6 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in .pic7 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in .pic8 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in .pic9 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in .pic10 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in .pic11 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in .pic12 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
 		.in .pic13 {
 			display: block;
 			background-color:#dbdbdb;
@@ -238,16 +118,7 @@
 			margin-left: 50px;
 			float: left;
 		}
-		.in .pic14 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
+
 		.childss {
 			width: 150px;
 			height: 200px;
@@ -383,136 +254,7 @@
 			margin-left: 50px;
 			float: left;
 		}
-		.in1 .pic21 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic31 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic41 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic51 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic61 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic71 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic81 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic91 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic101 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic111 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic121 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic131 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in1 .pic141 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
+
 		.childss1 {
 			width: 150px;
 			height: 0px;
@@ -632,146 +374,7 @@
 			margin-left: 120px;
 			float: left;
 		}
-		.in2 .pic12 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic22 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic32 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic42 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic52 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic62 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic72 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic82 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic92 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic102 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/homepage/image/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic112 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic122 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic132 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in2 .pic142 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
+
 		.childss2 {
 			width: 150px;
 			height: 0px;
@@ -967,6 +570,7 @@
 			float: left;
 			font-size: 20px;
 			text-align: right;
+
 		}
 
 	</style>
@@ -1006,7 +610,7 @@
 			width:180px;
 			font-size: 15px;
 			background: #F6F6F6 ;
-			line-height: 32px;
+			line-height: 33px;
 			text-align: center;
 			position: relative;
 			z-index:99999
@@ -1023,6 +627,27 @@
 		.ll{
 			cursor: pointer;
 		}
+		.log ul{
+			position: absolute;
+			width:160px;
+			display: none;
+			background: #F6F6F6;
+			text-align: center;
+			margin: 32px 100px ;
+			font-size: 18px;
+
+		}
+		.reg ul{
+			 position: absolute;
+			 width:160px;
+			 display: none;
+			 background: #F6F6F6;
+			 text-align: center;
+			 margin: 32px 150px ;
+			 font-size: 18px;
+		 }
+
+
 	</style>
 </head>
 <body>
@@ -1038,12 +663,14 @@
 		</div>
 		<div class="topRight  ">
 
+
 			<c:if test="${not empty uname}">
 				<div class="nav" style="background-color: #F6F6F6">
-        <span>
+					<span>
+			<img src="${pageContext.request.contextPath}/${uhead}" style="width: 32px;height: 30px; border-radius: 25px;">
 	        <a href="">${uname}</a>
             <ul>
-	            <a href="" ><li class="ll">个人中心</li></a>
+	            <a href="${pageContext.request.contextPath}/user/personal"  ><li class="ll">个人中心</li></a>
 	             <a href=""><li class="ll">我的简历</li></a>
 	             <a href=""><li class="ll">求职反馈</li></a>
 	             <a href=""><li class="ll">收藏</li></a>
@@ -1053,12 +680,44 @@
 				</div>
 			</c:if>
 
+
+
 			<c:if test="${empty uname}">
-				<a href="${pageContext.request.contextPath}/user/login" class="lo" style="width: 200px" >用户登录</a>
+				<div class="log">
+
+				<a href="${pageContext.request.contextPath}/user/login" class="lo" style="width: 200px" >登录</a>
+				<ul>
+					<a href=""><li class="ll">用户登录</li></a>
+					<a href=""><li class="ll">企业登录</li></a>
+				</ul>
+
+				</div>
+					<div class="reg">
 				<a href="" class="lo" style="width: 80px;text-align: center" >注册</a>
-			</c:if>
+						<ul>
+							<a href=""><li class="ll">用户注册</li></a>
+							<a href=""><li class="ll">企业注册</li></a>
+						</ul>
+					</div>
+
+
+					</c:if>
 			<%--			鼠标经过 用户名 显示  离开隐藏--%>
 			<script type="text/javascript">
+
+				//hover接收2个参数,第一个是经过,第二个是离开;
+				$('.log').hover(function(){
+					$(this).find('ul').show();
+				},function(){
+					$(this).find('ul').hide();
+				});
+				//hover接收2个参数,第一个是经过,第二个是离开;
+				$('.reg').hover(function(){
+					$(this).find('ul').show();
+				},function(){
+					$(this).find('ul').hide();
+				});
+
 				//hover接收2个参数,第一个是经过,第二个是离开;
 				$('.nav span').hover(function(){
 					$(this).find('ul').show();
@@ -1070,6 +729,19 @@
 				},function(){
 					$(this).removeClass("li_yysy")
 				});
+				$('.log  li').hover(function(){
+					$(this).addClass("li_yysy")
+				},function(){
+					$(this).removeClass("li_yysy")
+				});
+				$('.reg  li').hover(function(){
+					$(this).addClass("li_yysy")
+				},function(){
+					$(this).removeClass("li_yysy")
+				});
+
+
+
 
 			</script>
 
@@ -1223,10 +895,24 @@
 
 			<div class="add1">
 				<!-- 在输入框加入id -->
-				<input type="text" name="sypositionaddress" class="cityinput layui-input city"  id="citySelect" placeholder="输入城市" autocomplete="off">
+				<img src="${pageContext.request.contextPath}/images/dsfw.png" style="float: left;margin: 10px 0 0 10px">
+				<input type="text" name="sypositionaddress" class="cityinput layui-input city"  id="citySelect" placeholder="输入城市" autocomplete="off" >
 				<%--			城市选择器--%>
 				<script type="text/javascript">
-					var test=new Vcity.CitySelector({input:'citySelect'});
+					//接口定位方法
+					function showLocation(data) {
+						var test=new Vcity.CitySelector({input:'citySelect'});
+						if($("#citySelect").val() == ""){
+							//获取当前的城市
+							$("#citySelect").val(data.content.address_detail.city)
+						}else {
+
+						}
+
+					}
+					//百度地图api接口
+					$.getScript("http://api.map.baidu.com/location/ip?ak=TeBonvj42xc1nTC1Cqg0BV5wONn0uAhI&callback=showLocation");
+
 				</script>
 			</div>
 		</div>
@@ -1243,14 +929,15 @@
 		<img src="${pageContext.request.contextPath}/images/spirit_40.png" />
 	</div>
 </div>
-<div class="menuDiv">
-	<a href="${pageContext.request.contextPath}/user/homepage" >首页</a>
+<div class="menuDiv" >
+	<a href="${pageContext.request.contextPath}/user/index" >首页</a>
 	<a href="${pageContext.request.contextPath}/HomePage/searchJob" >找工作</a>
 	<a href="meetingJob.html" >技术成长</a>
 	<a href="jobnews.html">就业资讯</a>
-	<a href="download.html">个人中心</a>
-	<a href="" >登录</a>
-	<a href="helpJob.html">注册</a>
+	<a href="${pageContext.request.contextPath}/user/personal" id="personal">个人中心</a>
+<%--	<a href="" >登录</a>--%>
+<%--	<a href="helpJob.html">注册</a>--%>
+
 	<%--	鼠标经过标题栏显示颜色改变--%>
 	<script>
 		$('.menuDiv  a').hover(function(){
