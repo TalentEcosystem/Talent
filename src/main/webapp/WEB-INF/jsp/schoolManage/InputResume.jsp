@@ -23,6 +23,7 @@
 	<label class="layui-form-label">模板下载：</label>
 	<div class="layui-input-block">
 		<button class="layui-btn"  id="download" >下载模板</button>
+		<p style="color: grey;font-size: small">请详细的填写模板，若没有相关信息填暂无</p>
 	</div>
 </div>
 <div class="layui-form-item">
@@ -38,38 +39,40 @@
 </div>
 <script>
 $("#download").click(function () {
-	var resouseCode='jianli';
-	var suffix='xlsx';
-	loadTemplate(resouseCode, suffix);
+	window.location.href= "${pageContext.request.contextPath}/school/downLoadExcel";
+
+});
+layui.use(['upload','jquery'], function(){
+	var upload = layui.upload,
+		$=layui.jquery;
+
+	//执行实例
+	var uploadInst = upload.render({
+		elem: '#test8' //绑定元素
+		,url: '${pageContext.request.contextPath}/school/uploadTalent' //上传接口
+		,auto: false
+		,async:false
+		,accept: 'file'
+		,multiple:false
+		,exts: 'xls|excel|xlsx' //只允许上传Excel文件
+		,bindAction: '#test9'
+		// ,before: function(obj){
+		// 	this.data = {
+		// 		bookName: $("#hideBookName").val()
+		//
+		// 	}
+		// }
+		,done: function(res){
+			//上传完毕回调
+			layer.msg("导入成功");
+		}
+		,error: function(){
+			//请求异常回调
+			alert("上传失败！");
+		}
+	});
 });
 
-/**
- * 模板下载
- */
-function loadTemplate(resouseCode, suffix) {
-	//文件名+后缀名
-	var fileName = resouseCode + '.' + suffix;
-
-	var templatediv = '<div id="templatediv" style="width:400px;height:200px;">'+
-		'</div>';
-	if (window.top.$('#templatediv').length == 0) {
-		window.top.$("body").append(templatediv);
-	}
-	var templistspan = "";
-	templistspan +='<div class="download-list">';
-	templistspan += '<span><a id="downloadBtn" href="${pageContext.request.contextPath}/school/fileHandle/downloadtemplate.do?fileName='+encodeURI(encodeURI(fileName))+'">'+fileName+'</a></span>';
-	templistspan +='</div>';
-	window.top.$("#templatediv").html(templistspan);
-	//弹出下载模板
-	window.top.$("#templatediv").dialog({
-		title:"下载模板",
-		modal:true
-	});
-	//下载模板完了就关闭对话框
-	window.top.$("#downloadBtn").click(function() {
-		window.top.$("#templatediv").dialog('close');
-	});
-}
 </script>
 </body>
 </html>

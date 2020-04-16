@@ -1,11 +1,16 @@
 package com.great.talent.entity;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
  * @author 小和
  * 简历的实体类
  */
+@Component(value = "Resume")
+@Scope("prototype")
 public class Resume
 {
 	private int resumeid;

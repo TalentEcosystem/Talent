@@ -166,6 +166,7 @@
 			,url: '${pageContext.request.contextPath}/school/fillOutResume' //上传接口
 			,auto:false
 			,async:false
+			,multiple:false
 			,accept:'file'
 			,method:'POST'
 			,enctype:'multipart/form-data'
