@@ -1,21 +1,24 @@
 package com.great.talent.controller;
 
-import com.great.talent.entity.Company;
-import com.great.talent.entity.Position;
-import com.great.talent.entity.SerachJob;
+import com.great.talent.entity.*;
 import com.great.talent.service.HomePageService;
 import com.great.talent.util.Diagis;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.annotation.Resources;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -61,17 +64,50 @@ public class HomePageController
 		return Str;
 	}
 	/**
-	 *得到课程和讲师的信息
+	 *得到产品包和讲师的信息
 	 * @return String
 	 */
 	@RequestMapping(value = "/getStudyNews" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
 	public String getStudyNews( )
 	{
-		System.out.println("getStudyNews被调用了~~~~~~~~~~~~~~~~···");
+
 		String Str=homePageService.getStudyNews();
+		System.out.println("nishi="+Str);
 		return Str;
 	}
+
+	/**
+	 *得到产品包和讲师的播放前四信息
+	 * @return String
+	 */
+	@RequestMapping(value = "/getClassCurri" ,produces = "text/html;charset=UTF-8" )
+	@ResponseBody
+	public String getClassCurri( )
+	{
+
+		String Str=homePageService.getClassCurri();
+		System.out.println(Str);
+		return Str;
+	}
+
+	/**
+	 *得到课程的详细信息的信息跳转课程详情页
+	 * @return String
+	 */
+	@RequestMapping(value = "/getCourseDetails" ,produces = "text/html;charset=UTF-8" )
+	public String getCourseDetails(String proid,HttpServletRequest request)
+	{
+
+		Product product=homePageService.getCourseDetails(proid);
+
+		request.getSession().setAttribute("product",product);
+
+		System.out.println("产品包的信息="+product);
+		return "homepage/CourseDetails";
+	}
+
+
 	/**
 	 *得到企业信息（首页轮播）
 	 * @return String
@@ -191,6 +227,47 @@ public class HomePageController
 		System.out.println("getJobTableNews"+srt);
 		return srt;
 	}
+
+
+	/**
+	 *得到企业信息（企业的简介）
+	 * @return String
+	 */
+	@RequestMapping(value = "/getTechnologyArea" ,produces = "text/html;charset=UTF-8" )
+
+	public String getTechnologyArea(HttpServletRequest request , String curPage1,  String did)
+	{
+		System.out.println("页数="+curPage1);
+		Integer curPage = null;
+		Integer domainid=null;
+		LinkedHashMap<String, Object> cond = new LinkedHashMap<>();
+		BackUserPageBean<Know> myReportByPage=null;
+		if (curPage1 != null)
+		{
+			curPage = (Integer.valueOf(curPage1)-1)*9;
+		} else
+		{
+			curPage = 0;
+		}
+		if(did != null&&did != ""){
+			domainid=Integer.valueOf(did);
+			request.setAttribute("domainid",domainid);
+		}
+		System.out.println("ccc"+curPage);
+//		cond.put("curPage",(curPage1-1)*9);
+//		cond.put("pageSize",9);
+		List<Know> knowList=homePageService.getDomain();
+		myReportByPage = homePageService.getTechnologyArea(cond, curPage, 9,domainid);
+
+//		HttpSession session = request.getSession();
+//		BigDecimal userid = (BigDecimal) session.getAttribute("userid");
+		request.setAttribute("knowList",knowList);
+		System.out.println("linhyi="+knowList);
+		System.out.println("myReportByPage====" + myReportByPage);
+		request.setAttribute("myReportByPage",myReportByPage);
+		return "homepage/TechnologyArea";
+	}
+
 
 
 

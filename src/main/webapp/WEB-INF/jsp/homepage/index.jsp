@@ -19,561 +19,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/layui/layui.js" charset="UTF-8"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/homepage/css/cityselect.css" charset="UTF-8">
 	<script type="text/javascript" src="${pageContext.request.contextPath}/homepage/js/cityselect.js" charset="UTF-8"></script>
-
-
-	<style>
-		.product-cont .lunbo{
-			width: 100%;
-			height: 150px;
-			margin-top: -330px;
-			margin-bottom: -100px;
-			background-color: #f0f0f0;
-		}
-		.product-cont  .cont-title {
-			font-size: 20px;
-			font-weight: 700;
-			line-height: 50px;
-			color: #00a346;
-			padding-bottom: 50px;
-			position: relative;
-			text-align: center;
-			padding-top: 50px;
-		}
-		.product-cont{
-			color: #00a346;
-			cursor: pointer;
-			padding-bottom: 0px;
-		}
-		.product-cont .cont-title:after {
-			content: '';
-			display: block;
-			width: 38px;
-			border-bottom: 1px solid #000;
-			position: absolute;
-			left: calc(10% - 19px);
-			/*margin-top: 10px;*/
-		}
-		.product-cont .product .product-list > p{
-			text-align: left;
-			font-size: 14px;
-			line-height: 24px;
-			color: #707070;
-			padding: 0 30px;
-		}
-		.product-cont .product .product-list > p.product-text{
-			margin-bottom: 20px;
-		}
-		.in img {
-			width: 50px;
-			height: 50px;
-			float: left;
-			padding-left: 100px;
-		}
-		.in {
-			width:5500px;
-			padding-left: 1000px;
-			position: absolute;
-		}
-		.out {
-			width: 1000px;
-			height: 170px;
-			overflow:hidden;
-			margin: 0px auto;
-			position: relative;
-
-		}
-		.left {
-			width: 30px;
-			height: 58px;
-			left: 240px;
-			background-image: url(<%=path+"/images/left.png"%>);
-			position: absolute;
-			margin-top: -140px;
-		}
-		.right {
-			width: 30px;
-			height: 58px;
-			background-image: url(<%=path+"/images/right.png"%>);
-			position: absolute;
-			right: 240px;
-			margin-top: -140px;
-		}
-		.in .pic {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-
-			background-size: 150px 150px;
-			margin-left: 120px;
-			float: left;
-		}
-		.in .pic13 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/1.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-
-		.childss {
-			width: 150px;
-			height: 200px;
-			background-color:#000000;
-			opacity: 0;
-			color: #ffffff;
-			font-weight: normal;
-			/*position: absolute;*/
-			bottom: 270px;
-		}
-		.childss p{
-			font-family: Segoe UI;
-			font-size: 13px;
-			padding: 0px 0 0 10px;
-			margin-right: 28px;
-			font-weight: normal;
-			color: #ffffff;
-			padding-bottom: 20px;
-		}
-		.childss i{
-			font-family: Segoe UI;
-			font-size: 12px;
-			padding: 0px 0px 0 10px;
-			font-weight: normal;
-
-			color: white;
-			padding-bottom: 20px;
-		}
-		.childss b{
-			font-family: Segoe UI;
-			font-size: 15px;
-			padding: 0px 0px 0px 10px;
-			font-weight: normal;
-			color: white;
-			margin-bottom: 20px;
-		}
-
-	</style>
-	<style>
-		.product-cont1 .lunbo1{
-			width: 100%;
-			height: 150px;
-			margin-top: -330px;
-			margin-bottom: -100px;
-			background-color: #f0f0f0;
-		}
-		.product-cont1  .cont-title1 {
-			font-size: 20px;
-			font-weight: 700;
-			line-height: 50px;
-			color: #00a346;
-			padding-bottom: 50px;
-			position: relative;
-			text-align: center;
-			padding-top: 50px;
-		}
-		.product-cont1{
-			color: #00a346;
-			cursor: pointer;
-			padding-bottom: 0px;
-		}
-		.product-cont1 .cont-title1:after {
-			content: '';
-			display: block;
-			width: 38px;
-			border-bottom: 1px solid #000;
-			position: absolute;
-			left: calc(10% - 19px);
-			/*margin-top: 10px;*/
-		}
-		.product-cont1 .product1 .product-list1 > p{
-			text-align: left;
-			font-size: 14px;
-			line-height: 24px;
-			color: #707070;
-			padding: 0 30px;
-		}
-		.product-cont1 .product1 .product-list1 > p.product-text1{
-			margin-bottom: 20px;
-		}
-		.in1 img {
-			width: 50px;
-			height: 50px;
-			float: left;
-			padding-left: 100px;
-		}
-		.in1 {
-			width:5500px;
-			padding-left: 1000px;
-			position: absolute;
-		}
-		.out1 {
-			width: 1000px;
-			height: 170px;
-			overflow:hidden;
-			margin: 0px auto;
-			position: relative;
-
-		}
-		.left1 {
-			width: 30px;
-			height: 58px;
-			left: 240px;
-			background-image: url(<%=path+"/images/left.png"%>);
-			position: absolute;
-			margin-top: -140px;
-		}
-		.right1 {
-			width: 30px;
-			height: 58px;
-			background-image: url(<%=path+"/images/right.png"%>);
-			position: absolute;
-			right: 240px;
-			margin-top: -140px;
-		}
-		.in1 .pic0 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-		;
-			background-size: 150px 150px;
-			margin-left: 120px;
-			float: left;
-		}
-		.in1 .pic11 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/2.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-
-		.childss1 {
-			width: 150px;
-			height: 0px;
-			background-color:#000000;
-			opacity: 0;
-			color: #ffffff;
-			font-size: 20px;
-			font-weight: normal;
-			position: absolute;
-			bottom: 250px;
-		}
-		.childss1 p{
-			font-family: Segoe UI;
-			font-size: 15px;
-			padding: 0px 0 0 10px;
-			margin-right: 28px;
-			font-weight: normal;
-			float: left;
-			color: #ffffff;
-			padding-bottom: 20px;
-		}
-		.childss1 i{
-			font-family: Segoe UI;
-			font-size: 15px;
-			padding: 0px 15px 0 0;
-			font-weight: normal;
-			float: right;
-			color: white;
-			padding-bottom: 20px;
-		}
-
-	</style>
-	<style>
-		.product-cont2 .lunbo2{
-			width: 100%;
-			height: 150px;
-			margin-top: -330px;
-			margin-bottom: -100px;
-			background-color: #f0f0f0;
-		}
-		.product-cont2  .cont-title2 {
-			font-size: 20px;
-			font-weight: 700;
-			line-height: 50px;
-			color: #00a346;
-			padding-bottom: 50px;
-			position: relative;
-			text-align: center;
-			padding-top: 50px;
-		}
-		.product-cont2{
-			color: #00a346;
-			cursor: pointer;
-			padding-bottom: 0px;
-		}
-		.product-cont2 .cont-title2:after {
-			content: '';
-			display: block;
-			width: 38px;
-			border-bottom: 1px solid #000;
-			position: absolute;
-			left: calc(10% - 19px);
-			/*margin-top: 10px;*/
-		}
-		.product-cont2 .product2 .product-list2 > p{
-			text-align: left;
-			font-size: 14px;
-			line-height: 24px;
-			color: #707070;
-			padding: 0 30px;
-		}
-		.product-cont2 .product2 .product-list2 > p.product-text2{
-			margin-bottom: 20px;
-		}
-		.in2 img {
-			width: 50px;
-			height: 50px;
-			float: left;
-			padding-left: 100px;
-		}
-		.in2 {
-			width:5500px;
-			padding-left: 1000px;
-			position: absolute;
-		}
-		.out2 {
-			width: 1000px;
-			height: 170px;
-			overflow:hidden;
-			margin: 0px auto;
-			position: relative;
-
-		}
-		.left2 {
-			width: 30px;
-			height: 58px;
-			left: 240px;
-			background-image: url(<%=path+"/images/left.png"%>);
-			position: absolute;
-			margin-top: -140px;
-		}
-		.right2 {
-			width: 30px;
-			height: 58px;
-			background-image: url(<%=path+"/images/right.png"%>);
-			position: absolute;
-			right: 240px;
-			margin-top: -140px;
-		}
-		.in2 .pic02 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/3.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 120px;
-			float: left;
-		}
-
-		.childss2 {
-			width: 150px;
-			height: 0px;
-			background-color:#000000;
-			opacity: 0;
-			color: #ffffff;
-			font-size: 15px;
-			font-weight: normal;
-			position: absolute;
-			bottom: 250px;
-		}
-		.childss2 p{
-			font-family: Segoe UI;
-			font-size: 15px;
-			padding: 0px 0 0 10px;
-			margin-right: 28px;
-			font-weight: normal;
-			float: left;
-			color: #ffffff;
-			padding-bottom: 20px;
-		}
-		.childss2 i{
-			font-family: Segoe UI;
-			font-size: 15px;
-			padding: 0px 5px 0 0;
-			font-weight: normal;
-
-			color: white;
-			padding-bottom: 20px;
-		}
-
-	</style>
-	<style>
-		.product-cont3 .lunbo3{
-			width: 100%;
-			height: 150px;
-			margin-top: -330px;
-			margin-bottom: -100px;
-			background-color: #f0f0f0;
-		}
-		.product-cont3  .cont-title3 {
-			font-size: 20px;
-			font-weight: 700;
-			line-height: 50px;
-			color: #00a346;
-			padding-bottom: 50px;
-			position: relative;
-			text-align: center;
-			padding-top: 50px;
-		}
-		.product-cont3{
-			color: #00a346;
-			cursor: pointer;
-			padding-bottom: 0px;
-		}
-		.product-cont3 .cont-title3:after {
-			content: '';
-			display: block;
-			width: 38px;
-			border-bottom: 1px solid #000;
-			position: absolute;
-			left: calc(10% - 19px);
-			/*margin-top: 10px;*/
-		}
-		.product-cont3 .product3 .product-list3 > p{
-			text-align: left;
-			font-size: 14px;
-			line-height: 24px;
-			color: #707070;
-			padding: 0 30px;
-		}
-		.product-cont3 .product3 .product-list3 > p.product-text3{
-			margin-bottom: 20px;
-		}
-		.in3 img {
-			width: 50px;
-			height: 50px;
-			float: left;
-			padding-left: 100px;
-		}
-		.in3 {
-			width:5500px;
-			padding-left: 1000px;
-			position: absolute;
-		}
-		.out3 {
-			width: 800px;
-			height: 170px;
-			overflow:hidden;
-			margin: 0px auto;
-			position: relative;
-
-		}
-
-		.in3 .pic03 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/jiuye.jpg"%>) ;
-			background-size: 150px 150px;
-			margin-left: 120px;
-			float: left;
-		}
-		.in3 .pic13 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/qiuzhi.jpg"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic23 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/gangwei.jpg"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.in3 .pic33 {
-			display: block;
-			background-color:#dbdbdb;
-			width: 150px;
-			height: 369px;
-			background-image: url(<%=path+"/images/tat.png"%>) ;
-			background-size: 150px 150px;
-			margin-left: 50px;
-			float: left;
-		}
-		.childss3 {
-			width: 150px;
-			height: 0px;
-			background-color:#000000;
-			opacity: 0;
-			color: #ffffff;
-			font-size: 20px;
-			font-weight: normal;
-			position: absolute;
-			bottom: 250px;
-		}
-		.childss3 p{
-			font-family: Segoe UI;
-			font-size: 15px;
-			padding: 0px 0 0 10px;
-			margin-right: 28px;
-			font-weight: normal;
-			float: left;
-			color: #ffffff;
-			padding-bottom: 20px;
-		}
-		.childss3 i{
-			font-family: Segoe UI;
-			font-size: 15px;
-			padding: 0px 15px 0 0;
-			font-weight: normal;
-			float: right;
-			color: white;
-			padding-bottom: 20px;
-		}
-
-	</style>
-
-	<%--	公告css--%>
-	<style type="text/css">
-		#container_small_tip{
-			background:#EBEEF7;
-			position:relative;
-			overflow:hidden;
-			width:690px;
-			height:36px;
-			float: right;
-			line-height:36px;
-			/* margin:100px; */
-		}
-
-		#content_small_tip{
-			position:absolute;
-			font-size: 18px;
-			left:0;
-			top:0;
-			white-space:nowrap;
-			color: #EBEEF7;/*与背景颜色相同，先隐藏，需要时再变颜色*/
-		}
-		.lo{
-			width: 140px;
-			height: 32px;
-			background-color: #F6F6F6;
-			float: left;
-			font-size: 20px;
-			text-align: right;
-
-		}
-
-	</style>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/homepage/css/index.css" charset="UTF-8">
 
 	<style>
 		.spa{
@@ -598,7 +44,7 @@
 
 	</style>
 
-	<%--	个人鼠标悬停显示--%>
+	<%--个人鼠标悬停显示--%>
 	<style type="text/css">
 		/*样式初始化*/
 		body, dl, dd, h1, h2, h3, h4, h5, h6, p, form,ul,ol{margin:0; padding:0;}
@@ -680,8 +126,6 @@
 				</div>
 			</c:if>
 
-
-
 			<c:if test="${empty uname}">
 				<div class="log">
 
@@ -699,10 +143,8 @@
 							<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseRegister"><li class="ll">企业注册</li></a>
 						</ul>
 					</div>
-
-
 					</c:if>
-			<%--			鼠标经过 用户名 显示  离开隐藏--%>
+			<%--鼠标经过 用户名 显示  离开隐藏--%>
 			<script type="text/javascript">
 
 				//hover接收2个参数,第一个是经过,第二个是离开;
@@ -718,7 +160,7 @@
 					$(this).find('ul').hide();
 				});
 
-				//hover接收2个参数,第一个是经过,第二个是离开;
+				//经过用户名按钮背景变色
 				$('.nav span').hover(function(){
 					$(this).find('ul').show();
 				},function(){
@@ -729,23 +171,21 @@
 				},function(){
 					$(this).removeClass("li_yysy")
 				});
+				//经过登录按钮背景变色
 				$('.log  li').hover(function(){
 					$(this).addClass("li_yysy")
 				},function(){
 					$(this).removeClass("li_yysy")
 				});
+				//经过注册按钮背景变色
 				$('.reg  li').hover(function(){
 					$(this).addClass("li_yysy")
 				},function(){
 					$(this).removeClass("li_yysy")
 				});
 
-
-
-
 			</script>
-
-			<%--			webscoket 实时发消息给客户端--%>
+			<%--webscoket 实时发消息给客户端--%>
 			<script type="text/javascript">
 
 
@@ -832,7 +272,7 @@
 					return currentdate;
 				}
 			</script>
-			<%--			实现好消息的动画--%>
+			<%--实现好消息的动画--%>
 			<script type="text/javascript">
 				(function ($) {
 					$.fn.extend({
@@ -890,6 +330,7 @@
 		<img src="${pageContext.request.contextPath}/images/LOGO.png" />
 		<img src="${pageContext.request.contextPath}/images/view_logo40.png" />
 	</div>
+
 	<form method="post" class="layui-form" action="${pageContext.request.contextPath}/HomePage/getJobNews">
 		<div class="loginAddress">
 
@@ -897,7 +338,8 @@
 				<!-- 在输入框加入id -->
 				<img src="${pageContext.request.contextPath}/images/dsfw.png" style="float: left;margin: 10px 0 0 10px">
 				<input type="text" name="sypositionaddress" class="cityinput layui-input city"  id="citySelect" placeholder="输入城市" autocomplete="off" >
-				<%--			城市选择器--%>
+
+				<%--城市选择器--%>
 				<script type="text/javascript">
 					//接口定位方法
 					function showLocation(data) {
@@ -922,9 +364,6 @@
 		</div>
 	</form>
 
-
-
-
 	<div class="loginR">
 		<img src="${pageContext.request.contextPath}/images/spirit_40.png" />
 	</div>
@@ -932,13 +371,13 @@
 <div class="menuDiv" >
 	<a href="${pageContext.request.contextPath}/user/index" >首页</a>
 	<a href="${pageContext.request.contextPath}/HomePage/searchJob" >找工作</a>
-	<a href="meetingJob.html" >技术成长</a>
+	<a href="${pageContext.request.contextPath}/HomePage/getTechnologyArea?curPage=1" >技术成长</a>
 	<a href="jobnews.html">就业资讯</a>
 	<a href="${pageContext.request.contextPath}/user/personal" id="personal">个人中心</a>
 <%--	<a href="" >登录</a>--%>
 <%--	<a href="helpJob.html">注册</a>--%>
 
-	<%--	鼠标经过标题栏显示颜色改变--%>
+	<%--鼠标经过标题栏显示颜色改变--%>
 	<script>
 		$('.menuDiv  a').hover(function(){
 			$(this).addClass("onnav");
@@ -949,6 +388,8 @@
 		});
 
 	</script>
+
+
 </div>
 <div class="BodyMain">
 	<div class="mainTop">
@@ -1017,7 +458,7 @@
 		<%--			</ul>--%>
 		<%--		</div>--%>
 		<div class="mainTopR">
-			<%--	中间轮播广告--%>
+			<%--中间轮播广告--%>
 			<div class="ads">
 				<!--            <div class="floatL" id="left"></div>-->
 				<div class="adBox0">
@@ -1029,7 +470,9 @@
 							<a href="${pageContext.request.contextPath}/user/homePage" style="background:url(<%=path+"/images/30.jpg"%>);background-size: cover;background-repeat: no-repeat;background-position: center;"></a>
 						</div>
 					</div>
-					<script>
+
+<%--layUI的图片轮播--%>
+<script>
 						layui.use(['carousel', 'form'], function() {
 							var carousel = layui.carousel
 								, form = layui.form;
@@ -1079,69 +522,18 @@
                     </span>
 				</div>
 
-				<%--				<div class="erweima">--%>
-				<%--					<div class="close"></div>--%>
-				<%--					<div class="ewmimg"><img src="images/showqrcode.jpg" /></div>--%>
-				<%--					<div class="ewmtxt">使用微信扫描上方二维码登录</div>--%>
-				<%--				</div>--%>
-				<%--				<div class="logintop">--%>
-				<%--					<div class="loginC loginA select">--%>
-				<%--						<div class="smlogin"></div>--%>
-				<%--						<span>个人登录</span>--%>
-				<%--					</div>--%>
-				<%--					<div class="loginC loginB">--%>
-				<%--						<span>企业登录</span>--%>
-				<%--					</div>--%>
-				<%--				</div>--%>
-				<%--				<div class="loginmain">--%>
-				<%--					<div class="ContentA">--%>
-				<%--						<div class="txtInput"><input name="" type="text" placeholder="请输入用户名"/></div>--%>
-				<%--						<div class="txtInput"><input name="" type="text" placeholder="请输入密码"/></div>--%>
-				<%--						<div class="txtbtn">--%>
-				<%--							<div style="float:left">--%>
-				<%--								<span class="chebox yes"></span>--%>
-				<%--								<a href="javascript:void()" class="a1">接受用户协议</a>--%>
-				<%--								<br /><div class="clear"></div>--%>
-				<%--								<span class="chebox yes"></span>--%>
-				<%--								<span>记住我</span>--%>
-				<%--								<a href="javascript:void()" class="a2">忘记密码</a>--%>
-				<%--							</div>--%>
-				<%--							<input name="" type="button" class="lobtn" value="登  录"/>--%>
-				<%--						</div>--%>
-				<%--						<div class="zcbox">--%>
-				<%--							<div class="zc1"></div>--%>
-				<%--							<div class="zc2">--%>
-				<%--								<a href="javascript:void()" class="a1">一分钟填写简历</a>--%>
-				<%--								<a href="javascript:void()" class="a2">注册</a>--%>
-				<%--							</div>--%>
-				<%--						</div>--%>
-				<%--					</div>--%>
-				<%--					<div class="ContentB">--%>
-				<%--						<div class="qybox1">--%>
-				<%--							<a href="javascript:void()">企业登录</a>--%>
-				<%--							<a href="javascript:void()">企业注册</a>--%>
-				<%--						</div>--%>
-				<%--						<div class="qybox2">--%>
-				<%--							<p>注册后可<b>免费</b>升级为<b>普通会员</b><br>不花钱也能完成中低职位的招聘</p>--%>
-				<%--						</div>--%>
-				<%--						<div class="qybox3">--%>
-				<%--							<div class="l">企业服务热线<br><b>400-800-8*8*</b></div>--%>
-				<%--							<div class="r"></div>--%>
-				<%--						</div>--%>
-				<%--					</div>--%>
-				<%--				</div>--%>
 			</div>
 			<div class="clear"></div>
-			<%--	专区模块--%>
+<%--专区模块--%>
 			<div class="tabs">
 				<ul id="tab">
-					<li class="current" style="display: block">技术成长专区</li>
+					<li class="current" style="display: block">课程学习区</li>
 					<li >高校专区</li>
 					<li  >名企专区</li>
 					<li  style="float: right;width: 242px;">成果展示</li>
 				</ul>
 				<div id="content">
-					<%--					左右按钮的隐藏显示--%>
+					<%--左右按钮图标的隐藏显示--%>
 					<script>
 						var conrent=document.getElementById("content");
 						var left=document.getElementsByClassName("left").item(0);
@@ -1178,7 +570,7 @@
 							<div class="scene2">
 								<div class="out" >
 									<div class="in clearFix" id="study" style="left: -1100px;">
-										<%--					课程轮播--%>
+										<%--课程轮播--%>
 									</div>
 									<div class="shodow"></div>
 								</div>
@@ -1187,6 +579,7 @@
 							<div class="right" style="display: none"></div>
 							<div class="lunbo"></div>
 						</div>
+					<%--得到课程轮播的图片信息--%>
 						<script>
 							var path=$("#path").val();
 							$.ajax({
@@ -1199,7 +592,7 @@
 									console.log(study);
 									for (var i = 0; i <study.length ; i++) {
 										$("#study").append(
-											"<a href='' class='pic' style='background-image: url("+path+"/"+study[i].propic+" )'>"+
+											"<a href='"+path+"/HomePage/getCourseDetails?proid="+study[i].productid+"' class='pic' style='background-image: url("+path+"/"+study[i].propic+" )'>"+
 											"<div class='childss test' >"+
 											"<div style='width: 150px;height: 100px'>"+
 											study[i].proname+"<br>"+
@@ -1208,7 +601,6 @@
 											"</div>"+
 											"</div>"+
 											"</a>"
-
 										);
 										$(".pic").mouseenter(function () {
 											$(".test").stop().animate({ 'height': '80px', opacity: '0.5' },"slow");
@@ -1225,13 +617,10 @@
 								}
 
 							});
-
-
 						</script>
+					<%--js实现图片的轮播--%>
 						<script>
-
 							//轮播
-
 							var out = document.getElementsByClassName("out").item(0);
 							var left = document.getElementsByClassName("left").item(0);
 							var right = document.getElementsByClassName("right").item(0);
@@ -1309,7 +698,7 @@
 							<div class="scene2">
 								<div class="out1">
 									<div class="in1 clearFix1" id="school" style="left: -1100px;">
-										<%--									高校轮播--%>
+										<%--高校轮播--%>
 									</div>
 									<div class="shodow1"></div>
 								</div>
@@ -1318,6 +707,7 @@
 							<div class="right1"></div>
 							<div class="lunbo1"></div>
 						</div>
+						<%--得到高校轮播的图片信息--%>
 						<script>
 							var path=$("#path").val();
 							$.ajax({
@@ -1357,8 +747,8 @@
 
 
 						</script>
+						<%--js实现div图片的轮播--%>
 						<script>
-
 							//轮播
 							var out1 = document.getElementsByClassName("out1").item(0);
 							var left1 = document.getElementsByClassName("left1").item(0);
@@ -1539,7 +929,7 @@
 							<div class="scene2">
 								<div class="out2">
 									<div class="in2 clearFix2" id="company" style="left: -1100px;">
-										<%--									企业就业轮播--%>
+										<%--企业信息轮播--%>
 									</div>
 									<div class="shodow2"></div>
 								</div>
@@ -1548,6 +938,7 @@
 							<div class="right2"></div>
 							<div class="lunbo2"></div>
 						</div>
+						<%--得到企业信息--%>
 						<script>
 							var path=$("#path").val();
 							$.ajax({
@@ -1584,6 +975,7 @@
 							});
 
 						</script>
+						<%--js实现企业图片的轮播--%>
 						<script>
 
 							//轮播
@@ -1787,8 +1179,8 @@
 					</ul>
 
 					<ul style="display:none;">
+					<%--得到成果展示专区的信息--%>
 						<script>
-
 							var path=$("#path").val();
 							$.ajax({
 								type: "post",
@@ -1855,6 +1247,7 @@
 
 							<div class="lunbo3"></div>
 						</div>
+					<%--鼠标移进一出显示详细信息--%>
 						<script>
 							// 鼠标移进一出
 							$(document).ready(function () {

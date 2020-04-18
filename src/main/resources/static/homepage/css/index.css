@@ -1,0 +1,572 @@
+/*轮播*/
+.product-cont .lunbo{
+    width: 100%;
+    height: 150px;
+    margin-top: -330px;
+    margin-bottom: -100px;
+    background-color: #f0f0f0;
+}
+.product-cont  .cont-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 50px;
+    color: #00a346;
+    padding-bottom: 50px;
+    position: relative;
+    text-align: center;
+    padding-top: 50px;
+}
+.product-cont{
+    color: #00a346;
+    cursor: pointer;
+    padding-bottom: 0px;
+}
+.product-cont .cont-title:after {
+    content: '';
+    display: block;
+    width: 38px;
+    border-bottom: 1px solid #000;
+    position: absolute;
+    left: calc(10% - 19px);
+    /*margin-top: 10px;*/
+}
+.product-cont .product .product-list > p{
+    text-align: left;
+    font-size: 14px;
+    line-height: 24px;
+    color: #707070;
+    padding: 0 30px;
+}
+.product-cont .product .product-list > p.product-text{
+    margin-bottom: 20px;
+}
+.in img {
+    width: 50px;
+    height: 50px;
+    float: left;
+    padding-left: 100px;
+}
+.in {
+    width:5500px;
+    padding-left: 1000px;
+    position: absolute;
+}
+.out {
+    width: 1000px;
+    height: 170px;
+    overflow:hidden;
+    margin: 0px auto;
+    position: relative;
+
+}
+.left {
+    width: 30px;
+    height: 58px;
+    left: 240px;
+    background-image: url("../../images/left.png");
+    position: absolute;
+    margin-top: -140px;
+}
+.right {
+    width: 30px;
+    height: 58px;
+    background-image: url("../../images/right.png");
+    position: absolute;
+    right: 240px;
+    margin-top: -140px;
+}
+.in .pic {
+    display: block;
+    background-color:#dbdbdb;
+    width: 150px;
+    height: 369px;
+
+    background-size: 150px 150px;
+    margin-left: 120px;
+    float: left;
+}
+.in .pic13 {
+    display: block;
+    background-color:#dbdbdb;
+    width: 150px;
+    height: 369px;
+    background-image: url("../../images/1.png") ;
+    background-size: 150px 150px;
+    margin-left: 50px;
+    float: left;
+}
+
+.childss {
+    width: 150px;
+    height: 200px;
+    background-color:#000000;
+    opacity: 0;
+    color: #ffffff;
+    font-weight: normal;
+    /*position: absolute;*/
+    bottom: 270px;
+}
+.childss p{
+    font-family: Segoe UI;
+    font-size: 13px;
+    padding: 0px 0 0 10px;
+    margin-right: 28px;
+    font-weight: normal;
+    color: #ffffff;
+    padding-bottom: 20px;
+}
+.childss i{
+    font-family: Segoe UI;
+    font-size: 12px;
+    padding: 0px 0px 0 10px;
+    font-weight: normal;
+
+    color: white;
+    padding-bottom: 20px;
+}
+.childss b{
+    font-family: Segoe UI;
+    font-size: 15px;
+    padding: 0px 0px 0px 10px;
+    font-weight: normal;
+    color: white;
+    margin-bottom: 20px;
+}
+
+
+
+/*轮播*/
+.product-cont1 .lunbo1{
+    width: 100%;
+    height: 150px;
+    margin-top: -330px;
+    margin-bottom: -100px;
+    background-color: #f0f0f0;
+}
+.product-cont1  .cont-title1 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 50px;
+    color: #00a346;
+    padding-bottom: 50px;
+    position: relative;
+    text-align: center;
+    padding-top: 50px;
+}
+.product-cont1{
+    color: #00a346;
+    cursor: pointer;
+    padding-bottom: 0px;
+}
+.product-cont1 .cont-title1:after {
+    content: '';
+    display: block;
+    width: 38px;
+    border-bottom: 1px solid #000;
+    position: absolute;
+    left: calc(10% - 19px);
+    /*margin-top: 10px;*/
+}
+.product-cont1 .product1 .product-list1 > p{
+    text-align: left;
+    font-size: 14px;
+    line-height: 24px;
+    color: #707070;
+    padding: 0 30px;
+}
+.product-cont1 .product1 .product-list1 > p.product-text1{
+    margin-bottom: 20px;
+}
+.in1 img {
+    width: 50px;
+    height: 50px;
+    float: left;
+    padding-left: 100px;
+}
+.in1 {
+    width:5500px;
+    padding-left: 1000px;
+    position: absolute;
+}
+.out1 {
+    width: 1000px;
+    height: 170px;
+    overflow:hidden;
+    margin: 0px auto;
+    position: relative;
+
+}
+.left1 {
+    width: 30px;
+    height: 58px;
+    left: 240px;
+    background-image: url("../../images/left.png");
+    position: absolute;
+    margin-top: -140px;
+}
+.right1 {
+    width: 30px;
+    height: 58px;
+    background-image: url("../../images/right.png");
+    position: absolute;
+    right: 240px;
+    margin-top: -140px;
+}
+.in1 .pic0 {
+    display: block;
+    background-color:#dbdbdb;
+    width: 150px;
+    height: 369px;
+;
+    background-size: 150px 150px;
+    margin-left: 120px;
+    float: left;
+}
+.in1 .pic11 {
+    display: block;
+    background-color:#dbdbdb;
+    width: 150px;
+    height: 369px;
+    background-image: url("../../images/2.png") ;
+    background-size: 150px 150px;
+    margin-left: 50px;
+    float: left;
+}
+
+.childss1 {
+    width: 150px;
+    height: 0px;
+    background-color:#000000;
+    opacity: 0;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: normal;
+    position: absolute;
+    bottom: 250px;
+}
+.childss1 p{
+    font-family: Segoe UI;
+    font-size: 15px;
+    padding: 0px 0 0 10px;
+    margin-right: 28px;
+    font-weight: normal;
+    float: left;
+    color: #ffffff;
+    padding-bottom: 20px;
+}
+.childss1 i{
+    font-family: Segoe UI;
+    font-size: 15px;
+    padding: 0px 15px 0 0;
+    font-weight: normal;
+    float: right;
+    color: white;
+    padding-bottom: 20px;
+}
+
+
+
+
+
+/*轮播*/
+.product-cont2 .lunbo2{
+    width: 100%;
+    height: 150px;
+    margin-top: -330px;
+    margin-bottom: -100px;
+    background-color: #f0f0f0;
+}
+.product-cont2  .cont-title2 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 50px;
+    color: #00a346;
+    padding-bottom: 50px;
+    position: relative;
+    text-align: center;
+    padding-top: 50px;
+}
+.product-cont2{
+    color: #00a346;
+    cursor: pointer;
+    padding-bottom: 0px;
+}
+.product-cont2 .cont-title2:after {
+    content: '';
+    display: block;
+    width: 38px;
+    border-bottom: 1px solid #000;
+    position: absolute;
+    left: calc(10% - 19px);
+    /*margin-top: 10px;*/
+}
+.product-cont2 .product2 .product-list2 > p{
+    text-align: left;
+    font-size: 14px;
+    line-height: 24px;
+    color: #707070;
+    padding: 0 30px;
+}
+.product-cont2 .product2 .product-list2 > p.product-text2{
+    margin-bottom: 20px;
+}
+.in2 img {
+    width: 50px;
+    height: 50px;
+    float: left;
+    padding-left: 100px;
+}
+.in2 {
+    width:5500px;
+    padding-left: 1000px;
+    position: absolute;
+}
+.out2 {
+    width: 1000px;
+    height: 170px;
+    overflow:hidden;
+    margin: 0px auto;
+    position: relative;
+
+}
+.left2 {
+    width: 30px;
+    height: 58px;
+    left: 240px;
+    background-image: url("../../images/left.png");
+    position: absolute;
+    margin-top: -140px;
+}
+.right2 {
+    width: 30px;
+    height: 58px;
+    background-image: url("../../images/right.png");
+    position: absolute;
+    right: 240px;
+    margin-top: -140px;
+}
+.in2 .pic02 {
+    display: block;
+    background-color:#dbdbdb;
+    width: 150px;
+    height: 369px;
+    background-image: url("../../images/3.png") ;
+    background-size: 150px 150px;
+    margin-left: 120px;
+    float: left;
+}
+
+.childss2 {
+    width: 150px;
+    height: 0px;
+    background-color:#000000;
+    opacity: 0;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: normal;
+    position: absolute;
+    bottom: 250px;
+}
+.childss2 p{
+    font-family: Segoe UI;
+    font-size: 15px;
+    padding: 0px 0 0 10px;
+    margin-right: 28px;
+    font-weight: normal;
+    float: left;
+    color: #ffffff;
+    padding-bottom: 20px;
+}
+.childss2 i{
+    font-family: Segoe UI;
+    font-size: 15px;
+    padding: 0px 5px 0 0;
+    font-weight: normal;
+
+    color: white;
+    padding-bottom: 20px;
+}
+
+
+
+/*轮播*/
+.product-cont3 .lunbo3{
+    width: 100%;
+    height: 150px;
+    margin-top: -330px;
+    margin-bottom: -100px;
+    background-color: #f0f0f0;
+}
+.product-cont3  .cont-title3 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 50px;
+    color: #00a346;
+    padding-bottom: 50px;
+    position: relative;
+    text-align: center;
+    padding-top: 50px;
+}
+.product-cont3{
+    color: #00a346;
+    cursor: pointer;
+    padding-bottom: 0px;
+}
+.product-cont3 .cont-title3:after {
+    content: '';
+    display: block;
+    width: 38px;
+    border-bottom: 1px solid #000;
+    position: absolute;
+    left: calc(10% - 19px);
+    /*margin-top: 10px;*/
+}
+.product-cont3 .product3 .product-list3 > p{
+    text-align: left;
+    font-size: 14px;
+    line-height: 24px;
+    color: #707070;
+    padding: 0 30px;
+}
+.product-cont3 .product3 .product-list3 > p.product-text3{
+    margin-bottom: 20px;
+}
+.in3 img {
+    width: 50px;
+    height: 50px;
+    float: left;
+    padding-left: 100px;
+}
+.in3 {
+    width:5500px;
+    padding-left: 1000px;
+    position: absolute;
+}
+.out3 {
+    width: 800px;
+    height: 170px;
+    overflow:hidden;
+    margin: 0px auto;
+    position: relative;
+
+}
+
+.in3 .pic03 {
+    display: block;
+    background-color:#dbdbdb;
+    width: 150px;
+    height: 369px;
+    background-image: url("../../images/jiuye.jpg") ;
+    background-size: 150px 150px;
+    margin-left: 120px;
+    float: left;
+}
+.in3 .pic13 {
+    display: block;
+    background-color:#dbdbdb;
+    width: 150px;
+    height: 369px;
+    background-image: url("../../images/qiuzhi.jpg") ;
+    background-size: 150px 150px;
+    margin-left: 50px;
+    float: left;
+}
+.in3 .pic23 {
+    display: block;
+    background-color:#dbdbdb;
+    width: 150px;
+    height: 369px;
+    background-image: url("../../images/gangwei.jpg") ;
+    background-size: 150px 150px;
+    margin-left: 50px;
+    float: left;
+}
+.in3 .pic33 {
+    display: block;
+    background-color:#dbdbdb;
+    width: 150px;
+    height: 369px;
+    background-image: url("../../images/tat.png") ;
+    background-size: 150px 150px;
+    margin-left: 50px;
+    float: left;
+}
+.childss3 {
+    width: 150px;
+    height: 0px;
+    background-color:#000000;
+    opacity: 0;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: normal;
+    position: absolute;
+    bottom: 250px;
+}
+.childss3 p{
+    font-family: Segoe UI;
+    font-size: 15px;
+    padding: 0px 0 0 10px;
+    margin-right: 28px;
+    font-weight: normal;
+    float: left;
+    color: #ffffff;
+    padding-bottom: 20px;
+}
+.childss3 i{
+    font-family: Segoe UI;
+    font-size: 15px;
+    padding: 0px 15px 0 0;
+    font-weight: normal;
+    float: right;
+    color: white;
+    padding-bottom: 20px;
+}
+
+/*公告css*/
+#container_small_tip{
+    background:#EBEEF7;
+    position:relative;
+    overflow:hidden;
+    width:690px;
+    height:36px;
+    float: right;
+    line-height:36px;
+    /* margin:100px; */
+}
+#content_small_tip{
+    position:absolute;
+    font-size: 18px;
+    left:0;
+    top:0;
+    white-space:nowrap;
+    color: #EBEEF7;/*与背景颜色相同，先隐藏，需要时再变颜色*/
+}
+.lo{
+    width: 140px;
+    height: 32px;
+    background-color: #F6F6F6;
+    float: left;
+    font-size: 20px;
+    text-align: right;
+
+}
+
+
+
+.spa{
+    float: left;
+    width: 250px;
+    height: 68px;
+    line-height: 68px !important;
+    margin:5px 5px 0 20px;
+    /*line-height: 50px;*/
+    /*text-align: center;*/
+    /*background-color: pink;*/
+    background-color: #6EC7FF;
+    font-size: 16px;
+    text-align: center;
+}
+.spa b,.spa i{
+    font-weight: bold;
+    font-style: normal;
+}

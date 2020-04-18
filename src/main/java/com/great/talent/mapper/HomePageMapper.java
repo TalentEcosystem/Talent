@@ -25,10 +25,27 @@ public interface HomePageMapper
 
 
 	/**
-	 * 得到课程讲师信息
+	 * 得到产品包和讲师的信息前8信息
 	 * @return List<Study>
 	 */
 	public List<Study> getStudyNews();
+
+	/**
+	 *  产品包和讲师信息前四名课程
+	 * @return List<Study>
+	 */
+	public List<Study> getClassCurri();
+	/**
+	 * 得到产品包和章节的详细信息
+	 * @return Product
+	 */
+	public Product getCourseDetails(Integer proid);
+
+	/**
+	 * 得到产品包相对应的章节的详细信息
+	 * @return List<Chapter>
+	 */
+	public List<Chapter> getChapter(Integer proid);
 
 	/**
 	 * 得到企业发布的招聘信息
@@ -95,6 +112,28 @@ public interface HomePageMapper
 	 * @return int
 	 */
 	public int getComJobNewsCount(Integer cid);
+
+
+	/**
+	 *的到知识库的信息
+	 * @param map
+	 * @return int
+	 */
+	public List<Know> getTechnologyArea(Map map,Integer curPage,Integer pageSize,Integer domainid);
+
+	/**
+	 *得到知识库的条数
+	 * @param map
+	 * @return int
+	 */
+	public int getTechnologyAreaCount(Map map,Integer curPage,Integer pageSize,Integer domainid);
+
+	/**
+	 * 得到领域的信息
+	 * @return
+	 */
+	public List<Know> getDomain();
+
 
 
 }

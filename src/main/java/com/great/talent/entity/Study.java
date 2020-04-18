@@ -5,15 +5,18 @@ public class Study
 
 
 	/**
-	 * 课程名
+	 * 产品包id
+	 * 产品包名
 	 * 图片路径
 	 * 课程路径
 	 *播放量
 	 * 讲师
 	 */
+	private int productid;
 	private String proname;
 	private String propic;
 	private String prourl;
+	private String period;
 	private int procount;
 	private String teachername;
 
@@ -21,13 +24,14 @@ public class Study
 	{
 	}
 
-	public Study(String proname, String propic, String prourl, int procount, String teachername)
+	public int getProductid()
 	{
-		this.proname = proname;
-		this.propic = propic;
-		this.prourl = prourl;
-		this.procount = procount;
-		this.teachername = teachername;
+		return productid;
+	}
+
+	public void setProductid(int productid)
+	{
+		this.productid = productid;
 	}
 
 	public String getProname()
@@ -70,6 +74,16 @@ public class Study
 		this.procount = procount;
 	}
 
+	public String getPeriod()
+	{
+		return period;
+	}
+
+	public void setPeriod(String period)
+	{
+		this.period = period;
+	}
+
 	public String getTeachername()
 	{
 		return teachername;
@@ -83,6 +97,6 @@ public class Study
 	@Override
 	public String toString()
 	{
-		return "Study{" + "proname='" + proname + '\'' + ", propic='" + propic + '\'' + ", prourl='" + prourl + '\'' + ", procount=" + procount + ", teachername='" + teachername + '\'' + '}';
+		return "Study{" + "productid=" + productid + ", proname='" + proname + '\'' + ", propic='" + propic + '\'' + ", prourl='" + prourl + '\'' + ", period='" + period + '\'' + ", procount=" + procount + ", teachername='" + teachername + '\'' + '}';
 	}
 }

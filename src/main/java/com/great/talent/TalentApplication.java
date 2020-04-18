@@ -18,7 +18,8 @@ public class TalentApplication
 	}
 
 	@Bean
-	public ServerEndpointExporter serverEndpointExporter() {
+	public ServerEndpointExporter serverEndpointExporter()
+	{
 		return new ServerEndpointExporter();
 	}
 

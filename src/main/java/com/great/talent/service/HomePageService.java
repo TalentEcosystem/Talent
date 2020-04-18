@@ -43,7 +43,7 @@ public class HomePageService
 		return Str;
 	}
 	/**
-	 * 得到学校的信息
+	 * 得到产品包和讲师的信息
 	 * @return
 	 */
 	public String getStudyNews(){
@@ -52,6 +52,28 @@ public class HomePageService
 		String Str=gson.toJson(studyList);
 
 		return Str;
+	}
+	/**
+	 * 得到产品包和讲师的播放前四的信息信息
+	 * @return
+	 */
+	public String getClassCurri(){
+
+		List<Study> studyList=homePageMapper.getClassCurri();
+		String Str=gson.toJson(studyList);
+
+		return Str;
+	}
+	/**
+	 * 得到产品包和课程的详细信息
+	 * @return
+	 */
+	public Product getCourseDetails(String pid){
+		Integer proid=Integer.valueOf(pid);
+		Product product=homePageMapper.getCourseDetails(proid);
+		List<Chapter> chapterList=homePageMapper.getChapter(proid);
+		product.setDate(chapterList);
+		return product;
 	}
 
 	/**
@@ -161,6 +183,32 @@ public class HomePageService
 		dataTable.setData(serachJobList);
 		String roleStr=gson.toJson(dataTable);
 		return roleStr;
+	}
+	/**
+	 * 企业招聘信息的条数
+	 * @param map
+	 * @return int
+	 */
+	public BackUserPageBean<Know> getTechnologyArea(Map map,Integer curPage,Integer pageSize,Integer domainid){
+
+//		List<Know> knowList=homePageMapper.getTechnologyArea(map);
+		Integer totalRerords = null;
+		List<Know> my_reports=null;
+		totalRerords=homePageMapper.getTechnologyAreaCount(map,curPage,pageSize,domainid);
+		my_reports=homePageMapper.getTechnologyArea(map,curPage,pageSize,domainid);
+		BackUserPageBean<Know> myReportBackUserPageBean=new BackUserPageBean<Know>(curPage,totalRerords,pageSize);
+		myReportBackUserPageBean.setList(my_reports);
+		return myReportBackUserPageBean;
+
+	}
+	/**
+	 * 得到领域的信息
+	 * @return
+	 */
+	public List<Know> getDomain(){
+
+		List<Know> knowList=homePageMapper.getDomain();
+		return knowList;
 	}
 
 
