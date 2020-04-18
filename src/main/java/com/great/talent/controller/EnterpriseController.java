@@ -762,8 +762,39 @@ public class EnterpriseController {
             diagis.setCode(0);
             diagis.setMsg("");
             diagis.setCount((Integer) map.get("count"));
-            diagis.setData((List<Interview>) map.get("screenList"));
+            diagis.setData((List<Resume>) map.get("screenList"));
             ResponseUtils.outJson(response, diagis);
+        }
+    }
+
+    @RequestMapping("/findPositionName")
+    public ModelAndView findPositionName(HttpServletRequest request){
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        List<Position> positionList = enterpriseService.findPositionName(admin.getAid());
+        mv.addObject("positionList",positionList);
+        mv.setViewName("Enterprise/CompanyInvitation");
+        return mv;
+    }
+    /**
+     * 筛选简历公司邀请面试
+     * @param interview
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/addInterviews")
+    @ResponseBody
+    public void addInterviews(Interview interview,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (interview != null){
+            interview.setIntertime(new Date());
+            interview.setCheck("已查看");
+            interview.setInvate("已邀请");
+            int flag = enterpriseService.addInterViews(interview);
+            if (flag > 0){
+                response.getWriter().print("success");
+            }
+        }else{
+            response.getWriter().print("error");
         }
     }
 }

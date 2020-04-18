@@ -71,4 +71,10 @@ public interface SchoolMapper
 
 	public int findUserResumeStatusCount(int uid);
 
+	public int userInsertInterview(Interview interview);
+
+	public Resume findResumeTel(String tel);
+
+	public int insertresume(Resume resume);
+
 }

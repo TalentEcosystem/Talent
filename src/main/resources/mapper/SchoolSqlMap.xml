@@ -178,6 +178,7 @@
             sid=#{sid},
             degreeid=#{degreeid},
             professid=#{professid}
+            operationtime = #{operationtime}
         </set>
           where uid=#{uid}
     </update>
@@ -278,6 +279,17 @@
         #{reset}
         )
     </insert>
+    <insert id="userInsertInterview" parameterType="Interview">
+        insert into tbl_interview(
+        uid,
+        professid,
+        intertime
+        )values (
+        #{uid},
+        #{professid},
+       #{intertime}
+        )
+    </insert>
     <select id="findUserResumeStatus" parameterType="int" resultType="ResumeStatus">
         select i.interviewid,p.positionname,c.companyname,c.companynature from tbl_interview i,tbl_position p,tbl_company c,tbl_admin b
         <where>
@@ -298,4 +310,33 @@
             and i.`check`='已查看'
         </where>
     </select>
+    <select id="findResumeTel" parameterType="java.lang.String" resultType="Resume">
+        select * from tbl_resume
+        <where>
+            retel=#{tel}
+        </where>
+    </select>
+    <insert id="insertresume" parameterType="Resume">
+        insert into tbl_resume(
+        resname,
+        rebirth,
+        retel,
+        readdress,
+        repol,
+        reskill,
+        reeva,
+        degreeid,
+        professid
+        )values (
+        #{resname},
+        #{rebirth},
+        #{retel},
+        #{readdress},
+        #{repol},
+        #{reskill},
+        #{reeva},
+        #{degreeid},
+        #{professid}
+        )
+    </insert>
 </mapper>

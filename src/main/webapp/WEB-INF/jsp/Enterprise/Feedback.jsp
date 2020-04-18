@@ -98,8 +98,8 @@
                         }
                         layer.open({
                             type: 2,
-                            area: ['90%', '90%'],
-                            offset: ['10%', '10%'],
+                            area: ['80%', '80%'],
+                            offset: 'auto',
                             btn: ['返回'],
                             btn1: function(index, layero){
                                 layer.close(index);
@@ -107,7 +107,6 @@
                             content: path+'/school/useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
                             ,success: function(layero, index){
                                 console.log(social1);
-                                var form = layui.form;
                                 var body=layer.getChildFrame('body',index);
                                 body.find("input[id=resname1]").empty();
                                 body.find("input[id=schoolname1]").empty();
@@ -167,7 +166,6 @@
                                     body.find("input[id=sname1]").val("");
                                     body.find("input[id=profession1]").val("");
                                 }
-                                form.render()
                             }
                         });
                     },error:function (err) {
