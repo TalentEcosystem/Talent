@@ -3,10 +3,7 @@ package com.great.talent.controller;
 import com.google.gson.Gson;
 import com.great.talent.entity.*;
 import com.great.talent.service.SchoolService;
-import com.great.talent.util.Diagis;
-import com.great.talent.util.ExcelUtil;
-import com.great.talent.util.PhoneCode;
-import com.great.talent.util.ResponseUtils;
+import com.great.talent.util.*;
 import com.sun.net.httpserver.HttpHandler;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Encoder;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -27,10 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author 小和
@@ -398,9 +393,9 @@ public class SchoolController
 	@RequestMapping("/findUserResume")
 	public String findUserResume(HttpServletRequest request)
 	{
-		User user = (User) request.getSession().getAttribute("user");
-
-		userTalent.setUid(user.getUid());
+//		User user = (User) request.getSession().getAttribute("user");
+//		user.getUid();
+		userTalent.setUid(2);
 		Resume resume = schoolService.findUserResume(userTalent);
 		List<Social> socials = schoolService.findUserSocial(userTalent);
 		List<Aducational> aducationals = schoolService.findUserAducation(userTalent);
@@ -412,17 +407,74 @@ public class SchoolController
 	}
 
 	@RequestMapping("/updateResume")
-	public void updateResume(Resume resume, Social social, Aducational aducational, HttpServletRequest request, HttpServletResponse response)
+	public void updateResume(@RequestParam("file")MultipartFile fileaot, Resume resume, Social social, Aducational aducational, HttpServletRequest request, HttpServletResponse response)
 	{
 		User user = (User) request.getSession().getAttribute("user");
-
 		List<Social> social3 = (List<Social>) request.getSession().getAttribute("socials");
 		List<Aducational> aducational3 = (List<Aducational>) request.getSession().getAttribute("aducationals");
 		System.out.println("resume=" + resume);
 		System.out.println("social=" + social + "aducational=" + aducational);
 		System.out.println(social.getCompany().split(",")[0]);
 		System.out.println(aducational.getSname().split(",")[0]);
-		//		System.out.println(social3.get(0).getCompany()+","+aducational3.get(0).getSname());
+		if (fileaot.getOriginalFilename() != null && !"".equals(fileaot.getOriginalFilename().trim()))
+		{
+			String filename = null;
+			// 设置上传图片的保存路径
+			String savePath = request.getServletContext().getRealPath("/images");
+			File file = new File(savePath);
+			// 判断上传文件的保存目录是否存在
+			if (!file.exists() && !file.isDirectory())
+			{
+				System.out.println(savePath + "目录不存在，需要创建");
+				// 创建目录
+				file.mkdir();
+			}
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			// 2、创建一个文件上传解析器
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			upload.setHeaderEncoding("UTF-8");
+			// 3、判断提交上来的数据是否是上传表单的数据
+			if (!ServletFileUpload.isMultipartContent(request))
+			{
+				// 按照传统方式获取数据
+				return;
+			}
+			try
+			{
+				// 報錯 需要過濾文件名稱 java.io.FileNotFoundException:
+				// G:\测试02\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\FaceUp\WEB-INF\images\C:\Users\Ray\Pictures\2.jpeg
+				// (文件名、目录名或卷标语法不正确。)
+
+				filename = fileaot.getOriginalFilename();
+				//				System.out.print(filename);
+				if (fileaot.getOriginalFilename().split("\\.")[1].equals("png") || fileaot.getOriginalFilename().split("\\.")[1].equals("jpg") || fileaot.getOriginalFilename().split("\\.")[1].equals("jpeg"))
+				{
+					resume.setRepic("images/" + fileaot.getOriginalFilename());
+					InputStream in = fileaot.getInputStream();// 獲得上傳的輸入流
+					FileOutputStream out = new FileOutputStream(savePath + "\\" + filename);// 指定web-inf目錄下的images文件
+					request.setAttribute("path", "images" + "\\" + filename);
+					int len = 0;
+					byte buffer[] = new byte[1024];
+					while ((len = in.read(buffer)) > 0)// 每次讀取
+					{
+						out.write(buffer, 0, len);
+					}
+					in.close();
+					out.close();
+				} else
+				{  //必须是图片才能上传否则失败
+					ResponseUtils.outJson(response, "上传必须是图片");
+					return;
+				}
+
+			} catch (FileNotFoundException e)
+			{
+				e.printStackTrace();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		if (social3.size() != 0)
 		{
 			//社会关系更新
@@ -528,7 +580,7 @@ public class SchoolController
 		resume.setOperationtime(new Date());
 		System.out.println(resume);
 		schoolService.updateUserresume(resume);
-		ResponseUtils.outJson(response, "保存成功");
+		ResponseUtils.outJson1(response, "{\"code\":0, \"msg\":\"\", \"data\":{}}");
 	}
 
 	//显示用户端的填写简历页面
@@ -621,6 +673,7 @@ public class SchoolController
 				e.printStackTrace();
 			}
 		}
+
 		resume.setUid(3);
 		int i = schoolService.userInsertResume(resume);
 		//还要插入面试表
@@ -819,7 +872,50 @@ public class SchoolController
 
 		}
 		ResponseUtils.outJson1(response,"{\"code\":0, \"msg\":\"\", \"data\":{}}");
+	}
+	@RequestMapping("/outputTalent")
+	public void outputTalent(HttpServletRequest request,HttpServletResponse response){
+//		String imagePath=request.getServletContext().getRealPath("/images");
+//		//查询当前页
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("resume", resume);
+//		map.put("socials", socials);
+//		map.put("aducations",aducations);
+//		map.put("repic",this.getImageBase(imagePath));
+//		try {
+//			WordUtil.exportMillCertificateWord(request, response, map, "简历", "template.ftl");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
 
 
 	}
+	protected String getImageBase(String src) {
+		if(src==null||src==""){
+			return "";
+		}
+		File file = new File(src);
+		if(!file.exists()) {
+			return "";
+		}
+		InputStream in = null;
+		byte[] data = null;
+		try {
+			in = new FileInputStream(file);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			data = new byte[in.available()];
+			in.read(data);
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		BASE64Encoder encoder = new BASE64Encoder();
+		return encoder.encode(data);
+	}
+
 }

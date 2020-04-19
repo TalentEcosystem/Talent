@@ -99,11 +99,11 @@ table.listtab td .applydiv span{padding-left: 20px; background: url(../../images
 table.listtab td .applydiv span.ygz{background: url(../../images/18.png) 1px 8px no-repeat; color:#FF3300}
 table.listtab tr{ width:100%}
 table.listtab tr.xxdetail.none{ display:none}
-.seachlist .listbottom{width: 1084px; height:28px; margin-top: 20px;padding-bottom: 15px;margin-left: 12px;border-bottom:1px #E0E0E0 dotted;}
+.seachlist .listbottom{width: 1084px; height:28px; margin-top: 20px;padding-bottom: 15px;border-bottom:1px #E0E0E0 dotted;}
 .seachlist .listbottom .lb1{ float:left;height: 26px; line-height:26px}
 .seachlist .listbottom .lb1 input[type='checkbox']{vertical-align: middle;}
-.seachlist .listbottom .lb2{ margin-left:10px; float:left;}
-.seachlist .listbottom .lb2 a{ float:left;width: 80px;height: 26px;display: inline-block;margin-left: 5px;text-align: center;vertical-align: middle;border-radius: 3px;line-height: 26px;font-family: "微软雅黑";font-size: 14px;background: #FFF;border: 1px solid #E2E2E2; color:#434343; margin-left:10px;}
+.seachlist .listbottom .lb2{ float:left;}
+.seachlist .listbottom .lb2 a{ float:left;width: 80px;height: 26px;display: inline-block;margin-left: 5px;text-align: center;vertical-align: middle;border-radius: 3px;line-height: 26px;font-family: "微软雅黑";font-size: 14px;background: #FFF;border: 1px solid #E2E2E2; color:#434343; }
 .seachlist .listbottom .lb2 a.sqzw{color: #FFF;background: #FF6236;border: none;}
 .seachlist .listbottom .lb3{ float:right}
 .fenyediv{color: #313131; padding-top:10px; text-align:center}
@@ -126,7 +126,7 @@ table.listtab tr.xxdetail.none{ display:none}
 .meetingDiv .part1{height: 70px;padding-bottom: 12px;}
 .meetingDiv .part2{background: #FFFCF5;border: 1px #FFD088 solid;font-size: 14px;}
 .meetingDiv .part2 .part2main{padding: 10px 20px;}
-.meetingDiv .part2 .part2main .meetsx{ width:100%; height:40px; border-bottom:1px #E8E6E9 dotted;}
+.meetingDiv .part2 .part2main .meetsx{ width:100%; height:250px; border-bottom:1px #E8E6E9 dotted;}
 .meetingDiv .part2 .part2main .meetsx .meettitle{float:left;text-align:right; width:105px;padding-top:10px;line-height:23px;padding-bottom: 5px; font-weight:bold}
 .meetingDiv .part2 .part2main .meetsx .meetcon{ float:left; width:877px; height:20px;padding-top:10px;line-height:23px;padding-bottom: 5px; overflow:hidden}
 .meetingDiv .part2 .part2main .meetsx .meetcon span{margin-right: 25px;cursor: pointer;padding-left: 25px;display:inline-block }
