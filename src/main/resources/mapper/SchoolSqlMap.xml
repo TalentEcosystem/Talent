@@ -179,6 +179,7 @@
             sid=#{sid},
             degreeid=#{degreeid},
             professid=#{professid}
+            operationtime = #{operationtime}
         </set>
           where uid=#{uid}
     </update>

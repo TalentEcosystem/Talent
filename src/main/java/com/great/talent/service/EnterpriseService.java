@@ -280,11 +280,30 @@ public class EnterpriseService {
     public Map findScreenResumeInfo(Map map){
         Integer count = enterpriseMapper.ScreeningResumeNum(map);
         System.out.println(count);
-        List<Interview> screenList = enterpriseMapper.ScreeningResume(map);
+        List<Resume> screenList = enterpriseMapper.ScreeningResume(map);
         Map map1 = new HashMap();
         map1.put("count",count);
         map1.put("screenList",screenList);
         return map1;
+    }
+
+    /**
+     * 查询发布的岗位
+     * @param aid
+     * @return
+     */
+    public List<Position> findPositionName(Integer aid){
+        return enterpriseMapper.findPositionName(aid);
+    }
+
+    /**
+     * 公司筛选面试邀请面试
+     * @param interview
+     * @return
+     */
+    @Transactional
+    public int addInterViews(Interview interview){
+        return enterpriseMapper.addInterViews(interview);
     }
 }
 

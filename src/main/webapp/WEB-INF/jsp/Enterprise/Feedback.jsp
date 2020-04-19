@@ -96,84 +96,83 @@
                                 console.log(aducation2)
                             }
                         }
+                        layer.open({
+                            type: 2,
+                            area: ['80%', '80%'],
+                            offset: 'auto',
+                            btn: ['返回'],
+                            btn1: function(index, layero){
+                                layer.close(index);
+                            },
+                            content: path+'/school/useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                            ,success: function(layero, index){
+                                console.log(social1);
+                                var body=layer.getChildFrame('body',index);
+                                body.find("input[id=resname1]").empty();
+                                body.find("input[id=schoolname1]").empty();
+                                body.find("input[id=rebirth1]").empty();
+                                body.find("input[id=professname]").empty();
+                                body.find("input[id=repol]").empty();
+                                body.find("input[id=degreename]").empty();
+                                body.find("input[id=retel]").empty();
+                                body.find("input[id=readdress]").empty();
+                                body.find("input[id=hidepic]").empty();
+                                body.find("input[id=reskill12]").empty();
+                                body.find("input[id=reeva12]").empty();
+                                body.find("input[id=resname1]").val(resume.resname);
+                                body.find("input[id=schoolname1]").val(resume.schoolname);
+                                body.find("input[id=rebirth1]").val(resume.rebirth);
+                                body.find("input[id=professname]").val(resume.professname);
+                                body.find("input[id=repol]").val(resume.repol);
+                                body.find("input[id=degreename]").val(resume.degreename);
+                                body.find("input[id=retel]").val(resume.retel);
+                                body.find("input[id=readdress]").val(resume.readdress);
+                                body.find("input[id=hidepic]").val(resume.repic);
+                                body.find("input[id=reskill12]").val(resume.reskill);
+                                body.find("input[id=reeva12]").val(resume.reeva);
+                                if(social1 != " "){
+                                    body.find("input[id=socialtime1]").val(social1.socialtime);
+                                    body.find("input[id=company1]").val(social1.company);
+                                    body.find("input[id=content1]").val(social1.content);
+                                    if(social2 != " "){
+                                        body.find("input[id=socialtime2]").val(social2.socialtime);
+                                        body.find("input[id=company2]").val(social2.company);
+                                        body.find("input[id=content2]").val(social2.content);
+                                    }else{
+                                        body.find("input[id=socialtime2]").val("");
+                                        body.find("input[id=company2]").val("");
+                                        body.find("input[id=content2]").val("");
+                                    }
+                                }else{
+                                    body.find("input[id=socialtime1]").val("");
+                                    body.find("input[id=company1]").val("");
+                                    body.find("input[id=content1]").val("");
+                                }
+                                if(aducation1 != " "){
+                                    body.find("input[id=adtime1]").val(aducation1.adtime);
+                                    body.find("input[id=sname1]").val(aducation1.sname);
+                                    body.find("input[id=profession1]").val(aducation1.profession);
+                                    if(aducation2 != " "){
+                                        body.find("input[id=adtime2]").val(aducation2.adtime);
+                                        body.find("input[id=sname2]").val(aducation2.sname);
+                                        body.find("input[id=profession2]").val(aducation2.profession);
+                                    }else{
+                                        body.find("input[id=adtime2]").val("");
+                                        body.find("input[id=sname2]").val("");
+                                        body.find("input[id=profession2]").val("");
+                                    }
+                                }else{
+                                    body.find("input[id=adtime1]").val("");
+                                    body.find("input[id=sname1]").val("");
+                                    body.find("input[id=profession1]").val("");
+                                }
+                            }
+                        });
                     },error:function (err) {
                         console.log(err);
                     }
                 });
-                layer.open({
-                    type: 2,
-                    area: ['90%', '90%'],
-                    offset: ['10%', '10%'],
-                    btn: ['返回'],
-                    btn1: function(index, layero){
-                        layer.close(index);
-                    },
-                    content: path+'/school/useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-                    ,success: function(layero, index){
-                        console.log(social1);
-                        var form = layui.form;
-                        var body=layer.getChildFrame('body',index);
-                        body.find("input[id=resname1]").empty();
-                        body.find("input[id=schoolname1]").empty();
-                        body.find("input[id=rebirth1]").empty();
-                        body.find("input[id=professname]").empty();
-                        body.find("input[id=repol]").empty();
-                        body.find("input[id=degreename]").empty();
-                        body.find("input[id=retel]").empty();
-                        body.find("input[id=readdress]").empty();
-                        body.find("input[id=hidepic]").empty();
-                        body.find("input[id=reskill12]").empty();
-                        body.find("input[id=reeva12]").empty();
-                        body.find("input[id=resname1]").val(resume.resname);
-                        body.find("input[id=schoolname1]").val(resume.schoolname);
-                        body.find("input[id=rebirth1]").val(resume.rebirth);
-                        body.find("input[id=professname]").val(resume.professname);
-                        body.find("input[id=repol]").val(resume.repol);
-                        body.find("input[id=degreename]").val(resume.degreename);
-                        body.find("input[id=retel]").val(resume.retel);
-                        body.find("input[id=readdress]").val(resume.readdress);
-                        body.find("input[id=hidepic]").val(resume.repic);
-                        body.find("input[id=reskill12]").val(resume.reskill);
-                        body.find("input[id=reeva12]").val(resume.reeva);
-                        if(social1 != " "){
-                            body.find("input[id=socialtime1]").val(social1.socialtime);
-                            body.find("input[id=company1]").val(social1.company);
-                            body.find("input[id=content1]").val(social1.content);
-                            if(social2 != " "){
-                                body.find("input[id=socialtime2]").val(social2.socialtime);
-                                body.find("input[id=company2]").val(social2.company);
-                                body.find("input[id=content2]").val(social2.content);
-                            }else{
-                                body.find("input[id=socialtime2]").val("");
-                                body.find("input[id=company2]").val("");
-                                body.find("input[id=content2]").val("");
-                            }
-                        }else{
-                            body.find("input[id=socialtime1]").val("");
-                            body.find("input[id=company1]").val("");
-                            body.find("input[id=content1]").val("");
-                        }
-                        if(aducation1 != " "){
-                            body.find("input[id=adtime1]").val(aducation1.adtime);
-                            body.find("input[id=sname1]").val(aducation1.sname);
-                            body.find("input[id=profession1]").val(aducation1.profession);
-                            if(aducation2 != " "){
-                                body.find("input[id=adtime2]").val(aducation2.adtime);
-                                body.find("input[id=sname2]").val(aducation2.sname);
-                                body.find("input[id=profession2]").val(aducation2.profession);
-                            }else{
-                                body.find("input[id=adtime2]").val("");
-                                body.find("input[id=sname2]").val("");
-                                body.find("input[id=profession2]").val("");
-                            }
-                        }else{
-                            body.find("input[id=adtime1]").val("");
-                            body.find("input[id=sname1]").val("");
-                            body.find("input[id=profession1]").val("");
-                        }
-                        form.render()
-                    }
-                });
+
             }
             else if (event ==='update'){
                 if (data.interstate ==='未面试'){

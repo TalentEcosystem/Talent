@@ -23,6 +23,7 @@ public class Position {
     private Date positiontime;
     private Integer welfareid;
     private String welname;
+    private String applicantsnum;
 
     public Position() {
     }
@@ -38,6 +39,14 @@ public class Position {
         this.positionaddress = positionaddress;
         this.positioncontent = positioncontent;
         this.positionstate = positionstate;
+    }
+
+    public String getApplicantsnum() {
+        return applicantsnum;
+    }
+
+    public void setApplicantsnum(String applicantsnum) {
+        this.applicantsnum = applicantsnum;
     }
 
     public Integer getWelfareid() {
@@ -224,6 +233,7 @@ public class Position {
                 ", positiontime=" + positiontime +
                 ", welfareid=" + welfareid +
                 ", welname='" + welname + '\'' +
+                ", applicantsnum='" + applicantsnum + '\'' +
                 '}';
     }
 }

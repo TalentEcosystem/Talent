@@ -3,6 +3,7 @@ package com.great.talent.entity;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +33,7 @@ public class Resume
 	private String reexper;
 	private String reeva;
 	private String reset;
+	private Date operationtime;
 	private List<Social> socialList;
 	private List<Aducational> aducationalList;
 
@@ -39,6 +41,13 @@ public class Resume
 	{
 	}
 
+	public Date getOperationtime() {
+		return operationtime;
+	}
+
+	public void setOperationtime(Date operationtime) {
+		this.operationtime = operationtime;
+	}
 	public int getResumeid()
 	{
 		return resumeid;
@@ -250,8 +259,30 @@ public class Resume
 	}
 
 	@Override
-	public String toString()
-	{
-		return "Resume{" + "resumeid=" + resumeid + ", uid=" + uid + ", degreeid=" + degreeid + ", sid=" + sid + ", professid=" + professid + ", resex='" + resex + '\'' + ", resname='" + resname + '\'' + ", rebirth='" + rebirth + '\'' + ", retel='" + retel + '\'' + ", repic='" + repic + '\'' + ", readdress='" + readdress + '\'' + ", repol='" + repol + '\'' + ", degreename='" + degreename + '\'' + ", professname='" + professname + '\'' + ", schoolname='" + schoolname + '\'' + ", reskill='" + reskill + '\'' + ", reexper='" + reexper + '\'' + ", reeva='" + reeva + '\'' + ", reset='" + reset + '\'' + ", socialList=" + socialList + ", aducationalList=" + aducationalList + '}';
+	public String toString() {
+		return "Resume{" +
+				"resumeid=" + resumeid +
+				", uid=" + uid +
+				", degreeid=" + degreeid +
+				", sid=" + sid +
+				", professid=" + professid +
+				", resex='" + resex + '\'' +
+				", resname='" + resname + '\'' +
+				", rebirth='" + rebirth + '\'' +
+				", retel='" + retel + '\'' +
+				", repic='" + repic + '\'' +
+				", readdress='" + readdress + '\'' +
+				", repol='" + repol + '\'' +
+				", degreename='" + degreename + '\'' +
+				", professname='" + professname + '\'' +
+				", schoolname='" + schoolname + '\'' +
+				", reskill='" + reskill + '\'' +
+				", reexper='" + reexper + '\'' +
+				", reeva='" + reeva + '\'' +
+				", reset='" + reset + '\'' +
+				", operationtime=" + operationtime +
+				", socialList=" + socialList +
+				", aducationalList=" + aducationalList +
+				'}';
 	}
 }

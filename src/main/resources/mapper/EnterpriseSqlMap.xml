@@ -191,7 +191,7 @@
             </if>
         </where>
     </select>
-
+<!--写入最终应聘时间-->
     <update id="updateInterInvate" parameterType="Interview">
         update tbl_interview set  invate = #{invate,jdbcType=VARCHAR},endtime = #{endtime} where interviewid = #{interviewid,jdbcType=INTEGER}
     </update>
@@ -244,9 +244,11 @@
     <update id="companyEmploy" parameterType="Interview">
          update tbl_interview set  employ = #{employ,jdbcType=VARCHAR},endtime = #{endtime} where interviewid = #{interviewid,jdbcType=INTEGER}
     </update>
+<!--  公司录用的用户id  -->
     <select id="findCompanyEmployid" parameterType="Interview" resultType="java.lang.Integer">
         select uid  from tbl_interview where interviewid = #{interviewid,jdbcType=INTEGER}
     </select>
+<!--  修改简历的就业情况  -->
     <update id="updateResumeInfo" parameterType="java.lang.Integer">
         update tbl_resume set reemploy = '已就业' where uid = #{uid}
     </update>
@@ -260,6 +262,7 @@
             a.uid = b.uid and a.positionid = c.positionid and c.aid = #{aid} and a.employ = '已录用'
         </where>
     </select>
+<!--  公司已录用人员信息数量  -->
     <select id="companyEmployInfoNum" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(*) from (select * from tbl_interview) a,
         (select u.*,p.*,s.schoolname,d.* from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s,tbl_degree d where
@@ -269,48 +272,46 @@
             a.uid = b.uid and a.positionid = c.positionid and c.aid = #{aid} and a.employ = '已录用'
         </where>
     </select>
-
+<!--周统计-->
     <select id="weekJobinfo" parameterType="java.util.Map" resultType="java.lang.Integer">
 		select count(*) from (select i.*,c.* from tbl_interview i,tbl_admin a,tbl_position p,tbl_company c where
 		 i.positionid = p.positionid and a.aid = p.aid and a.cid = c.cid) t where t.intertime like concat('${day}','%') and t.cid =${companyid}
 	</select>
-
+<!--月统计-->
     <select id="monthJobinfo" parameterType="java.util.Map" resultType="java.lang.Integer">
 		select count(*) from (select i.*,c.* from tbl_interview i,tbl_admin a,tbl_position p,tbl_company c where
 		 i.positionid = p.positionid and a.aid = p.aid and a.cid = c.cid) t where t.intertime  between #{day} and #{day1} and t.cid =${companyid}
 	</select>
-
-    <select id="ScreeningResume" resultType="Interview" parameterType="java.util.Map">
-        select * from (select * from tbl_interview) a,
-        (select u.uid,u.uname,u.utel,r.reset,p.*,s.* from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s where
-         u.uid = r.uid = s.sid and r.professid = p.professid) b,
-        (select p.aid,p.positionid,p.positionname,id.industryid,id.indname from tbl_position p,tbl_industry id where p.industryid = id.industryid) c
+<!--简历筛选-->
+    <select id="ScreeningResume" resultType="Resume" parameterType="java.util.Map">
+        select u.uid,p.*,s.*,r.* from tbl_user u,tbl_profession p,tbl_school s,tbl_resume r
         <where>
-            a.uid = b.uid and a.positionid = c.positionid and a.invate != '拒绝'  and b.reset = 1
+            r.professid = p.professid and r.sid = s.sid and r.uid = u.uid and r.reset = 1
             <if test="sid != null">
-                and b.sid = #{sid}
+                and s.sid = #{sid}
             </if>
             <if test="professid != null">
-                and b.professid = #{professid}
+                and p.professid = #{professid}
             </if>
         </where>
         limit #{pageInts},#{limitInt}
     </select>
-
+<!--简历筛选数-->
     <select id="ScreeningResumeNum" resultType="java.lang.Integer" parameterType="java.util.Map">
-        select count(*) from (select * from tbl_interview) a,
-        (select u.uid,u.uname,u.utel,r.reset,p.*,s.* from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s where
-        u.uid = r.uid = s.sid and r.professid = p.professid) b,
-        (select p.aid,p.positionid,p.positionname,id.industryid,id.indname from tbl_position p,tbl_industry id where p.industryid = id.industryid) c
+        select count(*) from tbl_user u,tbl_profession p,tbl_school s,tbl_resume r
         <where>
-            a.uid = b.uid and a.positionid = c.positionid and a.invate != '拒绝'  and b.reset = 1
+            r.professid = p.professid and r.sid = s.sid and r.uid = u.uid and r.reset = 1
             <if test="sid != null">
-                and b.sid = #{sid}
+                and s.sid = #{sid}
             </if>
             <if test="professid != null">
-                and b.professid = #{professid}
+                and p.professid = #{professid}
             </if>
         </where>
     </select>
+
+    <insert id="addInterViews" parameterType="Interview">
+        insert into tbl_interview(uid,positionid,sid,intertime,`check`,invate) values (#{uid},#{positionid},#{sid},#{intertime},#{check},#{invate})
+    </insert>
 
 </mapper>
