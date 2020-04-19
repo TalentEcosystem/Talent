@@ -183,11 +183,12 @@
                     return false;
                 }else{
                     var interviewid = data.interviewid;
+                    var positionid = data.positionid;
                     $.ajax({
                         url:path+"/Enterprise/companyEmploy",
                         dataType:"text",
                         type:"POST",
-                        data:{"interviewid":interviewid,"employ":'录用'},
+                        data:{"interviewid":interviewid,"employ":'录用',"positionid":positionid},
                         success:function (msg) {
                             if (msg === 'success'){
                                 alert("应聘成功！");
