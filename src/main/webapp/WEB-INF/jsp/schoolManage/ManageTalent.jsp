@@ -107,7 +107,17 @@
 					}
 				});
 			}else if(type=='outputfild'){
-
+				$.ajax({
+					//这里需要把查询的条件发送到后台，还需要把当前页发送过去
+					url:'${pageContext.request.contextPath}/school/outputTalent',
+					type:'post',
+					success:function (msg) {
+						layer.msg(msg);
+					},
+					error:function () {
+						layer.msg("导出失败");
+					}
+				})
 			}
 
 		});
