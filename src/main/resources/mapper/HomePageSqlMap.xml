@@ -13,31 +13,37 @@ and t.aid=a.aid and t.positionstate='发布' order by t.positiontime desc limit 
 </select>
 <!--    学校信息-->
     <select  id="getSchoolNews" resultType="SchoolNews" >
-
 select c.*, t.Num  from tbl_school as c
 left join (select sid,COUNT(*) AS Num from
-tbl_resume where reemploy='是' group by sid) as t on c.sid= t.sid limit 10
-
+tbl_resume where reemploy='已就业' group by sid) as t on c.sid= t.sid limit 10
 </select>
-<!--    产品包和讲师信息-->
+<!--   首页  得到 产品包和讲师信息-->
     <select id="getStudyNews" resultType="Study" >
-select p.productid,p.proname,p.propic,p.prourl,p.procount,t.teachername from
-tbl_product p,tbl_teacher t where t.teacherid=p.teacherid ORDER BY
-p.procount desc LIMIT  8
+SELECT e.procount,f.* from
+(select p.productid,p.proname,p.propic,p.prourl,p.procount,t.teachername from
+tbl_product p,tbl_teacher t where t.teacherid=p.teacherid )as f LEFT JOIN (select c.productid ,sum(chcount)
+as procount from tbl_chapter h,tbl_config c where c.chapterid=h.chapterid
+ GROUP BY c.productid) as e on e.productid=f.productid
+ORDER BY e.procount desc LIMIT  8
 </select>
 
     <!--    产品包和章节的详细信息-->
     <select id="getCourseDetails" resultType="Product" parameterType="integer" >
-select c.*, t.Num  from (select p.*,t.teachername,t.teacherinfo from
+SELECT e.procount,f.* from
+(select c.*, t.Num  from (select p.*,t.teachername,t.teacherinfo from
 tbl_product p,tbl_teacher t where t.teacherid=p.teacherid and
 p.productid=#{proid}) as c left join (select productid ,count(productid)
-as num from tbl_chapter  GROUP BY productid) as t on c.productid= t.productid
-ORDER BY c.procount desc LIMIT  8
+as num from tbl_chapter ch,tbl_config c where c.chapterid=ch.chapterid
+  GROUP BY productid) as t on c.productid= t.productid)as f LEFT JOIN (select c.productid ,sum(chcount)
+as procount from tbl_chapter h,tbl_config c where c.chapterid=h.chapterid
+ GROUP BY c.productid) as e on e.productid=f.productid
+ORDER BY e.procount desc LIMIT  8
 </select>
 
     <!--    得到产品包对应的章节的详细信息-->
     <select id="getChapter" resultType="Chapter" parameterType="integer" >
-select * from tbl_chapter where productid=#{proid}
+select * from tbl_chapter ch,tbl_config c where
+c.chapterid=ch.chapterid and  productid=#{proid}
 </select>
 
 <!--    企业信息-->
@@ -52,7 +58,7 @@ tbl_position   group by aid)as t  where a.aid=t.aid)as t1 on c.cid= t1.cid limit
     <select id="getCount" resultType="map" >
   select t.job,t1.employ,t2.post,t3.talent,t4.company from
 (select count(*)as job from tbl_resume)t,
-(select count(*)as employ from tbl_resume where reemploy='是')t1,
+(select count(*)as employ from tbl_resume where reemploy='已就业')t1,
 (select count(*)as post from tbl_position)t2 ,
 (select count(*)as talent from tbl_user)t3,
 (select count(*)as company from tbl_company)t4
@@ -165,39 +171,67 @@ on c.cid= t1.cid )t where t.cid=#{cid}
         where  a.aid=p.aid and a.cid=c.cid and c.cid=#{cid}
     </select>
 <!--    查看知识库的信息-->
-    <select id="getTechnologyArea"  parameterType="Map" resultType="Know" >
-       SELECT * from tbl_knowledge
-       <where> 1=1
+    <select id="getTechnologyArea"  parameterType="Map" resultType="Product" >
+        SELECT e.procount,f.* from
+        (select p.productid,p.proname,p.propic,p.prourl,p.procount,t.teachername from
+        tbl_product p,tbl_teacher t
+       <where> 1=1 and t.teacherid=p.teacherid
            <if test="domainid != null and domainid != '' ">
-               and domainid =#{domainid}
-
+               and p.domainid =#{domainid}
            </if>
 
        </where>
-
+        )as f LEFT JOIN (select c.productid ,sum(chcount)
+        as procount from tbl_chapter h,tbl_config c where c.chapterid=h.chapterid
+        GROUP BY c.productid) as e on e.productid=f.productid
+        ORDER BY e.procount desc
        limit #{curPage} , #{pageSize}
     </select>
 <!--    查看知识库的条数-->
     <select id="getTechnologyAreaCount"  parameterType="Map" resultType="int" >
-       SELECT count(*) from tbl_knowledge
-        <where> 1=1
+        SELECT count(*) from
+        (select p.productid,p.proname,p.propic,p.prourl,p.procount,t.teachername from
+        tbl_product p,tbl_teacher t
+        <where> 1=1 and t.teacherid=p.teacherid
             <if test="domainid != null and domainid != '' ">
-                and domainid =#{domainid}
+                and p.domainid = #{domainid}
             </if>
         </where>
-
+        )as f LEFT JOIN (select c.productid ,sum(chcount)
+        as procount from tbl_chapter h,tbl_config c where c.chapterid=h.chapterid
+        GROUP BY c.productid) as e on e.productid=f.productid
+        ORDER BY e.procount desc
        limit #{curPage} , #{pageSize}
     </select>
 
+<!--    知识库的领域-->
     <select id="getDomain" resultType="Know">
         select * from tbl_domain
     </select>
 
     <!--    产品包和讲师信息前四名课程-->
     <select id="getClassCurri" resultType="Study" >
-select p.productid,p.proname,p.propic,p.prourl,p.period,p.procount,t.teachername from
-tbl_product p,tbl_teacher t where t.teacherid=p.teacherid ORDER BY
-p.procount desc LIMIT  4
+SELECT e.procount,f.* from
+(select p.productid,p.proname,p.propic,p.period,p.prourl,p.procount,t.teachername from
+tbl_product p,tbl_teacher t where t.teacherid=p.teacherid )as f LEFT JOIN (select c.productid ,sum(chcount)
+as procount from tbl_chapter h,tbl_config c where c.chapterid=h.chapterid
+ GROUP BY c.productid) as e on e.productid=f.productid
+ORDER BY e.procount desc LIMIT  5
 </select>
+
+
+<!--    用户评论产品包-->
+    <insert id="setEvainfo" parameterType="Eva" >
+    insert into tbl_eva values (0,#{uid},#{evainfo},now(),#{productid})
+
+    </insert>
+<!--    查看评论产品包的用户和内容-->
+    <select id="getEvaInfo" parameterType="integer" resultType="Eva">
+        SELECT e.*,u.uname,u.uhead FROM tbl_eva e,tbl_user u where
+        e.uid=u.uid and e.productid=#{productid} ORDER BY e.evatime desc
+        LIMIT 20;
+    </select>
+
+
 
 </mapper>

@@ -67,9 +67,9 @@
 			display: none;
 			background: #F6F6F6
 		}
-		.li_yysy{
-			background:#6EC7FF;
-		}
+			.li_yysy{
+				background:#6EC7FF;
+			}
 		.ll{
 			cursor: pointer;
 		}
@@ -107,9 +107,7 @@
 				<div id="content_small_tip"></div>
 			</div>
 		</div>
-		<div class="topRight  ">
-
-
+		<div class="topRight ">
 			<c:if test="${not empty uname}">
 				<div class="nav" style="background-color: #F6F6F6">
 					<span>
@@ -128,13 +126,11 @@
 
 			<c:if test="${empty uname}">
 				<div class="log">
-
 				<a href="#" class="lo" style="width: 200px" >登录</a>
 				<ul>
 					<a href="${pageContext.request.contextPath}/user/login"><li class="ll">用户登录</li></a>
 					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin"><li class="ll">企业登录</li></a>
 				</ul>
-
 				</div>
 					<div class="reg">
 				<a href="#" class="lo" style="width: 80px;text-align: center" >注册</a>
@@ -213,25 +209,25 @@
 				websocket.onopen = function () {
 					console.log("WebSocket连接成功");
 					// setMessageInnerHTML("WebSocket连接成功");
-				}
+				};
 
 				//接收到消息的回调方法
 				websocket.onmessage = function (event) {
 					$("#content_small_tip")[0].innerHTML = event.data.toString();
 
 					// setMessageInnerHTML(event.data);
-				}
+				};
 
 				//连接关闭的回调方法
 				websocket.onclose = function () {
 					console.log("WebSocket连接关闭");
 					// setMessageInnerHTML("WebSocket连接关闭");
-				}
+				};
 
 				//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
 				window.onbeforeunload = function () {
 					closeWebSocket();
-				}
+				};
 
 				//将消息显示在网页上
 				function setMessageInnerHTML(sendMessage) {
@@ -348,7 +344,6 @@
 							//获取当前的城市
 							$("#citySelect").val(data.content.address_detail.city)
 						}else {
-
 						}
 
 					}
@@ -864,62 +859,7 @@
 									$(".test31").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
 									//$('.test3').animate({ 'height': '0px', opacity: '0' }, "slow");
 								})
-								$(".pic51").mouseenter(function () {
-									// $('.test5').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test51").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
-								});
-								$(".pic51").mouseleave(function () {
-									// $('.test5').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test51").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
-								})
-								$(".pic61").mouseenter(function () {
-									//$('.test6').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test61").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
-								});
-								$(".pic61").mouseleave(function () {
-									//$('.test6').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test61").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
-								})
-								$(".pic71").mouseenter(function () {
-									//$('.test7').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test71").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
-								});
-								$(".pic71").mouseleave(function () {
-									// $('.test7').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test71").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
-								})
-								$(".pic81").mouseenter(function () {
-									//$('.test8').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test81").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
-								});
-								$(".pic81").mouseleave(function () {
-									// $('.test8').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test81").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
-								})
-								$(".pic91").mouseenter(function () {
-									//$('.test9').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test91").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
-								});
-								$(".pic91").mouseleave(function () {
-									// $('.test9').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test91").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
-								})
-								$(".pic101").mouseenter(function () {
-									//$('.test10').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test101").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
-								});
-								$(".pic101").mouseleave(function () {
-									// $('.test10').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test101").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
-								})
-								$(".pic111").mouseenter(function () {
-									//$('.test11').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test111").stop().animate({ 'height': '67px', opacity: '0.5' },"slow1");
-								});
-								$(".pic111").mouseleave(function () {
-									// $('.test11').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test111").stop().animate({ 'height': '0px', opacity: '0' },"slow1");
-								})
+
 							});
 						</script>
 					</ul>
@@ -1094,86 +1034,7 @@
 									$(".test32").stop().animate({ 'height': '0px', opacity: '0' },"slow2");
 									//$('.test3').animate({ 'height': '0px', opacity: '0' }, "slow");
 								})
-								$(".pic52").mouseenter(function () {
-									// $('.test5').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test52").stop().animate({ 'height': '67px', opacity: '0.5' },"slow2");
-								});
-								$(".pic52").mouseleave(function () {
-									// $('.test5').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test52").stop().animate({ 'height': '0px', opacity: '0' },"slow2");
-								})
-								$(".pic62").mouseenter(function () {
-									//$('.test6').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test62").stop().animate({ 'height': '67px', opacity: '0.5' },"slow2");
-								});
-								$(".pic62").mouseleave(function () {
-									//$('.test6').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test62").stop().animate({ 'height': '0px', opacity: '0' },"slow2");
-								})
-								$(".pic72").mouseenter(function () {
-									//$('.test7').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test72").stop().animate({ 'height': '67px', opacity: '0.5' },"slow2");
-								});
-								$(".pic72").mouseleave(function () {
-									// $('.test7').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test72").stop().animate({ 'height': '0px', opacity: '0' },"slow2");
-								})
-								$(".pic82").mouseenter(function () {
-									//$('.test8').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test82").stop().animate({ 'height': '67px', opacity: '0.5' },"slow2");
-								});
-								$(".pic82").mouseleave(function () {
-									// $('.test8').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test82").stop().animate({ 'height': '0px', opacity: '0' },"slow2");
-								})
-								$(".pic92").mouseenter(function () {
-									//$('.test9').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test92").stop().animate({ 'height': '67px', opacity: '0.5' },"slow2");
-								});
-								$(".pic92").mouseleave(function () {
-									// $('.test9').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test92").stop().animate({ 'height': '0px', opacity: '0' },"slow2");
-								})
-								$(".pic102").mouseenter(function () {
-									//$('.test10').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test102").stop().animate({ 'height': '67px', opacity: '0.5' },"slow2");
-								});
-								$(".pic102").mouseleave(function () {
-									// $('.test10').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test102").stop().animate({ 'height': '0px', opacity: '0' },"slow2");
-								})
-								$(".pic112").mouseenter(function () {
-									//$('.test11').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test112").stop().animate({ 'height': '67px', opacity: '0.5' },"slow2");
-								});
-								$(".pic112").mouseleave(function () {
-									// $('.test11').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test112").stop().animate({ 'height': '0px', opacity: '0' },"slow2");
-								})
-								$(".pic132").mouseenter(function () {
-									//$('.test9').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test132").stop().animate({ 'height': '67px', opacity: '0.5' },"slow2");
-								});
-								$(".pic132").mouseleave(function () {
-									// $('.test9').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test132").stop().animate({ 'height': '0px', opacity: '0' },"slow2");
-								})
-								$(".pic142").mouseenter(function () {
-									//$('.test10').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test142").stop().animate({ 'height': '67px', opacity: '0.5' },"slow2");
-								});
-								$(".pic142").mouseleave(function () {
-									// $('.test10').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test142").stop().animate({ 'height': '0px', opacity: '0' },"slow2");
-								})
-								$(".pic122").mouseenter(function () {
-									//$('.test11').animate({ 'height': '67px', opacity: '0.5' }, "slow");
-									$(".test122").stop().animate({ 'height': '67px', opacity: '0.5' },"slow2");
-								});
-								$(".pic122").mouseleave(function () {
-									// $('.test11').animate({ 'height': '0px', opacity: '0' }, "slow");
-									$(".test122").stop().animate({ 'height': '0px', opacity: '0' },"slow2");
-								})
+
 							});
 						</script>
 					</ul>
@@ -1289,31 +1150,31 @@
 	<div class="clear"></div>
 	<div class="mainCon1">
 		<div class="imgbox1">
-			<div class="box1"><img src="${pageContext.request.contextPath}/images/1.gif" height="71" width="546" /></div>
-			<div class="box1"><img src="${pageContext.request.contextPath}/images/2.gif" height="71" width="546" /></div>
+			<a href="http://www.dippsi.com/" class="box1"><img src="${pageContext.request.contextPath}/images/1.gif" height="71" width="546" /></a>
+			<a href="http://www.tcjy-ic.com/" class="box1"><img src="${pageContext.request.contextPath}/images/2.gif" height="71" width="546" /></a>
 		</div>
 		<div class="clear"></div>
 		<div class="imgbox1">
-			<div class="box2"><img src="${pageContext.request.contextPath}/images/4.gif" height="71" width="362" /></div>
-			<div class="box2"><img src="${pageContext.request.contextPath}/images/5.gif" height="71" width="362" /></div>
-			<div class="box2"><img src="${pageContext.request.contextPath}/images/6.gif" height="71" width="362" /></div>
+			<a href="http://www.geeetech.cn/" class="box2"><img src="${pageContext.request.contextPath}/images/4.gif" height="71" width="362" /></a>
+			<a href="https://chartermate.b2b.hc360.com/" class="box2"><img src="${pageContext.request.contextPath}/images/5.gif" height="71" width="362" /></a>
+			<a href="http://www.widehuge.com/" class="box2"><img src="${pageContext.request.contextPath}/images/6.gif" height="71" width="362" /></a>
 		</div>
 		<div class="clear"></div>
 		<div class="imgbox1">
-			<div class="box2"><img src="${pageContext.request.contextPath}/images/7.gif" height="71" width="362" /></div>
-			<div class="box3"><img src="${pageContext.request.contextPath}/images/8.gif" height="71" width="178" /></div>
-			<div class="box3"><img src="${pageContext.request.contextPath}/images/9.gif" height="71" width="178" /></div>
-			<div class="box3"><img src="${pageContext.request.contextPath}/images/10.gif" height="71" width="178" /></div>
-			<div class="box3"><img src="${pageContext.request.contextPath}/images/11.gif" height="71" width="178" /></div>
+			<a href="http://www.minjiangrc.com/" class="box2"><img src="${pageContext.request.contextPath}/images/7.gif" height="71" width="362" /></a>
+			<a href="http://www.likuso.com/city21/2240076.html" class="box3"><img src="${pageContext.request.contextPath}/images/8.gif" height="71" width="178" /></a>
+			<a href="http://qy.58.com/21817027955974/" class="box3"><img src="${pageContext.request.contextPath}/images/9.gif" height="71" width="178" /></a>
+			<a href="https://szdingrun.d17.cc/" class="box3"><img src="${pageContext.request.contextPath}/images/10.gif" height="71" width="178" /></a>
+			<a href="http://www.3d-link.com.cn/" class="box3"><img src="${pageContext.request.contextPath}/images/11.gif" height="71" width="178" /></a>
 		</div>
 		<div class="clear"></div>
 		<div class="imgbox1">
-			<div class="box3"><img src="${pageContext.request.contextPath}/images/12.gif" height="71" width="178" /></div>
-			<div class="box3"><img src="${pageContext.request.contextPath}/images/13.gif" height="71" width="178" /></div>
-			<div class="box3"><img src="${pageContext.request.contextPath}/images/14.gif" height="71" width="178" /></div>
-			<div class="box3"><img src="${pageContext.request.contextPath}/images/15.gif" height="71" width="178" /></div>
-			<div class="box3"><img src="${pageContext.request.contextPath}/images/16.gif" height="71" width="178" /></div>
-			<div class="box3"><img src="${pageContext.request.contextPath}/images/17.gif" height="71" width="178" /></div>
+			<a href="http://www.lidaluyun.com/" class="box3"><img src="${pageContext.request.contextPath}/images/12.gif" height="71" width="178" /></a>
+			<a href="http://www.likang-inc.com/" class="box3"><img src="${pageContext.request.contextPath}/images/13.gif" height="71" width="178" /></a>
+			<a href="http://www.wmfaucets.com/" class="box3"><img src="${pageContext.request.contextPath}/images/14.gif" height="71" width="178" /></a>
+			<a href="http://www.app17.com/c22573/" class="box3"><img src="${pageContext.request.contextPath}/images/15.gif" height="71" width="178" /></a>
+			<a href="http://www.jinguanauto.com/index.aspx" class="box3"><img src="${pageContext.request.contextPath}/images/16.gif" height="71" width="178" /></a>
+			<a href="https://www.job001.cn/cwechat/recruitment?id=1299149" class="box3"><img src="${pageContext.request.contextPath}/images/17.gif" height="71" width="178" /></a>
 		</div>
 		<div class="clear"></div>
 	</div>

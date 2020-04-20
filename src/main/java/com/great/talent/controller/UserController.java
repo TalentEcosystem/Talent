@@ -153,6 +153,7 @@ public class UserController
 		    if (null != user1){
 		    	if (user1.getUstate().equals("启用")){
 				    response.getWriter().print("success");
+				    request.getSession().setAttribute("uid",user1.getUid());
 				    request.getSession().setAttribute("uname", user1.getUname());
 				    request.getSession().setAttribute("uaccount",user1.getUaccount());
 				    request.getSession().setAttribute("usex",user1.getUsex());

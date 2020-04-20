@@ -189,14 +189,14 @@ public class HomePageService
 	 * @param map
 	 * @return int
 	 */
-	public BackUserPageBean<Know> getTechnologyArea(Map map,Integer curPage,Integer pageSize,Integer domainid){
+	public BackUserPageBean<Product> getTechnologyArea(Map map,Integer curPage,Integer pageSize,Integer domainid){
 
 //		List<Know> knowList=homePageMapper.getTechnologyArea(map);
 		Integer totalRerords = null;
-		List<Know> my_reports=null;
+		List<Product> my_reports=null;
 		totalRerords=homePageMapper.getTechnologyAreaCount(map,curPage,pageSize,domainid);
 		my_reports=homePageMapper.getTechnologyArea(map,curPage,pageSize,domainid);
-		BackUserPageBean<Know> myReportBackUserPageBean=new BackUserPageBean<Know>(curPage,totalRerords,pageSize);
+		BackUserPageBean<Product> myReportBackUserPageBean=new BackUserPageBean<Product>(curPage,totalRerords,pageSize);
 		myReportBackUserPageBean.setList(my_reports);
 		return myReportBackUserPageBean;
 
@@ -209,6 +209,28 @@ public class HomePageService
 
 		List<Know> knowList=homePageMapper.getDomain();
 		return knowList;
+	}
+
+	/**
+	 * 用户评论产品包
+	 * @param eva
+	 * @return
+	 */
+	public int setEvainfo(Eva eva){
+
+		int num=homePageMapper.setEvainfo(eva);
+		return num;
+	}
+	/**
+	 * 得到评论产品包的用户和内容
+	 * @param productid
+	 * @return
+	 */
+	public String getEvaInfo(Integer productid){
+
+		List<Eva> evaList=homePageMapper.getEvaInfo(productid);
+		String Str=gson.toJson(evaList);
+		return Str;
 	}
 
 
