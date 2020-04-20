@@ -1,8 +1,6 @@
 package com.great.talent.service;
 
-import com.great.talent.entity.MyCollection;
-import com.great.talent.entity.RequestFeedback;
-import com.great.talent.entity.User;
+import com.great.talent.entity.*;
 import com.great.talent.mapper.DeptMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,5 +76,20 @@ public class UserService
 	@Transactional
 	public Integer findRequestFeedbackCount(Map map){
 		return deptMapper.findRequestFeedbackCount(map);
+	}
+
+	@Transactional
+	public JobData checkJob(JobData jobData){
+		return deptMapper.checkJob(jobData);
+	}
+
+	@Transactional
+	public List<Welfare> findWelfare(Map map){
+		return deptMapper.findWelfare(map);
+	}
+
+	@Transactional
+	public List<MyStudy> findMyStudy(int uid){
+		return deptMapper.findMyStudy(uid);
 	}
 }

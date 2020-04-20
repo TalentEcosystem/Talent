@@ -340,9 +340,8 @@ public class SchoolController
 	//用户端的简历显示
 	@RequestMapping("/findUserResume")
 	public String findUserResume(HttpServletRequest request){
-		User user= (User) request.getSession().getAttribute("user");
-
-		userTalent.setUid(user.getUid());
+		int uid= (int) request.getSession().getAttribute("uid");
+		userTalent.setUid(uid);
 		Resume resume=schoolService.findUserResume(userTalent);
 		List<Social> socials=schoolService.findUserSocial(userTalent);
 		List<Aducational> aducationals=schoolService.findUserAducation(userTalent);

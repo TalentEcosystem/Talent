@@ -30,6 +30,10 @@ spring:
                     #防御sql注入的filter:wall
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000 #通过connectProperties属性来打开mergeSql功能；慢SQL记录
       use-global-data-source-stat: true #合并多个DruidDataSource的监控数据
+#  jackson:
+#    default-property-inclusion: ALWAYS
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: GMT+8
   mvc:
     view:
       suffix: .jsp
@@ -38,7 +42,6 @@ spring:
       #设置是否是后缀模式匹配，如“/user”是否匹配/user.*，默认真即匹配；
       #当此参数设置为true的时候，那么/user.html，/user.aa，/user.*都能是正常访问的。
       use-suffix-pattern: true
-
 mybatis:
   config-location: classpath:SqlMapConfig.xml
   mapper-locations: classpath:/mapper/*.xml
