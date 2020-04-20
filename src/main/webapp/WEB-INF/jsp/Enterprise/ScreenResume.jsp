@@ -85,7 +85,7 @@
                 ,{field: 'professname', title: '专业', width:100}
                 ,{field: 'sid', title: '学校id', width:200,hide:true}
                 ,{field: 'schoolname', title: '高校名称', width:150}
-                ,{field: 'operationtime', title: '发布时间', width:200}
+                ,{field: 'operationtime', title: '发布时间', width:200,templet:"<div> {{layui.util.toDateString(d.operationtime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
                 ,{fixed: 'right',title:'操作', width: 200, align:'center', toolbar: '#barDemo'}
             ]]
         })

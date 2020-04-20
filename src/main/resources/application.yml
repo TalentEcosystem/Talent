@@ -47,6 +47,12 @@ spring:
       max-file-size: 50MB
       max-request-size: 100MB
       resolve-lazily: false
+
+  jackson:
+    default-property- inclusion: ALWAYS
+    time- zone: GMT+8
+    date- -fo rmat: yyyy-MM-dd HH:mm:ss
+
 mybatis:
   config-location: classpath:SqlMapConfig.xml
   mapper-locations: classpath:/mapper/*.xml

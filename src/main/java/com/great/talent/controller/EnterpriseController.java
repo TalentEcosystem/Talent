@@ -141,7 +141,16 @@ public class EnterpriseController {
         session.setAttribute("menuMap",list);
         return "success";
     }
-
+    /**
+     * 退出
+     * @param httpSession
+     * @return
+     */
+    @RequestMapping("/Exit")
+    public String Exit(HttpSession httpSession){
+        httpSession.removeAttribute("admin");
+        return "Enterprise/path/EnterpriseLogin";
+    }
     /**
      * 查重账号
      *

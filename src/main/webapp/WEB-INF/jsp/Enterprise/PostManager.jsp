@@ -107,9 +107,7 @@
                     ,{field: 'positionname', title: '招聘岗位', width:200}
                     ,{field: 'aid', title: '发布者', width:200,hide:true}
                     ,{field: 'name', title: '发布者', width:100}
-                    ,{field: 'positiontime', title: '发布时间', width:200}// templet:function(value){
-                        //return layui.util.toDateString(value.time);
-                    //}}
+                    ,{field: 'positiontime', title: '发布时间', width:200,templet:"<div> {{layui.util.toDateString(d.positiontime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
                     ,{field: 'money', title: '参考薪资(元)', width:150}
                     ,{field: 'degreename', title: '学历要求', width:150}
                     ,{field: 'professname', title: '专业要求', width:150}
