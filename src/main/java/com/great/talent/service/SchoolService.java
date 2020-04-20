@@ -122,5 +122,16 @@ public class SchoolService
 	public int insertresume(Resume resume){
 		return schoolMapper.insertresume(resume);
 	}
+	public List<Resume> outPutUserResume(HashMap<String, Object> condition){
+		return schoolMapper.outPutUserResume(condition);
+	}
+
+	public List<Social> outPutUserSocial(Resume resume){
+		return schoolMapper.outPutUserSocial(resume);
+	}
+
+	public List<Aducational> outPutUserAducation(Resume resume){
+		return schoolMapper.outPutUserAducation(resume);
+	}
 
 }

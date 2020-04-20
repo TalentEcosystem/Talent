@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Encoder;
 
@@ -88,6 +89,8 @@ public class SchoolController
 		}
 		int pageInt = Integer.valueOf(page);
 		int limitInt = Integer.valueOf(limit);
+		request.getSession().setAttribute("pageInt",pageInt);
+		request.getSession().setAttribute("limitInt",limitInt);
 		condition.put("pageInt", limitInt * (pageInt - 1));
 		condition.put("limitInt", limitInt);
 		int count = schoolService.findTalentCount(condition);
@@ -874,25 +877,61 @@ public class SchoolController
 		ResponseUtils.outJson1(response,"{\"code\":0, \"msg\":\"\", \"data\":{}}");
 	}
 	@RequestMapping("/outputTalent")
-	public void outputTalent(HttpServletRequest request,HttpServletResponse response){
-//		String imagePath=request.getServletContext().getRealPath("/images");
-//		//查询当前页
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("resume", resume);
-//		map.put("socials", socials);
-//		map.put("aducations",aducations);
-//		map.put("repic",this.getImageBase(imagePath));
-//		try {
-//			WordUtil.exportMillCertificateWord(request, response, map, "简历", "template.ftl");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+	@ResponseBody
+	public void  outputTalent(HttpServletRequest request,HttpServletResponse response){
+		String imagePath=request.getServletContext().getRealPath("/images");
+		//查询当前页
+		HashMap<String, Object> condition = new HashMap<>();
+		String mindate = request.getParameter("mindate");
+		String maxdate = request.getParameter("maxdate");
+		String schoolname = request.getParameter("schoolname");
+		String pro = request.getParameter("pro");
+		int pageInt= (int) request.getSession().getAttribute("pageInt");
+		int limitInt= (int) request.getSession().getAttribute("limitInt");
+		String page = request.getParameter("page");
+		String limit = request.getParameter("limit");
+		if (null != mindate && !"".equals(mindate.trim()))
+		{
+			condition.put("mindate", mindate);
+		}
+		if (null != maxdate && !"".equals(maxdate.trim()))
+		{
+			condition.put("maxdate", maxdate);
+		}
+		if (null != schoolname && !"".equals(schoolname.trim()))
+		{
+			condition.put("schoolname", schoolname);
+		}
+		if (null != pro && !"".equals(pro.trim()))
+		{
+			condition.put("pro", pro);
+		}
 
+		condition.put("pageInt", limitInt * (pageInt - 1));
+		condition.put("limitInt", limitInt);
+		//查询简历信息然后循环遍历
+		List<Resume> resumes=schoolService.outPutUserResume(condition);
+		System.out.println(resumes.size());
+		for (int i = 0; i < resumes.size(); i++)
+		{
+			List<Social> socials = schoolService.outPutUserSocial(resumes.get(i));
+			List<Aducational> aducationals = schoolService.outPutUserAducation(resumes.get(i));
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("resume", resumes.get(i));
+			map.put("socials", socials);
+			map.put("aducations",aducationals);
+			System.out.println(imagePath+"\\"+resumes.get(i).getRepic().split("/")[1]);
+			map.put("repic",this.getImageBase(imagePath+"\\"+resumes.get(i).getRepic().split("/")[1]));
+		try {
+			WordUtil.exportMillCertificateWord(request, response, map, "简历", "template.ftl");
+		} catch (IOException e) {
 
-
+			e.printStackTrace();
+		}
+		}
 	}
-	protected String getImageBase(String src) {
+	@SuppressWarnings("deprecation")
+	public String getImageBase(String src) {
 		if(src==null||src==""){
 			return "";
 		}
@@ -915,6 +954,7 @@ public class SchoolController
 			e.printStackTrace();
 		}
 		BASE64Encoder encoder = new BASE64Encoder();
+
 		return encoder.encode(data);
 	}
 

@@ -27,7 +27,7 @@ public class WordUtil
 	//classLoader.getResource()只能获取相对路径的资源
 	//     private static final String templateFolder = WordUtils.class.getClassLoader().getResource("template").getPath();
 	//class.getResource()可以获取绝对路径和相对路径request.getServletContext().getRealPath("/excel")
-	private static final String templateFolder = WordUtil.class.getResource("/excel").getPath();
+	private static final String templateFolder = WordUtil.class.getResource("/template").getPath();
 
 	static {
 		configuration = new Configuration();
@@ -49,20 +49,20 @@ public class WordUtil
 		File file = null;
 		InputStream fin = null;
 		ServletOutputStream out = null;
+
 		try {
 			// 调用工具类的createDoc方法生成Word文档
 			file = createDoc(map, freemarkerTemplate);
 			fin = new FileInputStream(file);
 
 			response.setCharacterEncoding("utf-8");
-			response.setContentType("application/msword");
 			// 设置浏览器以下载的方式处理该文件名
 			String fileName = title + new Date() + ".doc";
 			response.setHeader("Content-Disposition", "attachment;filename="
 					.concat(String.valueOf(URLEncoder.encode(fileName, "UTF-8"))));
 
 			out = response.getOutputStream();
-			byte[] buffer = new byte[512];  // 缓冲区
+			byte[] buffer = new byte[1024];  // 缓冲区
 			int bytesToRead = -1;
 			// 通过循环将读入的Word文件的内容输出到浏览器中
 			while ((bytesToRead = fin.read(buffer)) != -1) {
@@ -85,6 +85,7 @@ public class WordUtil
 	}
 
 	private static File createDoc(Map<?, ?> dataMap, Template template) {
+		System.out.println("进入创建doc一次");
 		String name = "sellPlan.doc";
 		File f = new File(name);
 		Template t = template;
