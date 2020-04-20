@@ -18,6 +18,7 @@ public class Product
 	private int procount;
 	private String prostate;
 	private int domainid;
+	private String propic;
 
 	public Product()
 	{
@@ -163,9 +164,14 @@ public class Product
 		this.domainid = domainid;
 	}
 
-	@Override
-	public String toString()
+	public String getPropic()
 	{
-		return "Product{" + "productid=" + productid + ", proname='" + proname + '\'' + ", starttime=" + starttime + ", endtime=" + endtime + ", period='" + period + '\'' + ", teacherid=" + teacherid + ", teachername='" + teachername + '\'' + ", teacherinfo='" + teacherinfo + '\'' + ", prourl='" + prourl + '\'' + ", prointro='" + prointro + '\'' + ", procontent='" + procontent + '\'' + ", procount=" + procount + ", prostate='" + prostate + '\'' + ", domainid=" + domainid + '}';
+		return propic;
 	}
+
+	public void setPropic(String propic)
+	{
+		this.propic = propic;
+	}
+
 }
