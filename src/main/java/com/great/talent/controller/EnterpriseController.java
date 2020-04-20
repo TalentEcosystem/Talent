@@ -9,6 +9,7 @@ import com.great.alipay.config.AlipayConfig;
 import com.great.talent.entity.*;
 import com.great.talent.service.AdminService;
 import com.great.talent.service.EnterpriseService;
+import com.great.talent.service.SchoolService;
 import com.great.talent.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,8 @@ public class EnterpriseController {
     private EnterpriseService enterpriseService;
     @Resource
     private AdminService adminService;
+    @Resource
+    private SchoolService schoolService;
 
     /**
      * 企业路径跳转
@@ -147,9 +150,10 @@ public class EnterpriseController {
      * @return
      */
     @RequestMapping("/Exit")
-    public String Exit(HttpSession httpSession){
+    public ModelAndView Exit(HttpSession httpSession){
         httpSession.removeAttribute("admin");
-        return "Enterprise/path/EnterpriseLogin";
+        mv.setViewName("Enterprise/EnterpriseLogin");
+        return mv;
     }
     /**
      * 查重账号
@@ -968,6 +972,24 @@ public class EnterpriseController {
     }
 
     /**
+     * 购买简历时，验证密码
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/JudgePassword")
+    @ResponseBody
+    public void JudgePassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String password = request.getParameter("password");
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        if (MD5Utils.checkpassword(password,admin.getPassword())){
+            response.getWriter().print("success");
+        }else{
+            response.getWriter().print("error");
+        }
+
+    }
+    /**
      * 购买简历
      * @param request
      * @param response
@@ -1002,5 +1024,17 @@ public class EnterpriseController {
             response.getWriter().print("deficiency");
         }
     }
+    //查找用户简历
+    @RequestMapping("/findResume")
+    public void findResume(HttpServletRequest request, HttpServletResponse response){
+        String jsonStr=request.getParameter("uid");
+        Gson g=new Gson();
+        UserTalent userTalent=g.fromJson(jsonStr,UserTalent.class);
+        Resume resume=schoolService.findUserResume(userTalent);
+        List<Social> socials=schoolService.findUserSocial(userTalent);
+        List<Aducational> aducationals=schoolService.findUserAducation(userTalent);
+        System.out.println(resume+"="+socials+"-"+aducationals);
+        ResponseUtils.outJson1(response,g.toJson(resume)+"%"+g.toJson(socials)+"%"+g.toJson(aducationals));
 
+    }
 }
