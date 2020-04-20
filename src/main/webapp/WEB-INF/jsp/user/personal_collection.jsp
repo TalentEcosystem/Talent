@@ -11,7 +11,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>个人中心-个人信息</title>
+	<title>个人中心-我的收藏</title>
 	<%
 		String path=request.getContextPath();
 		String uname = (String) session.getAttribute("uname");
@@ -99,7 +99,7 @@
 				<a href=<%=path+"/user/personal" %> class="a7">个人信息</a>
 			</div>
 			<div class="NavLeftBox">
-				<a href="personal_jl.html" class="a2">我的简历</a>
+				<a href=<%=path+"/school/findUserResume" %> class="a2">我的简历</a>
 			</div>
 			<div class="NavLeftBox">
 				<a href=<%=path+"/user/study"%> class="a3">学习记录</a>
@@ -107,11 +107,11 @@
 			<div class="NavLeftBox active">
 				<a href=<%=path+"/user/collection"%> class="a5">我的收藏</a>
 			</div>
-			<div class="NavLeftBox twoNav">
+			<div class="NavLeftBox">
 				<a href=<%=path+"/user/requestFeedback" %> class="a6">求职反馈</a>
 			</div>
 			<div class="NavLeftBox">
-				<a href="personal_help.html" class="a8">帮助中心</a>
+				<a href=<%=path+"/user/help" %> class="a8">帮助中心</a>
 			</div>
 		</div>
 		<div class="navLeftBottom">
@@ -140,7 +140,7 @@
 			<table id="dataTable" lay-filter="test"></table>
 		</div>
 		<script type="text/html" id="butdiv">
-			<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="delete" ><i class="layui-icon">&#xe615;</i>查看详情</button>
+			<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="check" ><i class="layui-icon">&#xe615;</i>查看详情</button>
 		</script>
 	</div>
 	<div class="adBox" >
@@ -176,9 +176,10 @@
 					templet:function (data) {
 						var positiontime1 = new Date(data.positiontime).toJSON();
 						var positiontime = new Date(+new Date(positiontime1)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
-						//date.substr(0,10); //接取2020-04-02
 						return positiontime;
-					}}
+					}
+					// templet : "<div> {{layui.util.toDateString(d.positiontime,'yyyy-MM-dd HH:mm:ss')}}</div>"
+					}
 				, {field: '', title: '操作', toolbar: "#butdiv", width: 130, align: 'center'}
 			]]
 		});
@@ -200,32 +201,30 @@
 		});
 
 
-		//删除
+		//查看详情
 		//注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
 		table.on('tool(test)', function(obj){
 			var data = obj.data; //获得当前行数据
 			var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 			var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
 			var path1 = $("#path").val();
-			if(layEvent === 'delete'){ //查看
+			if(layEvent === 'check'){ //查看
 				$.ajax({
 					async:true,
 					method : "POST",
-					url :path1+'/user/deleteDocumentInf',
+					url :path1+'/user/checkJob',
 					data: data,
 					dataType : "text",
-					success:function(data){
-						if ("success"==data){
-							layer.alert("删除成功",{icon:6},function () {
-								window.parent.location.reload();
-							});
+					success:function(msg){
+						if ("1111"==msg){
+							location.href=path1+"/user/jobDetails"
 						}else {
-							layer.alert("删除失败",{icon:2});
+							layer.alert("网络繁忙",{icon:2});
 						}
 					}
 				})
 			}
-		});
+		 });
 	});
 </script>
 </body>

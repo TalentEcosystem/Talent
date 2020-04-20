@@ -1,8 +1,6 @@
 package com.great.talent.mapper;
 
-import com.great.talent.entity.MyCollection;
-import com.great.talent.entity.RequestFeedback;
-import com.great.talent.entity.User;
+import com.great.talent.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -26,4 +24,9 @@ public interface DeptMapper
 	//求职反馈
 	List<RequestFeedback> findRequestFeedback(Map map);
 	Integer findRequestFeedbackCount(Map map);
+	//岗位详情
+	JobData checkJob(JobData jobData);
+	List<Welfare> findWelfare(Map map);
+	//学习记录
+	List<MyStudy> findMyStudy(int uid);
 }

@@ -228,4 +228,19 @@ public class AdminService
 
 	@Transactional
 	public void deleteProduct(String productid){ adminMapper.deleteProduct(productid);}
+
+	@Transactional
+	public List<Config> findConfigKnow(String domainid){ return adminMapper.findConfigKnow(domainid);}
+
+	@Transactional
+	public List<Config> findConfigChapter(String knowledgeid){ return adminMapper.findConfigChapter(knowledgeid);}
+
+	@Transactional
+	public List<Config> hasConfig(String productid){ return adminMapper.hasConfig(productid);}
+
+	@Transactional
+	public void deleteConfig(String productid){ adminMapper.deleteConfig(productid);}
+
+	@Transactional
+	public void configChapter(List list){ adminMapper.configChapter(list);}
 }
