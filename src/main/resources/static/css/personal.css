@@ -1,9 +1,16 @@
 @charset "utf-8";
+.zph .zph_1{ float:left;height: 100px;width: 110px; margin: 0px 16px 0 0;}
+.zph .zph_1 img{height: 171px;width: 255px;}
+.zph .zph_2{ float:left;margin-left: 140px;width: 366px;line-height: 29px;}
+.zph .zph_2 p.TopTitle a{white-space: nowrap;overflow: hidden;max-width: 372px;text-overflow: ellipsis;color: #000;font-family: "微软雅黑";font-size: 14px;max-width: 375px;}
+.zph{ height:170px;border:solid 1px sandybrown}
+.zph .ContentMain p a{color: #1957A3;}
+.zph .ContentMain p a:hover{ color:#FA5F00}
 /* CSS Document */
 *{ margin:0; padding:0}
 ul li{ list-style:none}
 a{ text-decoration:none}
-img{ border:0; max-height:100%; max-width:100%}
+img{ border:0; max-height:170%; max-width:232%}
 body{ width:100%; min-width:1200px; margin:0 auto; font-size:12px; font-family:"宋体";color: #222;}
 .clear{ clear:both}
 input{ border:0; outline:none}
@@ -157,7 +164,7 @@ a.Mobile:hover{background:url(../images/per6.png) 1px no-repeat;}
 
 
 /*个人中心-账户管理-邮箱认证*/
-.commonTit{padding-bottom: 20px;}
+.commonTit{padding-bottom: 34px;}
 .commonTit h1{display: inline-block;font-family: "微软雅黑";font-size: 16px;padding-left: 10px;border-left: 4px solid #F36000;height: 16px;line-height: 16px;font-weight: normal;color: #343432;}
 .TopNotice{background: #F6F6F6;border: 1px #EDEDED solid;padding-left: 10px;height: 36px;line-height: 36px;font-family: "微软雅黑";color: #343635;}
 .TopNotice span{font-weight: bold;font-size: 14px; color:#000;margin-left: 10px;}

@@ -19,16 +19,30 @@ left join (select sid,COUNT(*) AS Num from
 tbl_resume where reemploy='是' group by sid) as t on c.sid= t.sid limit 10
 
 </select>
-<!--    课程信息-->
+<!--    产品包和讲师信息-->
     <select id="getStudyNews" resultType="Study" >
-
-select p.proname,p.propic,p.prourl,p.procount,t.teachername from
-tbl_product p,tbl_teacher t where t.teacherid=p.teacherid LIMIT 8
-
+select p.productid,p.proname,p.propic,p.prourl,p.procount,t.teachername from
+tbl_product p,tbl_teacher t where t.teacherid=p.teacherid ORDER BY
+p.procount desc LIMIT  8
 </select>
+
+    <!--    产品包和章节的详细信息-->
+    <select id="getCourseDetails" resultType="Product" parameterType="integer" >
+select c.*, t.Num  from (select p.*,t.teachername,t.teacherinfo from
+tbl_product p,tbl_teacher t where t.teacherid=p.teacherid and
+p.productid=#{proid}) as c left join (select productid ,count(productid)
+as num from tbl_chapter  GROUP BY productid) as t on c.productid= t.productid
+ORDER BY c.procount desc LIMIT  8
+</select>
+
+    <!--    得到产品包对应的章节的详细信息-->
+    <select id="getChapter" resultType="Chapter" parameterType="integer" >
+select * from tbl_chapter where productid=#{proid}
+</select>
+
 <!--    企业信息-->
     <select id="getCompanyNews" resultType="Company" >
-select c.companyname,c.companypic, t1.Num  from tbl_company as c
+select c.*, t1.Num  from tbl_company as c
 left join(select t.*,a.cid from tbl_admin as a,
 (select aid,COUNT(maxnum) AS Num from
 tbl_position   group by aid)as t  where a.aid=t.aid)as t1 on c.cid= t1.cid limit 8
@@ -53,7 +67,6 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
 
 <!--    搜索工作-->
     <select id="getJobNews" resultType="SerachJob" parameterType="map" >
-
         SELECT p.positionid,p.aid,p.positionname as sypositionname,p.positionaddress as sypositionaddress,p.maxnum,p.request,
         p.positioncontent,p.positionstate, p.professid, p.positionname,p.positionexper,
         p.money,p.positionaddress,p.industryid,p.degreeid,p.positiontime,c.companynum,c.companyname
@@ -127,7 +140,64 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
     <select id="getJobExper" resultType="String" >
     select positionexper from tbl_position where positionexper!= '不限' GROUP BY positionexper
     </select>
+<!--    得到企业简介的信息-->
+    <select id="getCompanyProfile" resultType="Company" parameterType="integer" >
+select t.* from (select c.*, t1.Num  from tbl_company as c
+left join(select t.*,a.cid from tbl_admin as a,
+(select aid,COUNT(maxnum) AS Num from
+tbl_position   group by aid)as t  where a.aid=t.aid)as t1
+on c.cid= t1.cid )t where t.cid=#{cid}
+</select>
+    <!--    得到企业招聘的信息-->
+    <select id="getComJobNews" resultType="SerachJob" parameterType="integer" >
+        SELECT p.positionid,p.aid,p.positionname as sypositionname,p.positionaddress as sypositionaddress,p.maxnum,p.request,
+        p.positioncontent,p.positionstate, p.professid, p.positionname,p.positionexper,
+        p.money,p.positionaddress,p.industryid,p.degreeid,p.positiontime,c.companynum,c.companyname
+        FROM tbl_position p,tbl_company c,tbl_admin a
+        where a.aid=p.aid and a.cid=c.cid and c.cid=#{cid}
+                order by p.positiontime desc ;
 
 
+    </select>
+
+    <select id="getComJobNewsCount"  parameterType="integer" resultType="int" >
+        SELECT count(*) FROM tbl_position p,tbl_company c,tbl_admin a
+        where  a.aid=p.aid and a.cid=c.cid and c.cid=#{cid}
+    </select>
+<!--    查看知识库的信息-->
+    <select id="getTechnologyArea"  parameterType="Map" resultType="Know" >
+       SELECT * from tbl_knowledge
+       <where> 1=1
+           <if test="domainid != null and domainid != '' ">
+               and domainid =#{domainid}
+
+           </if>
+
+       </where>
+
+       limit #{curPage} , #{pageSize}
+    </select>
+<!--    查看知识库的条数-->
+    <select id="getTechnologyAreaCount"  parameterType="Map" resultType="int" >
+       SELECT count(*) from tbl_knowledge
+        <where> 1=1
+            <if test="domainid != null and domainid != '' ">
+                and domainid =#{domainid}
+            </if>
+        </where>
+
+       limit #{curPage} , #{pageSize}
+    </select>
+
+    <select id="getDomain" resultType="Know">
+        select * from tbl_domain
+    </select>
+
+    <!--    产品包和讲师信息前四名课程-->
+    <select id="getClassCurri" resultType="Study" >
+select p.productid,p.proname,p.propic,p.prourl,p.period,p.procount,t.teachername from
+tbl_product p,tbl_teacher t where t.teacherid=p.teacherid ORDER BY
+p.procount desc LIMIT  4
+</select>
 
 </mapper>

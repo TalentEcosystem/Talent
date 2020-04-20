@@ -23,7 +23,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">学校：</label>
             <div class="layui-input-inline">
-                <select name="industryid" id="industryid" lay-filter="chooseSchool"  >
+                <select name="school" id="school" lay-filter="chooseSchool"  >
                     <option value="0" >请选择学校</option>
                     <c:if test="${schoolMsgList!=null}">
                         <c:forEach items="${schoolMsgList}" begin="0" var="i">
@@ -57,7 +57,7 @@
         查看简历
     </button>
     <button lay-event="update" type="button" class="layui-btn layui-btn-xs layui-btn-radius">
-        应聘
+        邀请
     </button>
 </script>
 </body>
@@ -79,78 +79,210 @@
             ,limit:5
             ,limits:[5,10,20,50,100]
             ,cols: [[ //表头
-                {field: 'interviewid', title: 'ID', width: 80,hide:true}
-                ,{field: 'industryid', title: '行业ID', width: 80,hide:true}
-                ,{field: 'positionid', title: '岗位ID', width:150,hide:true}
-                ,{field: 'uid', title: '应聘者', width:200,hide:true}
-                ,{field: 'uname', title: '应聘者', width:150}
+                {field: 'uid', title: '应聘者', width:200,hide:true}
+                ,{field: 'resumeid', title: '应聘者', width:200,hide:true}
+                ,{field: 'resname', title: '应聘者', width:150}
                 ,{field: 'professname', title: '专业', width:100}
+                ,{field: 'sid', title: '学校id', width:200,hide:true}
                 ,{field: 'schoolname', title: '高校名称', width:150}
-                ,{field: 'endtime', title: '反馈时间', width:200}
+                ,{field: 'operationtime', title: '发布时间', width:200}
                 ,{fixed: 'right',title:'操作', width: 200, align:'center', toolbar: '#barDemo'}
             ]]
         })
+        var resume="";
+        var social1="";
+        var aducation1="";
+        var social2="";
+        var aducation2="";
         table.on('tool(test)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性
             var data = obj.data //获得当前行数据
                 ,event = obj.event;
             if (event ==='detail'){
-                var uid={'uid':data.uid};
-                uid=JSON.stringify(uid);
-                layer.msg('查看操作');
+                var resumeid =data.resumeid
                 $.ajax({
-                    url:'${pageContext.request.contextPath}/school/findResume',
+                    url:'${pageContext.request.contextPath}/Enterprise/JudgeResume',
                     type:'post',
-                    data:'uid='+uid,
+                    data:"resumeid="+resumeid,
                     dataType:'text',
                     success:function(msg){
-                        layer.msg(msg);
-                    },error:function (err) {
-                        console.log(err);
+                        if (msg == 'success'){
+                            var uid={'uid':data.uid};
+                            uid=JSON.stringify(uid);
+                            $.ajax({
+                                url:'${pageContext.request.contextPath}/school/findResume',
+                                type:'post',
+                                data:'uid='+uid,
+                                dataType:'text',
+                                success:function(msg){
+                                    resume=JSON.parse(msg.split("%")[0]);
+                                    console.log(resume)
+                                    if(JSON.parse(msg.split("%")[1]).length!=0){
+                                        if(JSON.parse(msg.split("%")[1]).length>1){
+                                            social2=JSON.parse(msg.split("%")[1])[1];
+                                            console.log(social2)
+                                        }
+                                        social1=JSON.parse(msg.split("%")[1])[0];
+                                        console.log(social1)
+                                    }
+                                    if(JSON.parse(msg.split("%")[2]).length!=0){
+                                        aducation1=JSON.parse(msg.split("%")[2])[0];
+                                        console.log(aducation1)
+                                        if(JSON.parse(msg.split("%")[2]).length>1){
+                                            aducation2=JSON.parse(msg.split("%")[2])[1];
+                                            console.log(aducation2)
+                                        }
+                                    }
+                                    layer.open({
+                                        type: 2,
+                                        area: ['80%', '80%'],
+                                        offset: ['10%','10%'],
+                                        btn: ['返回'],
+                                        btn1: function(index, layero){
+                                            layer.close(index);
+                                        },
+                                        content: path+'/school/useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                                        ,success: function(layero, index){
+                                            console.log(social1);
+                                            var body=layer.getChildFrame('body',index);
+                                            body.find("input[id=resname1]").empty();
+                                            body.find("input[id=schoolname1]").empty();
+                                            body.find("input[id=rebirth1]").empty();
+                                            body.find("input[id=professname]").empty();
+                                            body.find("input[id=repol]").empty();
+                                            body.find("input[id=degreename]").empty();
+                                            body.find("input[id=retel]").empty();
+                                            body.find("input[id=readdress]").empty();
+                                            body.find("input[id=hidepic]").empty();
+                                            body.find("input[id=reskill12]").empty();
+                                            body.find("input[id=reeva12]").empty();
+                                            body.find("input[id=resname1]").val(resume.resname);
+                                            body.find("input[id=schoolname1]").val(resume.schoolname);
+                                            body.find("input[id=rebirth1]").val(resume.rebirth);
+                                            body.find("input[id=professname]").val(resume.professname);
+                                            body.find("input[id=repol]").val(resume.repol);
+                                            body.find("input[id=degreename]").val(resume.degreename);
+                                            body.find("input[id=retel]").val(resume.retel);
+                                            body.find("input[id=readdress]").val(resume.readdress);
+                                            body.find("input[id=hidepic]").val(resume.repic);
+                                            body.find("input[id=reskill12]").val(resume.reskill);
+                                            body.find("input[id=reeva12]").val(resume.reeva);
+                                            if(social1 != " "){
+                                                body.find("input[id=socialtime1]").val(social1.socialtime);
+                                                body.find("input[id=company1]").val(social1.company);
+                                                body.find("input[id=content1]").val(social1.content);
+                                                if(social2 != " "){
+                                                    body.find("input[id=socialtime2]").val(social2.socialtime);
+                                                    body.find("input[id=company2]").val(social2.company);
+                                                    body.find("input[id=content2]").val(social2.content);
+                                                }else{
+                                                    body.find("input[id=socialtime2]").val("");
+                                                    body.find("input[id=company2]").val("");
+                                                    body.find("input[id=content2]").val("");
+                                                }
+                                            }else{
+                                                body.find("input[id=socialtime1]").val("");
+                                                body.find("input[id=company1]").val("");
+                                                body.find("input[id=content1]").val("");
+                                            }
+                                            if(aducation1 != " "){
+                                                body.find("input[id=adtime1]").val(aducation1.adtime);
+                                                body.find("input[id=sname1]").val(aducation1.sname);
+                                                body.find("input[id=profession1]").val(aducation1.profession);
+                                                if(aducation2 != " "){
+                                                    body.find("input[id=adtime2]").val(aducation2.adtime);
+                                                    body.find("input[id=sname2]").val(aducation2.sname);
+                                                    body.find("input[id=profession2]").val(aducation2.profession);
+                                                }else{
+                                                    body.find("input[id=adtime2]").val("");
+                                                    body.find("input[id=sname2]").val("");
+                                                    body.find("input[id=profession2]").val("");
+                                                }
+                                            }else{
+                                                body.find("input[id=adtime1]").val("");
+                                                body.find("input[id=sname1]").val("");
+                                                body.find("input[id=profession1]").val("");
+                                            }
+                                        }
+                                    });
+                                },error:function (err) {
+                                    console.log(err);
+                                }
+                            });
+                        }else{
+                            layer.confirm('尚未购买此简历，是否付费？', function (index) {
+                                var vNow = new Date();
+                                var sNow = "";
+                                sNow += String(vNow.getFullYear());
+                                sNow += String(vNow.getMonth() + 1);
+                                sNow += String(vNow.getDate());
+                                sNow += String(vNow.getHours());
+                                sNow += String(vNow.getMinutes());
+                                sNow += String(vNow.getSeconds());
+                                sNow += String(vNow.getMilliseconds());
+                                $.ajax({
+                                    url:'${pageContext.request.contextPath}/Enterprise/purchaseResume',
+                                    type:'post',
+                                    data:{"resumeid":resumeid,"tradeno":sNow},
+                                    dataType:'text',
+                                    success:function(msg){
+                                        if (msg ==="success"){
+                                            alert("付费成功！")
+                                            window.location.reload();
+                                        }else if (msg ==="deficiency"){
+                                            alert("余额不足，请先充值！")
+                                            window.location.href = path +'Enterprise/CompanyRecharge';
+                                        }else{
+                                            alert("付费失败")
+                                        }
+                                    },
+                                    error:function () {
+                                        alert("网络繁忙！")
+                                    }
+
+                                })
+                            })
+
+                        }
                     }
-                });
-                layer.open({
-                    type: 2,
-                    area: ['90%', '90%'],
-                    offset: ['10%', '10%'],
-                    btn: ['返回'],
-                    btn1: function(index, layero){
-                        layer.close(index);
-                    },
-                    content: path+'/school/useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-                    ,success: function(layero, index){
-                        layer.msg('查看用户简历');
-                    }
-                });
+            })
             }
             else if (event ==='update'){
-                if (data.interstate ==='未面试'){
-                    layer.msg('尚未完成面试无法应聘');
-                    return false;
-                }else if (data.employ ==='已录用'){
-                    layer.msg('已录用');
-                    return false;
-                }else{
-                    var interviewid = data.interviewid;
-                    $.ajax({
-                        url:path+"/Enterprise/companyEmploy",
-                        dataType:"text",
-                        type:"POST",
-                        data:{"interviewid":interviewid,"employ":'录用'},
-                        success:function (msg) {
-                            if (msg === 'success'){
-                                alert("应聘成功！");
-                                window.location.reload();
-                            }else{
-                                alert("录用失败")
-                            }
-                        },
-                        error:function () {
-                             alert("网络繁忙！")
-                        }
-                    })
-                }
+                layer.open({
+                    type: 2,
+                    area: ['80%', '80%'],
+                    offset: ['10%', '10%'],
+                    content: path+'/Enterprise/findPositionName'
+                    ,success: function(layero, index){
+                        var body=layer.getChildFrame('body',index);
+                        body.find("#resname").val(data.resname);
+                        body.find("#schoolname").val(data.schoolname);
+                        body.find("#uid").val(data.uid);
+                        body.find("#sid").val(data.sid);
+
+                    }
+                });
             }
         })
+        form.on('submit(search)',function () {
+            var myselect = document.getElementById("school");
+            var index = myselect.selectedIndex;
+            var sid = myselect.options[index].value;
+
+            var myselect1 = document.getElementById("profess");
+            var index1 = myselect1.selectedIndex;
+            var professid = myselect1.options[index1].value;
+
+            tableinf.reload({
+                url:path+"/Enterprise/findScreenResumeInfo",
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                },
+                where:{
+                    sid:sid,
+                    professid:professid
+                }
+            });
+        });
     })
 </script>
 

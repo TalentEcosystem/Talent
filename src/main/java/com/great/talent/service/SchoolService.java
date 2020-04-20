@@ -113,5 +113,14 @@ public class SchoolService
 	public int findUserResumeStatusCount(int uid){
 		return schoolMapper.findUserResumeStatusCount(uid);
 	}
+	public int userInsertInterview(Interview interview){
+		return schoolMapper.userInsertInterview(interview);
+	}
+	public Resume findResumeTel(String tel){
+		return schoolMapper.findResumeTel(tel);
+	}
+	public int insertresume(Resume resume){
+		return schoolMapper.insertresume(resume);
+	}
 
 }

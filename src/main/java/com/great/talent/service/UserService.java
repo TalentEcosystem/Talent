@@ -1,11 +1,15 @@
 package com.great.talent.service;
 
+import com.great.talent.entity.MyCollection;
+import com.great.talent.entity.RequestFeedback;
 import com.great.talent.entity.User;
 import com.great.talent.mapper.DeptMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService
@@ -21,6 +25,11 @@ public class UserService
 	@Transactional
 	public Integer userNameCheck(String uaccount){
 		return deptMapper.userNameCheck(uaccount);
+	}
+
+	@Transactional
+	public Integer findUserIdByUaccount(String uaccount){
+		return deptMapper.findUserIdByUaccount(uaccount);
 	}
 
 	@Transactional
@@ -53,4 +62,21 @@ public class UserService
 		return deptMapper.uheadUpLoad(user);
 	}
 
+	@Transactional
+	public List<MyCollection> findMyCollection(Map map){
+		return deptMapper.findMyCollection(map);
+	}
+	@Transactional
+	public Integer findMyCollectionCount(Map map){
+		return deptMapper.findMyCollectionCount(map);
+	}
+
+	@Transactional
+	public List<RequestFeedback> findRequestFeedback(Map map){
+		return deptMapper.findRequestFeedback(map);
+	}
+	@Transactional
+	public Integer findRequestFeedbackCount(Map map){
+		return deptMapper.findRequestFeedbackCount(map);
+	}
 }

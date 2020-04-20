@@ -43,7 +43,7 @@ public class HomePageService
 		return Str;
 	}
 	/**
-	 * 得到学校的信息
+	 * 得到产品包和讲师的信息
 	 * @return
 	 */
 	public String getStudyNews(){
@@ -52,6 +52,28 @@ public class HomePageService
 		String Str=gson.toJson(studyList);
 
 		return Str;
+	}
+	/**
+	 * 得到产品包和讲师的播放前四的信息信息
+	 * @return
+	 */
+	public String getClassCurri(){
+
+		List<Study> studyList=homePageMapper.getClassCurri();
+		String Str=gson.toJson(studyList);
+
+		return Str;
+	}
+	/**
+	 * 得到产品包和课程的详细信息
+	 * @return
+	 */
+	public Product getCourseDetails(String pid){
+		Integer proid=Integer.valueOf(pid);
+		Product product=homePageMapper.getCourseDetails(proid);
+		List<Chapter> chapterList=homePageMapper.getChapter(proid);
+		product.setDate(chapterList);
+		return product;
 	}
 
 	/**
@@ -65,6 +87,16 @@ public class HomePageService
 
 		return Str;
 	}
+
+	/**
+	 * 得到企业的简介信息
+	 * @return Company
+	 */
+	public Company getCompanyProfile(Integer cid){
+
+		Company company=homePageMapper.getCompanyProfile(cid);
+		return company;
+	};
 
 	/**
 	 * 统计人才 就业 岗位数
@@ -97,8 +129,6 @@ public class HomePageService
 	 * @return List
 	 */
 	public String getJobNews(Map map){
-
-
 		Diagis dataTable=new Diagis();
 		List<SerachJob> roleList=new ArrayList<>();
 		int num=homePageMapper.getJobNewsCount(map);
@@ -132,9 +162,53 @@ public class HomePageService
 		//工作经验
 		List<String> list1=homePageMapper.getJobExper();
 		String str=gson.toJson(list1);
-
 		return str;
 
+	}
+
+
+	/**
+	 * 企业发布的招聘信息
+	 * @return List
+	 */
+	public String getComJobNews(String cid){
+		Diagis dataTable=new Diagis();
+		Integer ci=Integer.valueOf(cid);
+		List<SerachJob> serachJobList=new ArrayList<>();
+		int num=homePageMapper.getComJobNewsCount(ci);
+		serachJobList=homePageMapper.getComJobNews(ci);
+		dataTable.setCode(0);
+		dataTable.setMsg("");
+		dataTable.setCount(num);
+		dataTable.setData(serachJobList);
+		String roleStr=gson.toJson(dataTable);
+		return roleStr;
+	}
+	/**
+	 * 企业招聘信息的条数
+	 * @param map
+	 * @return int
+	 */
+	public BackUserPageBean<Know> getTechnologyArea(Map map,Integer curPage,Integer pageSize,Integer domainid){
+
+//		List<Know> knowList=homePageMapper.getTechnologyArea(map);
+		Integer totalRerords = null;
+		List<Know> my_reports=null;
+		totalRerords=homePageMapper.getTechnologyAreaCount(map,curPage,pageSize,domainid);
+		my_reports=homePageMapper.getTechnologyArea(map,curPage,pageSize,domainid);
+		BackUserPageBean<Know> myReportBackUserPageBean=new BackUserPageBean<Know>(curPage,totalRerords,pageSize);
+		myReportBackUserPageBean.setList(my_reports);
+		return myReportBackUserPageBean;
+
+	}
+	/**
+	 * 得到领域的信息
+	 * @return
+	 */
+	public List<Know> getDomain(){
+
+		List<Know> knowList=homePageMapper.getDomain();
+		return knowList;
 	}
 
 

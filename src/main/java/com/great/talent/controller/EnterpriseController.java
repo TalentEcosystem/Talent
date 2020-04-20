@@ -1,21 +1,18 @@
 package com.great.talent.controller;
 
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.google.gson.Gson;
+import com.great.alipay.config.AlipayConfig;
 import com.great.talent.entity.*;
 import com.great.talent.service.AdminService;
 import com.great.talent.service.EnterpriseService;
 import com.great.talent.util.*;
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -350,7 +347,6 @@ public class EnterpriseController {
 
     /**
      * 查询福利
-     *
      * @param request
      * @return
      */
@@ -365,7 +361,6 @@ public class EnterpriseController {
 
     /**
      * 修改发布岗位记录的状态
-     *
      * @param request
      * @param response
      * @throws IOException
@@ -399,7 +394,6 @@ public class EnterpriseController {
 
     /**
      * 查询公司信息
-     *
      * @param session
      * @return
      */
@@ -414,6 +408,21 @@ public class EnterpriseController {
         return mv;
     }
 
+    /**
+     * 充值页
+     * @param session
+     * @return
+     */
+    @RequestMapping("/CompanyRecharge")
+    public ModelAndView CompanyRecharge(HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        Admin admin = (Admin) session.getAttribute("admin");
+        Company company = enterpriseService.findCompanyInfo(admin.getAid());
+//        System.out.println(company.toString());
+        session.setAttribute("company", company);
+        mv.setViewName("/Enterprise/Recharge");
+        return mv;
+    }
     /**
      * 图片上传
      * @param file
@@ -576,6 +585,7 @@ public class EnterpriseController {
         int uid = enterpriseService.companyEmploy(interview);
         int flag = enterpriseService.updateResumeInfo(uid);
         if (flag>0){
+            enterpriseService.updateApplicantsNum(interview.getPositionid());
             return "success";
         }else{
             return "error";
@@ -762,8 +772,226 @@ public class EnterpriseController {
             diagis.setCode(0);
             diagis.setMsg("");
             diagis.setCount((Integer) map.get("count"));
-            diagis.setData((List<Interview>) map.get("screenList"));
+            diagis.setData((List<Resume>) map.get("screenList"));
             ResponseUtils.outJson(response, diagis);
         }
     }
+
+    @RequestMapping("/findPositionName")
+    public ModelAndView findPositionName(HttpServletRequest request){
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        List<Position> positionList = enterpriseService.findPositionName(admin.getAid());
+        mv.addObject("positionList",positionList);
+        mv.setViewName("Enterprise/CompanyInvitation");
+        return mv;
+    }
+    /**
+     * 筛选简历公司邀请面试
+     * @param interview
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/addInterviews")
+    @ResponseBody
+    public void addInterviews(Interview interview,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (interview != null){
+            interview.setIntertime(new Date());
+            interview.setCheck("已查看");
+            interview.setInvate("已邀请");
+            int flag = enterpriseService.addInterViews(interview);
+            if (flag > 0){
+                response.getWriter().print("success");
+            }
+        }else{
+            response.getWriter().print("error");
+        }
+    }
+
+    /**
+     * 充值添加订单
+     * @param finance
+     * @return
+     * @throws AlipayApiException
+     */
+    @RequestMapping("/addFinances")
+    @ResponseBody
+    public String addFinances(Finance finance) throws AlipayApiException {
+        System.out.println(finance.toString());
+        AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id,
+                AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+        //设置请求参数
+        AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
+        alipayRequest.setReturnUrl(AlipayConfig.return_url);
+        alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
+
+        //商户订单号，商户网站订单系统中唯一订单号，必填WIDout_trade_norequest.getParameter("12").getBytes("ISO-8859-1"),"UTF-8"
+        String out_trade_no = new String(String.valueOf(finance.getTradeno()));
+        //付款金额，必填WIDtotal_amount
+        String total_amount = new String(String.valueOf(finance.getPrice()));
+        //订单名称，必填WIDsubject
+        String subject = new String(finance.getCompanyname()+"充值");
+        //商品描述，可空WIDbody
+        String body = new String("充值");
+        alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
+                + "\"total_amount\":\""+ total_amount +"\","
+                + "\"subject\":\""+ subject +"\","
+                + "\"body\":\""+ body +"\","
+                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+        String result = alipayClient.pageExecute(alipayRequest).getBody();
+        return  result;
+
+    }
+
+    /**
+     * 支付宝同步回调方法
+     * @param request
+     * @param out_trade_no
+     * @param total_amount
+     * @param subject
+     * @param body
+     * @param lows
+     * @param highs
+     * @param kcname
+     * @return
+     */
+    @RequestMapping("/paymentUrl")
+    public ModelAndView returnUrl(HttpServletRequest request,String out_trade_no,String total_amount,String subject,String body,String lows,String highs,String kcname){
+        System.out.println("同步通知支付成功");
+        Finance finance = new Finance();
+        Company company = (Company) request.getSession().getAttribute("company");
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        finance.setCid(company.getCid());
+        finance.setCompanyname(company.getCompanyname());
+        finance.setFinancetype("充值");
+        finance.setFinancetime(new Date());
+        finance.setTradeno(out_trade_no);
+        finance.setPrice(Double.valueOf(total_amount).intValue());
+        finance.setFinancestate("正常");
+        System.out.println(finance.toString());
+        int flag = enterpriseService.addFinances(finance);
+        Map map = new HashMap();
+        map.put("money",Double.valueOf(total_amount).intValue());
+        map.put("aid",admin.getAid());
+        if (flag>0){
+            enterpriseService.EnterpriseRecharge(map);
+            mv.setViewName("/Enterprise/Transition");
+        }else{
+            mv.setViewName("/Enterprise/Error");
+        }
+        return mv;
+    }
+
+    /**
+     * 支付宝异步回调
+     * @param request
+     * @param out_trade_no
+     * @param total_amount
+     * @return
+     */
+    @RequestMapping("/paymentUrls")
+    public ModelAndView paymentUrlS(HttpServletRequest request,String out_trade_no,String total_amount){
+        ModelAndView mv = new ModelAndView();
+        System.out.println("异步通知支付成功");
+        mv.setViewName("/Enterprise/Transition");
+        return mv;
+    }
+
+    /**
+     * 查询订单信息
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/findFinances")
+    @ResponseBody
+    public void findFinances(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String page = request.getParameter("page");
+        String limit = request.getParameter("limit");
+        String tradeno = request.getParameter("tradeno");
+        String startTime = request.getParameter("startTime");
+        String endTime = request.getParameter("endTime");
+        int pageInt = Integer.valueOf(page);
+        int limitInt = Integer.parseInt(limit);
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        Company company = enterpriseService.findCompanyInfo(admin.getAid());
+        HashMap<String, Object> condition = new HashMap<>();
+        if (null != tradeno && !"".equals((tradeno.trim())) && !"0".equals(tradeno.trim())) {
+            condition.put("tradeno", tradeno);
+        }
+        if (null != startTime && !"".equals((startTime.trim()))) {
+            condition.put("startTime", startTime);
+        }
+        if (null != endTime && !"".equals((endTime.trim()))) {
+            condition.put("endTime", endTime);
+        }
+        int pageInts = (pageInt - 1) * limitInt;
+        condition.put("pageInts", pageInts);
+        condition.put("limitInt", limitInt);
+        condition.put("cid",company.getCid());
+        Map map = enterpriseService.findFinances(condition);
+        System.out.println(map.get("financeList"));
+        if (map.size() != 0) {
+            diagis.setCode(0);
+            diagis.setMsg("");
+            diagis.setCount((Integer) map.get("count"));
+            diagis.setData((List<Finance>) map.get("financeList"));
+            ResponseUtils.outJson(response, diagis);
+        }
+    }
+
+    /**
+     * 判断简历是否被付费过
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/JudgeResume")
+    @ResponseBody
+    public void JudgeResume(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String resumeid = request.getParameter("resumeid");
+        int count = enterpriseService.findFinanceInterview(Integer.parseInt(resumeid));
+        if (count != 0){
+            response.getWriter().print("success");
+        }else{
+            response.getWriter().print("error");
+        }
+    }
+
+    /**
+     * 购买简历
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/purchaseResume")
+    @ResponseBody
+    public void purchaseResume(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String resumeid = request.getParameter("resumeid");
+        String tradeno = request.getParameter("tradeno");
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        Company company = enterpriseService.findCompanyInfo(admin.getAid());
+        Finance finances = new Finance();
+        finances.setPrice(10);
+        finances.setFinancetype("支出");
+        finances.setFinancestate("正常");
+        finances.setFinancetime(new Date());
+        finances.setTradeno(tradeno);
+        finances.setResumeid(Integer.parseInt(resumeid));
+        finances.setCid(company.getCid());
+        finances.setCompanyname(company.getCompanyname());
+        if (admin.getMoney()>=10){
+            int flag = enterpriseService.purchaseResume(finances);
+            if(flag > 0){
+                admin.setMoney(10);
+                enterpriseService.reduceCompanyMoney(admin);
+                response.getWriter().print("success");
+            }else{
+                response.getWriter().print("error");
+            }
+        }else{
+            response.getWriter().print("deficiency");
+        }
+    }
+
 }
