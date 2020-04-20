@@ -42,8 +42,7 @@
 			<div class="layui-upload-list" id="img_upload"></div>
 			<button type="button" class="layui-btn" id="test8">
 				<i class="layui-icon">&#xe67c;</i>上传图片
-			</button><%--			上传绑定按钮--%>
-			<button id="hideupload1" type="button" style="display:none;"></button>
+			</button>
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -166,7 +165,8 @@
 			,url: '${pageContext.request.contextPath}/school/fillOutResume' //上传接口
 			,auto:false
 			,async:false
-			,accept:'file'
+			,multiple:false
+			,accept:'images'
 			,method:'POST'
 			,enctype:'multipart/form-data'
 			,bindAction: '#submit'

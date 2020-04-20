@@ -1,17 +1,25 @@
 package com.great.talent.entity;
 
 public class Company {
+    //企业id
     private Integer cid;
     private String companyname;
     private String companyadd;
     private String companyphone;
+    //企业照片
     private String companypic;
+    //企业简介
     private String companypro;
+    //企业性质（私有 国有）
     private String companynature;
+    //企业人数
     private Integer companynum;
+    //企业主营的业务
     private String companybusiness;
+    //营业执照
     private String permit;
     private String company2;
+    //招收总人数
     private int num;
 
     public Company() {

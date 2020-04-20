@@ -97,7 +97,7 @@
 				layer.open({
 					type: 2,
 					area: ['1000px', '100%'],
-					btn: ['返回'],
+					btn: ['保存','返回'],
 					btn1: function(index, layero){
 						layer.close(index);
 					},
@@ -106,6 +106,18 @@
 						layer.msg('导出人才');
 					}
 				});
+			}else if(type=='outputfild'){
+				$.ajax({
+					//这里需要把查询的条件发送到后台，还需要把当前页发送过去
+					url:'${pageContext.request.contextPath}/school/outputTalent',
+					type:'post',
+					success:function (msg) {
+						layer.msg(msg);
+					},
+					error:function () {
+						layer.msg("导出失败");
+					}
+				})
 			}
 
 		});
@@ -141,59 +153,83 @@
 								 aducation2=JSON.parse(msg.split("%")[2])[1];
 							 }
 						 }
+						layer.open({
+							type: 2,
+							area: ['1000px', '100%'],
+							btn: ['返回'],
+							btn2: function(index, layero){
+								layer.close(index);
+							},
+							content: 'useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+							,success: function(layero, index){
+
+								var body=layer.getChildFrame('body',index);
+								body.find("input[id=resname1]").val("");
+								body.find("input[id=schoolname1]").val("");
+								body.find("input[id=rebirth1]").val("");
+								body.find("input[id=professname]").val("");
+								body.find("input[id=repol]").val("");
+								body.find("input[id=degreename]").val("");
+								body.find("input[id=retel]").val("");
+								body.find("input[id=readdress]").val("");
+								body.find("input[id=hidepic]").val("");
+								body.find("input[id=reskill12]").val("");
+								body.find("input[id=reeva12]").val("");
+								body.find("input[id=resname1]").val(resume.resname);
+								body.find("input[id=schoolname1]").val(resume.schoolname);
+								body.find("input[id=rebirth1]").val(resume.rebirth);
+								body.find("input[id=professname]").val(resume.professname);
+								body.find("input[id=repol]").val(resume.repol);
+								body.find("input[id=degreename]").val(resume.degreename);
+								body.find("input[id=retel]").val(resume.retel);
+								body.find("input[id=readdress]").val(resume.readdress);
+								body.find("input[id=hidepic]").val(resume.repic);
+								body.find("input[id=reskill12]").val(resume.reskill);
+								body.find("input[id=reeva12]").val(resume.reeva);
+								if(social1!=null){
+									body.find("input[id=socialtime1]").val(social1.socialtime);
+									body.find("input[id=company1]").val(social1.company);
+									body.find("input[id=content1]").val(social1.content);
+									if(social2!=null){
+										body.find("input[id=socialtime2]").val(social2.socialtime);
+										body.find("input[id=company2]").val(social2.company);
+										body.find("input[id=content2]").val(social2.content);
+									}else{
+										body.find("input[id=socialtime2]").val("");
+										body.find("input[id=company2]").val("");
+										body.find("input[id=content2]").val("");
+									}
+								}else{
+									body.find("input[id=socialtime1]").val("");
+									body.find("input[id=company1]").val("");
+									body.find("input[id=content1]").val("");
+								}
+								if(aducation1!=null){
+									body.find("input[id=adtime1]").val(aducation1.adtime);
+									body.find("input[id=sname1]").val(aducation1.sname);
+									body.find("input[id=profession1]").val(aducation1.profession);
+									if(aducation2!=null){
+										body.find("input[id=adtime2]").val(aducation2.adtime);
+										body.find("input[id=sname2]").val(aducation2.sname);
+										body.find("input[id=profession2]").val(aducation2.profession);
+									}else{
+										body.find("input[id=adtime2]").val("");
+										body.find("input[id=sname2]").val("");
+										body.find("input[id=profession2]").val("");
+									}
+								}else{
+									body.find("input[id=adtime1]").val("");
+									body.find("input[id=sname1]").val("");
+									body.find("input[id=profession1]").val("");
+								}
+
+							}
+						});
 					},error:function (err) {
 						console.log(err);
 					}
 				});
-				layer.open({
-					type: 2,
-					area: ['1000px', '100%'],
-					btn: ['返回'],
-					btn1: function(index, layero){
-						layer.close(index);
-					},
-					content: 'useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-					,success: function(layero, index){
-						console.log(social1.length);
-						var form=layui.form;
-						var body=layer.getChildFrame('body',index);
-						body.find("input[id=resname1]").val(resume.resname);
-						body.find("input[id=schoolname1]").val(resume.schoolname);
-						body.find("input[id=rebirth1]").val(resume.rebirth);
-						body.find("input[id=professname]").val(resume.professname);
-						body.find("input[id=repol]").val(resume.repol);
-						body.find("input[id=degreename]").val(resume.degreename);
-						body.find("input[id=retel]").val(resume.retel);
-						body.find("input[id=readdress]").val(resume.readdress);
-						body.find("input[id=hidepic]").val(resume.repic);
-						body.find("input[id=reskill12]").val(resume.reskill);
-						body.find("input[id=reeva12]").val(resume.reeva);
-						if(social1!=null){
-							body.find("input[id=socialtime1]").val(social1.socialtime);
-							body.find("input[id=company1]").val(social1.company);
-							body.find("input[id=content1]").val(social1.content);
-							if(social2!=null){
-								body.find("input[id=socialtime2]").val(social2.socialtime);
-								body.find("input[id=company2]").val(social2.company);
-								body.find("input[id=content2]").val(social2.content);
-							}
-						}
-						if(aducation1!=null){
-							body.find("input[id=adtime1]").val(aducation1.adtime);
-							body.find("input[id=sname1]").val(aducation1.sname);
-							body.find("input[id=profession1]").val(aducation1.profession);
-							if(aducation2!=null){
-								body.find("input[id=adtime2]").val(aducation2.adtime);
-								body.find("input[id=sname2]").val(aducation2.sname);
-								body.find("input[id=profession2]").val(aducation2.profession);
-							}
-						}
 
-
-
-
-					}
-				});
 
 
 

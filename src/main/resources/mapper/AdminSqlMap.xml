@@ -425,8 +425,8 @@
 
     <!--新增产品包-->
     <insert id="addProduct" parameterType="Product">
-        insert into tbl_product (proname, starttime, endtime, period, teacherid, prointro, procontent, prourl, procount, prostate, domainid)
-        values (#{proname},#{starttime},#{endtime},#{period},#{teacherid},#{prointro},#{procontent},#{prourl},0,'启用',#{domainid})
+        insert into tbl_product (proname, starttime, endtime, period, teacherid, prointro, procontent, propic, procount, prostate, domainid)
+        values (#{proname},#{starttime},#{endtime},#{period},#{teacherid},#{prointro},#{procontent},#{propic},0,'启用',#{domainid})
     </insert>
 
     <!--启用产品包-->
@@ -442,7 +442,36 @@
     <!--修改产品包-->
     <update id="updateProduct" parameterType="Product">
         update tbl_product set proname=#{proname},endtime=#{endtime},period=#{period},teacherid=#{teacherid},
-        prointro=#{prointro}, procontent=#{procontent}, prourl=#{prourl}, procount=#{procount},domainid=#{domainid}
+        prointro=#{prointro}, procontent=#{procontent}, propic=#{propic}, procount=#{procount},domainid=#{domainid}
         where productid=#{productid}
     </update>
+
+    <!--查询对应领域下的产品包,存入树组件对象-->
+    <select id="findConfigKnow" parameterType="java.lang.String" resultType="Config">
+        select knowledgeid as id,knowname as title from tbl_knowledge where domainid=#{domainid}
+    </select>
+
+    <!--查询对应产品包下的章节,存入树组件对象-->
+    <select id="findConfigChapter" parameterType="java.lang.String" resultType="Config">
+        select chapterid as id,chname as title from tbl_chapter where knowledgeid=#{knowledgeid}
+    </select>
+
+    <!--查询对应产品包下已经分配的章节-->
+    <select id="hasConfig" parameterType="java.lang.String" resultType="Config">
+        select a.chapterid as id,a.chname as title from tbl_chapter a left join tbl_config b
+        on a.chapterid=b.chapterid where b.productid=#{productid}
+    </select>
+
+	<!--删除产品包的章节-->
+	<delete id="deleteConfig" parameterType="java.lang.String">
+		delete from tbl_config where productid=#{productid}
+	</delete>
+
+	<!--分配章节-->
+	<insert id="configChapter" parameterType="java.util.List">
+		insert into tbl_config (productid, chapterid) values
+		<foreach collection="list" index="index" separator="," item="item">
+			(#{item.productid},#{item.chapterid})
+		</foreach>
+	</insert>
 </mapper>

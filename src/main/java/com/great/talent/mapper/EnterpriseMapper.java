@@ -3,9 +3,11 @@ package com.great.talent.mapper;
 import com.great.talent.entity.*;
 import com.sun.jdi.IntegerValue;
 import com.sun.tools.corba.se.idl.InterfaceGen;
+import javafx.geometry.Pos;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import javax.swing.*;
 import java.util.Date;
@@ -38,11 +40,19 @@ public interface EnterpriseMapper {
     public int updateResumeInfo(int uid);
     public List<Interview> companyEmployInfo(Map map);//录用人员信息
     public int companyEmployInfoNum(Map map);//录用人员信息数量
-    public int weekJobinfo(@Param("day") String day, @Param("companyid") int companyid);
-    public int monthJobinfo(@Param("day") String day,@Param("day1") String day1, @Param("companyid") int companyid);
+    public int weekJobinfo(@Param("day") String day, @Param("companyid") int companyid);//周统计
+    public int monthJobinfo(@Param("day") String day,@Param("day1") String day1, @Param("companyid") int companyid);//月统计
 
-    public List<Interview> ScreeningResume(Map map);
-    public Integer ScreeningResumeNum(Map map);
+    public List<Resume> ScreeningResume(Map map);//筛选面试信息
+    public Integer ScreeningResumeNum(Map map);//筛选面试数
+    public int addInterViews(Interview interview);//面试邀请
+    public int addFinances(Finance finance);//增加订单记录
+    public int addCompanyMoney(Map map);//充值
+    public List<Finance> findFinances(Map map);//查询订单
+    public int findFinanceNum(Map map);//查询订单数
+    public int findFinanceInterview(int resumeid);//查询是否有此订单
+    public int purchaseResume(Finance finance);//购买简历
+    public int reduceCompanyMoney(Admin admin);//账户支出
     /**
      * 校验用户手机是否被注册
      * @param tel
@@ -112,4 +122,27 @@ public interface EnterpriseMapper {
     @Select("select * from tbl_school")
     public List<SchoolMsg> findSchool();
 
+    /**
+     * 查询还未招收满的岗位
+     * @param aid
+     * @return
+     */
+    @Select("select positionid,positionname from tbl_position where aid = #{aid} and applicantsnum < maxnum")
+    public List<Position> findPositionName(Integer aid);
+
+    /**
+     * 增加岗位已招收人数
+     * @param positionid
+     * @return
+     */
+    @Update("update tbl_position set applicantsnum = applicantsnum +1 where positionid = #{positionid}")
+    public int updateApplicantsnum(Integer positionid);
+
+    /**
+     * 账户金额充值
+     * @param map
+     * @return
+     */
+    @Update("update tbl_admin set money = money + #{money} where aid = #{aid}")
+    public int EnterpriseRecharge(Map map);
 }

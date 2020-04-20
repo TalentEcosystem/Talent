@@ -1,6 +1,7 @@
 package com.great.talent.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Product
 {
@@ -14,10 +15,15 @@ public class Product
 	private String teacherinfo;
 	private String prourl;
 	private String prointro;
+	private String propic;
 	private String procontent;
 	private int procount;
 	private String prostate;
 	private int domainid;
+
+//	产品包的章节数
+	private int num;
+	private List<?> date;
 
 	public Product()
 	{
@@ -163,9 +169,34 @@ public class Product
 		this.domainid = domainid;
 	}
 
-	@Override
-	public String toString()
+	public String getPropic()
 	{
-		return "Product{" + "productid=" + productid + ", proname='" + proname + '\'' + ", starttime=" + starttime + ", endtime=" + endtime + ", period='" + period + '\'' + ", teacherid=" + teacherid + ", teachername='" + teachername + '\'' + ", teacherinfo='" + teacherinfo + '\'' + ", prourl='" + prourl + '\'' + ", prointro='" + prointro + '\'' + ", procontent='" + procontent + '\'' + ", procount=" + procount + ", prostate='" + prostate + '\'' + ", domainid=" + domainid + '}';
+		return propic;
 	}
+
+	public void setPropic(String propic)
+	{
+		this.propic = propic;
+	}
+
+	public List<?> getDate()
+	{
+		return date;
+	}
+
+	public void setDate(List<?> date)
+	{
+		this.date = date;
+	}
+
+	public int getNum()
+	{
+		return num;
+	}
+
+	public void setNum(int num)
+	{
+		this.num = num;
+	}
+
 }

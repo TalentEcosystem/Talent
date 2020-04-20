@@ -16,9 +16,7 @@
 	%>
 	<script src=<%=path+"/js/jquery-3.4.1.js" %>></script>
 	<script src=<%=path+"/js/jquery-form.js" %>></script>
-	<link rel="stylesheet" href=<%=path+"/css/personal.css"%>>
 	<link rel="stylesheet" href=<%=path+"/js/layui/css/layui.css" %>>
-	<script type="text/javascript" src=<%=path+"/js/front/personals.js" %>></script>
 	<script type="text/javascript" src=<%=path+"/js/layui/layui.js" %>></script>
 	<script type="text/javascript" src=<%=path+"/js/json2.js" %>></script>
 </head>
