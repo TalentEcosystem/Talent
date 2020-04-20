@@ -1,9 +1,7 @@
 package com.great.talent.controller;
 
 import com.google.gson.Gson;
-import com.great.talent.entity.MyCollection;
-import com.great.talent.entity.RequestFeedback;
-import com.great.talent.entity.User;
+import com.great.talent.entity.*;
 import com.great.talent.service.UserService;
 import com.great.talent.util.Diagis;
 import com.great.talent.util.MD5Utils;
@@ -23,6 +21,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -121,9 +121,17 @@ public class UserController
 	}
 	//个人中心-学习记录
 	@RequestMapping("/study")
-	public String study(HttpServletRequest request){
+	public String study(HttpServletRequest request)throws ParseException{
 		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
 		if(null!=str1){
+			int uid = userService.findUserIdByUaccount(str1);
+			List<MyStudy> list = userService.findMyStudy(uid);
+			for (int i=0;i<list.size();i++){
+				SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String sDate=sdf2.format(list.get(i).getStudytime());
+				list.get(i).setStudytime2(sDate);
+			}
+			request.getSession().setAttribute("myStudy",list);
 			return "user/personal_study";
 		}else {
 			return "user/login";
@@ -139,7 +147,27 @@ public class UserController
 			return "user/login";
 		}
 	}
-
+	//找工作-岗位详情
+	@RequestMapping("/jobDetails")
+	public String jobDetails(HttpServletRequest request){
+		JobData jobData = (JobData) request.getSession().getAttribute("jobData");//用户名
+		if (null!=jobData){
+		    return "user/job_details";
+		}else {
+			return "homepage/searchJob";
+		}
+	}
+	//个人中心-帮助中心
+	@RequestMapping("/help")
+	public String help(HttpServletRequest request){
+		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
+		if(null!=str1){
+			return "user/personal_help";
+		}else {
+			return "user/login";
+		}
+	}
+	//用户登陆
 	@RequestMapping("/userLogin")
 	@ResponseBody
 	public void userLogin(HttpServletRequest request, HttpServletResponse response)throws IOException{
@@ -174,7 +202,7 @@ public class UserController
 
 
 	}
-
+	//验证码
 	@RequestMapping("/loginCode")
 	public void cherkCode(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -223,7 +251,7 @@ public class UserController
 			e.printStackTrace();
 		}
 	}
-
+	//用户注册
 	@RequestMapping("/userReg")
 	@ResponseBody
 	public void userReg(HttpServletRequest request, HttpServletResponse response)throws IOException{
@@ -247,7 +275,7 @@ public class UserController
 			response.getWriter().print("UserAlreadyExists");
 		}
 	}
-
+	//根据用户名查用户手机号
 	@RequestMapping("/findPhoneByAccount")
 	@ResponseBody
 	public void findPhoneByAccount(HttpServletRequest request, HttpServletResponse response)throws IOException{
@@ -278,7 +306,6 @@ public class UserController
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(PhoneCode.code);
 	}
-
 	//找回-新密码修改
 	@RequestMapping("/updatePwd")
 	@ResponseBody
@@ -295,7 +322,6 @@ public class UserController
 			response.getWriter().print("error");
 		}
 	}
-
 	//个人中心-个人信息修改
 	@RequestMapping("/updatePersonal")
 	@ResponseBody
@@ -315,7 +341,6 @@ public class UserController
 			response.getWriter().print("error");
 		}
 	}
-
 	//个人中心-密码修改
 	@RequestMapping("/updatePsd")
 	@ResponseBody
@@ -340,7 +365,6 @@ public class UserController
 		}
 
 	}
-
 	//个人中心-手机号修改
 	@RequestMapping("/updatePhone")
 	@ResponseBody
@@ -358,7 +382,7 @@ public class UserController
 			response.getWriter().print("error");
 		}
 	}
-
+    //个人中心-头像修改
 	@RequestMapping("/uheadUpLoad")
 	@ResponseBody
 	public void uheadUpLoad(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response)throws IOException {
@@ -383,7 +407,7 @@ public class UserController
 			ResponseUtils.outHtml(response, "{\"code\":3, \"msg\":\"\", \"data\":{}}");
 		}
 	}
-
+	//个人中心-我的收藏
 	@RequestMapping("/myCollection")
 	@ResponseBody
 	public Diagis myCollection(HttpServletRequest request, HttpServletResponse response)throws IOException {
@@ -416,7 +440,7 @@ public class UserController
 		}
 		return null;
 	}
-
+	//个人中心-求职反馈
 	@RequestMapping("/myRequestFeedback")
 	@ResponseBody
 	public Diagis myRequestFeedback(HttpServletRequest request, HttpServletResponse response)throws IOException {
@@ -448,5 +472,35 @@ public class UserController
 			return diagis;
 		}
 		return null;
+	}
+	//找工作-岗位详情
+	@RequestMapping("/checkJob")
+	@ResponseBody
+	public void checkJob(HttpServletRequest request, HttpServletResponse response)throws IOException,ParseException {
+		String indname = request.getParameter("indname");
+		String companyname = request.getParameter("companyname");
+		String positionname = request.getParameter("positionname");
+		String positiontime1 = request.getParameter("positiontime");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZ");
+		Date date = sdf.parse(positiontime1);
+		SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String sDate=sdf2.format(date);
+		Date positiontime = sdf2.parse(sDate);
+		JobData jobData1 = new JobData();
+		jobData1.setPositiontime(positiontime);
+		jobData1.setPositionname(positionname);
+		jobData1.setCompanyname(companyname);
+		jobData1.setIndname(indname);
+		JobData jobData = userService.checkJob(jobData1);
+		Map<String,Object> map = new LinkedHashMap<>();
+		map.put("positionid",jobData.getPositionid());
+		List<Welfare> list= userService.findWelfare(map);
+		if (null!=jobData&&!"".equals(jobData)){
+			response.getWriter().print("1111");
+			request.getSession().setAttribute("jobData",jobData);
+			request.getSession().setAttribute("welfare",list);
+		}else {
+			response.getWriter().print("error");
+		}
 	}
 }

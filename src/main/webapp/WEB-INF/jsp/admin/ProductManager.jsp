@@ -156,7 +156,18 @@
 					})
 				});
 			}else if(obj.event === 'edit'){
-				alert("暂未完成")
+				layer.open({
+					type:2
+					,title:"配置章节"
+					,area:['600px','600px']
+					,shadeClose: true //点击遮罩不会关闭
+					,content:path+"/admin/path/ChapterConfig"
+					,success : function(layero, index) {
+						var body = layer.getChildFrame('body',index);
+						body.find("#domainid").val(data.domainid);
+						body.find("#productid").val(data.productid);
+					}
+				});
 			}
 		});
 

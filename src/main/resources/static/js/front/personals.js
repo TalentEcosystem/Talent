@@ -7,19 +7,19 @@ $(document).ready(function () {
 		$(this).find("#TopNavMorePopup").stop(true,true).slideUp();
     });
 
-	//侧边栏二级导航
-	$('.NavLeftBox.twoNav').click(function(){
-	    if($(this).attr("class")=="NavLeftBox twoNav on"){
-			$(this).removeClass('on');
-		    $(this).find('span.up.down').removeClass('down');
-			$(this).next('ul').css('display','block');
-		}
-		else{
-		   $(this).addClass('on');
-		   $(this).find('span.up').addClass('down');
-		   $(this).next('ul').css('display','none');
-		}
-	})
+	// //侧边栏二级导航
+	// $('.NavLeftBox.twoNav').click(function(){
+	//     if($(this).attr("class")=="NavLeftBox twoNav on"){
+	// 		$(this).removeClass('on');
+	// 	    $(this).find('span.up.down').removeClass('down');
+	// 		$(this).next('ul').css('display','block');
+	// 	}
+	// 	else{
+	// 	   $(this).addClass('on');
+	// 	   $(this).find('span.up').addClass('down');
+	// 	   $(this).next('ul').css('display','none');
+	// 	}
+	// })
 	//
 	// //简历状态  已公开 已隐藏
 	// $('.statusjl').click(function(){
@@ -127,11 +127,11 @@ $(document).ready(function () {
   //
   //
   //
-  // //个人中心-帮助中心
-  // $('.quesBox a').click(function(){
-  //    $('.quesBox').removeClass('show');
-	//  $(this).parent().addClass('show');
-  // })
+  //个人中心-帮助中心
+  $('.quesBox a').click(function(){
+     $('.quesBox').removeClass('show');
+	 $(this).parent().addClass('show');
+  })
   //
   //
   // //申请的职位  选项卡

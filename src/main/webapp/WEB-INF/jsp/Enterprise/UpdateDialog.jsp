@@ -276,7 +276,7 @@
                 traditional: true,
                 success: function (datas) {
                     if (datas == 1111){
-                       alert("修改成功")
+                       alert("修改成功");
                     $("#company").empty();
                     $("#name").empty();
                     $("#address").empty();
