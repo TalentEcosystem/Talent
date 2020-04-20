@@ -314,4 +314,67 @@
         insert into tbl_interview(uid,positionid,sid,intertime,`check`,invate) values (#{uid},#{positionid},#{sid},#{intertime},#{check},#{invate})
     </insert>
 
+<!-- 充值插入订单   -->
+    <insert id="addFinances" parameterType="Finance">
+    insert into tbl_finance (financeid, cid, companyname,
+      price, financetype, financetime,
+      tradeno, financestate)
+    values (#{financeid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{companyname,jdbcType=VARCHAR},
+      #{price,jdbcType=INTEGER}, #{financetype,jdbcType=VARCHAR}, #{financetime,jdbcType=TIMESTAMP},
+      #{tradeno,jdbcType=INTEGER}, #{financestate,jdbcType=VARCHAR})
+  </insert>
+<!-- 企业的平台充值  -->
+   <update id="addCompanyMoney" parameterType="java.util.Map">
+       update tbl_admin set money = money + #{money} where aid = #{aid}
+   </update>
+<!-- 查询订单 -->
+    <select id="findFinances" resultType="Finance" parameterType="java.util.Map">
+        select * from tbl_finance
+        <where>
+            <if test="tradeno != null">
+                and tradeno like concat('%',#{tradeno},'%')
+            </if>
+            <if test="startTime != null and startTime !=''">
+                and financetime &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and startTime !=''">
+                and financetime &lt;= #{endTime}
+            </if>
+            and cid = #{cid}
+        </where>
+        limit #{pageInts},#{limitInt}
+    </select>
+<!--查询订单数-->
+    <select id="findFinanceNum" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) from tbl_finance
+        <where>
+            <if test="tradeno != null">
+                and tradeno like concat('%',#{tradeno},'%')
+            </if>
+            <if test="startTime != null and startTime !=''">
+                and financetime &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and startTime !=''">
+                and financetime &lt;= #{endTime}
+            </if>
+            and cid = #{cid}
+        </where>
+    </select>
+<!--查询是否有订单记录-->
+    <select id="findFinanceInterview" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(*) from tbl_finance where resumeid = #{resumeid}
+    </select>
+<!-- 购买简历-->
+    <insert id="purchaseResume" parameterType="Finance">
+        insert into tbl_finance (cid, companyname,
+      price, financetype, financetime,
+      tradeno, financestate,resumeid)
+    values(#{cid,jdbcType=INTEGER}, #{companyname,jdbcType=VARCHAR},
+      #{price,jdbcType=INTEGER}, #{financetype,jdbcType=VARCHAR}, #{financetime,jdbcType=TIMESTAMP},
+      #{tradeno,jdbcType=INTEGER}, #{financestate,jdbcType=VARCHAR},#{resumeid,jdbcType=INTEGER})
+    </insert>
+<!-- 账户支出 -->
+    <update id="reduceCompanyMoney" parameterType="Admin">
+         update tbl_admin set money = money - #{money} where aid = #{aid}
+    </update>
 </mapper>

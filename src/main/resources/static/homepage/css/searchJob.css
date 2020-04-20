@@ -16,7 +16,7 @@ input{ border:0; outline:0}
 .topDiv .topL .logo{ width:225px; float:left; height:42px}
 .topDiv .topL .logo img{}
 .topDiv .topL img{ float:left}
-.topDiv .topR{ float:right;width: 500px;margin-top: 10px;}
+.topDiv .topR{ float:right;width: 500px;margin-top: 0px;}
 .topDiv .topR .topR0{ float:right; height: 19px; margin-top: 10px;line-height: 22px; padding-bottom:5px;}
 .topDiv .topR .topR0 a{ color: #434343;}
 .topDiv .topR .topR1{background: url(../../images/4.png) no-repeat;width: 50px;padding-left: 25px;cursor: pointer;}

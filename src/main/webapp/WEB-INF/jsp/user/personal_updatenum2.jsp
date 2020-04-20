@@ -93,7 +93,7 @@
 				<a href=<%=path+"/user/personal" %> class="a7">个人信息</a>
 			</div>
 			<div class="NavLeftBox">
-				<a href="personal_jl.html" class="a2">我的简历</a>
+				<a href=<%=path+"/school/findUserResume" %> class="a2">我的简历</a>
 			</div>
 			<div class="NavLeftBox">
 				<a href=<%=path+"/user/study"%> class="a3">学习记录</a>
@@ -105,7 +105,7 @@
 				<a href=<%=path+"/user/requestFeedback" %> class="a6">求职反馈</a>
 			</div>
 			<div class="NavLeftBox">
-				<a href="personal_help.html" class="a8">帮助中心</a>
+				<a href=<%=path+"/user/help" %> class="a8">帮助中心</a>
 			</div>
 		</div>
 		<div class="navLeftBottom">

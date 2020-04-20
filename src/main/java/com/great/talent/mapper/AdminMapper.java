@@ -125,4 +125,14 @@ public interface AdminMapper {
 	public void deleteProduct(@Param("productid") String productid);
 
 	public void updateProduct(Product product);
+
+	public List<Config> findConfigKnow(@Param("domainid") String domainid);
+
+	public List<Config> findConfigChapter(@Param("knowledgeid") String knowledgeid);
+
+	public List<Config> hasConfig(@Param("productid") String productid);
+
+	public void deleteConfig(@Param("productid") String productid);
+
+	public void configChapter(List list);
 }

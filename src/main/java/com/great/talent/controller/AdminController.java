@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Array;
 import java.util.*;
 
 @Controller
@@ -761,7 +762,7 @@ public class AdminController
 		String name=file.getOriginalFilename();
 		String savePath=request.getSession().getServletContext().getRealPath("/images");
 		String Path=savePath+"\\"+name;
-		product.setProurl("images/"+name);
+		product.setPropic("images/"+name);
 		Date date=new Date();
 		product.setStarttime(date);
 		product.setEndtime(date);
@@ -794,7 +795,7 @@ public class AdminController
 		String name=file.getOriginalFilename();
 		String savePath=request.getSession().getServletContext().getRealPath("/images");
 		String Path=savePath+"\\"+name;
-		product.setProurl("images/"+name);
+		product.setPropic("images/"+name);
 		Date date=new Date();
 		product.setStarttime(date);
 		product.setEndtime(date);
@@ -836,5 +837,52 @@ public class AdminController
 	public String deleteProduct(String productid){
 		adminService.deleteProduct(productid);
 		return "停用成功";
+	}
+
+	/**
+	 * 查询章节信息用于产品包配置章节
+	 * @param domainid
+	 * @param productid
+	 * @param
+	 */
+	@RequestMapping("/config")
+	@ResponseBody
+	public String config(String domainid,String productid){
+		List<Config> list = adminService.findConfigKnow(domainid);
+		for(int i=0;i<list.size();i++){
+			List<Config> childList = adminService.findConfigChapter(list.get(i).getId()+"");
+			list.get(i).setChildren(childList);
+		}
+		List<Config> hasList = adminService.hasConfig(productid);
+		Map<String,List<Config>> map=new HashMap();
+		map.put("all",list);
+		map.put("has",hasList);
+		Gson g=new Gson();
+		String ss = g.toJson(map);
+		return ss;
+	}
+
+	/**
+	 * 删除产品包原有的章节,分配新的章节
+	 * @param productid
+	 * @param checkData
+	 * @return
+	 */
+	@RequestMapping("/configSubmit")
+	@ResponseBody
+	public String configSubmit(String productid,String checkData){
+		int proid=Integer.parseInt(productid);
+		Gson g=new Gson();
+		Config[] arr=g.fromJson(checkData,Config[].class);
+		List idList=new ArrayList();
+		for(int i=0;i<arr.length;i++){
+			List<Config> list=arr[i].getChildren();
+			for(int j=0;j<list.size();j++){
+				idList.add(new Chapter(list.get(j).getId(),proid));
+			}
+		}
+		adminService.deleteConfig(productid);
+		adminService.configChapter(idList);
+		return "分配成功";
 	}
 }

@@ -51,7 +51,7 @@
                 ,{field: 'degreename', title: '学历', width:200}
                 ,{field: 'professname', title: '专业', width:100}
                 ,{field: 'schoolname', title: '高校名称', width:150}
-                ,{field: 'endtime', title: '反馈时间', width:200}
+                ,{field: 'endtime', title: '反馈时间', width:200,templet:"<div> {{layui.util.toDateString(d.endtime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
             ]]
         })
     })

@@ -20,6 +20,7 @@ public class Product
 	private int procount;
 	private String prostate;
 	private int domainid;
+
 //	产品包的章节数
 	private int num;
 	private List<?> date;
@@ -198,9 +199,4 @@ public class Product
 		this.num = num;
 	}
 
-	@Override
-	public String toString()
-	{
-		return "Product{" + "productid=" + productid + ", proname='" + proname + '\'' + ", starttime=" + starttime + ", endtime=" + endtime + ", period='" + period + '\'' + ", teacherid=" + teacherid + ", teachername='" + teachername + '\'' + ", teacherinfo='" + teacherinfo + '\'' + ", prourl='" + prourl + '\'' + ", prointro='" + prointro + '\'' + ", propic='" + propic + '\'' + ", procontent='" + procontent + '\'' + ", procount=" + procount + ", prostate='" + prostate + '\'' + ", domainid=" + domainid + ", num=" + num + ", date=" + date + '}';
-	}
 }

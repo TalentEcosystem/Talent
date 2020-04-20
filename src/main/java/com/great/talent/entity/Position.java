@@ -15,15 +15,15 @@ public class Position {
     private String positioncontent;//工作内容
     private String positionstate;//发布状态
     private Integer industryid;//行业id
-    private String indname;
-    private Integer degreeid;
-    private String degreename;
-    private Integer professid;
-    private String professname;
-    private Date positiontime;
-    private Integer welfareid;
-    private String welname;
-    private String applicantsnum;
+    private String indname;//行业名
+    private Integer degreeid;//学历id
+    private String degreename;//学历名
+    private Integer professid;//专业id
+    private String professname;//专业名
+    private Date positiontime;//发布岗位的时间
+    private Integer welfareid;//福利的id
+    private String welname;//福利的名字
+    private String applicantsnum;//已招收人数
 
     public Position() {
     }

@@ -19,6 +19,12 @@ public class Chapter
 	{
 	}
 
+	public Chapter(int chapterid, int productid)
+	{
+		this.chapterid = chapterid;
+		this.productid = productid;
+	}
+
 	public int getChapterid()
 	{
 		return chapterid;

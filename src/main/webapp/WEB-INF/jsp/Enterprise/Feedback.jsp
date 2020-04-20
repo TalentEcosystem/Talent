@@ -57,7 +57,7 @@
                 ,{field: 'interstate', title: '是否面试', width:200}
                 ,{field: 'employ', title: '是否录用', width:200}
                 ,{field: 'schoolname', title: '高校名称', width:150}
-                ,{field: 'endtime', title: '反馈时间', width:200}
+                ,{field: 'endtime', title: '反馈时间', width:200,templet:"<div> {{layui.util.toDateString(d.endtime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
                 ,{fixed: 'right',title:'操作', width: 200, align:'center', toolbar: '#barDemo'}
             ]]
         })
@@ -183,11 +183,12 @@
                     return false;
                 }else{
                     var interviewid = data.interviewid;
+                    var positionid = data.positionid;
                     $.ajax({
                         url:path+"/Enterprise/companyEmploy",
                         dataType:"text",
                         type:"POST",
-                        data:{"interviewid":interviewid,"employ":'录用'},
+                        data:{"interviewid":interviewid,"employ":'录用',"positionid":positionid},
                         success:function (msg) {
                             if (msg === 'success'){
                                 alert("应聘成功！");

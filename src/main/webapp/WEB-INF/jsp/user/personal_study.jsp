@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Minzg
   Date: 2020/4/13
@@ -11,7 +12,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>个人中心-个人信息</title>
+	<title>个人中心-学习记录</title>
 	<%
 		String path=request.getContextPath();
 		String uname = (String) session.getAttribute("uname");
@@ -99,7 +100,7 @@
 				<a href=<%=path+"/user/personal" %> class="a7">个人信息</a>
 			</div>
 			<div class="NavLeftBox">
-				<a href="personal_jl.html" class="a2">我的简历</a>
+				<a href=<%=path+"/school/findUserResume" %> class="a2">我的简历</a>
 			</div>
 			<div class="NavLeftBox active">
 				<a href=<%=path+"/user/study"%> class="a3">学习记录</a>
@@ -107,11 +108,11 @@
 			<div class="NavLeftBox">
 				<a href=<%=path+"/user/collection"%> class="a5">我的收藏</a>
 			</div>
-			<div class="NavLeftBox twoNav">
+			<div class="NavLeftBox">
 				<a href=<%=path+"/user/requestFeedback" %> class="a6">求职反馈</a>
 			</div>
 			<div class="NavLeftBox">
-				<a href="personal_help.html" class="a8">帮助中心</a>
+				<a href=<%=path+"/user/help" %> class="a8">帮助中心</a>
 			</div>
 		</div>
 		<div class="navLeftBottom">
@@ -125,19 +126,24 @@
 			<h1 class="fl">学习记录</h1>
 		</div>
 		<div class="clear"></div>
-		<div class="zph">
-			<div class="zph_1"><a href="javascript:void()"><img src=<%=path+"/images/1.png" %> /></a></div>
-			<div class="zph_2">
-				<p class="TopTitle">
-					<a href="javascript:void()">12月20日周三龙观人才大市场综合类招聘会</a>
-				</p>
-				<div class="ContentMain">
-					<p><span>举办时间：</span> <span>&nbsp;08:00-13:00 周三 </span></p>
-					<p><span>举办场馆：</span> <span>深圳市龙观人才大市场</span></p>
-					<p><span>具体地点：</span> <span>深圳市龙华新区龙华汽车站三楼</span></p>
+		<c:if test="${not empty myStudy}">
+			<c:forEach items="${myStudy}" step="1" var="i">
+				<div class="zph">
+					<div class="zph_1"><a href="javascript:void()"><img src="${pageContext.request.contextPath}/${i.propic}" /></a></div>
+					<div class="zph_2">
+						<p class="TopTitle">
+							<a href="javascript:void()">${i.proname}</a>
+						</p>
+						<div class="ContentMain">
+							<p><span>总共有${i.period}</span></p>
+							<p><span>最后一次学习的时间：${i.studytime2}</span></p>
+							<p><button type="button" class="layui-btn layui-btn-warm" style="margin-top: 40px">继续学习</button></p>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
+				<div class="clear"></div>
+			</c:forEach>
+		</c:if>
 	</div>
 	<div class="adBox" >
 		<img style="margin-left: 15px;margin-top: 10px" src=<%=path+"/images/perAD.jpg" %> width="814" />
