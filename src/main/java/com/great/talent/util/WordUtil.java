@@ -49,7 +49,6 @@ public class WordUtil
 		File file = null;
 		InputStream fin = null;
 		ServletOutputStream out = null;
-
 		try {
 			// 调用工具类的createDoc方法生成Word文档
 			file = createDoc(map, freemarkerTemplate);
@@ -60,14 +59,14 @@ public class WordUtil
 			String fileName = title + new Date() + ".doc";
 			response.setHeader("Content-Disposition", "attachment;filename="
 					.concat(String.valueOf(URLEncoder.encode(fileName, "UTF-8"))));
-
 			out = response.getOutputStream();
-			byte[] buffer = new byte[1024];  // 缓冲区
+			byte[] buffer = new byte[512];  // 缓冲区
 			int bytesToRead = -1;
 			// 通过循环将读入的Word文件的内容输出到浏览器中
 			while ((bytesToRead = fin.read(buffer)) != -1) {
 				out.write(buffer, 0, bytesToRead);
 			}
+			System.out.println("下载一次");
 		} finally {
 			if (fin != null)
 			{
@@ -100,6 +99,41 @@ public class WordUtil
 		}
 		return f;
 	}
+	public static void exportWord(HttpServletRequest request, HttpServletResponse response, Map map, String title, String ftlFile) throws IOException {
+		Template freemarkerTemplate = configuration.getTemplate(ftlFile);
+		File file = null;
+		InputStream fin = null;
+		ServletOutputStream out = null;
+		try {
+			// 调用工具类的createDoc方法生成Word文档
+			file = createDocZip(map, freemarkerTemplate);
+			fin = new FileInputStream(file);
 
 
+			System.out.println("下载一次");
+		} finally {
+			if (fin != null)
+			{
+				fin.close();
+			}
+
+
+		}
+	}
+	private static File createDocZip(Map<?, ?> dataMap, Template template) {
+		System.out.println("进入创建doc一次");
+		String name = "sellPlan.doc";
+		File f = new File(name);
+		Template t = template;
+		try {
+			// 这个地方不能使用FileWriter因为需要指定编码类型否则生成的Word文档会因为有无法识别的编码而无法打开
+			Writer w = new OutputStreamWriter(new FileOutputStream(f), "utf-8");
+			t.process(dataMap, w);
+			w.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+		return f;
+	}
 }
