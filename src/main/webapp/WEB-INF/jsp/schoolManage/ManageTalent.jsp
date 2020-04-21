@@ -45,6 +45,7 @@
 
 <script type="text/html" id="barDemo">
 	<a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
+
 </script>
 <script type="text/html" id="zizeng">
 	{{d.LAY_TABLE_INDEX+1}}
