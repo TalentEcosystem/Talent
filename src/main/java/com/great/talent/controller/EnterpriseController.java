@@ -1043,9 +1043,9 @@ public class EnterpriseController {
     @RequestMapping("/JudgePassword")
     @ResponseBody
     public void JudgePassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String password = request.getParameter("password");
+        String payment = request.getParameter("payment");
         Admin admin = (Admin) request.getSession().getAttribute("admin");
-        if (MD5Utils.checkpassword(password,admin.getPassword())){
+        if (MD5Utils.checkpassword(payment,admin.getPayment())){
             response.getWriter().print("success");
         }else{
             response.getWriter().print("error");
