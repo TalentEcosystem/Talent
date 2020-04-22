@@ -885,4 +885,17 @@ public class AdminController
 		adminService.configChapter(idList);
 		return "分配成功";
 	}
+
+	/**
+	 * 传入视频链接,跳转视频页面
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/showVideo")
+	public ModelAndView showVideo(HttpSession session,String chapurl){
+		ModelAndView mv = new ModelAndView();
+		session.setAttribute("chapurl",chapurl);
+		mv.setViewName("/admin/VideoPlayer");
+		return mv;
+	}
 }
