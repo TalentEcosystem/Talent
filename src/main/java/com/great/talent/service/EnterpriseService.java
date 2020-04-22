@@ -380,6 +380,13 @@ public class EnterpriseService {
     }
 
     /**
+     * 查询简历价格
+     * @return
+     */
+    public int findPrice(){
+        return enterpriseMapper.findPrice();
+    }
+    /**
      * 购买简历
      * @param finance
      * @return

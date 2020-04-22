@@ -316,15 +316,15 @@
                                     type: 2,
                                     area: ['300px','200px'],
                                     offset: ['10%','10%'],
-                                    content: path+'/Enterprise/path/Password',
+                                    content: path+'/Enterprise/path/Payment',
                                     btn: ['确定','返回'],
                                     btn1:function(index, layero){
                                         var body=layer.getChildFrame('body',index);
-                                        var password = body.find("#password").val();
+                                        var payment = body.find("#payment").val();
                                         $.ajax({
                                             url:'${pageContext.request.contextPath}/Enterprise/JudgePassword',
                                             type:'post',
-                                            data:"password="+password,
+                                            data:"payment="+payment,
                                             dataType:'text',
                                             success:function(msg){
                                                 if (msg ==="success"){

@@ -16,6 +16,7 @@
 	%>
 	<script src=<%=path+"/js/jquery-3.4.1.js" %>></script>
 	<script src=<%=path+"/js/jquery-form.js" %>></script>
+	<link rel="stylesheet" href=<%=path+"/css/personal.css"%>>
 	<link rel="stylesheet" href=<%=path+"/js/layui/css/layui.css" %>>
 	<script type="text/javascript" src=<%=path+"/js/layui/layui.js" %>></script>
 	<script type="text/javascript" src=<%=path+"/js/json2.js" %>></script>
@@ -229,6 +230,7 @@
 	<p><a href="">**人才</a>旗下<img src=<%=path+"/images/logo_foot.gif" %> />蝶飞人才网版权所有 <a href="">京ICP证0******9号</a><a href=""></a>本网站所有招聘信息，未经书面授权不得转载 投诉电话：400-8**-****</p>
 </div>
 <script>
+
 	$(function(){
 		/** 验证文件是否导入成功 */
 		$("#form2").ajaxForm(function(data){
@@ -237,6 +239,62 @@
 				window.location.reload();
 			}
 		});
+	});
+	layui.use(['form','upload','jquery'], function(){
+		var form = layui.form;
+		var layer=layui.layer,
+			upload = layui.upload;
+		var formData = serializeObject($, $('.layui-form').serializeArray());
+		form.render();
+		form.verify({
+			resname: function(value){
+				if(value.length < 2&&value.length>4){
+					return '请输入2至4位的用户名';
+				}
+			}
+
+		});
+
+		function serializeObject($, array){
+			var obj=new Object();
+			$.each(array, function(index,param){
+				if(!(param.name in obj)){
+					obj[param.name]=param.value;
+				}
+			});
+			return obj;
+		}
+		var uploadInst = upload.render({
+			elem: '#test8' //绑定元素
+			,url: '${pageContext.request.contextPath}/school/updateResume' //上传接口
+			,auto:false
+			,async:false
+			,multiple:false
+			,accept:'images'
+			,method:'POST'
+			,enctype:'multipart/form-data'
+			,bindAction: '#save12'
+			,before:function (obj) {
+				this.data = {
+					formData
+				}
+			}
+			,choose: function(obj){
+				//预读本地文件示例，不支持ie8
+				obj.preview(function(index, file, result){
+					$('#img_upload').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" style="width: 135px;height: 80px">');
+				});
+			}
+			,done: function(res){
+				//上传完毕回调
+				layer.msg(res);
+			}
+			,error: function(){
+				//请求异常回调
+				alert("上传失败！");
+			}
+		});
+
 	});
 </script>
 </body>
