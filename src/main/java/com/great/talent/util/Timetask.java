@@ -53,11 +53,6 @@ public class Timetask
 
 
 
-
-
-
-
-		System.out.println(Str);
 		ConcurrentHashMap<String, WebSocketServlet> webSocketHashMap = WebSocketServlet.getWebSocketHashMap();
 		HashMap<String, String> hashMap = WebSocketServlet.getHashMap();
 		System.err.println("进入webSocketHashMap遍历"+webSocketHashMap.size());

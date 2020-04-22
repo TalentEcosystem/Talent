@@ -73,11 +73,11 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
 
 <!--    搜索工作-->
     <select id="getJobNews" resultType="SerachJob" parameterType="map" >
-        SELECT p.positionid,p.aid,p.positionname as sypositionname,p.positionaddress as sypositionaddress,p.maxnum,p.request,
+        SELECT i.*,p.positionid,p.aid,p.positionname as sypositionname,p.positionaddress as sypositionaddress,p.maxnum,p.request,
         p.positioncontent,p.positionstate, p.professid, p.positionname,p.positionexper,
         p.money,p.positionaddress,p.industryid,p.degreeid,p.positiontime,c.companynum,c.companyname
-        FROM tbl_position p,tbl_company c,tbl_admin a
-        <where> 1=1 and a.aid=p.aid and a.cid=c.cid
+        FROM tbl_position p,tbl_company c,tbl_admin a,tbl_industry i
+        <where> 1=1 and a.aid=p.aid and a.cid=c.cid and i.industryid=p.industryid
             <if test="cond!=null">
                 <if test=" cond.sypositionaddress != null and cond.sypositionaddress != '' ">
                    and p.positionaddress like '%${cond.sypositionaddress}%'
@@ -108,8 +108,8 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
 
     <select id="getJobNewsCount"  parameterType="map" resultType="int" >
 
-        SELECT count(*) FROM tbl_position p,tbl_company c,tbl_admin a
-        <where> 1=1 and a.aid=p.aid and a.cid=c.cid
+        SELECT count(*) FROM tbl_position p,tbl_company c,tbl_admin a,tbl_industry i
+        <where> 1=1 and a.aid=p.aid and a.cid=c.cid and i.industryid=p.industryid
             <if test="cond!=null">
             <if test=" cond.sypositionaddress != null and cond.sypositionaddress != '' ">
               and  p.positionaddress like '%${cond.sypositionaddress}%'
