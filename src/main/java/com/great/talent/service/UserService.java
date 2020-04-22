@@ -92,4 +92,28 @@ public class UserService
 	public List<MyStudy> findMyStudy(int uid){
 		return deptMapper.findMyStudy(uid);
 	}
+
+	@Transactional
+	public Integer findSidByUid(int uid){
+		return deptMapper.findSidByUid(uid);
+	}
+
+	@Transactional
+	public Boolean jobApplication(Interview interview){
+		return deptMapper.jobApplication(interview);
+	}
+
+	@Transactional
+	public Interview checkInterview(Interview interview){
+		return deptMapper.checkInterview(interview);
+	}
+
+	@Transactional
+	public MyCollection checkCollection(MyCollection myCollection){
+		return deptMapper.checkCollection(myCollection);
+	}
+	@Transactional
+	public Boolean addCollection(MyCollection myCollection){
+		return deptMapper.addCollection(myCollection);
+	}
 }

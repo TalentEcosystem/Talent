@@ -11,8 +11,30 @@ public class MyCollection
 	private String companyname;
 	private String positionname;
 	private Date positiontime;
+	private int uid;
+	private int positionid;
 
 	public MyCollection() { }
+
+	public int getUid()
+	{
+		return uid;
+	}
+
+	public void setUid(int uid)
+	{
+		this.uid = uid;
+	}
+
+	public int getPositionid()
+	{
+		return positionid;
+	}
+
+	public void setPositionid(int positionid)
+	{
+		this.positionid = positionid;
+	}
 
 	public String getIndname()
 	{

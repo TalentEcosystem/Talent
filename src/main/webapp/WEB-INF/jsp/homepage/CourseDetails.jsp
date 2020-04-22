@@ -132,9 +132,9 @@
 					<ul class="contentmeetul" style="display: block" >
 						<c:if test="${not empty product.date}">
 						<c:forEach items="${product.date}" step="1" var="c">
-						<div class="item gray">
+						<a href="${pageContext.request.contextPath}/admin/showVideo?chapurl=${c.chapurl}" class="item gray">
 							<img style="margin-right: 20px" src="../images/04.gif" />${c.chname}
-						</div>
+						</a>
 						</c:forEach>
 						</c:if>
 						<c:if test="${empty product.date}">

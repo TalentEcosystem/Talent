@@ -17,6 +17,7 @@ public class SerachJob
 	private String positioncontent;//工作内容
 	private String positionstate;//发布状态
 	private Integer industryid;//行业id
+	private String indname;//行业名字
 	private Integer degreeid;//学历id
 	private Integer professid;
 	private String companynum;//企业人数
@@ -53,6 +54,26 @@ public class SerachJob
 	public Integer getPositionid()
 	{
 		return positionid;
+	}
+
+	public String getIndname()
+	{
+		return indname;
+	}
+
+	public void setIndname(String indname)
+	{
+		this.indname = indname;
+	}
+
+	public Date getPositiontime()
+	{
+		return positiontime;
+	}
+
+	public void setPositiontime(Date positiontime)
+	{
+		this.positiontime = positiontime;
 	}
 
 	public void setPositionid(Integer positionid)
