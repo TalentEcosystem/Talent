@@ -12,6 +12,7 @@ public interface DeptMapper
 	User userLogin(User user);
 	Integer userNameCheck(String uaccount);
 	Integer findUserIdByUaccount(String uaccount);
+	Integer findSidByUid(int uid);
 	Boolean addUser(User user);
 	String findPhoneByAccount(String uaccount);
 	Boolean updateUser(User user);
@@ -29,4 +30,12 @@ public interface DeptMapper
 	List<Welfare> findWelfare(Map map);
 	//学习记录
 	List<MyStudy> findMyStudy(int uid);
+	//岗位申请
+	Boolean jobApplication(Interview interview);
+	//是否已申请
+	Interview checkInterview(Interview interview);
+	//是否已收藏
+	MyCollection checkCollection(MyCollection myCollection);
+	//岗位收藏
+	Boolean addCollection(MyCollection myCollection);
 }

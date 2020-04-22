@@ -26,6 +26,7 @@
 </head>
 <body>
 <input type="hidden" id="path" value="<%=path%>">
+<input type="hidden" id="positionid" value="<%=jobData.getPositionid()%>">
 <div class="compHeader">
 	<div class="main">
 		<div class="header_l">
@@ -68,15 +69,6 @@
 			</div>
 			<div class="clear"></div>
 			<div class="clear"></div>
-<%--			<div class="DivLeft_4">--%>
-<%--				<h2><span></span>猜你感兴趣</h2>--%>
-<%--				<p><a href="searchJob_new.html">IT技术支持/维护经理</a></p>--%>
-<%--				<p><a href="searchJob_new.html">硬件测试</a></p>--%>
-<%--				<p><a href="searchJob_new.html">网络信息安全工程师</a></p>--%>
-<%--				<p><a href="searchJob_new.html">综合布线</a></p>--%>
-<%--				<p><a href="searchJob_new.html">软件测试</a></p>--%>
-<%--				<p><a href="searchJob_new.html">IT品质管理</a></p>--%>
-<%--			</div>--%>
 		</div>
 	</div>
 	<div class="DivRight">
@@ -98,7 +90,7 @@
 						</c:if>
 						<div class="clear"></div>
 					</div>
-					<div class="jobsub">工作地点： <%=jobData.getPositionaddress()%></div>
+					<div class="jobsub">工作地点： <span><%=jobData.getPositionaddress()%></span></div>
 					<div class="jobsub">职位月薪： <%=jobData.getMoney()%></div>
 					<div class="jobsub">招聘人数： <%=jobData.getMaxnum()%></div>
 					<div class="jobsub">最低学历： <%=jobData.getDegreename()%></div>
@@ -114,9 +106,8 @@
 			</div>
 			<div class="clear"></div>
 			<div class="divJob_2">
-				<div class="divJob_2_1">立即申请</div>
-				<div class="divJob_2_2">关注</div>
-				<div class="divJob_2_3">投诉</div>
+				<div class="divJob_2_1" id="application">立即申请</div>
+				<div class="divJob_2_2" id="collection">收藏</div>
 			</div>
 			<div class="clear"></div>
 			<div class="divJob_3">
@@ -130,49 +121,6 @@
 				</div>
 			</div>
 			<div class="clear"></div>
-<%--			<div class="jobotherlist">--%>
-<%--				<div class="title">公司其他职位</div>--%>
-<%--				<div class="jobtype">--%>
-<%--					<div class="jobtypel">--%>
-<%--						<p><a href="jobtype.html">绘图工程师</a> [惠州市]</p>--%>
-<%--						<p><span class="red">月薪 面议</span> |全职 |招聘2人 |年龄20-30岁 |经验1~2年</p>--%>
-<%--					</div>--%>
-<%--					<div class="jobtyper">--%>
-<%--						<p>1小时</p>--%>
-<%--					</div>--%>
-<%--					<div class="clear"></div>--%>
-<%--				</div>--%>
-<%--				<div class="jobtype">--%>
-<%--					<div class="jobtypel">--%>
-<%--						<p><a href="jobtype.html">储备管理干部</a> [惠州市]</p>--%>
-<%--						<p><span class="red">月薪 面议</span> |全职 |招聘2人 |年龄20-30岁 |经验1~2年</p>--%>
-<%--					</div>--%>
-<%--					<div class="jobtyper">--%>
-<%--						<p>1小时</p>--%>
-<%--					</div>--%>
-<%--					<div class="clear"></div>--%>
-<%--				</div>--%>
-<%--				<div class="jobtype">--%>
-<%--					<div class="jobtypel">--%>
-<%--						<p><a href="jobtype.html">品管员</a> [惠州市]</p>--%>
-<%--						<p><span class="red">月薪 面议</span> |全职 |招聘2人 |年龄20-30岁 |经验1~2年</p>--%>
-<%--					</div>--%>
-<%--					<div class="jobtyper">--%>
-<%--						<p>1小时</p>--%>
-<%--					</div>--%>
-<%--					<div class="clear"></div>--%>
-<%--				</div>--%>
-<%--				<div class="jobtype">--%>
-<%--					<div class="jobtypel">--%>
-<%--						<p><a href="jobtype.html">绘图工程师</a> [惠州市]</p>--%>
-<%--						<p><span class="red">月薪 面议</span> |全职 |招聘2人 |年龄20-30岁 |经验1~2年</p>--%>
-<%--					</div>--%>
-<%--					<div class="jobtyper">--%>
-<%--						<p>1小时</p>--%>
-<%--					</div>--%>
-<%--					<div class="clear"></div>--%>
-<%--				</div>--%>
-<%--			</div>--%>
 		</div>
 	</div>
 </div>
@@ -181,5 +129,58 @@
 <div class="footer">
 	<p><a href="">**人才</a>旗下<img src=<%=path+"/images/logo_foot.gif" %> />蝶飞人才网版权所有 <a href="">京ICP证0******9号</a><a href=""></a>本网站所有招聘信息，未经书面授权不得转载 投诉电话：400-8**-****</p>
 </div>
+<script>
+	//申请
+	$("#application").click(function () {
+		var path = $("#path").val();
+		var positionid = $("#positionid").val();
+		$.ajax({
+			async:true,
+			method : "POST",
+			url :path+'/user/jobApplication',
+			data:{"positionid":positionid},
+			dataType : "text",
+			success:function(msg){
+				if ("1111"==msg){
+					alert("申请成功");
+				}else if ("error"==msg) {
+					alert("网络繁忙");
+				}else if ("notResume"==msg) {
+					alert("您的简历不完整");
+					location.href=path+"/school/findUserResume"
+				}else if ("notLogin"==msg) {
+					alert("您还没有登录");
+					location.href=path+"/user/login"
+				}else if ("2222"==msg) {
+					alert("已申请");
+				}
+			}
+		})
+	});
+	//收藏
+	$("#collection").click(function () {
+		var path = $("#path").val();
+		var positionid = $("#positionid").val();
+		$.ajax({
+			async:true,
+			method : "POST",
+			url :path+'/user/addCollection',
+			data:{"positionid":positionid},
+			dataType : "text",
+			success:function(msg){
+				if ("1111"==msg){
+					alert("收藏成功");
+				}else if ("error"==msg) {
+					alert("网络繁忙");
+				}else if ("notLogin"==msg) {
+					alert("您还没有登录");
+					location.href=path+"/user/login"
+				}else if ("2222"==msg) {
+					alert("已收藏");
+				}
+			}
+		})
+	});
+</script>
 </body>
 </html>
