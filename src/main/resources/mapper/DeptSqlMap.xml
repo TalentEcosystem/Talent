@@ -97,7 +97,6 @@
         </where>
         limit #{minLimit},#{maxLimit}
     </select>
-
     <!--查找求职反馈信息总数-->
     <select id="findRequestFeedbackCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         SELECT count(*) FROM tbl_interview T1,tbl_company T2,tbl_industry T3,tbl_position T4,tbl_admin T5
@@ -148,4 +147,24 @@
         FROM tbl_study T1,tbl_product T2
         WHERE T1.productid=T2.productid AND T1.uid=#{uid}
     </select>
+    <!--    找工作-查用户简历中的学校-->
+    <select id="findSidByUid" resultType="int" parameterType="int">
+         SELECT sid FROM tbl_resume WHERE uid=#{uid}
+    </select>
+    <!--    找工作-岗位申请-->
+    <insert id="jobApplication"  parameterType="Interview">
+		insert into tbl_interview (uid,sid,intertime,positionid) values (#{uid},#{sid},#{intertime},#{positionid})
+	</insert>
+    <!--    找工作-查是否已经申请过该工作-->
+    <select id="checkInterview" resultType="Interview" parameterType="Interview">
+         SELECT * FROM tbl_interview WHERE uid=#{uid} AND positionid=#{positionid}
+    </select>
+    <!--    找工作-查是否已经申请过该工作-->
+    <select id="checkCollection" resultType="MyCollection" parameterType="MyCollection">
+         SELECT * FROM tbl_collection WHERE uid=#{uid} AND positionid=#{positionid}
+    </select>
+    <!--    找工作-岗位收藏-->
+    <insert id="addCollection"  parameterType="MyCollection">
+		insert into tbl_collection (uid,positionid) values (#{uid},#{positionid})
+	</insert>
 </mapper>

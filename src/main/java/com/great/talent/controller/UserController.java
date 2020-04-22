@@ -503,4 +503,65 @@ public class UserController
 			response.getWriter().print("error");
 		}
 	}
+	//找工作-岗位申请
+	@RequestMapping("/jobApplication")
+	@ResponseBody
+	public void jobApplication(HttpServletRequest request, HttpServletResponse response)throws IOException {
+		String positionid1 = request.getParameter("positionid");
+		Integer positionid = Integer.parseInt(positionid1);
+		int uid = (int) request.getSession().getAttribute("uid");//用户名
+		if (uid>0){
+			int sid = userService.findSidByUid(uid);
+			Date intertime = new Date();
+			if (sid>0){
+				Interview interview = new Interview();
+				interview.setUid(uid);
+				interview.setSid(sid);
+				interview.setIntertime(intertime);
+				interview.setPositionid(positionid);
+				Interview checkInterview = userService.checkInterview(interview);
+				if (null==checkInterview){
+					Boolean flag = userService.jobApplication(interview);
+					if (flag){
+						response.getWriter().print("1111");
+					}else {
+						response.getWriter().print("error");
+					}
+				}else {
+					response.getWriter().print("2222");
+				}
+			}else {
+				response.getWriter().print("notResume");
+			}
+
+		}else {
+			response.getWriter().print("notLogin");
+		}
+	}
+	//找工作-岗位收藏
+	@RequestMapping("/addCollection")
+	@ResponseBody
+	public void addCollection(HttpServletRequest request, HttpServletResponse response)throws IOException {
+		String positionid1 = request.getParameter("positionid");
+		Integer positionid = Integer.parseInt(positionid1);
+		int uid = (int) request.getSession().getAttribute("uid");//用户名
+		if (uid>0){
+			MyCollection myCollection1 = new MyCollection();
+			myCollection1.setUid(uid);
+			myCollection1.setPositionid(positionid);
+			MyCollection myCollection = userService.checkCollection(myCollection1);
+			if (null==myCollection){
+				Boolean flag = userService.addCollection(myCollection);
+				if (flag){
+					response.getWriter().print("1111");
+				}else {
+					response.getWriter().print("error");
+				}
+			}else {
+				response.getWriter().print("2222");
+			}
+		}else {
+			response.getWriter().print("notLogin");
+		}
+	}
 }
