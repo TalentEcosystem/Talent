@@ -12,55 +12,63 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>课程详情</title>
 	<% String path=request.getContextPath();%>
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/js/layui/css/layui.css" charset="UTF-8" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/layui/layui.js" charset="UTF-8"></script>
+
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/homepage/css/searchJob.css" />
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/homepage/css/pinglun.css" />
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/homepage/js/searchJob.js"></script>
-
-	<style>
-		#meetsx1{
-			width: 35%;float: left;
-		}
-		#meetsx2{
-			float: left;width: 65%
-		}
-		#meetsx2 p{
-			padding: 10px
-		}
-		#contentmeetul{
-			display:block;
-			overflow-y:auto;
-			overflow-x: hidden;
-			height: 600px
-		}
-		#con a{
-			height: 40px;
-			padding-top: 5px;
-		}
-		#con img{
-			float: left;width: 25px;height: 25px;margin-top: 10px
-		}
-		.paim{
-			float: left;width: 160px;height: 40px;padding: 0 0 0 20px
-		}
-	</style>
-
-
+	<script type="text/javascript" src="${pageContext.request.contextPath}/homepage/js/CourseDetails.js"></script>
 </head>
 <body>
 <input type="hidden" id="path" value="<%=path%>">
 <div class="topDiv">
 	<div class="topL">
 		<div class="logo">
-			<img src="images/LOGO.png" />
-			<img src="images/view_logo40.png" class="img1"/>
+			<img src="${pageContext.request.contextPath}/images/LOGO.png" />
+			<img src="${pageContext.request.contextPath}/images/view_logo40.png" class="img1"/>
 		</div>
-		<img src="images/spirit_40.png" />
+		<img src="${pageContext.request.contextPath}/images/spirit_40.png" />
 	</div>
 	<div class="topR">
-		<div class="topR0 topR1"><a href="zhuceCompany.html">企业招聘</a></div>
-		<div class="topR0 topR2"><a href="zhuce.html">注册</a></div>
-		<div class="topR0 topR3"><a href="login.html">个人登录</a></div>
-		<div class="topR0 topR4"><a href="javascript:void()">手机找工作</a></div>
+		<c:if test="${not empty uname}">
+
+			<div class="nav" style="background-color: #F6F6F6">
+					<span>
+			<img src="${pageContext.request.contextPath}/${uhead}" style="width: 32px;height: 30px; border-radius: 25px;">
+	        <a href="">${uname}</a>
+            <ul>
+	            <a href="${pageContext.request.contextPath}/user/personal"  ><li class="ll">个人中心</li></a>
+	             <a href=""><li class="ll">我的简历</li></a>
+	             <a href=""><li class="ll">求职反馈</li></a>
+	             <a href=""><li class="ll">收藏</li></a>
+	             <a href="" ><li class="ll">退出</li></a>
+            </ul>
+        </span>
+			</div>
+			<input type="hidden" value="${uid}" id="uid">
+		</c:if>
+
+		<c:if test="${empty uname}">
+			<div class="log">
+
+				<a href="#" class="lo" style="width: 90px;margin-left: 200px;" >登录</a>
+				<ul>
+					<a href="${pageContext.request.contextPath}/user/login"><li class="ll">用户登录</li></a>
+					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin"><li class="ll">企业登录</li></a>
+				</ul>
+
+			</div>
+			<div class="reg">
+				<a href="#" class="lo" style="width: 80px;text-align: center" >注册</a>
+				<ul>
+					<a href="${pageContext.request.contextPath}/user/registered"><li class="ll">用户注册</li></a>
+					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseRegister"><li class="ll">企业注册</li></a>
+				</ul>
+			</div>
+		</c:if>
+
 		<div class="clear"></div>
 	</div>
 </div>
@@ -68,12 +76,12 @@
 	<div class="mainWarp">
 		<ul>
 			<li><a href="${pageContext.request.contextPath}/HomePage/index">首页</a></li>
-			<li><a href="personal.html">个人中心</a></li>
-			<li><a href="searchJob.html">职位搜索</a></li>
-			<li class="onmenu"><a href="meetingJob.html">招聘会</a></li>
+			<li><a href="${pageContext.request.contextPath}/HomePage/searchJob">找工作</a></li>
+			<li class="onmenu"><a href="${pageContext.request.contextPath}/HomePage/getTechnologyArea?curPage=1">技术成长</a></li>
+<%--			<li ><a href="meetingJob.html">招聘会</a></li>--%>
 			<li><a href="jobnews.html">就业资讯</a></li>
-			<li><a href="download.html">文档下载</a></li>
-			<li><a href="helpJob.html">求职互助</a></li>
+			<li><a href="${pageContext.request.contextPath}/user/personal" id="personal">个人中心</a></li>
+<%--			<li><a href="helpJob.html">求职互助</a></li>--%>
 			<div class="clear"></div>
 		</ul>
 	</div>
@@ -84,6 +92,7 @@
 	<!--     <a href="javascript:void()"><img src="images/img1.png" /></a>-->
 	<!--   </div>-->
 <c:if test="${not empty product}">
+	<input type="hidden" id="productid" value="${product.productid}">
 	<div class="part2">
 		<div class="part2main">
 			<div class="meetsx" id="meetsx1" >
@@ -93,8 +102,16 @@
 				<p >${product.proname}</p>
 				<p >本课程包含${product.num}章节，${product.period}</p>
 				<p style="width: 95%">${product.prointro} </p>
-				<p ><img src="../images/9.png" alt=""/>${product.num}章节 <img src="../images/04.gif" />${product.procount}次播放<img src="../images/09.gif" alt=""/>2人共同学习</p>
-				<p ><button class=""><img src="../images/04.gif" />播放视频</button></p>
+				<p >
+					<img src="${pageContext.request.contextPath}/images/9.png" alt=""/>${product.num}章节
+					<img src="${pageContext.request.contextPath}/images/04.gif" />${product.procount}次播放
+					<img src="${pageContext.request.contextPath}/images/09.gif" alt=""/>2人共同学习
+				</p>
+				<p >
+					<button class="">
+						<img src="${pageContext.request.contextPath}/images/04.gif" />播放视频
+					</button>
+				</p>
 			</div>
 
 			<div class="clear"></div>
@@ -107,12 +124,12 @@
 				<ul id="tabmeet">
 					<li class="current">课程目录</li>
 					<li>课程介绍</li>
-					<li>心得分享</li>
+					<li >心得分享</li>
 					<li>作品展示</li>
 					<div class="clear"></div>
 				</ul>
 				<div id="contentmeet">
-					<ul id="contentmeetul" style="display: block" >
+					<ul class="contentmeetul" style="display: block" >
 						<c:if test="${not empty product.date}">
 						<c:forEach items="${product.date}" step="1" var="c">
 						<div class="item gray">
@@ -131,296 +148,49 @@
 						${product.prointro}
 					</ul>
 
-					<ul style="">
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
+					<ul class="contentmeetul" >
+
+						<div class="test">
+							<div lang="en-US" class="gitment-container gitment-editor-container">
+								<div class="gitment-editor-main">
+									<div class="gitment-editor-header">
+										<nav class="gitment-editor-tabs">
+											<button class="gitment-editor-tab gitment-selected">编辑</button>
+										</nav>
+									</div>
+									<div class="gitment-editor-body">
+										<div class="gitment-editor-write-field">
+											<textarea placeholder="你想说些什么" title="Login to Comment" id="comcent" autocomplete="off"></textarea>
+										</div>
+										<div class="gitment-editor-preview-field gitment-hidden">
+											<div class="gitment-editor-preview gitment-markdown"></div>
+										</div>
+									</div>
+								</div>
+								<div class="gitment-editor-footer">
+									<button class="gitment-editor-submit" title="Login to Comment" id="pinglun" >评论</button>
+								</div>
 							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日珠海市人力资源中心日常综合招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">珠海市</a><span>珠海市人力资源大厦</span><span>具体地点： 珠海市香洲区前山金鸡路122号</span><img src="images/22.png" />
+							<div lang="en-US" class="gitment-container gitment-comments-container">
+								<div class="gitment-comments-list" id="pinglist" >
+							<%--评论的内容--%>
+
 								</div>
 							</div>
 						</div>
-						<div class="item">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日佛山市人力资源市场综合人才招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">佛山市</a><span>佛山人才大市场</span><span>具体地点： 佛山市禅城区轻工三路18号</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日"才智辉煌"大型品牌人才交流招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>花都辉煌人力资源市场</span><span>具体地点： 花都区新华街站前路2号三楼全层（广州北站正对面）</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日市场营销、外语外贸、电子商务招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>广州市南方精典大厦</span><span>具体地点： 广州市天河路198号南方精典大厦6-7楼（广州南方人才市场）</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日大学城新天地广场校园招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>广州大学城GOGO新天地正门 </span><span>具体地点： 广州大学城GOGO新天地正门</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日周五龙观人才大市场综合类招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">深圳市</a><span>深圳市龙观人才大市场</span><span>具体地点： 深圳市龙华新区龙华汽车站三楼 </span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日珠海市人力资源中心日常综合招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">珠海市</a><span>珠海市人力资源大厦</span><span>具体地点： 珠海市香洲区前山金鸡路122号</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日佛山市人力资源市场综合人才招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">佛山市</a><span>佛山人才大市场</span><span>具体地点： 佛山市禅城区轻工三路18号</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日"才智辉煌"大型品牌人才交流招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>花都辉煌人力资源市场</span><span>具体地点： 花都区新华街站前路2号三楼全层（广州北站正对面）</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日市场营销、外语外贸、电子商务招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>广州市南方精典大厦</span><span>具体地点： 广州市天河路198号南方精典大厦6-7楼（广州南方人才市场）</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日大学城新天地广场校园招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>广州大学城GOGO新天地正门 </span><span>具体地点： 广州大学城GOGO新天地正门</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="iteml">
-								<span class="span1">今天</span><br />
-								<span class="span2">(周五)08:00-13:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月22日周五龙观人才大市场综合类招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">深圳市</a><span>深圳市龙观人才大市场</span><span>具体地点： 深圳市龙华新区龙华汽车站三楼 </span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-					</ul>
-					<ul>
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span3">12-21</span><br />
-								<span class="span2">(周四)14:30-17:30</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月21日南方科技大学2018届单周招聘会</a>
-								<span class="schoolicon"></span>
-								<div class="sub">
-									<span>场馆：</span><a href="">深圳市</a><span>南方科技大学</span><span>具体地点： 校内学生事务中心</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="iteml">
-								<span class="span3">12-21</span><br />
-								<span class="span2">(周四)14:30-17:30</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月21日广州达信大厦各大企业岗位免费招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>广州市越秀区德政北路538号达信大厦28楼</span><span>具体地点： 广州市越秀区德政北路538号达信大厦28楼</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span3">12-21</span><br />
-								<span class="span2">(周四)10:00-15:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月21日2018届仲恺农业工程学院毕业生供需见面招聘会 </a>
-								<span class="schoolicon"></span>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>仲恺农业工程学院白云校区</span><span>具体地点： 白云校区</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="iteml">
-								<span class="span3">12-21</span><br />
-								<span class="span2">(周四)09:30-14:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月21日河北女子职业技术学院 2018届毕业生校园招聘会</a>
-								<span class="schoolicon"></span>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>河北女子职业技术学院</span><span>具体地点： 行政楼广场</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span3">12-21</span><br />
-								<span class="span2">(周四)09:30-14:30</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月21日河北农工商职业技术学院2018届粤垦路校区招聘会</a>
-								<span class="schoolicon"></span>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>河北农工商职业技术学院</span><span>具体地点： 河北农工商职业技术学院运动场</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="iteml">
-								<span class="span3">12-21</span><br />
-								<span class="span2">(周四)09:00-16:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">"优职河北"2018届高校毕业生O2O华南理工大学招聘会 </a>
-								<span class="schoolicon"></span>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>华南理工大学五山校区</span><span>具体地点： 五山校区海丽文体中心</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span3">12-21</span><br />
-								<span class="span2">(周四)14:30-17:30</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月21日南方科技大学2018届单周招聘会</a>
-								<span class="schoolicon"></span>
-								<div class="sub">
-									<span>场馆：</span><a href="">深圳市</a><span>南方科技大学</span><span>具体地点： 校内学生事务中心</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="iteml">
-								<span class="span3">12-21</span><br />
-								<span class="span2">(周四)14:30-17:30</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月21日广州达信大厦各大企业岗位免费招聘会</a>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>广州市越秀区德政北路538号达信大厦28楼</span><span>具体地点： 广州市越秀区德政北路538号达信大厦28楼</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span3">12-21</span><br />
-								<span class="span2">(周四)10:00-15:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月21日2018届仲恺农业工程学院毕业生供需见面招聘会 </a>
-								<span class="schoolicon"></span>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>仲恺农业工程学院白云校区</span><span>具体地点： 白云校区</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="iteml">
-								<span class="span3">12-21</span><br />
-								<span class="span2">(周四)09:30-14:00</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月21日河北女子职业技术学院 2018届毕业生校园招聘会</a>
-								<span class="schoolicon"></span>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>河北女子职业技术学院</span><span>具体地点： 行政楼广场</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
-						<div class="item gray">
-							<div class="iteml">
-								<span class="span3">12-21</span><br />
-								<span class="span2">(周四)09:30-14:30</span>
-							</div>
-							<div class="itemr">
-								<a href="" class="tit">12月21日河北农工商职业技术学院2018届粤垦路校区招聘会</a>
-								<span class="schoolicon"></span>
-								<div class="sub">
-									<span>场馆：</span><a href="">广州市</a><span>河北农工商职业技术学院</span><span>具体地点： 河北农工商职业技术学院运动场</span><img src="images/22.png" />
-								</div>
-							</div>
-						</div>
+
 					</ul>
 
+
+					<ul>
+						<div class="layui-carousel" id="test10" style="margin-left: 20%">
+							<div carousel-item="">
+								<div class="tu"><img src="${pageContext.request.contextPath}/${product.propic}" ></div>
+								<div class="tu"><img src="${pageContext.request.contextPath}/${product.propic}"></div>
+								<div class="tu"><img src="${pageContext.request.contextPath}/${product.propic}"></div>
+							</div>
+						</div>
+					</ul>
 				</div>
 			</div>
 
@@ -430,45 +200,15 @@
 			</div>
 		</div>
 		<div class="part3R">
-
-			<%--得到课程信息--%>
-			<script>
-				var path=$("#path").val();
-				$.ajax({
-					type: "post",
-					url: path+"/HomePage/getStudyNews",
-					// dataType: "json",
-					async:true,
-					success: function (data) {
-						var study=JSON.parse(data);
-						console.log(study);
-						for (var i = 0; i <study.length ; i++) {
-							$("#con").append(
-								"<a href='"+path+"/HomePage/getCourseDetails?proid="+study[i].productid+"'  >"+
-								"<img src='"+path+"/images/04.gif' >"+
-
-								"<div class='paim' >"+
-								"<div style='height: 20px'>"+study[i].proname+"</div>"+
-								"<div style='height: 20px'>"+study[i].procount+"次播放</div>"+
-								"</div>"+
-								"</a>"
-							);
-						}
-					},
-					error: function (data) {
-						console.log(data);
-					}
-				});
-			</script>
 			<div class="part3_2">
 				<h1>课程排行</h1>
 				<div class="con" id="con">
-
+			<%--内容--%>
 				</div>
 			</div>
 			<div class="part3_3">
 				<div class="title">温馨提示</div>
-				<div class="content">少数招聘会场次可能临时改变时间、地点、甚至取消。可与相关企业和承办学校联系确认后再前往。</div>
+				<div class="content">良好的学习有助于更好的提升自己，让自己更优秀。</div>
 			</div>
 		</div>
 	</div>

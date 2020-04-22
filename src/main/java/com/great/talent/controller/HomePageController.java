@@ -2,6 +2,7 @@ package com.great.talent.controller;
 
 import com.great.talent.entity.*;
 import com.great.talent.service.HomePageService;
+import com.great.talent.service.SchoolService;
 import com.great.talent.util.Diagis;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +29,8 @@ public class HomePageController
 
 	@Resource
 	private HomePageService homePageService;
-
+	@Resource
+	private SchoolService schoolService;
 
 	/**
 	 * 首页
@@ -87,7 +89,7 @@ public class HomePageController
 	{
 
 		String Str=homePageService.getClassCurri();
-		System.out.println(Str);
+		System.out.println("kengcpaiming"+Str);
 		return Str;
 	}
 
@@ -230,18 +232,17 @@ public class HomePageController
 
 
 	/**
-	 *得到企业信息（企业的简介）
+	 *技术成长页面（企业的简介）
 	 * @return String
 	 */
 	@RequestMapping(value = "/getTechnologyArea" ,produces = "text/html;charset=UTF-8" )
-
 	public String getTechnologyArea(HttpServletRequest request , String curPage1,  String did)
 	{
 		System.out.println("页数="+curPage1);
 		Integer curPage = null;
 		Integer domainid=null;
 		LinkedHashMap<String, Object> cond = new LinkedHashMap<>();
-		BackUserPageBean<Know> myReportByPage=null;
+		BackUserPageBean<Product> myReportByPage=null;
 		if (curPage1 != null)
 		{
 			curPage = (Integer.valueOf(curPage1)-1)*9;
@@ -266,6 +267,50 @@ public class HomePageController
 		System.out.println("myReportByPage====" + myReportByPage);
 		request.setAttribute("myReportByPage",myReportByPage);
 		return "homepage/TechnologyArea";
+	}
+
+	/**
+	 *用户评论产品包
+	 * @return String
+	 */
+	@RequestMapping(value = "/setEvaInfo" ,produces = "text/html;charset=UTF-8" )
+	@ResponseBody
+	public String setEvainfo(Eva eva)
+	{
+		System.out.println("页数="+eva);
+		int num=homePageService.setEvainfo(eva);
+		if (num > 0){
+			return "success";
+		}else {
+			return "error";
+		}
+
+	}
+	/**
+	 *得到评论产品包的用户和内容
+	 * @return String
+	 */
+	@RequestMapping(value = "/getEvaInfo" ,produces = "text/html;charset=UTF-8" )
+	@ResponseBody
+	public String getEvaInfo(String pid)
+	{
+		System.out.println("产品包id="+pid);
+		Integer productid=Integer.valueOf(pid);
+		String Str=homePageService.getEvaInfo(productid);
+		System.out.println("pinglun内容="+Str);
+
+		return Str;
+
+
+	}
+	//显示高校简介页面
+	@RequestMapping("/schoolProfile")
+	public String showSchoolInfo(HttpServletRequest request,String sid ){
+		//这里需要获取登录高校账号的学校id
+		Integer schid=Integer.valueOf(sid);
+		SchoolMsg schoolMsg=schoolService.findSchoolInfo(schid);
+		request.getSession().setAttribute("school",schoolMsg);
+		return "homepage/SchoolProfile";
 	}
 
 

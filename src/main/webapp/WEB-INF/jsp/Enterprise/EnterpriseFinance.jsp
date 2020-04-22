@@ -50,7 +50,7 @@
                 ,{field:'companyname',title:'公司', width:150, sort: true}
                 ,{field:'price',title:'交易金额', width:150, sort: true}
                 ,{field:'financetype',title:'事件', width:100, sort: true}
-                ,{field:'financetime',title:'时间', width:200, sort: true}
+                ,{field:'financetime',title:'时间', width:200, sort: true,templet:"<div> {{layui.util.toDateString(d.financetime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
                 ,{field:'tradeno',title:'订单编号', width:200, sort: true}
                 ,{field:'financestate',title:'订单状态', width:150, sort: true}
             ]]

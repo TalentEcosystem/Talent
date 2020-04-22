@@ -45,6 +45,7 @@
 
 <script type="text/html" id="barDemo">
 	<a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
+
 </script>
 <script type="text/html" id="zizeng">
 	{{d.LAY_TABLE_INDEX+1}}
@@ -107,17 +108,38 @@
 					}
 				});
 			}else if(type=='outputfild'){
-				$.ajax({
-					//这里需要把查询的条件发送到后台，还需要把当前页发送过去
-					url:'${pageContext.request.contextPath}/school/outputTalent',
-					type:'post',
-					success:function (msg) {
-						layer.msg(msg);
-					},
-					error:function () {
-						layer.msg("导出失败");
-					}
-				})
+				var mindate1=$("#mindate").val();//获取文本框的值
+				var	maxdate1=$("#maxdate").val();
+				var	schoolname1=$("#schoolname").val();
+				var	pro1=$("#pro").val();
+				if(($("#mindate").val()!=null&&$("#mindate").val()!='')||($("#maxdate").val()!=null&&$("#maxdate").val()!='')||($("#schoolname").val()!=null&&$("#schoolname").val()!='')||($("#pro").val()!=null&&$("#pro").val()!='')){
+					$('<form action="${pageContext.request.contextPath}/school/outputTalent" method="post">'+
+						'<input type="hidden" name="mindate" value="'+mindate1+'"/>'+
+						'<input type="hidden" name="maxdate" value="'+maxdate1+'"/>'+
+						'<input type="hidden" name="schoolname" value="'+schoolname1+'"/>'+
+						'<input type="hidden" name="pro" value="'+pro1+'"/>'+
+						'</form>')
+						.appendTo('body').submit().remove();
+					<%--$.ajax({--%>
+					<%--	//这里需要把查询的条件发送到后台，还需要把当前页发送过去--%>
+					<%--	url:'${pageContext.request.contextPath}/school/outputTalent',--%>
+					<%--	type:'post',--%>
+					<%--	date:"mindate="+mindate1+"&maxdate="+maxdate1+"&schoolname="+schoolname1+"&pro="+pro1,--%>
+					<%--	beforeSend:function(){--%>
+					<%--		//发送前加载loading--%>
+					<%--		showLoading();--%>
+					<%--	},--%>
+					<%--	success:function (data) {--%>
+					<%--		--%>
+					<%--	},--%>
+					<%--	error:function () {--%>
+					<%--		layer.msg("导出失败");--%>
+					<%--	}--%>
+					<%--})--%>
+				}else{
+					layer.msg("导出您想查询的数据");
+				}
+
 			}
 
 		});

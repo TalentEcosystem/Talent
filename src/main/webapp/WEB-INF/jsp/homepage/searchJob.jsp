@@ -25,6 +25,65 @@
 		height:35px;
 		line-height: 35px;
 	}
+	.nav span{
+		float: right;
+		display: inline-block;
+		height:32px;
+		width:180px;
+		font-size: 15px;
+		background: #F6F6F6 ;
+		line-height: 33px;
+		text-align: center;
+		position: relative;
+		z-index:99999
+	}
+	.nav ul{
+		position: absolute;
+		width:180px;
+		display: none;
+		background: #F6F6F6
+	}
+	.lo{
+		width: 200px;
+		height: 45px;
+
+		/*background-color: #F6F6F6;*/
+		float: left;
+		font-size: 23px;
+		text-align: right;
+
+	}
+	.log ul{
+		position: absolute;
+		width:160px;
+		display: none;
+		background: #F6F6F6;
+		text-align: center;
+		margin: 32px 180px ;
+		font-size: 18px;
+
+	}
+	.reg ul{
+		position: absolute;
+		width:160px;
+		display: none;
+		background: #F6F6F6;
+		text-align: center;
+		margin: 32px 240px ;
+		font-size: 18px;
+	}
+
+	.li_yysy{
+		background:#6EC7FF;
+	}
+	.mainWarp ul{
+		margin-left: 20px
+	}
+	.mainWarp ul li{
+		font-size: 22px;
+		width: 120px;
+	}
+
 </style>
 <body>
 <input type="hidden" value="<%=path%>" id="path">
@@ -37,10 +96,86 @@
 		<img src="${pageContext.request.contextPath}/images/spirit_40.png" />
 	</div>
 	<div class="topR">
-		<div class="topR0 topR1"><a href="zhuceCompany.html">企业招聘</a></div>
-		<div class="topR0 topR2"><a href="zhuce.html">注册</a></div>
-		<div class="topR0 topR3"><a href="login.html">个人登录</a></div>
-		<div class="topR0 topR4"><a href="javascript:void()">手机找工作</a></div>
+		<c:if test="${not empty uname}">
+			<div class="nav" style="background-color: #F6F6F6">
+					<span>
+			<img src="${pageContext.request.contextPath}/${uhead}" style="width: 32px;height: 30px; border-radius: 25px;">
+	        <a href="">${uname}</a>
+            <ul>
+	            <a href="${pageContext.request.contextPath}/user/personal"  ><li class="ll" >个人中心</li></a>
+	             <a href=""><li class="ll">我的简历</li></a>
+	             <a href=""><li class="ll">求职反馈</li></a>
+	             <a href=""><li class="ll">收藏</li></a>
+	             <a href="" ><li class="ll">退出</li></a>
+            </ul>
+        </span>
+			</div>
+		</c:if>
+
+		<c:if test="${empty uname}">
+			<div class="log">
+
+				<a href="#" class="lo" style="width: 90px;margin-left: 200px;" >登录</a>
+				<ul>
+					<a href="${pageContext.request.contextPath}/user/login"><li class="ll" style="padding: 20px">用户登录</li></a>
+					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin"><li class="ll" style="padding: 20px">企业登录</li></a>
+				</ul>
+
+			</div>
+			<div class="reg">
+				<a href="#" class="lo" style="width: 80px;text-align: center" >注册</a>
+				<ul>
+					<a href="${pageContext.request.contextPath}/user/registered"><li class="ll" style="padding: 20px">用户注册</li></a>
+					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseRegister"><li class="ll" style="padding: 20px">企业注册</li></a>
+				</ul>
+			</div>
+		</c:if>
+		<%--鼠标经过 用户名 显示  离开隐藏--%>
+		<script type="text/javascript">
+			//hover接收2个参数,第一个是经过,第二个是离开;
+			$('.log').hover(function(){
+				$(this).find('ul').show();
+			},function(){
+				$(this).find('ul').hide();
+			});
+			//hover接收2个参数,第一个是经过,第二个是离开;
+			$('.reg').hover(function(){
+				$(this).find('ul').show();
+			},function(){
+				$(this).find('ul').hide();
+			});
+
+			//经过用户名按钮背景变色
+			$('.nav span').hover(function(){
+				$(this).find('ul').show();
+			},function(){
+				$(this).find('ul').hide();
+			});
+			$('.nav  li').hover(function(){
+				$(this).addClass("li_yysy")
+			},function(){
+				$(this).removeClass("li_yysy")
+			});
+			//经过登录按钮背景变色
+			$('.log  li').hover(function(){
+				$(this).addClass("li_yysy")
+			},function(){
+				$(this).removeClass("li_yysy")
+			});
+			//经过注册按钮背景变色
+			$('.reg  li').hover(function(){
+				$(this).addClass("li_yysy")
+			},function(){
+				$(this).removeClass("li_yysy")
+			});
+
+		</script>
+
+
+<%--		<div class="topR0 topR1"><a href="zhuceCompany.html">企业招聘</a></div>--%>
+<%--		<div class="topR0 topR2"><a href="zhuce.html">注册</a></div>--%>
+<%--		<div class="topR0 topR3"><a href="login.html">个人登录</a></div>--%>
+<%--		<div class="topR0 topR4"><a href="javascript:void()">手机找工作</a></div>--%>
 		<div class="clear"></div>
 	</div>
 </div>
@@ -49,11 +184,11 @@
 		<ul>
 			<li><a href="${pageContext.request.contextPath}/HomePage/index">首页</a></li>
 <%--			<li class="onmenu"><a href="searchJob.html">职位搜索</a></li>--%>
-			<li><a href="personal.html">个人中心</a></li>
-			<li><a href="meetingJob.html">招聘会</a></li>
+			<li class="onmenu"><a href="${pageContext.request.contextPath}/HomePage/searchJob">找工作</a></li>
+			<li><a href="${pageContext.request.contextPath}/HomePage/getTechnologyArea?curPage=1">技术成长</a></li>
 			<li><a href="jobnews.html">就业资讯</a></li>
-			<li><a href="download.html">文档下载</a></li>
-			<li><a href="helpJob.html">求职互助</a></li>
+			<li><a href="${pageContext.request.contextPath}/user/personal" id="personal">个人中心</a></li>
+<%--			<li><a href="helpJob.html">求职互助</a></li>--%>
 			<div class="clear"></div>
 		</ul>
 	</div>
@@ -468,8 +603,8 @@
 		<input type="hidden" value="${sypositionaddress}" id="sypositionaddress">
 		<table class="layui-hide" id="test" > </table>
 		<script type="text/html" id="bar">
-			<button class="layui-btn   layui-btn-danger" lay-event="shen">
-				<i class="layui-icon ">申请</i>
+			<button class="layui-btn layui-btn-sm   layui-btn-normal" lay-event="shen">
+				<i class="layui-icon layui-icon-search ">查看详情</i>
 			</button>
 		</script>
 		<script>
@@ -496,7 +631,7 @@
 						,{field:'positiontime', title: '发布时间', width: '18%', minWidth: 100,
 						templet:"<div>{{layui.util.toDateString(d.positiontime,'MM月dd号 ')}}</div>"
 					} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-						,{field:'j', title: '职位申请',toolbar:"#bar", width: '17%', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+						,{field:'j', title: '查看详情',toolbar:"#bar", width: '17%', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
 
 					]]
 					,page: true,
@@ -725,7 +860,7 @@
 
 			});
 		</script>
-		
+
 	</div>
 	<div class="clear"></div>
 	<div class="listbottom">

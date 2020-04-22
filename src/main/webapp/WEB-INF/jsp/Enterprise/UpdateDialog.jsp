@@ -33,6 +33,7 @@
                         </c:forEach>
                     </c:if>
                 </select>
+                <input type="hidden" id="industryid1">
             </div>
         </div>
         <div class="layui-input-inline">
@@ -40,6 +41,7 @@
             <div class="layui-input-inline">
                 <select name="post" id="post" lay-filter="choosePost"  >
                 </select>
+                <input type="hidden" id="post1">
             </div>
         </div>
         <div class="layui-form-item" >
@@ -133,6 +135,10 @@
                 <input name="Domain" id="gongjijin" title="公积金" type="checkbox" value="公积金">
                 <input name="Domain" id="jiangjin" title="奖金提成" type="checkbox" value="奖金提成">
                 <input name="Domain" id="zhusu" title="提供住宿" type="checkbox" value="提供住宿">
+                <input name="Domain" id="wujin1"  type="hidden">
+                <input name="Domain" id="gongjijin1" type="hidden">
+                <input name="Domain" id="jiangjin1"  type="hidden">
+                <input name="Domain" id="zhusu1"  type="hidden">
             </div>
         </div>
         <div class="layui-form-item">
@@ -173,10 +179,20 @@
 </body>
 <script>
     var path=$('#path').val();
+
     layui.use(['form', 'layer', 'jquery'], function(){
         var form = layui.form;
         var layer = layui.layer;
         var $ = layui.jquery;
+        var industryid = $("#industryid").val();
+        var industryid1 = $("#industryid1").val();
+        var post = $("#post").val();
+
+        // console.log("industryid="+industryid)
+        // console.log("industryid1="+industryid1)
+        // console.log("post1="+post1)
+
+
         form.on('select(chooseIndustry)', function(data){
             var myselect=document.getElementById("industryid");
             var index=myselect.selectedIndex;
@@ -299,5 +315,28 @@
 
         })
     });
+    function child(obj){
+        var wujin = $("#wujin").val();
+        var gongjijin = $("#gongjijin").val();
+        var jiangjin = $("#jiangjin").val();
+        var zhusu = $("#zhusu").val();
+        for (var i =0;i<obj.length;i++){
+            console.log(obj[i].welname)
+            if (wujin === obj[i].welname){
+                $("#wujin").attr("checked","checked")
+            }
+            if (zhusu === obj[i].welname){
+                $("#zhusu").attr("checked","checked")
+            }
+            if (gongjijin === obj[i].welname){
+                $("#gongjijin").attr("checked","checked")
+            }
+            if (jiangjin === obj[i].welname){
+                $("#jiangjin").attr("checked","checked")
+            }
+        }
+        var form = layui.form;
+        form.render();
+    }
 </script>
 </html>
