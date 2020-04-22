@@ -1066,7 +1066,8 @@ public class EnterpriseController {
         Admin admin = (Admin) request.getSession().getAttribute("admin");
         Company company = enterpriseService.findCompanyInfo(admin.getAid());
         Finance finances = new Finance();
-        finances.setPrice(10);
+        int prices = enterpriseService.findPrice();
+        finances.setPrice(prices);
         finances.setFinancetype("支出");
         finances.setFinancestate("正常");
         finances.setFinancetime(new Date());
