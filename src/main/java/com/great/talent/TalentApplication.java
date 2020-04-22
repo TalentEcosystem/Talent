@@ -25,11 +25,4 @@ public class TalentApplication extends SpringBootServletInitializer
 		SpringApplication.run(TalentApplication.class, args);
 	}
 
-//	@Bean
-//	public ServerEndpointExporter serverEndpointExporter() {
-//		return new ServerEndpointExporter();
-//	}
-
-
-
 }

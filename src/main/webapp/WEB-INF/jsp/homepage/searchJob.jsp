@@ -125,8 +125,8 @@
 			<div class="reg">
 				<a href="#" class="lo" style="width: 80px;text-align: center" >注册</a>
 				<ul>
-					<a href="${pageContext.request.contextPath}/user/registered"><li class="ll">用户注册</li></a>
-					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseRegister"><li class="ll">企业注册</li></a>
+					<a href="${pageContext.request.contextPath}/user/registered"><li class="ll" style="padding: 20px">用户注册</li></a>
+					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseRegister"><li class="ll" style="padding: 20px">企业注册</li></a>
 				</ul>
 			</div>
 		</c:if>
