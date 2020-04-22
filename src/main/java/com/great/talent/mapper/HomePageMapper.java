@@ -119,7 +119,7 @@ public interface HomePageMapper
 	 * @param map
 	 * @return int
 	 */
-	public List<Know> getTechnologyArea(Map map,Integer curPage,Integer pageSize,Integer domainid);
+	public List<Product> getTechnologyArea(Map map,Integer curPage,Integer pageSize,Integer domainid);
 
 	/**
 	 *得到知识库的条数
@@ -133,6 +133,20 @@ public interface HomePageMapper
 	 * @return
 	 */
 	public List<Know> getDomain();
+
+	/**
+	 * 添加用户评论产品包
+	 * @param eva
+	 * @return
+	 */
+	public int setEvainfo(Eva eva);
+
+	/**
+	 * 得到评论产品包的用户和内容
+	 * @param productid
+	 * @return
+	 */
+	public List<Eva> getEvaInfo(Integer productid);
 
 
 

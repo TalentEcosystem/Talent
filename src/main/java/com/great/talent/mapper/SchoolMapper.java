@@ -77,4 +77,9 @@ public interface SchoolMapper
 
 	public int insertresume(Resume resume);
 
+	public List<Resume> outPutUserResume(HashMap<String, Object> condition);
+
+	public List<Social> outPutUserSocial(Resume resume);
+
+	public List<Aducational> outPutUserAducation(Resume resume);
 }

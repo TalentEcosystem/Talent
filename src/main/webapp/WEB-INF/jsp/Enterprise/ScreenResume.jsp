@@ -56,6 +56,9 @@
     <button lay-event="detail" type="button" class="layui-btn layui-btn-xs layui-btn-radius">
         查看简历
     </button>
+    <button lay-event="down" type="button" class="layui-btn layui-btn-xs layui-btn-radius">
+      下载
+    </button>
     <button lay-event="update" type="button" class="layui-btn layui-btn-xs layui-btn-radius">
         邀请
     </button>
@@ -85,7 +88,7 @@
                 ,{field: 'professname', title: '专业', width:100}
                 ,{field: 'sid', title: '学校id', width:200,hide:true}
                 ,{field: 'schoolname', title: '高校名称', width:150}
-                ,{field: 'operationtime', title: '发布时间', width:200}
+                ,{field: 'operationtime', title: '发布时间', width:200,templet:"<div> {{layui.util.toDateString(d.operationtime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
                 ,{fixed: 'right',title:'操作', width: 200, align:'center', toolbar: '#barDemo'}
             ]]
         })
@@ -109,7 +112,7 @@
                             var uid={'uid':data.uid};
                             uid=JSON.stringify(uid);
                             $.ajax({
-                                url:'${pageContext.request.contextPath}/school/findResume',
+                                url:'${pageContext.request.contextPath}/Enterprise/findResume',
                                 type:'post',
                                 data:'uid='+uid,
                                 dataType:'text',
@@ -210,36 +213,65 @@
                             });
                         }else{
                             layer.confirm('尚未购买此简历，是否付费？', function (index) {
-                                var vNow = new Date();
-                                var sNow = "";
-                                sNow += String(vNow.getFullYear());
-                                sNow += String(vNow.getMonth() + 1);
-                                sNow += String(vNow.getDate());
-                                sNow += String(vNow.getHours());
-                                sNow += String(vNow.getMinutes());
-                                sNow += String(vNow.getSeconds());
-                                sNow += String(vNow.getMilliseconds());
-                                $.ajax({
-                                    url:'${pageContext.request.contextPath}/Enterprise/purchaseResume',
-                                    type:'post',
-                                    data:{"resumeid":resumeid,"tradeno":sNow},
-                                    dataType:'text',
-                                    success:function(msg){
-                                        if (msg ==="success"){
-                                            alert("付费成功！")
-                                            window.location.reload();
-                                        }else if (msg ==="deficiency"){
-                                            alert("余额不足，请先充值！")
-                                            window.location.href = path +'Enterprise/CompanyRecharge';
-                                        }else{
-                                            alert("付费失败")
-                                        }
+                                layer.open({
+                                    type: 2,
+                                    area: ['300px','200px'],
+                                    offset: ['10%','10%'],
+                                    content: path+'/Enterprise/path/Password',
+                                    btn: ['确定','返回'],
+                                    btn1:function(index, layero){
+                                        var body=layer.getChildFrame('body',index);
+                                       var password = body.find("#password").val();
+                                       $.ajax({
+                                           url:'${pageContext.request.contextPath}/Enterprise/JudgePassword',
+                                           type:'post',
+                                           data:"password="+password,
+                                           dataType:'text',
+                                           success:function(msg){
+                                               if (msg ==="success"){
+                                                   var vNow = new Date();
+                                                   var sNow = "";
+                                                   sNow += String(vNow.getFullYear());
+                                                   sNow += String(vNow.getMonth() + 1);
+                                                   sNow += String(vNow.getDate());
+                                                   sNow += String(vNow.getHours());
+                                                   sNow += String(vNow.getMinutes());
+                                                   sNow += String(vNow.getSeconds());
+                                                   sNow += String(vNow.getMilliseconds());
+                                                   $.ajax({
+                                                       url:'${pageContext.request.contextPath}/Enterprise/purchaseResume',
+                                                       type:'post',
+                                                       data:{"resumeid":resumeid,"tradeno":sNow},
+                                                       dataType:'text',
+                                                       success:function(msg){
+                                                           if (msg ==="success"){
+                                                               alert("付费成功！")
+                                                               window.location.reload();
+                                                           }else if (msg ==="deficiency"){
+                                                               alert("余额不足，请先充值！")
+                                                               window.location.href = path +'Enterprise/CompanyRecharge';
+                                                           }else{
+                                                               alert("付费失败")
+                                                           }
+                                                       },
+                                                       error:function () {
+                                                           alert("网络繁忙！")
+                                                       }
+                                                   })
+                                               }else{
+                                                   alert("验证失败，密码输入错误")
+                                               }
+                                           },
+                                           error:function () {
+                                               alert("网络繁忙！")
+                                           }
+                                       })
                                     },
-                                    error:function () {
-                                        alert("网络繁忙！")
-                                    }
-
+                                    btn2: function(index, layero){
+                                        layer.close(index);
+                                    },
                                 })
+
                             })
 
                         }
@@ -261,6 +293,89 @@
 
                     }
                 });
+            }
+            else if (event ==='down'){
+                var resumeid =data.resumeid
+                $.ajax({
+                    url:'${pageContext.request.contextPath}/Enterprise/JudgeResume',
+                    type:'post',
+                    data:"resumeid="+resumeid,
+                    dataType:'text',
+                    success:function(msg){
+                        if (msg == 'success'){
+                            var uid1=data.uid;//获取文本框的值
+                            var	operationtime1= layui.util.toDateString(data.operationtime,'yyyy-MM-dd HH:mm:ss');
+                            $('<form action="${pageContext.request.contextPath}/Enterprise/outputTalent" method="post">'+
+                                '<input type="hidden" name="uid" value="'+uid1+'"/>'+
+                                '<input type="hidden" name="operationtime" value="'+operationtime1+'"/>'+
+                                '</form>')
+                                .appendTo('body').submit().remove();
+                        }else{
+                            layer.confirm('尚未购买此简历，是否付费？', function (index) {
+                                layer.open({
+                                    type: 2,
+                                    area: ['300px','200px'],
+                                    offset: ['10%','10%'],
+                                    content: path+'/Enterprise/path/Password',
+                                    btn: ['确定','返回'],
+                                    btn1:function(index, layero){
+                                        var body=layer.getChildFrame('body',index);
+                                        var password = body.find("#password").val();
+                                        $.ajax({
+                                            url:'${pageContext.request.contextPath}/Enterprise/JudgePassword',
+                                            type:'post',
+                                            data:"password="+password,
+                                            dataType:'text',
+                                            success:function(msg){
+                                                if (msg ==="success"){
+                                                    var vNow = new Date();
+                                                    var sNow = "";
+                                                    sNow += String(vNow.getFullYear());
+                                                    sNow += String(vNow.getMonth() + 1);
+                                                    sNow += String(vNow.getDate());
+                                                    sNow += String(vNow.getHours());
+                                                    sNow += String(vNow.getMinutes());
+                                                    sNow += String(vNow.getSeconds());
+                                                    sNow += String(vNow.getMilliseconds());
+                                                    $.ajax({
+                                                        url:'${pageContext.request.contextPath}/Enterprise/purchaseResume',
+                                                        type:'post',
+                                                        data:{"resumeid":resumeid,"tradeno":sNow},
+                                                        dataType:'text',
+                                                        success:function(msg){
+                                                            if (msg ==="success"){
+                                                                alert("付费成功！")
+                                                                window.location.reload();
+                                                            }else if (msg ==="deficiency"){
+                                                                alert("余额不足，请先充值！")
+                                                                window.location.href = path +'Enterprise/CompanyRecharge';
+                                                            }else{
+                                                                alert("付费失败")
+                                                            }
+                                                        },
+                                                        error:function () {
+                                                            alert("网络繁忙！")
+                                                        }
+                                                    })
+                                                }else{
+                                                    alert("验证失败，密码输入错误")
+                                                }
+                                            },
+                                            error:function () {
+                                                alert("网络繁忙！")
+                                            }
+                                        })
+                                    },
+                                    btn2: function(index, layero){
+                                        layer.close(index);
+                                    },
+                                })
+
+                            })
+
+                        }
+                    }
+                })
             }
         })
         form.on('submit(search)',function () {

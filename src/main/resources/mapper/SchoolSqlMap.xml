@@ -79,7 +79,7 @@
             sid=#{sid}
         </where>
     </update>
-    <select id="findRcommend" resultType="Recommend" parameterType="Recommend">
+    <select id="findRcommend" resultType="Recommend">
      select c.cid,b.positionid,d.indname,c.companyname,b.positionname,b.positiontime from tbl_admin a,tbl_position b,tbl_company c,tbl_industry d
     <where>
         a.cid=c.cid and b.industryid=d.industryid and  b.positionstate='发布' and b.aid=a.aid
@@ -340,4 +340,35 @@
         #{professid}
         )
     </insert>
+    <select id="outPutUserResume"  resultType="Resume">
+        SELECT u.uid,a.resname,a.rebirth,b.degreename,c.professname,a.retel,d.schoolname,a.repic,a.readdress,a.repol,a.reskill,a.reeva from tbl_resume a,tbl_user u,tbl_degree b,tbl_profession c,tbl_school d
+                <where>
+                    a.degreeid=b.degreeid and a.professid=c.professid and d.sid=a.sid and a.uid=u.uid
+            <if test="mindate!=null and mindate !=''">
+                and u.udate &gt;=#{mindate}
+            </if>
+            <if test="maxdate!=null and maxdate !=''">
+                and u.udate &lt;=#{maxdate}
+            </if>
+            <if test="schoolname!=null and schoolname !=''">
+                and d.schoolname LIKE '%' #{schoolname} '%'
+            </if>
+            <if test="pro!=null and pro !=''">
+                and c.professname LIKE '%' #{pro} '%'
+            </if>
+            and u.uid limit #{pageInt},#{limitInt}
+        </where>
+    </select>
+    <select id="outPutUserSocial" resultType="Social" parameterType="Resume">
+        SELECT socialid,socialtime,company,content from tbl_social
+        <where>
+            uid=#{uid};
+        </where>
+    </select>
+    <select id="outPutUserAducation" resultType="Aducational" parameterType="Resume">
+        SELECT aducationid,adtime,sname,profession from tbl_aducational
+        <where>
+            uid=#{uid}
+        </where>
+    </select>
 </mapper>

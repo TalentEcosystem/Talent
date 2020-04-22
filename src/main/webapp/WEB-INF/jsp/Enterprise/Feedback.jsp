@@ -57,7 +57,7 @@
                 ,{field: 'interstate', title: '是否面试', width:200}
                 ,{field: 'employ', title: '是否录用', width:200}
                 ,{field: 'schoolname', title: '高校名称', width:150}
-                ,{field: 'endtime', title: '反馈时间', width:200}
+                ,{field: 'endtime', title: '反馈时间', width:200,templet:"<div> {{layui.util.toDateString(d.endtime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
                 ,{fixed: 'right',title:'操作', width: 200, align:'center', toolbar: '#barDemo'}
             ]]
         })

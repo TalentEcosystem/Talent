@@ -27,7 +27,7 @@ public class WordUtil
 	//classLoader.getResource()只能获取相对路径的资源
 	//     private static final String templateFolder = WordUtils.class.getClassLoader().getResource("template").getPath();
 	//class.getResource()可以获取绝对路径和相对路径request.getServletContext().getRealPath("/excel")
-	private static final String templateFolder = WordUtil.class.getResource("/excel").getPath();
+	private static final String templateFolder = WordUtil.class.getResource("/template").getPath();
 
 	static {
 		configuration = new Configuration();
@@ -55,12 +55,10 @@ public class WordUtil
 			fin = new FileInputStream(file);
 
 			response.setCharacterEncoding("utf-8");
-			response.setContentType("application/msword");
 			// 设置浏览器以下载的方式处理该文件名
 			String fileName = title + new Date() + ".doc";
 			response.setHeader("Content-Disposition", "attachment;filename="
 					.concat(String.valueOf(URLEncoder.encode(fileName, "UTF-8"))));
-
 			out = response.getOutputStream();
 			byte[] buffer = new byte[512];  // 缓冲区
 			int bytesToRead = -1;
@@ -68,6 +66,7 @@ public class WordUtil
 			while ((bytesToRead = fin.read(buffer)) != -1) {
 				out.write(buffer, 0, bytesToRead);
 			}
+			System.out.println("下载一次");
 		} finally {
 			if (fin != null)
 			{
@@ -85,6 +84,7 @@ public class WordUtil
 	}
 
 	private static File createDoc(Map<?, ?> dataMap, Template template) {
+		System.out.println("进入创建doc一次");
 		String name = "sellPlan.doc";
 		File f = new File(name);
 		Template t = template;
@@ -99,6 +99,41 @@ public class WordUtil
 		}
 		return f;
 	}
+	public static void exportWord(HttpServletRequest request, HttpServletResponse response, Map map, String title, String ftlFile) throws IOException {
+		Template freemarkerTemplate = configuration.getTemplate(ftlFile);
+		File file = null;
+		InputStream fin = null;
+		ServletOutputStream out = null;
+		try {
+			// 调用工具类的createDoc方法生成Word文档
+			file = createDocZip(map, freemarkerTemplate);
+			fin = new FileInputStream(file);
 
 
+			System.out.println("下载一次");
+		} finally {
+			if (fin != null)
+			{
+				fin.close();
+			}
+
+
+		}
+	}
+	private static File createDocZip(Map<?, ?> dataMap, Template template) {
+		System.out.println("进入创建doc一次");
+		String name = "sellPlan.doc";
+		File f = new File(name);
+		Template t = template;
+		try {
+			// 这个地方不能使用FileWriter因为需要指定编码类型否则生成的Word文档会因为有无法识别的编码而无法打开
+			Writer w = new OutputStreamWriter(new FileOutputStream(f), "utf-8");
+			t.process(dataMap, w);
+			w.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+		return f;
+	}
 }

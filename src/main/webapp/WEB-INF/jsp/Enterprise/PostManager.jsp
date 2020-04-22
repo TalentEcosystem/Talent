@@ -107,9 +107,7 @@
                     ,{field: 'positionname', title: '招聘岗位', width:200}
                     ,{field: 'aid', title: '发布者', width:200,hide:true}
                     ,{field: 'name', title: '发布者', width:100}
-                    ,{field: 'positiontime', title: '发布时间', width:200}// templet:function(value){
-                        //return layui.util.toDateString(value.time);
-                    //}}
+                    ,{field: 'positiontime', title: '发布时间', width:200,templet:"<div> {{layui.util.toDateString(d.positiontime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
                     ,{field: 'money', title: '参考薪资(元)', width:150}
                     ,{field: 'degreename', title: '学历要求', width:150}
                     ,{field: 'professname', title: '专业要求', width:150}
@@ -132,37 +130,48 @@
                     , success: function (layero, index) {
                         var body = layer.getChildFrame('body',index);
                         var iframeWindow = layero.find('iframe')[0].contentWindow;
+                        var iframe = window['layui-layer-iframe' + index];
                         body.find("#positionid").val(data.positionid);
-                        body.find("#industryid").val(data.industryid).attr("selected",true);
-                        $.ajax({
-                            url: path + "/Enterprise/findPostInfo",
-                            async: true,
-                            type: "post",
-                            data: "industryid=" + data.industryid,
-                            datatype: "text",
-                            success: function (msg) {
-                                var posts = msg;
-                                var gangwei = body.find('#post');
-                                gangwei.empty();
-                                gangwei.append("<option value=''>请选择岗位</option>");
-                                for(var i = 0; i < posts.length; i++){
-                                    gangwei.append("<option value='" + posts[i].postid + "'> " + posts[i].postname + "</option>")
-                                }
-                                body.find('#post').each(function () {
-                                    $(this).children("option").each(function () {
-                                        if (this.value == posts[0].postid) {
-                                            // 进行回显
-                                            $(this).attr("selected", "selected");
+                        // body.find("#industryid").val(data.industryid);
+                        $("#industryid").each(function () {
+                            $(this).children("option").each(function () {
+                                if (this.value == data.industryid) {
+                                    // 进行回显
+                                    $(this).attr("selected", "selected");
+                                    $.ajax({
+                                        url: path + "/Enterprise/findPostInfo",
+                                        async: true,
+                                        type: "post",
+                                        data: "industryid=" + data.industryid,
+                                        datatype: "text",
+                                        success: function (msg) {
+                                            var posts = msg;
+                                            var gangwei = body.find('#post');
+                                            gangwei.empty();
+                                            gangwei.append("<option value=''>请选择岗位</option>");
+                                            for (var i = 0; i < posts.length; i++) {
+                                                gangwei.append("<option value='" + posts[i].postid + "'> " + posts[i].postname + "</option>")
+                                            }
+                                            gangwei.each(function () {
+                                                $(this).children("option").each(function () {
+                                                    if (this.value == posts[0].postid) {
+                                                        // 进行回显
+                                                        $(this).attr("selected", "selected");
+                                                    }
+                                                })
+                                            })
+                                            iframeWindow.layui.form.render();
+                                        },
+                                        error: function () {
+                                            layer.msg("服务器繁忙", {icon: 2})
                                         }
-                                    })
-                                })
-                                    },
-                            error:function () {
-                                layer.msg("服务器繁忙",{icon:2})
-                            }
-                        })
+                                    });
+                                }
+                            })
+                        });
+
                         console.log("data.industryid="+data.industryid)
-                        body.find("#post").val(data.positionname).attr("selected",true);
+                        // body.find("#post").val(data.positionname).attr("selected",true);
                         // console.log("data.positionname="+data.positionname)
                         body.find("#degree").val(data.degreeid).attr("selected",true);
                         // console.log("data.degreeid="+data.degreeid)
@@ -178,20 +187,13 @@
                             data: "positionid=" + data.positionid,
                             datatype: "text",
                             success: function (msg) {
-                                for (var i = 0; i < msg.length; i++){
-                                    // body.find("input[name=wujin] [value = "+msg[i].welname+"]").attr("checked","checked");
-                                    body.find("#wujin").val(msg[i].welname).attr("checked",true);
-                                    body.find("#gongjijin").val(msg[i].welname).attr("checked",true);
-                                    body.find("#jiangjin").val(msg[i].welname).attr("checked",true);
-                                    body.find("#zhusu").val(msg[i].welname).attr("checked",true);
-                                    // body.find("input[name=gongjijin] [value = "+msg[i].welname+"]").attr("checked","checked");
-                                    // body.find("input[name=jiangjin] [value = "+msg[i].welname+"]").attr("checked","checked");
-                                    // body.find("input[name=zhusu] [value = "+msg[i].welname+"]").attr("checked","checked");
-                                }
-
+                                iframe.child(msg)
                             }
                         })
-
+                        // body.find("#wujin").val("五金")
+                        // body.find("#gongjijin").val("公积金")
+                        // body.find("#jiangjin").val("奖金提成")
+                        // body.find("#zhusu").val("提供住宿")
                         body.find("#maxnum").val(data.maxnum);
                         body.find("#request").val(data.request);
                         body.find("#positioncontent").val(data.positioncontent);

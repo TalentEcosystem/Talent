@@ -87,6 +87,13 @@
             </div>
             <div id="tip8" style="display: none;"></div>
         </div>
+        <div class="layui-form-item" >
+            <label class="layui-form-label" id="label2">支付密码</label>
+            <div class="layui-input-inline" style="width:400px">
+                <input name="payment" class="layui-input" type="password" placeholder="请输入统一社会信用代码" autocomplete="off" onblur="checkPayment(this.value)">
+            </div>
+            <div id="tip9" style="display: none;"></div>
+        </div>
         <div class="layui-form-item">
             <div class="layui-form-label">
                 <label>验证码:</label>
@@ -129,10 +136,11 @@
          var tip6 = $("#tip6").val();
          var tip7 = $("#tip7").val();
          var tip8 = $("#tip8").val();
+         var tip9 = $("#tip9").val();
          var password = $('#password').val();
          var password2 = $('#password2').val();
          if (tip1 === "success"&& tip2 === "success" && tip3 === "success" && tip4 === "success" && tip5 === "success"
-             && tip6 === "success" && tip7 === "success" && tip8 === "success"){
+             && tip6 === "success" && tip7 === "success" && tip8 === "success" && tip9 === "success"){
              console.log(1)
          if(password === password2){
              console.log(2)
@@ -347,5 +355,22 @@
             }
         }
     }
+    function checkPayment(value) {
+        if(value.length === 0){
+            layer.alert('密码不能为空', { icon: 2, offset: "auto", time:1000 }) ;
+            $('#tip9').val("win");
+        }else if(value.length <6 && value.length >12){
+            layer.alert('密码不少得于6位或者超过12位', { icon: 2, offset: "auto", time:1000 });
+            $('#tip9').val("win");
+        }else if(/^\d+\d+\d$/.test(value)){
+            layer.alert('密码不能全为数字', { icon: 2, offset: "auto", time:1000 });
+            $('#tip9').val("win");
+        }else if(/[\u4E00-\u9FA5]/g.test(value)){
+            layer.alert('密码不能存在中文', { icon: 2, offset: "auto", time:1000 });
+            $('#tip9').val("win");
+        }else {
+            $('#tip9').val("success");
+        }
+    };
 </script>
 </html>

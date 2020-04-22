@@ -19,6 +19,20 @@
         <result column="invate" property="invate"></result>
     </resultMap>
 
+    <resultMap id="Welfare" type="Welfare">
+        <result column="welfareid" property="welfareid"></result>
+        <result column="welname" property="welname"></result>
+        <result column="positionid" property="positionid"></result>
+    </resultMap>
+
+    <resultMap id="MyStudy" type="MyStudy">
+        <result column="proname" property="proname"></result>
+        <result column="period" property="period"></result>
+        <result column="studytime" property="studytime"></result>
+        <result column="propic" property="propic"></result>
+        <result column="productid" property="productid"></result>
+    </resultMap>
+
     <select id="userLogin" resultType="User" parameterType="User">
 		select * from tbl_user where UACCOUNT = #{uaccount} and UPASSWORD = #{upassword}
 	</select>
@@ -110,5 +124,28 @@
             </if>
         </where>
         limit #{minLimit},#{maxLimit}
+    </select>
+    <!--查询岗位详情数据 -->
+    <select id="checkJob" resultType="JobData" parameterType="JobData">
+        SELECT T1.positionname,T1.positionaddress,T1.money,T1.maxnum,T5.degreename,T1.positionexper,T1.positiontime,T1.request,T1.positioncontent
+        ,T3.companyname,T4.indname,T3.companyadd,T3.companynature,T3.companypro,T3.companynum,T3.companypic,T1.positionid
+        FROM tbl_position T1,tbl_admin T2,tbl_company T3,tbl_industry T4,tbl_degree T5
+        <where>
+            T1.aid=T2.aid AND T3.cid=T2.cid AND T4.industryid=T1.industryid AND T1.degreeid=T5.degreeid
+            AND T1.positionname=#{positionname} AND T4.indname=#{indname} AND T3.companyname=#{companyname} AND positiontime=#{positiontime}
+        </where>
+	</select>
+    <!--岗位详情-岗位福利 -->
+    <select id="findWelfare" resultMap="Welfare" parameterType="java.util.Map">
+        SELECT * FROM tbl_welfare
+        <where>
+            positionid=#{positionid}
+        </where>
+    </select>
+    <!--    个人中心-查学习记录-->
+    <select id="findMyStudy" resultMap="MyStudy" parameterType="int">
+        SELECT  T2.proname,T2.period,T1.studytime,T2.propic,T1.productid
+        FROM tbl_study T1,tbl_product T2
+        WHERE T1.productid=T2.productid AND T1.uid=#{uid}
     </select>
 </mapper>
