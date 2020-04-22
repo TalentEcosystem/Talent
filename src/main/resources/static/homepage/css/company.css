@@ -156,3 +156,81 @@ body{ width:100%; min-width:1200px; margin:0 auto; font-size:12px; font-family:"
 .jobotherlist .jobtype .jobtyper{ width:60px; float:right}
 .jobotherlist .jobtype .jobtyper p{ padding-top:20px}
 .red{ color:red}
+
+.nav span{
+    float: right;
+    display: inline-block;
+    height:32px;
+    width:180px;
+    font-size: 15px;
+    background: #F6F6F6 ;
+    line-height: 33px;
+    text-align: center;
+    position: relative;
+    z-index:99999
+}
+.nav ul{
+    position: absolute;
+    width:180px;
+    display: none;
+    background: #F6F6F6
+}
+.lo{
+    width: 200px;
+    height: 45px;
+
+    /*background-color: #F6F6F6;*/
+    float: left;
+    font-size: 23px;
+    text-align: right;
+
+}
+.log{
+    width: 300px;
+    height: 45px;
+
+    /*background-color: #F6F6F6;*/
+    float: left;
+    font-size: 23px;
+    text-align: right;
+
+}
+.log a{
+    width: 90px;margin-left: 200px;
+}
+.reg{
+    width: 100px;
+    height: 45px;
+    /*background-color: #F6F6F6;*/
+    float: left;
+    font-size: 23px;
+    /*text-align: right;*/
+
+}
+.log ul{
+    position: absolute;
+    width:160px;
+    display: none;
+    background: #F6F6F6;
+    text-align: center;
+    margin: 32px 200px ;
+    font-size: 18px;
+
+}
+.reg ul{
+    position: absolute;
+    width:160px;
+    display: none;
+    background: #F6F6F6;
+    text-align: center;
+    margin: 32px -40px ;
+    font-size: 18px;
+}
+
+.li_yysy{
+    background:#6EC7FF;
+}
+.ll{
+    color: #0C0C0C;
+
+}

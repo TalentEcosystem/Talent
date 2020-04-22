@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -16,14 +17,13 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/homepage/js/company.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/layui/layui.js" charset="UTF-8"></script>
 
-
 </head>
 <body>
 
 <c:if test="${not empty CompanyProfile}">
 	<input type="hidden" id="cid" value="${CompanyProfile.cid}">
 	<input type="hidden" value="<%=path%>" id="path">
-<div class="compHeader">
+<div class="compHeader" style="background-color:orange ">
 	<div class="main">
 		<div class="header_l">
 			<a href="#">
@@ -33,14 +33,83 @@
 			<span>www.diefeirencai.com</span>
 		</div>
 		<div class="header_c">
-<%--			<input name="" type="text" placeholder="请输入关键字..." class="keyword"/>--%>
-<%--			<input name="" type="button" class="btnsearch"/>--%>
 		</div>
 		<div class="header_r">
-			<a href="login.html">个人登录</a>
-			<a href="zhuce.html">注册</a>
-			<span>|</span>
-			<a href="loginCompany.html">企业登录</a>
+			<c:if test="${not empty uname}">
+
+				<div class="nav" >
+					<span style="background-color: orange">
+			<img src="${pageContext.request.contextPath}/${uhead}" style="width: 32px;height: 30px; border-radius: 25px;">
+	        <a href="" style="color: #0C0C0C" >${uname}</a>
+            <ul>
+	            <a href="${pageContext.request.contextPath}/user/personal"  ><li class="ll" >个人中心</li></a>
+	             <a href=""><li class="ll">我的简历</li></a>
+	             <a href=""><li class="ll">求职反馈</li></a>
+	             <a href=""><li class="ll">收藏</li></a>
+	             <a href="" ><li class="ll">退出</li></a>
+            </ul>
+        </span>
+				</div>
+				<input type="hidden" value="${uid}" id="uid">
+			</c:if>
+
+			<c:if test="${empty uname}">
+				<div class="log">
+					<a href="#" class="lo"  >登录</a>
+					<ul>
+						<a href="${pageContext.request.contextPath}/user/login"><li class="ll">用户登录</li></a>
+						<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin"><li class="ll">企业登录</li></a>
+					</ul>
+
+				</div>
+				<div class="reg">
+					<a href="#" class="lo" style="width: 80px;text-align: center" >注册</a>
+					<ul>
+						<a href="${pageContext.request.contextPath}/user/registered"><li class="ll">用户注册</li></a>
+						<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseRegister"><li class="ll">企业注册</li></a>
+					</ul>
+				</div>
+			</c:if>
+				<%--鼠标经过 用户名 显示  离开隐藏--%>
+			<script type="text/javascript">
+				//hover接收2个参数,第一个是经过,第二个是离开;
+				$('.log').hover(function(){
+					$(this).find('ul').show();
+				},function(){
+					$(this).find('ul').hide();
+				});
+				//hover接收2个参数,第一个是经过,第二个是离开;
+				$('.reg').hover(function(){
+					$(this).find('ul').show();
+				},function(){
+					$(this).find('ul').hide();
+				});
+
+				//经过用户名按钮背景变色
+				$('.nav span').hover(function(){
+					$(this).find('ul').show();
+				},function(){
+					$(this).find('ul').hide();
+				});
+				$('.nav  li').hover(function(){
+					$(this).addClass("li_yysy")
+				},function(){
+					$(this).removeClass("li_yysy")
+				});
+				//经过登录按钮背景变色
+				$('.log  li').hover(function(){
+					$(this).addClass("li_yysy")
+				},function(){
+					$(this).removeClass("li_yysy")
+				});
+				//经过注册按钮背景变色
+				$('.reg  li').hover(function(){
+					$(this).addClass("li_yysy")
+				},function(){
+					$(this).removeClass("li_yysy")
+				});
+			</script>
+
 		</div>
 	</div>
 </div>
@@ -106,7 +175,6 @@
 
 			var path=$("#path").val();
 			var cid=$("#cid").val();
-
 			layui.use(['table','form'], function(){
 				var table = layui.table;
 				var form=layui.form;
@@ -117,7 +185,7 @@
 					,url:path+ '/HomePage/getComJobNews/'
 					,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
 					,id:'ComJobMsg'
-					,skin:'nob'
+					,skin:'nob'//风格无格子线
 					// ,height:"533"
 					,even: true //开启隔行背景
 					,cols: [[
@@ -144,20 +212,12 @@
 					,done : function(res, curr, count){
 
 						tableList=res.data;
+						//layui表头样式
 						$('th').css({'background-color': '#5792c6', 'color': '#fff','font-weight':'bold','border-bottom': '1px #F7B8A6 solid'});
 						$('tr').css({})
 
 					}
-
-
-
-
 				});
-
-
-
-
-
 			});
 			function company() {
 				var ulcompany=document.getElementById("pro");

@@ -79,7 +79,7 @@
             sid=#{sid}
         </where>
     </update>
-    <select id="findRcommend" resultType="Recommend" parameterType="Recommend">
+    <select id="findRcommend" resultType="Recommend">
      select c.cid,b.positionid,d.indname,c.companyname,b.positionname,b.positiontime from tbl_admin a,tbl_position b,tbl_company c,tbl_industry d
     <where>
         a.cid=c.cid and b.industryid=d.industryid and  b.positionstate='发布' and b.aid=a.aid
