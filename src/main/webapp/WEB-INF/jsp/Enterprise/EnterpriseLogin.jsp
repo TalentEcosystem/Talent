@@ -63,6 +63,8 @@
                     <div class="userDiv">
                         <div class="submitLabel">
                             <label>若没有账号？<a href=<%=path+"/Enterprise/path/EnterpriseRegister"%>>点击注册</a></label>
+                            <br/>
+                            <label>忘记密码？<a href=<%=path+"/Enterprise/path/retrievePassword_1"%>>点击找回</a></label>
                         </div>
                         <div class="submitDiv">
                             <button id="submitLogin" type="submit" class="layui-btn" lay-submit

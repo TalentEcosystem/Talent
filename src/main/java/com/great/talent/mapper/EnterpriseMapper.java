@@ -53,6 +53,16 @@ public interface EnterpriseMapper {
     public int findFinanceInterview(int resumeid);//查询是否有此订单
     public int purchaseResume(Finance finance);//购买简历
     public int reduceCompanyMoney(Admin admin);//账户支出
+    public Resume outPutUserResume(Map map);//查找用户简历信息
+
+    /**
+     * 修改找回密码
+     * @param admin
+     * @return
+     */
+    @Update("update tbl_admin set password = #{password} where account = #{account}")
+    public int updateAdmin(Admin admin);
+
     /**
      * 校验用户手机是否被注册
      * @param tel

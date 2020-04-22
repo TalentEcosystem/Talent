@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import sun.misc.BASE64Encoder;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -26,7 +27,9 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -143,6 +146,66 @@ public class EnterpriseController {
         System.out.println(list);
         session.setAttribute("menuMap",list);
         return "success";
+    }
+
+    //根据用户名查用户手机号
+    @RequestMapping("/findPhoneByAccount")
+    @ResponseBody
+    public void findPhoneByAccount(HttpServletRequest request, HttpServletResponse response)throws IOException{
+        String account = request.getParameter("account");
+        String test = request.getParameter("test");
+        String sessionCode = (String)request.getSession().getAttribute("vcode");
+        if (sessionCode.equalsIgnoreCase(test)){
+            Admin admins = enterpriseService.adminLogin(account);
+            String tel = admins.getTel();
+            if (null!=tel){
+                response.getWriter().print("1111");
+                request.getSession().setAttribute("retrieveName",account);
+                request.getSession().setAttribute("retrievePhone",tel);
+            }else {
+                response.getWriter().print("error");
+            }
+        }else {
+            response.getWriter().print("testError");
+        }
+    }
+
+    /**
+     * 获取短信验证码
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/sendMsg")
+    @ResponseBody
+    public void sendMsg(HttpServletRequest request, HttpServletResponse response)throws IOException{
+        String phone = request.getParameter("tel"); //发送短信验证码
+        PhoneCode.getPhonemsg(phone);
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+        response.getWriter().print(PhoneCode.code);
+    }
+
+    /**
+     * 找回-新密码修改
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/updatePwd")
+    @ResponseBody
+    public void updatePwd(HttpServletRequest request, HttpServletResponse response)throws IOException{
+        String uaccount = request.getParameter("retrieveName");
+        String upassword = MD5Utils.md5(request.getParameter("newPwd"));
+        Admin admin = new Admin();
+        admin.setPassword(upassword);
+        admin.setAccount(uaccount);
+        int flag = enterpriseService.updateAdmin(admin);
+        if (flag>0){
+            response.getWriter().print("1111");
+        }else {
+            response.getWriter().print("error");
+        }
     }
     /**
      * 退出
@@ -1036,5 +1099,58 @@ public class EnterpriseController {
         System.out.println(resume+"="+socials+"-"+aducationals);
         ResponseUtils.outJson1(response,g.toJson(resume)+"%"+g.toJson(socials)+"%"+g.toJson(aducationals));
 
+    }
+    @RequestMapping("/outputTalent")
+    @ResponseBody
+    public void  outputTalent(HttpServletRequest request,HttpServletResponse response) throws ParseException{
+        String imagePath=request.getServletContext().getRealPath("/images");
+        HashMap<String, Object> condition = new HashMap<>();
+        String uid = request.getParameter("uid");
+        String operationtime = request.getParameter("operationtime");
+        condition.put("uid", uid);
+        condition.put("operationtime",operationtime);
+        //查询简历信息然后循环遍历
+        Resume resumes=enterpriseService.outPutUserResume(condition);
+            List<Social> socials = schoolService.outPutUserSocial(resumes);
+            List<Aducational> aducationals = schoolService.outPutUserAducation(resumes);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("resume", resumes);
+            map.put("socials", socials);
+            map.put("aducations",aducationals);
+            System.out.println(imagePath+"\\"+resumes.getRepic().split("/")[1]);
+            map.put("repic",this.getImageBase(imagePath+"\\"+resumes.getRepic().split("/")[1]));
+            try {
+                WordUtil.exportMillCertificateWord(request, response, map, "简历", "template.ftl");
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
+    }
+    @SuppressWarnings("deprecation")
+    public String getImageBase(String src) {
+        if(src==null||src==""){
+            return "";
+        }
+        File file = new File(src);
+        if(!file.exists()) {
+            return "";
+        }
+        InputStream in = null;
+        byte[] data = null;
+        try {
+            in = new FileInputStream(file);
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        }
+        try {
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BASE64Encoder encoder = new BASE64Encoder();
+
+        return encoder.encode(data);
     }
 }

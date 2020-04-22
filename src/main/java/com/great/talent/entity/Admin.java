@@ -16,6 +16,7 @@ public class Admin {
     private String permit;
     private Date date;
     private Integer money;
+    private String payment;
     private String code;
     private Role role;
     private String companyname;
@@ -38,6 +39,14 @@ public class Admin {
         this.permit = permit;
         this.date = date;
         this.money = money;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 
     public Role getRole() {
@@ -176,7 +185,7 @@ public class Admin {
                 "aid=" + aid +
                 ", account='" + account + '\'' +
                 ", password='" + password + '\'' +
-                ", role='" + roleid + '\'' +
+                ", roleid=" + roleid +
                 ", name='" + name + '\'' +
                 ", tel='" + tel + '\'' +
                 ", state='" + state + '\'' +
@@ -186,8 +195,10 @@ public class Admin {
                 ", permit='" + permit + '\'' +
                 ", date=" + date +
                 ", money=" + money +
+                ", payment='" + payment + '\'' +
                 ", code='" + code + '\'' +
-                ", roles=" + role +
+                ", role=" + role +
+                ", companyname='" + companyname + '\'' +
                 '}';
     }
 }

@@ -5,6 +5,7 @@ import com.great.talent.entity.*;
 import com.great.talent.service.SchoolService;
 import com.great.talent.util.*;
 import com.sun.net.httpserver.HttpHandler;
+import net.lingala.zip4j.core.ZipFile;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
@@ -52,6 +53,7 @@ public class SchoolController
 	private Interview interview;
 	@Resource
 	private Resume resume;
+
 
 
 	@RequestMapping("/findTalent")
@@ -238,9 +240,9 @@ public class SchoolController
 			}
 		}
 		//这里需要获取登录高校账号的学校id
-		//		Admin admin= (Admin) request.getSession().getAttribute("admin");
-		//		admin.getSid();
-		schoolMsg.setSid(2);
+				Admin admin= (Admin) request.getSession().getAttribute("admin");
+//				admin.getSid();
+		schoolMsg.setSid(admin.getSid());
 		int i = schoolService.updateSchool(schoolMsg);
 		if (i > 0)
 		{
@@ -388,6 +390,11 @@ public class SchoolController
 		{
 			recomend.setUid(Integer.valueOf(ids[i]));
 			schoolService.insertRecommend(recomend);
+			//还要插入面试表
+			interview.setUid(Integer.valueOf(ids[i]));
+			interview.setPositionid(Integer.valueOf(positionid));
+			interview.setIntertime(new Date());
+			schoolService.userInsertInterview(interview);
 		}
 		ResponseUtils.outJson(response, "推荐成功");
 	}
@@ -396,9 +403,9 @@ public class SchoolController
 	@RequestMapping("/findUserResume")
 	public String findUserResume(HttpServletRequest request)
 	{
-//		User user = (User) request.getSession().getAttribute("user");
+		User user = (User) request.getSession().getAttribute("user");
 //		user.getUid();
-		userTalent.setUid(2);
+		userTalent.setUid(user.getUid());
 		Resume resume = schoolService.findUserResume(userTalent);
 		List<Social> socials = schoolService.findUserSocial(userTalent);
 		List<Aducational> aducationals = schoolService.findUserAducation(userTalent);
@@ -505,7 +512,7 @@ public class SchoolController
 				social2.setCompany(social.getCompany().split(",")[1]);
 				social2.setContent(social.getContent().split(",")[1]);
 				social2.setSocialtime(social.getSocialtime().split(",")[1]);
-				social2.setUid(2);
+				social2.setUid(user.getUid());
 				schoolService.insertSocial(social2);
 			}
 		} else
@@ -614,7 +621,7 @@ public class SchoolController
 	public void fillOutResume(@RequestParam("file") MultipartFile fileaot, Resume resume, HttpServletRequest request, HttpServletResponse response)
 	{
 		System.out.println(resume);
-		//		User user= (User) request.getSession().getAttribute("user");
+				User user= (User) request.getSession().getAttribute("user");
 		//		//插入数据库
 		//		//拿到user.getUid()
 		if (fileaot.getOriginalFilename() != null && !"".equals(fileaot.getOriginalFilename().trim()))
@@ -677,13 +684,9 @@ public class SchoolController
 			}
 		}
 
-		resume.setUid(3);
+		resume.setUid(user.getUid());
 		int i = schoolService.userInsertResume(resume);
-		//还要插入面试表
-		interview.setUid(3);
-		interview.setPositionid(5);
-		interview.setIntertime(new Date());
-		schoolService.userInsertInterview(interview);
+
 
 		System.out.println("保存==" + i);
 		if (i > 0)
@@ -877,8 +880,7 @@ public class SchoolController
 		ResponseUtils.outJson1(response,"{\"code\":0, \"msg\":\"\", \"data\":{}}");
 	}
 	@RequestMapping("/outputTalent")
-	@ResponseBody
-	public void  outputTalent(HttpServletRequest request,HttpServletResponse response){
+	public void outputTalent(HttpServletRequest request,HttpServletResponse response){
 		String imagePath=request.getServletContext().getRealPath("/images");
 		//查询当前页
 		HashMap<String, Object> condition = new HashMap<>();
@@ -888,8 +890,6 @@ public class SchoolController
 		String pro = request.getParameter("pro");
 		int pageInt= (int) request.getSession().getAttribute("pageInt");
 		int limitInt= (int) request.getSession().getAttribute("limitInt");
-		String page = request.getParameter("page");
-		String limit = request.getParameter("limit");
 		if (null != mindate && !"".equals(mindate.trim()))
 		{
 			condition.put("mindate", mindate);
@@ -920,7 +920,6 @@ public class SchoolController
 			map.put("resume", resumes.get(i));
 			map.put("socials", socials);
 			map.put("aducations",aducationals);
-			System.out.println(imagePath+"\\"+resumes.get(i).getRepic().split("/")[1]);
 			map.put("repic",this.getImageBase(imagePath+"\\"+resumes.get(i).getRepic().split("/")[1]));
 		try {
 			WordUtil.exportMillCertificateWord(request, response, map, "简历", "template.ftl");
@@ -929,6 +928,7 @@ public class SchoolController
 			e.printStackTrace();
 		}
 		}
+
 	}
 	@SuppressWarnings("deprecation")
 	public String getImageBase(String src) {
@@ -954,7 +954,6 @@ public class SchoolController
 			e.printStackTrace();
 		}
 		BASE64Encoder encoder = new BASE64Encoder();
-
 		return encoder.encode(data);
 	}
 

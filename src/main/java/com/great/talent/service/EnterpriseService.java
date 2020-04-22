@@ -25,6 +25,16 @@ public class EnterpriseService {
     }
 
     /**
+     * 修改密码
+     * @param admin
+     * @return
+     */
+    @Transactional
+    public int updateAdmin(Admin admin){
+        return enterpriseMapper.updateAdmin(admin);
+    }
+
+    /**
      * 校验手机号码
      * @param tel
      * @return
@@ -387,6 +397,15 @@ public class EnterpriseService {
     @Transactional
     public int reduceCompanyMoney(Admin admin){
         return enterpriseMapper.reduceCompanyMoney(admin);
+    }
+
+    /**
+     * 查询用户建立信息
+     * @param map
+     * @return
+     */
+    public Resume outPutUserResume(Map map){
+        return enterpriseMapper.outPutUserResume(map);
     }
 }
 

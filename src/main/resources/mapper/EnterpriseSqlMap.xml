@@ -21,12 +21,12 @@
       roleid, name, tel,
       state, address, cid,
       sid, date,
-      money)
+      money,payment)
     values (#{aid}, #{account}, #{password},
       #{roleid}, #{name}, #{tel},
       #{state}, #{address}, #{cid},
       #{sid}, #{date},
-      #{money})
+      #{money},#{payment})
   </insert>
 <!--简易公司注册-->
     <insert id="addCompany" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="cid" keyColumn="cid">
@@ -377,4 +377,11 @@
     <update id="reduceCompanyMoney" parameterType="Admin">
          update tbl_admin set money = money - #{money} where aid = #{aid}
     </update>
+<!--  查找用户建立  -->
+    <select id="outPutUserResume"  resultType="Resume" parameterType="java.util.Map">
+        SELECT u.uid,a.resname,a.rebirth,b.degreename,c.professname,a.retel,d.schoolname,a.repic,a.readdress,a.repol,a.reskill,a.reeva from tbl_resume a,tbl_user u,tbl_degree b,tbl_profession c,tbl_school d
+        <where>
+            a.degreeid=b.degreeid and a.professid=c.professid and d.sid=a.sid and a.uid=u.uid and u.uid = #{uid} and a.operationtime = #{operationtime,jdbcType=TIMESTAMP}
+        </where>
+    </select>
 </mapper>
