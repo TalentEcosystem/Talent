@@ -13,20 +13,17 @@ $(function () {
 				$("#con").append(
 					"<a href='"+path+"/HomePage/getCourseDetails?proid="+study[i].productid+"'  >"+
 					"<img src='"+path+"/images/04.gif' >"+
-
 					"<div class='paim' >"+
 					"<div style='height: 20px'>"+study[i].proname+"</div>"+
-					"<div style='height: 20px'>"+study[i].procount+"次播放</div>"+
-					"</div>"+
+					"<div style='height: 20px;float: left'>"+study[i].procount+"次播放</div>"+
+					"<div style='float: right;'><button class='layui-btn-danger' style='width: 20px;'>"+(i+1)+"</button></div>"+
+				"</div>"+
 					"</a>"
 				);
 			}
 		},
-		error: function (data) {
-			console.log(data);
-		}
+		error: function (data) {}
 	});
-
 
 
 // 鼠标经过 用户名 显示  离开隐藏
@@ -66,7 +63,6 @@ $(function () {
 	},function(){
 		$(this).removeClass("li_yysy")
 	});
-
 	layui.use(['carousel','layer'], function() {
 		var layer = layui.layer;
 		var carousel=layui.carousel;
@@ -116,23 +112,19 @@ $(function () {
 					"</li>"
 				)
 					}
-
 				},
-				error:function (data) {
-
-				}
-
-
-
+				error:function (data) {}
 			})
 		});
 		//时间格式的转换
 		function renderTime(date) {
 			var dateee = new Date(date).toJSON();
-			return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+			return new Date(+new Date(dateee) + 8 * 3600 * 1000)
+				.toISOString().replace(/T/g, ' ')
+				.replace(/\.[\d]{3}Z/, '')
 		}
 
-
+		//用户评论产品包
 		$("#pinglun").click(function(){
 			// 用户id
 			var uid=$("#uid").val();

@@ -182,9 +182,8 @@
 
 			</script>
 			<%--webscoket 实时发消息给客户端--%>
+
 			<script type="text/javascript">
-
-
 				//这里面的userno是我自己拿的毫秒数//可修改成登录用户的账号或者ID 唯一就行
 				var strTime = (new Date()).valueOf();
 				document.getElementById('userno').innerHTML=strTime;
@@ -715,7 +714,7 @@
 									var j=1;
 									for (var i = 0; i <d.length ; i++) {
 										$("#school").append(
-											"<a href='"+path+"/school/schoolProfile?sid="+(i+1)+"' class='pic0' style='background-image: url("+path+"/"+d[i].schoolpic+")'>"+
+											"<a href='"+path+"/HomePage/schoolProfile?sid="+(i+1)+"' class='pic0' style='background-image: url("+path+"/"+d[i].schoolpic+")'>"+
 											"<div class='childss1 test0' >"+
 											"<h>"+d[i].schoolname+"</h>"+
 											"<p>就业总数</p>"+

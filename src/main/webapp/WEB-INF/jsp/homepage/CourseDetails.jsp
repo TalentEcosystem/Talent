@@ -102,8 +102,16 @@
 				<p >${product.proname}</p>
 				<p >本课程包含${product.num}章节，${product.period}</p>
 				<p style="width: 95%">${product.prointro} </p>
-				<p ><img src="../images/9.png" alt=""/>${product.num}章节 <img src="../images/04.gif" />${product.procount}次播放<img src="../images/09.gif" alt=""/>2人共同学习</p>
-				<p ><button class=""><img src="../images/04.gif" />播放视频</button></p>
+				<p >
+					<img src="${pageContext.request.contextPath}/images/9.png" alt=""/>${product.num}章节
+					<img src="${pageContext.request.contextPath}/images/04.gif" />${product.procount}次播放
+					<img src="${pageContext.request.contextPath}/images/09.gif" alt=""/>2人共同学习
+				</p>
+				<p >
+					<button class="">
+						<img src="${pageContext.request.contextPath}/images/04.gif" />播放视频
+					</button>
+				</p>
 			</div>
 
 			<div class="clear"></div>
@@ -165,7 +173,7 @@
 							</div>
 							<div lang="en-US" class="gitment-container gitment-comments-container">
 								<div class="gitment-comments-list" id="pinglist" >
-<%--								评论的内容--%>
+							<%--评论的内容--%>
 
 								</div>
 							</div>
@@ -180,11 +188,9 @@
 								<div class="tu"><img src="${pageContext.request.contextPath}/${product.propic}" ></div>
 								<div class="tu"><img src="${pageContext.request.contextPath}/${product.propic}"></div>
 								<div class="tu"><img src="${pageContext.request.contextPath}/${product.propic}"></div>
-
 							</div>
 						</div>
 					</ul>
-
 				</div>
 			</div>
 
@@ -197,7 +203,7 @@
 			<div class="part3_2">
 				<h1>课程排行</h1>
 				<div class="con" id="con">
-
+			<%--内容--%>
 				</div>
 			</div>
 			<div class="part3_3">

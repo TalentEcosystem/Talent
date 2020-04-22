@@ -2,6 +2,7 @@ package com.great.talent.controller;
 
 import com.great.talent.entity.*;
 import com.great.talent.service.HomePageService;
+import com.great.talent.service.SchoolService;
 import com.great.talent.util.Diagis;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +29,8 @@ public class HomePageController
 
 	@Resource
 	private HomePageService homePageService;
-
+	@Resource
+	private SchoolService schoolService;
 
 	/**
 	 * 首页
@@ -300,6 +302,15 @@ public class HomePageController
 		return Str;
 
 
+	}
+	//显示高校简介页面
+	@RequestMapping("/schoolProfile")
+	public String showSchoolInfo(HttpServletRequest request,String sid ){
+		//这里需要获取登录高校账号的学校id
+		Integer schid=Integer.valueOf(sid);
+		SchoolMsg schoolMsg=schoolService.findSchoolInfo(schid);
+		request.getSession().setAttribute("school",schoolMsg);
+		return "homepage/SchoolProfile";
 	}
 
 
