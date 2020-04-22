@@ -347,6 +347,7 @@ public class SchoolController
 		{
 			condition.put("pro", pro);
 		}
+		System.out.println(admin);
 		//这个要改
 		condition.put("sid", admin.getSid());
 
@@ -361,7 +362,7 @@ public class SchoolController
 		List<UserTalent> userTalentList = schoolService.findTalent1(condition);
 		datagridResult.setData(userTalentList);
 		System.out.println("表格数据===" + toJson(datagridResult));
-		ResponseUtils.outJson1(response, toJson(datagridResult));
+		ResponseUtils.outJson1(response,toJson(datagridResult));
 
 	}
 
@@ -912,6 +913,8 @@ public class SchoolController
 		//查询简历信息然后循环遍历
 		List<Resume> resumes=schoolService.outPutUserResume(condition);
 		System.out.println(resumes.size());
+		List<String> tittlelist=new ArrayList<>();
+		List<Map<String, Object>> mapList=new ArrayList<>();
 		for (int i = 0; i < resumes.size(); i++)
 		{
 			List<Social> socials = schoolService.outPutUserSocial(resumes.get(i));
@@ -921,13 +924,11 @@ public class SchoolController
 			map.put("socials", socials);
 			map.put("aducations",aducationals);
 			map.put("repic",this.getImageBase(imagePath+"\\"+resumes.get(i).getRepic().split("/")[1]));
-		try {
-			WordUtil.exportMillCertificateWord(request, response, map, "简历", "template.ftl");
-		} catch (IOException e) {
+			tittlelist.add("resume"+resumes.get(i).getResname());
+			mapList.add(map);
+		}
+		WordUtil.exportWordBatch(request, response, mapList,tittlelist , "template.ftl");
 
-			e.printStackTrace();
-		}
-		}
 
 	}
 	@SuppressWarnings("deprecation")

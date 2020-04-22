@@ -92,7 +92,7 @@
         and b.positionid limit #{pageInt},#{limitInt}
     </where>
     </select>
-    <select id="findRcommendCount" resultType="int" parameterType="Recommend">
+    <select id="findRcommendCount" resultType="int" >
         select count(*) from tbl_admin a,tbl_position b,tbl_company c,tbl_industry d
         <where>
             a.cid=c.cid and b.industryid=d.industryid and b.positionstate='发布' and b.aid=a.aid
@@ -107,7 +107,7 @@
     <select id="findTalent1" resultType="UserTalent">
         select u.uid,u.uaccount,r.resname,s.schoolname,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
         <where>
-            u.uid=r.uid and r.professid=p.professid and r.sid=s.sid and r.reemploy='否' and u.chapterid=c.chapterid
+            u.uid=r.uid and r.professid=p.professid and r.sid=s.sid  and u.chapterid=c.chapterid
             <if test="mindate!=null and mindate !=''">
                 and u.udate &gt;=#{mindate}
             </if>
@@ -124,7 +124,7 @@
         </where>
     </select>
     <select id="findTalentCount1" resultType="int">
-        select count(*) from (select u.uid,u.uaccount,s.schoolname,r.rename,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
+        select count(*) from (select u.uid,u.uaccount,s.schoolname,r.resname,c.chname,p.professname,r.reemploy from tbl_user u,tbl_resume r,tbl_chapter c,tbl_profession p,tbl_school s
         <where>
             u.uid=r.uid and r.professid=p.professid and r.sid=s.sid and r.reemploy='否' and s.sid=#{sid} and u.chapterid=c.chapterid
             <if test="mindate!=null and mindate !=''">

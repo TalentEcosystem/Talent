@@ -62,7 +62,7 @@
 			,url: "${pageContext.request.contextPath}/school/showTalent" //数据接口
 			,page: true //开启分页
 			,dataType : "json"
-			,limit:3
+			,limit:5
 			,id:'demotable'
 			,cols: [[ //表头
 				{field: 'zizeng', title: '序列', width:80, sort: true, fixed: 'left',templet:'#zizeng'},
@@ -137,7 +137,7 @@
 					<%--	}--%>
 					<%--})--%>
 				}else{
-					layer.msg("导出您想查询的数据");
+					layer.msg("需要先查询数据");
 				}
 
 			}
