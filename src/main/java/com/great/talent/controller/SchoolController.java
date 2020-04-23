@@ -404,9 +404,9 @@ public class SchoolController
 	@RequestMapping("/findUserResume")
 	public String findUserResume(HttpServletRequest request)
 	{
-		User user = (User) request.getSession().getAttribute("user");
+		int uid = (Integer)request.getSession().getAttribute("uid");
 //		user.getUid();
-		userTalent.setUid(user.getUid());
+		userTalent.setUid(uid);
 		Resume resume = schoolService.findUserResume(userTalent);
 		List<Social> socials = schoolService.findUserSocial(userTalent);
 		List<Aducational> aducationals = schoolService.findUserAducation(userTalent);
@@ -420,7 +420,9 @@ public class SchoolController
 	@RequestMapping("/updateResume")
 	public void updateResume(@RequestParam("file")MultipartFile fileaot, Resume resume, Social social, Aducational aducational, HttpServletRequest request, HttpServletResponse response)
 	{
-		User user = (User) request.getSession().getAttribute("user");
+//		User user = (User) request.getSession().getAttribute("user");
+		int uid = (Integer)request.getSession().getAttribute("uid");
+
 		List<Social> social3 = (List<Social>) request.getSession().getAttribute("socials");
 		List<Aducational> aducational3 = (List<Aducational>) request.getSession().getAttribute("aducationals");
 		System.out.println("resume=" + resume);
@@ -494,7 +496,7 @@ public class SchoolController
 			social1.setSocialtime(social.getSocialtime().split(",")[0]);
 			String s = (social.getSocialid() + "").split(",")[0];
 			int socialid1 = Integer.valueOf(s);
-			social1.setUid(user.getUid());
+			social1.setUid(uid);
 			social1.setSocialid(socialid1);
 			schoolService.updateSocial(social1);
 			if (social3.size() > 1)
@@ -502,7 +504,7 @@ public class SchoolController
 				social2.setCompany(social.getCompany().split(",")[1]);
 				social2.setContent(social.getContent().split(",")[1]);
 				social2.setSocialtime(social.getSocialtime().split(",")[1]);
-				social2.setUid(user.getUid());
+				social2.setUid(uid);
 				String s1 = (social.getSocialid() + "").split(",")[1];
 				int socialid2 = Integer.valueOf(s);
 				social1.setSocialid(socialid2);
@@ -513,7 +515,7 @@ public class SchoolController
 				social2.setCompany(social.getCompany().split(",")[1]);
 				social2.setContent(social.getContent().split(",")[1]);
 				social2.setSocialtime(social.getSocialtime().split(",")[1]);
-				social2.setUid(user.getUid());
+				social2.setUid(uid);
 				schoolService.insertSocial(social2);
 			}
 		} else
@@ -522,14 +524,14 @@ public class SchoolController
 			social1.setCompany(social.getCompany().split(",")[0]);
 			social1.setContent(social.getContent().split(",")[0]);
 			social1.setSocialtime(social.getSocialtime().split(",")[0]);
-			social1.setUid(user.getUid());
+			social1.setUid(uid);
 			schoolService.insertSocial(social1);
 			if (!"".equals(social.getCompany().split(",")[1]))
 			{
 				social2.setCompany(social.getCompany().split(",")[1]);
 				social2.setContent(social.getContent().split(",")[1]);
 				social2.setSocialtime(social.getSocialtime().split(",")[1]);
-				social2.setUid(user.getUid());
+				social2.setUid(uid);
 				schoolService.insertSocial(social2);
 			}
 		}
@@ -539,7 +541,7 @@ public class SchoolController
 			aducational1.setAdtime(aducational.getAdtime().split(",")[0]);
 			aducational1.setSname(aducational.getSname().split(",")[0]);
 			aducational1.setProfession(aducational.getProfession().split(",")[0]);
-			aducational1.setUid(user.getUid());
+			aducational1.setUid(uid);
 			String s = (aducational.getAducationid() + "").split(",")[0];
 			int aducationid1 = Integer.valueOf(s);
 			aducational1.setAducationid(aducationid1);
@@ -549,7 +551,7 @@ public class SchoolController
 				aducational2.setAdtime(aducational.getAdtime().split(",")[1]);
 				aducational2.setSname(aducational.getSname().split(",")[1]);
 				aducational2.setProfession(aducational.getProfession().split(",")[1]);
-				aducational2.setUid(user.getUid());
+				aducational2.setUid(uid);
 				String s1 = (aducational.getAducationid() + "").split(",")[1];
 				int aducationid2 = Integer.valueOf(s1);
 				aducational1.setAducationid(aducationid2);
@@ -560,7 +562,7 @@ public class SchoolController
 				aducational2.setAdtime(aducational.getAdtime().split(",")[1]);
 				aducational2.setSname(aducational.getSname().split(",")[1]);
 				aducational2.setProfession(aducational.getProfession().split(",")[1]);
-				aducational2.setUid(user.getUid());
+				aducational2.setUid(uid);
 				schoolService.insertAducation(aducational2);
 			}
 		} else
@@ -569,14 +571,14 @@ public class SchoolController
 			aducational1.setAdtime(aducational.getAdtime().split(",")[0]);
 			aducational1.setSname(aducational.getSname().split(",")[0]);
 			aducational1.setProfession(aducational.getProfession().split(",")[0]);
-			aducational1.setUid(user.getUid());
+			aducational1.setUid(uid);
 			schoolService.insertAducation(aducational1);
 			if (aducational3.size() == 1 && aducational.getAdtime().split(",")[1].length() > 1)
 			{
 				aducational2.setAdtime(aducational.getAdtime().split(",")[1]);
 				aducational2.setSname(aducational.getSname().split(",")[1]);
 				aducational2.setProfession(aducational.getProfession().split(",")[1]);
-				aducational2.setUid(user.getUid());
+				aducational2.setUid(uid);
 				schoolService.insertAducation(aducational2);
 			}
 		}
@@ -587,7 +589,7 @@ public class SchoolController
 		resume.setDegreeid(degreeid);
 		resume.setSid(sid);
 		resume.setProfessid(professid);
-		resume.setUid(user.getUid());
+		resume.setUid(uid);
 		resume.setOperationtime(new Date());
 		System.out.println(resume);
 		schoolService.updateUserresume(resume);
@@ -622,7 +624,9 @@ public class SchoolController
 	public void fillOutResume(@RequestParam("file") MultipartFile fileaot, Resume resume, HttpServletRequest request, HttpServletResponse response)
 	{
 		System.out.println(resume);
-				User user= (User) request.getSession().getAttribute("user");
+		int uid = (Integer)request.getSession().getAttribute("uid");
+
+//		User user= (User) request.getSession().getAttribute("user");
 		//		//插入数据库
 		//		//拿到user.getUid()
 		if (fileaot.getOriginalFilename() != null && !"".equals(fileaot.getOriginalFilename().trim()))
@@ -685,7 +689,7 @@ public class SchoolController
 			}
 		}
 
-		resume.setUid(user.getUid());
+		resume.setUid(uid);
 		int i = schoolService.userInsertResume(resume);
 
 
@@ -713,13 +717,15 @@ public class SchoolController
 	@RequestMapping("/userResumeStatus")
 	public void userResumeStatus(HttpServletRequest request, HttpServletResponse response)
 	{
-		User user = (User) request.getSession().getAttribute("user");
+		int uid = (Integer)request.getSession().getAttribute("uid");
+
+//		User user = (User) request.getSession().getAttribute("user");
 		//插入数据库
 		//拿到user.getUid()
 		datagridResult.setCode(0);
 		datagridResult.setMsg("");
-		int count = schoolService.findUserResumeStatusCount(user.getUid());
-		List<ResumeStatus> resumeStatuses = schoolService.findUserResumeStatus(1);
+		int count = schoolService.findUserResumeStatusCount(uid);
+		List<ResumeStatus> resumeStatuses = schoolService.findUserResumeStatus(uid);
 		datagridResult.setCount(count);
 		datagridResult.setData(resumeStatuses);
 		ResponseUtils.outJson1(response, toJson2(datagridResult));

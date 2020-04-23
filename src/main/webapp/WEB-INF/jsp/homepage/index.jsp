@@ -115,10 +115,10 @@
 	        <a href="">${uname}</a>
             <ul>
 	            <a href="${pageContext.request.contextPath}/user/personal"  ><li class="ll">个人中心</li></a>
-	             <a href=""><li class="ll">我的简历</li></a>
-	             <a href=""><li class="ll">求职反馈</li></a>
-	             <a href=""><li class="ll">收藏</li></a>
-	             <a href="" ><li class="ll">退出</li></a>
+	             <a href=<%=path+"/school/findUserResume" %>><li class="ll">我的简历</li></a>
+	             <a href=<%=path+"/user/requestFeedback" %>><li class="ll">求职反馈</li></a>
+	             <a href=<%=path+"/user/collection" %>><li class="ll">收藏</li></a>
+	             <a href="${pageContext.request.contextPath}/Enterprise/Exit" ><li class="ll">退出</li></a>
             </ul>
         </span>
 				</div>

@@ -214,8 +214,8 @@ public class EnterpriseController {
      */
     @RequestMapping("/Exit")
     public ModelAndView Exit(HttpSession httpSession){
-        httpSession.removeAttribute("admin");
-        mv.setViewName("Enterprise/EnterpriseLogin");
+        httpSession.invalidate();
+        mv.setViewName("homepage/index");
         return mv;
     }
     /**
