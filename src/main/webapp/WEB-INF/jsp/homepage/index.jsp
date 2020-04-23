@@ -191,7 +191,9 @@
 				var userno=document.getElementById('userno').innerHTML;
 				//判断当前浏览器是否支持WebSocket
 				if ('WebSocket' in window) {
-					websocket = new WebSocket("ws://localhost:8300/talent/websocket/"+userno);
+					websocket = new WebSocket("ws://8.129.170.238:8085/mavendemo-0.0.1-SNAPSHOT/websocket/"+userno);
+					// websocket = new WebSocket("ws://localhost/8300/talent/websocket/"+userno);
+
 				}
 				else {
 					alert('当前浏览器 Not support websocket')
@@ -245,7 +247,7 @@
 					document.getElementById('message').innerHTML += (now+"发送人："+userno+'<br/>'+"---"+message) + '<br/>';
 					document.getElementById('message').style.color="red";
 					var ToSendUserno="4567";//接收人编号：4567
-					message=message+"|"+ToSendUserno//将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
+					message=message+"|"+ToSendUserno;//将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
 					websocket.send(message);
 				}
 				//获取当前时间

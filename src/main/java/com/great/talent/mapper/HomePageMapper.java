@@ -2,10 +2,12 @@ package com.great.talent.mapper;
 
 import com.great.talent.entity.*;
 import org.apache.ibatis.annotations.Mapper;
-
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Administrator
+ */
 @Mapper
 public interface HomePageMapper
 {
@@ -14,63 +16,65 @@ public interface HomePageMapper
 	 * 得到企业发布的最新职位信息
 	 * @return GoodNews
 	 */
-	public List<GoodNews> getGoodNews();
+	 List<GoodNews> getGoodNews();
 
 
 	/**
 	 * 得到学校的信息
 	 * @return List<SchoolNews>
 	 */
-	public List<SchoolNews> getSchoolNews();
+	 List<SchoolNews> getSchoolNews();
 
 
 	/**
 	 * 得到产品包和讲师的信息前8信息
 	 * @return List<Study>
 	 */
-	public List<Study> getStudyNews();
+	 List<Study> getStudyNews();
 
 	/**
 	 *  产品包和讲师信息前四名课程
 	 * @return List<Study>
 	 */
-	public List<Study> getClassCurri();
+	 List<Study> getClassCurri();
 	/**
 	 * 得到产品包和章节的详细信息
+	 *  @param proid
 	 * @return Product
 	 */
-	public Product getCourseDetails(Integer proid);
+	 Product getCourseDetails(Integer proid);
 
 	/**
 	 * 得到产品包相对应的章节的详细信息
 	 * @return List<Chapter>
 	 */
-	public List<Chapter> getChapter(Integer proid);
+	 List<Chapter> getChapter(Integer proid);
 
 	/**
 	 * 得到企业发布的招聘信息
 	 * @return List<Company>
 	 */
-	public List<Company> getCompanyNews();
+	 List<Company> getCompanyNews();
 
 	/**
+	 * 得到企业发布的招聘信息的条数
 	 * @return Map
 	 */
-	public Map getCount();
+	 Map getCount();
 
 	/**
 	 * 得到最新入驻的企业名
-	 * @return Map
+	 * @return List<String>
 	 */
-	public List<String> getNewCompany();
+	 List<String> getNewCompany();
 
 
 	/**
 	 * s首页找工作
 	 * @param map
-	 * @return List<Position>
+	 * @return List<SerachJob>
 	 */
-	public List<SerachJob> getJobNews(Map map);
+	 List<SerachJob> getJobNews(Map map);
 
 
 	/**
@@ -78,32 +82,32 @@ public interface HomePageMapper
 	 * @param map
 	 * @return int
 	 */
-	public int getJobNewsCount(Map map);
+	 int getJobNewsCount(Map map);
 
 	/**
 	 * 行业下拉框的信息
-	 * @return List<Map>
+	 * @return List<Industry>
 	 */
-	public List<Industry> getInSelect();
+	 List<Industry> getInSelect();
 	/**
 	 * 行业下拉框的信息
-	 * @return List<Map>
+	 * @return List<String>
 	 */
-	public List<String> getJobExper();
+	 List<String> getJobExper();
 
 
 	/**
 	 * 得到企业的简介信息
 	 * @return Company
 	 */
-	public Company getCompanyProfile(Integer cid);
+	 Company getCompanyProfile(Integer cid);
 
 	/**
 	 * 企业招聘的信息
 	 * @param cid
-	 * @return List<Position>
+	 * @return  List<SerachJob>
 	 */
-	public List<SerachJob> getComJobNews(Integer cid);
+	 List<SerachJob> getComJobNews(Integer cid);
 
 
 	/**
@@ -111,42 +115,42 @@ public interface HomePageMapper
 	 * @param cid
 	 * @return int
 	 */
-	public int getComJobNewsCount(Integer cid);
+	 int getComJobNewsCount(Integer cid);
 
 
 	/**
 	 *的到知识库的信息
 	 * @param map
-	 * @return int
+	 * @return  List<Product>
 	 */
-	public List<Product> getTechnologyArea(Map map,Integer curPage,Integer pageSize,Integer domainid);
+	 List<Product> getTechnologyArea(Map map,Integer curPage,Integer pageSize,Integer domainid);
 
 	/**
 	 *得到知识库的条数
 	 * @param map
 	 * @return int
 	 */
-	public int getTechnologyAreaCount(Map map,Integer curPage,Integer pageSize,Integer domainid);
+	 int getTechnologyAreaCount(Map map,Integer curPage,Integer pageSize,Integer domainid);
 
 	/**
 	 * 得到领域的信息
-	 * @return
+	 * @return List<Know>
 	 */
-	public List<Know> getDomain();
+	 List<Know> getDomain();
 
 	/**
 	 * 添加用户评论产品包
 	 * @param eva
-	 * @return
+	 * @return int
 	 */
-	public int setEvainfo(Eva eva);
+	 int setEvainfo(Eva eva);
 
 	/**
 	 * 得到评论产品包的用户和内容
 	 * @param productid
-	 * @return
+	 * @return List<Eva>
 	 */
-	public List<Eva> getEvaInfo(Integer productid);
+	 List<Eva> getEvaInfo(Integer productid);
 
 
 

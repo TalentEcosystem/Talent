@@ -22,11 +22,11 @@
 
 	<label class="layui-form-label" style="clear: both;float: left;margin-top: 15px;margin-left: 60px">行业:</label>
 	<div class="layui-input-inline">
-		<input type="text" name="positionname" id="positionname" style="margin-top: 15px" placeholder="请输入行业" required  lay-verify="required"  autocomplete="off" class="layui-input">
+		<input type="text" name="indname" id="indname" style="margin-top: 15px" placeholder="请输入行业" required  lay-verify="required"  autocomplete="off" class="layui-input">
 	</div>
 	<label class="layui-form-label" style="margin-top: 15px">岗位:</label>
 	<div class="layui-input-inline">
-		<input type="text" name="indname" id="indname" style="margin-top: 15px" placeholder="请输入岗位" required  lay-verify="required"  autocomplete="off" class="layui-input">
+		<input type="text" name="positionname" id="positionname" style="margin-top: 15px" placeholder="请输入岗位" required  lay-verify="required"  autocomplete="off" class="layui-input">
 	</div>
 	<button class="layui-btn" data-type="reload" lay-filter="formDemo" style="margin-left: 10%;margin-bottom: 10px">搜索</button>
 
@@ -51,7 +51,7 @@
 			,url: "${pageContext.request.contextPath}/school/recommendTalent" //数据接口
 			,page: true //开启分页
 			,dataType : "json"
-			,limit:3
+			,limit:5
 			,id:'demotable'
 			,cols: [[ //表头
 
@@ -61,7 +61,7 @@
 				{field: 'indname', title: '行业', width:120},
 				{field: 'companyname', title: '发布者', width:120},
 				{field: 'positionname', title: '岗位', width:120},
-				{field: 'positiontime', title: '发布时间', width:120},
+				{field: 'positiontime', title: '发布时间', width:120,templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
 				{fixed: 'right', title: '操作', width: 80, align:'center', toolbar: '#barDemo'}
 			]]
 
@@ -106,7 +106,6 @@
 					},
 					content: 'findTalentByState1' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					, success: function (layero, index) {
-						layer.msg('推荐');
 						var form = layui.form;
 						var body = layer.getChildFrame('body', index);
 						body.find("input[name=cid]").val(data.cid);

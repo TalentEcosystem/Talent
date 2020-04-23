@@ -3,24 +3,16 @@ package com.great.talent.controller;
 import com.great.talent.entity.*;
 import com.great.talent.service.HomePageService;
 import com.great.talent.service.SchoolService;
-import com.great.talent.util.Diagis;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.annotation.Resource;
-import javax.annotation.Resources;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.*;
 
 @Controller
 @RequestMapping("/HomePage")
@@ -47,10 +39,8 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/getCount" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String getGoodNews( HttpServletRequest request)
-	{
-		System.out.println("getCount被调用了~~~~~~~~~~~~~~~~···");
-		String str = homePageService.getCount(request);
+	public String getGoodNews( HttpServletRequest request){
+		String str = homePageService.getCount();
 		return str;
 	}
 
@@ -60,8 +50,7 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/getSchoolNews" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String getSchoolNews( )
-	{
+	public String getSchoolNews( ){
 		String Str=homePageService.getSchoolNews();
 		return Str;
 	}
@@ -71,11 +60,8 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/getStudyNews" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String getStudyNews( )
-	{
-
+	public String getStudyNews( ){
 		String Str=homePageService.getStudyNews();
-		System.out.println("nishi="+Str);
 		return Str;
 	}
 
@@ -85,11 +71,9 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/getClassCurri" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String getClassCurri( )
-	{
+	public String getClassCurri( ){
 
 		String Str=homePageService.getClassCurri();
-		System.out.println("kengcpaiming"+Str);
 		return Str;
 	}
 
@@ -98,14 +82,9 @@ public class HomePageController
 	 * @return String
 	 */
 	@RequestMapping(value = "/getCourseDetails" ,produces = "text/html;charset=UTF-8" )
-	public String getCourseDetails(String proid,HttpServletRequest request)
-	{
-
+	public String getCourseDetails(String proid,HttpServletRequest request){
 		Product product=homePageService.getCourseDetails(proid);
-
 		request.getSession().setAttribute("product",product);
-
-		System.out.println("产品包的信息="+product);
 		return "homepage/CourseDetails";
 	}
 
@@ -116,8 +95,7 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/getCompanyNews" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String getCompanyNews( )
-	{
+	public String getCompanyNews( ){
 		String Str=homePageService.getCompanyNews();
 		return Str;
 	}
@@ -127,12 +105,10 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/getCompanyProfile" ,produces = "text/html;charset=UTF-8" )
 
-	public String getCompanyProfile(HttpServletRequest request ,String cid)
-	{
+	public String getCompanyProfile(HttpServletRequest request ,String cid){
 
 		Integer c= Integer.valueOf(cid);
 		Company company=homePageService.getCompanyProfile(c);
-		System.out.println("ccc"+company);
 		request.getSession().setAttribute("CompanyProfile",company);
 		return "homepage/CompanyProfile";
 	}
@@ -143,15 +119,13 @@ public class HomePageController
 	 * @return String
 	 */
 	@RequestMapping(value = "/searchJob" ,produces = "text/html;charset=UTF-8" )
-	public String 	searchJob( )
-	{
+	public String 	searchJob( ){
 		return "homepage/searchJob";
 	}
 
 
 	@RequestMapping(value = "/search" ,produces = "text/html;charset=UTF-8" )
-	public String search( )
-	{
+	public String search( ) {
 		System.out.println("aas");
 		return "";
 	}
@@ -161,18 +135,13 @@ public class HomePageController
 	 * @return String
 	 */
 	@RequestMapping(value = "/getJobNews",produces = "text/html;charset=UTF-8"  )
-	public ModelAndView getJobNews(String sypositionname ,String sypositionaddress ,HttpServletRequest request)
-	{
-
-		System.out.println("getJobNews"+sypositionaddress);
+	public ModelAndView getJobNews(String sypositionname ,String sypositionaddress ,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		//要跳转的页面
 		mav.setViewName("homepage/searchJob");
 		//传入对象
-
 		request.getSession().setAttribute("sypositionname",sypositionname);
 		request.getSession().setAttribute("sypositionaddress",sypositionaddress);
-
 		return mav;
 	}
 
@@ -183,12 +152,9 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/getJobTableNews" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String getJobTableNews(@ModelAttribute SerachJob serachJob, HttpServletRequest request)
-	{
-
+	public String getJobTableNews(@ModelAttribute SerachJob serachJob, HttpServletRequest request) {
 				Map cond=getMap(serachJob,request);
 				String s=homePageService.getJobNews(cond);
-				System.out.println("getJobTableNews"+s);
 				return s;
 	}
 
@@ -198,10 +164,8 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/getSelect" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String getSelect( )
-	{
+	public String getSelect( ) {
 		String Str=homePageService.getInSelect();
-		System.out.println(Str);
 		return Str;
 	}
 	/**
@@ -210,11 +174,9 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/getExperSelect" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String getExperSelect( )
-	{
+	public String getExperSelect( ) {
 
 		String Str=homePageService.getJobExper();
-		System.out.println(Str);
 		return Str;
 	}
 	/**
@@ -223,10 +185,8 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/getComJobNews" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String getComJobNews(String cid)
-	{
+	public String getComJobNews(String cid) {
 		String srt=homePageService.getComJobNews(cid);
-		System.out.println("getJobTableNews"+srt);
 		return srt;
 	}
 
@@ -236,9 +196,7 @@ public class HomePageController
 	 * @return String
 	 */
 	@RequestMapping(value = "/getTechnologyArea" ,produces = "text/html;charset=UTF-8" )
-	public String getTechnologyArea(HttpServletRequest request , String curPage1,  String did)
-	{
-		System.out.println("页数="+curPage1);
+	public String getTechnologyArea(HttpServletRequest request , String curPage1,  String did) {
 		Integer curPage = null;
 		Integer domainid=null;
 		LinkedHashMap<String, Object> cond = new LinkedHashMap<>();
@@ -254,17 +212,9 @@ public class HomePageController
 			domainid=Integer.valueOf(did);
 			request.setAttribute("domainid",domainid);
 		}
-		System.out.println("ccc"+curPage);
-//		cond.put("curPage",(curPage1-1)*9);
-//		cond.put("pageSize",9);
 		List<Know> knowList=homePageService.getDomain();
 		myReportByPage = homePageService.getTechnologyArea(cond, curPage, 9,domainid);
-
-//		HttpSession session = request.getSession();
-//		BigDecimal userid = (BigDecimal) session.getAttribute("userid");
 		request.setAttribute("knowList",knowList);
-		System.out.println("linhyi="+knowList);
-		System.out.println("myReportByPage====" + myReportByPage);
 		request.setAttribute("myReportByPage",myReportByPage);
 		return "homepage/TechnologyArea";
 	}
@@ -275,9 +225,7 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/setEvaInfo" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String setEvainfo(Eva eva)
-	{
-		System.out.println("页数="+eva);
+	public String setEvainfo(Eva eva) {
 		int num=homePageService.setEvainfo(eva);
 		if (num > 0){
 			return "success";
@@ -292,20 +240,16 @@ public class HomePageController
 	 */
 	@RequestMapping(value = "/getEvaInfo" ,produces = "text/html;charset=UTF-8" )
 	@ResponseBody
-	public String getEvaInfo(String pid)
-	{
-		System.out.println("产品包id="+pid);
+	public String getEvaInfo(String pid) {
 		Integer productid=Integer.valueOf(pid);
 		String Str=homePageService.getEvaInfo(productid);
-		System.out.println("pinglun内容="+Str);
-
 		return Str;
 
 
 	}
 	//显示高校简介页面
 	@RequestMapping("/schoolProfile")
-	public String showSchoolInfo(HttpServletRequest request,String sid ){
+	public String showSchoolInfo(HttpServletRequest request,String sid ) {
 		//这里需要获取登录高校账号的学校id
 		Integer schid=Integer.valueOf(sid);
 		SchoolMsg schoolMsg=schoolService.findSchoolInfo(schid);
@@ -313,6 +257,19 @@ public class HomePageController
 		return "homepage/SchoolProfile";
 	}
 
+	/**
+	 * 找工作-岗位详情
+	 * @param request
+	 * @param jobData1
+	 * @throws IOException
+	 * @throws ParseException
+	 */
+	@RequestMapping("/checkJob")
+	@ResponseBody
+	public String checkJob(JobData jobData1,HttpServletRequest request)throws IOException, ParseException {
+		String Str= homePageService.findWelfare(jobData1,request);
+		return Str;
+	}
 
 
 
@@ -325,8 +282,7 @@ public class HomePageController
 	 * @param request
 	 * @return
 	 */
-	public Map getMap(SerachJob serachJob,HttpServletRequest request)
-	{
+	public Map getMap(SerachJob serachJob,HttpServletRequest request) {
 		System.out.println("getJobTableNews"+serachJob);
 		String p=request.getParameter("page");
 		String l=request.getParameter("limit");

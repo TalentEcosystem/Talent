@@ -476,18 +476,22 @@ public class UserController
 	//找工作-岗位详情
 	@RequestMapping("/checkJob")
 	@ResponseBody
-	public void checkJob(HttpServletRequest request, HttpServletResponse response)throws IOException,ParseException {
+	public void checkJob(HttpServletRequest request, HttpServletResponse response)throws IOException,ParseException
+	{
+
 		String indname = request.getParameter("indname");
 		String companyname = request.getParameter("companyname");
 		String positionname = request.getParameter("positionname");
 		String positiontime1 = request.getParameter("positiontime");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZ");
-		Date date = sdf.parse(positiontime1);
-		SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String sDate=sdf2.format(date);
-		Date positiontime = sdf2.parse(sDate);
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZ");
+//		Date date = sdf.parse(positiontime1);
+//		SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		String sDate=sdf2.format(date);
+//		Date positiontime = sdf2.parse(sDate);
+		Date date = new Date(positiontime1);
+		System.out.println("==="+date);
 		JobData jobData1 = new JobData();
-		jobData1.setPositiontime(positiontime);
+		jobData1.setPositiontime(date);
 		jobData1.setPositionname(positionname);
 		jobData1.setCompanyname(companyname);
 		jobData1.setIndname(indname);

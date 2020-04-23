@@ -1,70 +1,208 @@
 package com.great.talent.util;
-import java.io.File;
+import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
-import net.lingala.zip4j.core.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
-import net.lingala.zip4j.model.ZipParameters;
-import net.lingala.zip4j.util.Zip4jConstants;
+
+import org.slf4j.LoggerFactory;
+
 /**
  * @author 小和
  * 生成压缩包zip格式的工具类，并可以生成密码
  */
 public class ZipUtils
 {
-	/**
-	 * 加密文件并导出
-	 * @param files 要进行压缩的文件
-	 * @param passwordZip 压缩密码
-	 * @param templatePathZip 压缩包路径
-	 * @param fileName 压缩文件名
-	 * @return zip文件
-	 *
-	 */
-	public static ZipFile createZipFile(String passwordZip, String templatePathZip, String fileName,File...files) {
-	try { // 創建zip包，指定了zip路徑和zip名稱
-		final ZipFile zipFile = new ZipFile(templatePathZip + fileName);
-		// 向zip包中添加文件集合
-		final ArrayList<File> fileAddZip = new ArrayList<File>();
-		File file1 = zipFile.getFile();
-		// 判断是否存在
-		if (file1.exists()) {
-			file1.delete();
-		}
-		// 向zip包中添加文件
-		for(File file:files){
-		fileAddZip.add(file);
-		}
-		// 设置zip包的一些参数集合
-		final ZipParameters parameters = new ZipParameters();
-		// 是否设置密码（若passwordZip为空，则为false）
-		if(null != passwordZip && !passwordZip.equals("")) {
-			parameters.setEncryptFiles(true);
-			// 压缩包密码
-			parameters.setPassword(passwordZip);
-		} else {
-			parameters.setEncryptFiles(false);
-		}
-		// 压缩方式(默认值)
-		parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
-		// 普通级别（参数很多）
-		parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
-		// 加密级别
-		parameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_STANDARD);
-		// 创建压缩包完成
-		zipFile.createZipFile(fileAddZip, parameters);
 
-		//压缩完成后删除文件
-		for(File file:files){
+	public static void zip(String inputFileName, String zipFileName)
+			throws Exception {
+		zip(zipFileName, new File(inputFileName));
+	}
+
+	private static void zip(String zipFileName, File inputFile)
+			throws Exception {
+		ZipOutputStream out = new ZipOutputStream(new FileOutputStream(
+				zipFileName));
+		zip(out, inputFile, "");
+		System.out.println("zip done");
+		out.close();
+	}
+
+	private static void zip(ZipOutputStream out, File f, String base)
+			throws Exception {
+		if (f.isDirectory()) {
+			File[] fl = f.listFiles();
+			out.putNextEntry(new ZipEntry(base + "/"));
+			base = base.length() == 0 ? "" : base + "/";
+			for (int i = 0; i < fl.length; i++) {
+				zip(out, fl[i], base + fl[i].getName());
+			}
+		} else {
+			out.putNextEntry(new ZipEntry(base));
+			FileInputStream in = new FileInputStream(f);
+			int b;
+			//System.out.println(base);
+			while ((b = in.read()) != -1) {
+				out.write(b);
+			}
+			in.close();
+		}
+	}
+
+	/**
+	 * 创建ZIP文件
+	 * @param sourcePath 文件或文件夹路径
+	 * @param zipPath 生成的zip文件存在路径（包括文件名）
+	 */
+	public static void createZip(String sourcePath, String zipPath) {
+		FileOutputStream fos = null;
+		ZipOutputStream zos = null;
+		try {
+			fos = new FileOutputStream(zipPath);
+			zos = new ZipOutputStream(fos);
+			writeZip(new File(sourcePath), "", zos);
+		} catch (FileNotFoundException e) {
+			System.out.println("ZipUtils createZip  Failed to create ZIP file"+e);
+		} finally {
+			try {
+				if (zos != null) {
+					System.out.println("ZipUtils createZip Create a ZIP file successfully! the path in:{}"+zipPath);
+					zos.close();
+					//压缩成功后，删除打包前的文件
+					deleteFile( new File(sourcePath) );
+				}
+			} catch (IOException e) {
+				System.out.println("ZipUtils createZip  Failed to create ZIP file"+ e);
+			}
+		}
+	}
+
+	private static void writeZip(File file, String parentPath,
+	                             ZipOutputStream zos) {
+		if (file.exists()) {
+			if (file.isDirectory()) {// 处理文件夹
+				parentPath += file.getName() + File.separator;
+				File[] files = file.listFiles();
+				for (File f : files) {
+					writeZip(f, parentPath, zos);
+				}
+			} else {
+				FileInputStream fis = null;
+				try {
+					fis = new FileInputStream(file);
+					ZipEntry ze = new ZipEntry(parentPath + file.getName());
+					zos.putNextEntry(ze);
+					byte[] content = new byte[1024];
+					int len;
+					while ((len = fis.read(content)) != -1) {
+						zos.write(content, 0, len);
+						zos.flush();
+					}
+				} catch (FileNotFoundException e) {
+					System.out.println("ZipUtils createZip  Failed to create ZIP file"+e);
+				} catch (IOException e) {
+					System.out.println("ZipUtils createZip  Failed to create ZIP file"+e);
+				} finally {
+					try {
+						if (fis != null) {
+							fis.close();
+						}
+					} catch (IOException e) {
+						System.out.println("ZipUtils createZip  Failed to create ZIP file"+e);
+					}
+				}
+			}
+		}
+	}
+
+	public static void copyResource(List<String> oldResPath, String newResPath) {
+		for (int m = 0; m < oldResPath.size(); m++) {
+			try {
+				// 如果文件夹不存在 则建立新文件夹
+				(new File(newResPath)).mkdirs();
+				File a = new File(oldResPath.get(m));
+				// 如果已经是具体文件，读取
+				if (a.isFile()) {
+					FileInputStream input = new FileInputStream(a);
+					FileOutputStream output = new FileOutputStream(newResPath + "/" + (a.getName()).toString());
+					byte[] b = new byte[1024 * 4];
+					int len;
+					while ((len = input.read(b)) != -1) {
+						output.write(b, 0, len);
+					}
+					output.flush();
+					output.close();
+					input.close();
+					// 如果文件夹下还存在文件，遍历，直到得到具体的文件
+				} else {
+					String[] file = a.list();
+					File temp = null;
+					for (int i = 0; i < file.length; i++) {
+						if (oldResPath.get(m).endsWith(File.separator)) {
+							temp = new File(oldResPath.get(m) + file[i]);
+						} else {
+							temp = new File(oldResPath.get(m) + File.separator + file[i]);
+						}
+
+						if (temp.isFile()) {
+							FileInputStream input = new FileInputStream(temp);
+							FileOutputStream output = new FileOutputStream(newResPath + "/" + (temp.getName()).toString());
+							byte[] b = new byte[1024 * 4];
+							int len;
+							while ((len = input.read(b)) != -1) {
+								output.write(b, 0, len);
+							}
+							output.flush();
+							output.close();
+							input.close();
+						}
+						if (temp.isDirectory()) {
+							List<String> oldChildPath = new ArrayList<String>();
+							oldChildPath.add(oldResPath.get(m) + "/" + file[i]);
+							newResPath = newResPath + "/" + file[i];
+							// 如果是子文件夹 递归循环
+							copyResource(oldChildPath, newResPath);
+						}
+					}
+				}
+			} catch (Exception e) {
+				System.out.println("copy all files failed"+ e);
+			}
+		}
+	}
+	/**
+	 * 删除文件夹
+	 * @param file
+	 */
+	public static void deleteFile(File file) {
+		if (file.exists()) {                               // 判断文件是否存在
+			if (file.isFile()) {                           // 判断是否是文件
+				file.delete();
+			} else if (file.isDirectory()) {               // 否则如果它是一个目录
+				File files[] = file.listFiles();           // 声明目录下所有的文件 files[];
+				for (int i = 0; i < files.length; i++) {   // 遍历目录下所有的文件
+					deleteFile(files[i]);                  // 把每个文件 用这个方法进行迭代
+				}
+			}
 			file.delete();
 		}
-		return zipFile;
-	} catch (final ZipException e) {
-		e.printStackTrace();
-		return null;
 	}
 
+	/**
+	 * 时间格式化
+	 *
+	 * @return
+	 */
+	public static String dateToString() {
+		Date d = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+		String time = formatter.format(d);
+		return time;
 	}
+
 
 }
 
