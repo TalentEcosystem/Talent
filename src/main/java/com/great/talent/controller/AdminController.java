@@ -892,7 +892,8 @@ public class AdminController
 	 * @return
 	 */
 	@RequestMapping("/showVideo")
-	public ModelAndView showVideo(HttpSession session,String chapurl){
+	public ModelAndView showVideo(HttpSession session,String chapurl,String cid){
+		System.out.println("ccc==="+cid);
 		ModelAndView mv = new ModelAndView();
 		session.setAttribute("chapurl",chapurl);
 		mv.setViewName("/admin/VideoPlayer");

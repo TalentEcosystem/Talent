@@ -73,7 +73,7 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
 
 <!--    搜索工作-->
     <select id="getJobNews" resultType="SerachJob" parameterType="map" >
-        SELECT i.*,p.positionid,p.aid,p.positionname as sypositionname,p.positionaddress as sypositionaddress,p.maxnum,p.request,
+        SELECT i.indname,,p.positionid,p.aid,p.positionname as sypositionname,p.positionaddress as sypositionaddress,p.maxnum,p.request,
         p.positioncontent,p.positionstate, p.professid, p.positionname,p.positionexper,
         p.money,p.positionaddress,p.industryid,p.degreeid,p.positiontime,c.companynum,c.companyname
         FROM tbl_position p,tbl_company c,tbl_admin a,tbl_industry i
@@ -156,19 +156,19 @@ on c.cid= t1.cid )t where t.cid=#{cid}
 </select>
     <!--    得到企业招聘的信息-->
     <select id="getComJobNews" resultType="SerachJob" parameterType="integer" >
-        SELECT p.positionid,p.aid,p.positionname as sypositionname,p.positionaddress as sypositionaddress,p.maxnum,p.request,
+        SELECT i.indname,p.positionid,p.aid,p.positionname as sypositionname,p.positionaddress as sypositionaddress,p.maxnum,p.request,
         p.positioncontent,p.positionstate, p.professid, p.positionname,p.positionexper,
         p.money,p.positionaddress,p.industryid,p.degreeid,p.positiontime,c.companynum,c.companyname
-        FROM tbl_position p,tbl_company c,tbl_admin a
-        where a.aid=p.aid and a.cid=c.cid and c.cid=#{cid}
+        FROM tbl_position p,tbl_company c,tbl_admin a,tbl_industry i
+        where a.aid=p.aid and a.cid=c.cid and i.industryid=p.industryid and c.cid=#{cid}
                 order by p.positiontime desc ;
 
 
     </select>
 
     <select id="getComJobNewsCount"  parameterType="integer" resultType="int" >
-        SELECT count(*) FROM tbl_position p,tbl_company c,tbl_admin a
-        where  a.aid=p.aid and a.cid=c.cid and c.cid=#{cid}
+        SELECT count(*) FROM tbl_position p,tbl_company c,tbl_admin a,tbl_industry i
+        where  a.aid=p.aid and a.cid=c.cid and i.industryid=p.industryid and c.cid=#{cid}
     </select>
 <!--    查看知识库的信息-->
     <select id="getTechnologyArea"  parameterType="Map" resultType="Product" >
