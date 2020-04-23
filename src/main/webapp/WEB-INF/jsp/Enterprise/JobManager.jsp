@@ -255,14 +255,6 @@
                 }
             }
             else if (event === 'derived'){
-                var resumeid =data.resumeid
-                $.ajax({
-                    url:'${pageContext.request.contextPath}/Enterprise/JudgeResume',
-                    type:'post',
-                    data:"resumeid="+resumeid,
-                    dataType:'text',
-                    success:function(msg){
-                        if (msg == 'success'){
                             var uid1=data.uid;//获取文本框的值
                             var	operationtime1= layui.util.toDateString(data.operationtime,'yyyy-MM-dd HH:mm:ss');
                             $('<form action="${pageContext.request.contextPath}/Enterprise/outputTalent" method="post">'+
@@ -270,73 +262,6 @@
                                 '<input type="hidden" name="operationtime" value="'+operationtime1+'"/>'+
                                 '</form>')
                                 .appendTo('body').submit().remove();
-                        }else{
-                            layer.confirm('尚未购买此简历，是否付费？', function (index) {
-                                layer.open({
-                                    type: 2,
-                                    area: ['300px','200px'],
-                                    offset: ['10%','10%'],
-                                    content: path+'/Enterprise/path/Payment',
-                                    btn: ['确定','返回'],
-                                    btn1:function(index, layero){
-                                        var body=layer.getChildFrame('body',index);
-                                        var payment = body.find("#payment").val();
-                                        $.ajax({
-                                            url:'${pageContext.request.contextPath}/Enterprise/JudgePassword',
-                                            type:'post',
-                                            data:"payment="+payment,
-                                            dataType:'text',
-                                            success:function(msg){
-                                                if (msg ==="success"){
-                                                    var vNow = new Date();
-                                                    var sNow = "";
-                                                    sNow += String(vNow.getFullYear());
-                                                    sNow += String(vNow.getMonth() + 1);
-                                                    sNow += String(vNow.getDate());
-                                                    sNow += String(vNow.getHours());
-                                                    sNow += String(vNow.getMinutes());
-                                                    sNow += String(vNow.getSeconds());
-                                                    sNow += String(vNow.getMilliseconds());
-                                                    $.ajax({
-                                                        url:'${pageContext.request.contextPath}/Enterprise/purchaseResume',
-                                                        type:'post',
-                                                        data:{"resumeid":resumeid,"tradeno":sNow},
-                                                        dataType:'text',
-                                                        success:function(msg){
-                                                            if (msg ==="success"){
-                                                                alert("付费成功！")
-                                                                window.location.reload();
-                                                            }else if (msg ==="deficiency"){
-                                                                alert("余额不足，请先充值！")
-                                                                window.location.href = path +'Enterprise/CompanyRecharge';
-                                                            }else{
-                                                                alert("付费失败")
-                                                            }
-                                                        },
-                                                        error:function () {
-                                                            alert("网络繁忙！")
-                                                        }
-                                                    })
-                                                }else{
-                                                    alert("验证失败，密码输入错误")
-                                                }
-                                            },
-                                            error:function () {
-                                                alert("网络繁忙！")
-                                            }
-                                        })
-                                    },
-                                    btn2: function(index, layero){
-                                        layer.close(index);
-                                    },
-                                })
-
-                            })
-
-                        }
-                    }
-                })
-
             }
 
         })
