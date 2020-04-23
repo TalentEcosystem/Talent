@@ -243,4 +243,7 @@ public class AdminService
 
 	@Transactional
 	public void configChapter(List list){ adminMapper.configChapter(list);}
+
+	@Transactional
+	public void addCount(String chapterid){ adminMapper.addCount(chapterid);}
 }
