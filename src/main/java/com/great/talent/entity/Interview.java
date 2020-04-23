@@ -32,7 +32,16 @@ public class Interview {
     private Integer applicantsnum;//已应聘人数
     private String reset;//简历隐私设置
     private Integer resumeid;//面试表id
+    private Date operationtime;
 
+
+    public Date getOperationtime() {
+        return operationtime;
+    }
+
+    public void setOperationtime(Date operationtime) {
+        this.operationtime = operationtime;
+    }
 
     public Integer getResumeid() {
         return resumeid;
@@ -41,6 +50,7 @@ public class Interview {
     public void setResumeid(Integer resumeid) {
         this.resumeid = resumeid;
     }
+
 
     public String getReset() {
         return reset;
@@ -244,6 +254,7 @@ public class Interview {
                 ", applicantsnum=" + applicantsnum +
                 ", reset='" + reset + '\'' +
                 ", resumeid=" + resumeid +
+                ", operationtime=" + operationtime +
                 '}';
     }
 }

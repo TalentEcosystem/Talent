@@ -79,6 +79,7 @@
                 ,{field: 'positionname', title: '岗位', width:150}
                 ,{field: 'uid', title: '应聘者', width:200,hide:true}
                 ,{field: 'resumeid', title: '面试id', width:200,hide:true}
+                ,{field: 'operationtime', title: '简历发布时间', width:200,hide:true}
                 ,{field: 'uname', title: '应聘者', width:150}
                 ,{field: 'intertime', title: '应聘时间', width:200,hide:true}
                 ,{field: 'professname', title: '专业', width:100}
@@ -255,13 +256,13 @@
                 }
             }
             else if (event === 'derived'){
-                            var uid1=data.uid;//获取文本框的值
-                            var	operationtime1= layui.util.toDateString(data.operationtime,'yyyy-MM-dd HH:mm:ss');
-                            $('<form action="${pageContext.request.contextPath}/Enterprise/outputTalent" method="post">'+
-                                '<input type="hidden" name="uid" value="'+uid1+'"/>'+
-                                '<input type="hidden" name="operationtime" value="'+operationtime1+'"/>'+
-                                '</form>')
-                                .appendTo('body').submit().remove();
+                var uid1=data.uid;//获取文本框的值
+                var	operationtime1= layui.util.toDateString(data.operationtime,'yyyy-MM-dd HH:mm:ss');
+                $('<form action="${pageContext.request.contextPath}/Enterprise/outputTalent" method="post">'+
+                    '<input type="hidden" name="uid" value="'+uid1+'"/>'+
+                    '<input type="hidden" name="operationtime" value="'+operationtime1+'"/>'+
+                    '</form>')
+                    .appendTo('body').submit().remove();
             }
 
         })
