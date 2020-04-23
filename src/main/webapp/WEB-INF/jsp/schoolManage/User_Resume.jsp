@@ -130,6 +130,13 @@
 				<div style="float: right;width: 140px;height: 137px;margin-right: 50px;border: 1px black solid;margin-top: -97px">
 					<img src="${pageContext.request.contextPath}/${resume.repic}" name="repic" style="width: 135px;height: 80px">
 					<%--			<label style="clear: both;float: left">选择图片：</label><input type="file" name="filea">--%>
+					<div class="layui-upload-inline">
+						<div class="layui-upload-list" id="img_upload"></div>
+						<button type="button" class="layui-btn" id="test8">
+							<i class="layui-icon">&#xe67c;</i>上传图片
+						</button><%--			上传绑定按钮--%>
+						<button id="hideupload1" type="button" style="display:none;"></button>
+					</div>
 				</div>
 				<h2 style="clear: both;float: left;margin-left: 58px">教育背景</h2>
 				<table border="1px black solid" width="500px" style="margin-top: 10px;clear: both;float: left;margin-left: 58px">
@@ -162,15 +169,7 @@
 						<td><input type="text" name="sname" value=""></td>
 						<td><input type="text" name="profession" value=""></td>
 					</tr>
-					<%--			<c:if test="${not empty aducationals}">--%>
-					<%--				<c:forEach items="${aducationals}" var="i">--%>
-					<%--					<tr>--%>
-					<%--						<td><input type="text" value="${i.adtime}"></td>--%>
-					<%--						<td><input type="text" value="${i.schoolname}"></td>--%>
-					<%--						<td><input type="text" value="${i.profession}"></td>--%>
-					<%--					</tr>--%>
-					<%--				</c:forEach>--%>
-					<%--			</c:if>--%>
+
 				</table>
 				<h2 style="clear: both;float: left;margin-left: 58px">社会经历</h2>
 				<table border="1px black solid" width="500px" style="margin-top: 10px;clear: both;float: left;margin-left: 58px">
@@ -203,21 +202,13 @@
 						<td><input type="text" name="company" value=""></td>
 						<td><input type="text" name="content" value=""></td>
 					</tr>
-					<%--			<c:if test="${not empty socials}">--%>
-					<%--				<c:forEach items="${socials}" var="j">--%>
-					<%--					<tr>--%>
-					<%--						<td><input type="text" value="${j.socialtime}"></td>--%>
-					<%--						<td><input type="text" value="${j.company}"></td>--%>
-					<%--						<td><input type="text" value="${j.content}"></td>--%>
-					<%--					</tr>--%>
-					<%--				</c:forEach>--%>
-					<%--			</c:if>--%>
+
 				</table>
 				<h2 style="clear: both;float: left;margin-left: 58px">技能证书</h2>
 				<input type="text" value="${resume.reskill}" style="clear: both;float: left;width: 500px;height: 30px;margin-left: 58px" name="reskill">
 				<h2 style="clear: both;float: left;margin-left: 58px">自我评价</h2>
 				<input type="text" value="${resume.reeva}" name="reeva" style="clear: both;float: left;width: 500px;height: 30px;margin-left: 58px">
-				<input type="submit" value="保存" style="lear: both;float: left;width: 120px;height: 35px;margin-left: 45%">
+				<input type="submit" id="save12" value="保存" style="lear: both;float: left;width: 120px;height: 35px;margin-left: 45%">
 			</form>
 		</div>
 	</div>
