@@ -474,4 +474,9 @@
 			(#{item.productid},#{item.chapterid})
 		</foreach>
 	</insert>
+
+	<!--点击章节增加播放量-->
+	<update id="addCount" parameterType="java.lang.String">
+		update tbl_chapter set chcount=chcount+1 where chapterid=#{chapterid}
+	</update>
 </mapper>

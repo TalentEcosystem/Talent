@@ -1,6 +1,7 @@
 package com.great.talent.controller;
 
 import com.google.gson.Gson;
+import com.great.talent.aoplog.Log;
 import com.great.talent.entity.*;
 import com.great.talent.service.AdminService;
 import com.great.talent.util.Diagis;
@@ -78,6 +79,7 @@ public class AdminController
 	 */
 	@RequestMapping("/updateKnow")
 	@ResponseBody
+	@Log(operationType="修改知识库")
 	public String updateKnow(Know know){
 		adminService.updateKnow(know);
 		return "修改成功!";
@@ -90,6 +92,7 @@ public class AdminController
 	 */
 	@RequestMapping("/deleteKnow")
 	@ResponseBody
+	@Log(operationType="删除知识库")
 	public String deleteKnow(String knowledgeid){
 		adminService.deleteKnow(knowledgeid);
 		return "删除成功!";
@@ -258,6 +261,7 @@ public class AdminController
 	 */
 	@RequestMapping("/checkConfirm")
 	@ResponseBody
+	@Log(operationType="企业审核通过")
 	public String checkConfirm(String aid){
 		adminService.checkConfirm(aid);
 		return "提交成功";
@@ -270,6 +274,7 @@ public class AdminController
 	 */
 	@RequestMapping("/checkRefuse")
 	@ResponseBody
+	@Log(operationType="企业审核不通过")
 	public String checkRefuse(String aid){
 		adminService.checkRefuse(aid);
 		return "提交成功";
@@ -892,8 +897,8 @@ public class AdminController
 	 * @return
 	 */
 	@RequestMapping("/showVideo")
-	public ModelAndView showVideo(HttpSession session,String chapurl,String cid){
-		System.out.println("ccc==="+cid);
+	public ModelAndView showVideo(HttpSession session,String chapurl,String chapterid){
+		adminService.addCount(chapterid);
 		ModelAndView mv = new ModelAndView();
 		session.setAttribute("chapurl",chapurl);
 		mv.setViewName("/admin/VideoPlayer");

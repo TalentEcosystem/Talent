@@ -6,6 +6,7 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.google.gson.Gson;
 import com.great.alipay.config.AlipayConfig;
+import com.great.talent.aoplog.Log;
 import com.great.talent.entity.*;
 import com.great.talent.service.AdminService;
 import com.great.talent.service.EnterpriseService;
@@ -214,8 +215,8 @@ public class EnterpriseController {
      */
     @RequestMapping("/Exit")
     public ModelAndView Exit(HttpSession httpSession){
-        httpSession.removeAttribute("admin");
-        mv.setViewName("Enterprise/EnterpriseLogin");
+        httpSession.invalidate();
+        mv.setViewName("homepage/index");
         return mv;
     }
     /**
@@ -391,6 +392,7 @@ public class EnterpriseController {
      */
     @RequestMapping("/addPositionInfo")
     @ResponseBody
+    @Log(operationType="发布岗位")
     public void addPositionInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int flag = 0;
         String jsonstr = request.getParameter("postInfo");
@@ -587,6 +589,12 @@ public class EnterpriseController {
             ResponseUtils.outJson(response, diagis);
         }
     }
+
+    /**
+     * 邀请面试
+     * @param interview
+     * @return
+     */
     @RequestMapping("/updateInterInvate")
     @ResponseBody
     public String updateInterInvate(Interview interview){
@@ -853,6 +861,11 @@ public class EnterpriseController {
         }
     }
 
+    /**
+     * 查询岗位名称
+     * @param request
+     * @return
+     */
     @RequestMapping("/findPositionName")
     public ModelAndView findPositionName(HttpServletRequest request){
         Admin admin = (Admin) request.getSession().getAttribute("admin");

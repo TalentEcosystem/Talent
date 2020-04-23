@@ -115,10 +115,10 @@
 	        <a href="">${uname}</a>
             <ul>
 	            <a href="${pageContext.request.contextPath}/user/personal"  ><li class="ll">个人中心</li></a>
-	             <a href=""><li class="ll">我的简历</li></a>
-	             <a href=""><li class="ll">求职反馈</li></a>
-	             <a href=""><li class="ll">收藏</li></a>
-	             <a href="" ><li class="ll">退出</li></a>
+	             <a href=<%=path+"/school/findUserResume" %>><li class="ll">我的简历</li></a>
+	             <a href=<%=path+"/user/requestFeedback" %>><li class="ll">求职反馈</li></a>
+	             <a href=<%=path+"/user/collection" %>><li class="ll">收藏</li></a>
+	             <a href="${pageContext.request.contextPath}/Enterprise/Exit" ><li class="ll">退出</li></a>
             </ul>
         </span>
 				</div>
@@ -191,7 +191,9 @@
 				var userno=document.getElementById('userno').innerHTML;
 				//判断当前浏览器是否支持WebSocket
 				if ('WebSocket' in window) {
-					websocket = new WebSocket("ws://localhost:8300/talent/websocket/"+userno);
+					websocket = new WebSocket("ws://8.129.170.238:8085/mavendemo-0.0.1-SNAPSHOT/websocket/"+userno);
+					// websocket = new WebSocket("ws://localhost/8300/talent/websocket/"+userno);
+
 				}
 				else {
 					alert('当前浏览器 Not support websocket')
@@ -245,7 +247,7 @@
 					document.getElementById('message').innerHTML += (now+"发送人："+userno+'<br/>'+"---"+message) + '<br/>';
 					document.getElementById('message').style.color="red";
 					var ToSendUserno="4567";//接收人编号：4567
-					message=message+"|"+ToSendUserno//将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
+					message=message+"|"+ToSendUserno;//将要发送的信息和内容拼起来，以便于服务端知道消息要发给谁
 					websocket.send(message);
 				}
 				//获取当前时间

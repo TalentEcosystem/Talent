@@ -161,7 +161,7 @@
 <!--查询面试信息-->
     <select id="findInterview" resultType="Interview" parameterType="java.util.Map">
         select * from (select * from tbl_interview) a,
-        (select u.uid,u.uname,u.utel,p.professid,p.professname,s.schoolname from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s where
+        (select u.uid,u.uname,u.utel,p.professid,p.professname,s.schoolname,r.resumeid,r.operationtime from tbl_user u,tbl_resume r,tbl_profession p,tbl_school s where
          u.uid = r.uid = s.sid and r.professid = p.professid) b,
         (select p.aid,p.positionid,p.positionname,id.industryid,id.indname from tbl_position p,tbl_industry id where p.industryid = id.industryid) c
         <where>

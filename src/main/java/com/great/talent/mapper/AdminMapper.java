@@ -135,4 +135,6 @@ public interface AdminMapper {
 	public void deleteConfig(@Param("productid") String productid);
 
 	public void configChapter(List list);
+
+	public void addCount(@Param("chapterid") String chapterid);
 }
