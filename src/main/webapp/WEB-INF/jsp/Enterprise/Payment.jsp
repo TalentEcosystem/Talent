@@ -19,7 +19,7 @@
 <div class="layui-inline">
     <label class="layui-form-label">请输入密码验证：</label>
     <div class="layui-input-block">
-        <input type="password" name="password" id="password" placeholder="请输入密码" class="layui-input">
+        <input type="password" name="payment" id="payment" placeholder="请输入密码" class="layui-input">
     </div>
 </div>
 

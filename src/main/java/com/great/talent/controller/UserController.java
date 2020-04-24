@@ -518,9 +518,6 @@ public class UserController
 		jobData1.setPositionname(positionname);
 		jobData1.setCompanyname(companyname);
 		jobData1.setIndname(indname);
-//		String msg = request.getParameter("data");
-//		JobData jobData1 = g.fromJson(msg,JobData.class);
-//		System.out.print(jobData1.toString());
 		JobData jobData = userService.checkJob(jobData1);
 		Map<String,Object> map = new LinkedHashMap<>();
 		map.put("positionid",jobData.getPositionid());

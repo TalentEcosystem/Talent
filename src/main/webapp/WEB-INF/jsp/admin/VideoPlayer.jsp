@@ -128,7 +128,7 @@
 							</div>
 						</li>
 						<li>
-							<a href="#" title="" class="btn-default">Upload</a>
+							<a href="${pageContext.request.contextPath}/HomePage/index" title="" class="btn-default">返回首页</a>
 						</li>
 					</ul><!--controls-lv end-->
 					<div class="clearfix"></div>

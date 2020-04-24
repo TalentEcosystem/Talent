@@ -195,11 +195,11 @@
 </div>
 <div class="clear"></div>
 <div class="menuLittle">
-	<div class="menuselect"><a href="searchJob.html" class="on">高级搜索</a></div>
-	<div class="menuselect"><a href="searchJob_map.html">地图搜索</a></div>
-	<div class="menuselect"><a href="searchJob_new.html">最新职位</a></div>
-	<div class="menuselect"><a href="searchJob_hot.html">热门搜索</a></div>
-	<div class="menuselect"><a href="searchJob_jianzhi.html">兼职招聘</a></div>
+	<div class="menuselect"><a href="#" class="on">高级搜索</a></div>
+<%--	<div class="menuselect"><a href="searchJob_map.html">地图搜索</a></div>--%>
+<%--	<div class="menuselect"><a href="searchJob_new.html">最新职位</a></div>--%>
+<%--	<div class="menuselect"><a href="searchJob_hot.html">热门搜索</a></div>--%>
+<%--	<div class="menuselect"><a href="searchJob_jianzhi.html">兼职招聘</a></div>--%>
 	<div class="clear"></div>
 </div>
 <div class="clear"></div>
@@ -601,12 +601,35 @@
 	<div class="listcon">
 		<input type="hidden" value="${sypositionname}" id="sypositionname">
 		<input type="hidden" value="${sypositionaddress}" id="sypositionaddress">
-		<table class="layui-hide" id="test" > </table>
+		<table class="layui-hide" id="test" lay-filter="test"  > </table>
 		<script type="text/html" id="bar">
-			<button class="layui-btn layui-btn-sm   layui-btn-normal" lay-event="shen">
+			<button class="layui-btn layui-btn-sm   layui-btn-normal" lay-event="look" >
 				<i class="layui-icon layui-icon-search ">查看详情</i>
 			</button>
+
 		</script>
+<%--		<script>--%>
+<%--			function look() {--%>
+<%--				var path=$("#path").val();--%>
+<%--				--%>
+<%--				$.ajax({--%>
+<%--					method:"post",--%>
+<%--					url:path+"/user/checkJob",--%>
+<%--					async:true,--%>
+<%--					success:function () {--%>
+<%--					window.location.href=path+"/user/jobDetails"--%>
+<%--					},--%>
+<%--					error:function () {--%>
+
+<%--					}--%>
+
+
+<%--				});--%>
+
+
+
+<%--			}--%>
+<%--		</script>--%>
 		<script>
 			layui.use(['table','form'], function(){
 				var table = layui.table;
@@ -615,7 +638,7 @@
 				var sypositionaddress=$("#sypositionaddress").val();
 				var sypositionname=$("#sypositionname").val();
 
-				console.log(sypositionaddress+sypositionname);
+				// console.log(sypositionaddress+sypositionname);
 				table.render({
 					elem: '#test'
 					,url:path+ '/HomePage/getJobTableNews/'
@@ -626,6 +649,7 @@
 					,cols: [[
 						{field:'positionname', width:'10%', title: '职位名称',style:''}
 						,{field:'companyname', width:'20%', title: '企业名称',}
+						, {field: 'indname', title: '行业', width: 120, hide: true, fixed: 'left', align: 'center'}
 						,{field:'positionaddress', width:'25%', title: '工作地点',}
 						,{field:'money', title: '薪水', width: '10%', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
 						,{field:'positiontime', title: '发布时间', width: '18%', minWidth: 100,
@@ -652,10 +676,31 @@
 						$('tr').css({})
 
 					}
-
-
-
-
+				});
+				//查看详情
+				//注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+				table.on('tool(test)', function(obj){
+					var data = obj.data; //获得当前行数据
+					var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+					var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+					// var path1 = $("#path").val();
+					console.log("撒飒飒");
+					if(layEvent === 'look'){ //查看
+						$.ajax({
+							async:true,
+							method : "POST",
+							url :path+'/HomePage/checkJob',
+							data: data,
+							dataType : "text",
+							success:function(msg){
+								if ("1111"==msg){
+									location.href=path+"/user/jobDetails"
+								}else {
+									layer.alert("网络繁忙",{icon:2});
+								}
+							}
+						})
+					}
 				});
 				$('#searchJob').on('click', function(){
 
@@ -866,9 +911,9 @@
 	<div class="listbottom">
 
 		<div class="lb2">
-			<a href="javascript:void()">浏览职位</a>
-			<a href="javascript:void()" class="sqzw">申请职位</a>
-			<a href="javascript:void()">关注职位</a>
+<%--			<a href="javascript:void()">浏览职位</a>--%>
+<%--			<a href="javascript:void()" class="sqzw">申请职位</a>--%>
+<%--			<a href="javascript:void()">关注职位</a>--%>
 		</div>
 		<div class="lb3">
 		</div>

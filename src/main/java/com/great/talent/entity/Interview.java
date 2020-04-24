@@ -1,5 +1,6 @@
 package com.great.talent.entity;
 
+import com.sun.tools.corba.se.idl.InterfaceGen;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,25 @@ public class Interview {
     private Date endtime;//回复时间
     private Integer applicantsnum;//已应聘人数
     private String reset;//简历隐私设置
+    private Integer resumeid;//面试表id
+    private Date operationtime;
+
+
+    public Date getOperationtime() {
+        return operationtime;
+    }
+
+    public void setOperationtime(Date operationtime) {
+        this.operationtime = operationtime;
+    }
+
+    public Integer getResumeid() {
+        return resumeid;
+    }
+
+    public void setResumeid(Integer resumeid) {
+        this.resumeid = resumeid;
+    }
 
 
     public String getReset() {
@@ -233,6 +253,8 @@ public class Interview {
                 ", endtime=" + endtime +
                 ", applicantsnum=" + applicantsnum +
                 ", reset='" + reset + '\'' +
+                ", resumeid=" + resumeid +
+                ", operationtime=" + operationtime +
                 '}';
     }
 }

@@ -108,9 +108,9 @@
 					<img src="${pageContext.request.contextPath}/images/09.gif" alt=""/>2人共同学习
 				</p>
 				<p >
-					<button class="">
-						<img src="${pageContext.request.contextPath}/images/04.gif" />播放视频
-					</button>
+<%--					<button class="">--%>
+<%--						<img src="${pageContext.request.contextPath}/images/04.gif" />播放视频--%>
+<%--					</button>--%>
 				</p>
 			</div>
 
@@ -132,9 +132,9 @@
 					<ul class="contentmeetul" style="display: block" >
 						<c:if test="${not empty product.date}">
 						<c:forEach items="${product.date}" step="1" var="c">
-						<div class="item gray">
+						<a href="${pageContext.request.contextPath}/admin/showVideo?chapurl=${c.chapurl}&chapterid=${c.chapterid}" class="item gray">
 							<img style="margin-right: 20px" src="../images/04.gif" />${c.chname}
-						</div>
+						</a>
 						</c:forEach>
 						</c:if>
 						<c:if test="${empty product.date}">

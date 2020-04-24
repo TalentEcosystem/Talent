@@ -155,4 +155,7 @@ public interface EnterpriseMapper {
      */
     @Update("update tbl_admin set money = money + #{money} where aid = #{aid}")
     public int EnterpriseRecharge(Map map);
+
+    @Select("select paravalue from tbl_para where paraname = '简历价格'")
+    public int findPrice();
 }

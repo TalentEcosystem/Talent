@@ -43,7 +43,6 @@
 </div>
 <table id="demo" lay-filter="demotest" style="margin-left: 40px"></table>
 
-
 <script>
 	layui.use('table', function(){
 		var table = layui.table,
@@ -56,17 +55,18 @@
 			,url: "${pageContext.request.contextPath}/school/findTalentByState" //数据接口
 			,page: true //开启分页
 			,dataType : "json"
-			,limit:3
+			,limit:5
 			,id:'demotable'
 			,cols: [[ //表头
 				{type:'checkbox'},
 				{field: 'uid', title: 'id', width:120,hide: true },
 				{field: 'uaccount', title: '账号', width:120},
-				{field: 'rename', title: '姓名', width:80},
+				{field: 'resname', title: '姓名', width:80},
 				{field: 'schoolname', title: '学校名称', width:120},
 				{field: 'professname', title: '专业', width:80},
 				{
-					field: 'reemploy', title: '是否就业', width: 120,
+					field: 'reemploy', title: '是否就业', width: 120
+
 				},
 
 			]]
@@ -94,10 +94,14 @@
 					var checkStatus = table.checkStatus('demotable');
 					var ids = [];
 					$(checkStatus.data).each(function (i, o) {//o即为表格中一行的数据
-						ids.push(o.uid);
+						if(o.reemploy=='否'){
+							ids.push(o.uid);
+						}
+
 					});
+
 					if (ids.length < 1) {
-						layer.msg('无选中项');
+						layer.msg('无选中项或选中用户已就业');
 						return false;
 					}
 					// ids = ids.join(",");
