@@ -33,10 +33,10 @@ public class AlipayConfig {
 
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问http://工程公网访问地址/alipay.trade.page.pay-JAVA-UTF-8/notify_url.jsp
 	public static String notify_url = "http://8.129.170.238:8085/mavendemo-0.0.1-SNAPSHOT/Enterprise/paymentUrls";
-    //	http://127.0.0.1:8080/talent/   http://localhost:8080/paymentUr   http://127.0.0.1:8080/talent/paymentUrlS
+    //  http://127.0.0.1:8080/talent/paymentUrlS
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问http://工程公网访问地址/alipay.trade.page.pay-JAVA-UTF-8/return_url.jsp
 	public static String return_url = "http://8.129.170.238:8085/mavendemo-0.0.1-SNAPSHOT/Enterprise/paymentUrl";
-	//http://127.0.0.1:8080/talent/paymentUrl
+
 
 	// 签名方式
 	public static String sign_type = "RSA2";
