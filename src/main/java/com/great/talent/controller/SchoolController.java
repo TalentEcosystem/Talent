@@ -428,7 +428,6 @@ public class SchoolController
 	{
 //		User user = (User) request.getSession().getAttribute("user");
 		int uid = (Integer)request.getSession().getAttribute("uid");
-
 		List<Social> social3 = (List<Social>) request.getSession().getAttribute("socials");
 		List<Aducational> aducational3 = (List<Aducational>) request.getSession().getAttribute("aducationals");
 		System.out.println("resume=" + resume);
@@ -532,7 +531,7 @@ public class SchoolController
 			social1.setSocialtime(social.getSocialtime().split(",")[0]);
 			social1.setUid(uid);
 			schoolService.insertSocial(social1);
-			if (!"".equals(social.getCompany().split(",")[1]))
+			if (social3.size() == 1 && social.getCompany().split(",")[1].length() > 1)
 			{
 				social2.setCompany(social.getCompany().split(",")[1]);
 				social2.setContent(social.getContent().split(",")[1]);
@@ -596,10 +595,9 @@ public class SchoolController
 		resume.setSid(sid);
 		resume.setProfessid(professid);
 		resume.setUid(uid);
-		resume.setOperationtime(new Date());
 		System.out.println(resume);
 		schoolService.updateUserresume(resume);
-		ResponseUtils.outJson1(response, "{\"code\":0, \"msg\":\"\", \"data\":{}}");
+		ResponseUtils.outJson(response, "保存成功");
 	}
 
 	//显示用户端的填写简历页面

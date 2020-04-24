@@ -178,8 +178,8 @@
             reeva=#{reeva},
             sid=#{sid},
             degreeid=#{degreeid},
-            professid=#{professid}
-            operationtime = #{operationtime}
+            professid=#{professid},
+            operationtime=DATE_FORMAT(NOW(),'%Y-%m-%d %H:%m:%s')
         </set>
           where uid=#{uid}
     </update>

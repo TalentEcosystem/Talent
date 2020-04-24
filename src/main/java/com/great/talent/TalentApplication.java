@@ -11,10 +11,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class TalentApplication extends SpringBootServletInitializer
 {
 	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder)
-	{
-		return builder.sources(TalentApplication.class);
-	}
+protected SpringApplicationBuilder configure(SpringApplicationBuilder builder)
+{
+	return builder.sources(TalentApplication.class);
+}
 
 	public static void main(String[] args)
 	{
