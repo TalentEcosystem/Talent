@@ -53,9 +53,10 @@
 			,cols: [[ //表头
 				{field: 'zizeng', title: '序号', width:100, sort: true, fixed: 'left',templet:'#zizeng'}
 				,{field: 'companyname', title: '企业名称', width:150}
+				,{field: 'permit', title: '统一社会信用代码', width:200}
 				,{field: 'tel', title: '联系方式', width:150}
 				,{field: 'name', title: '申请人', width:100}
-				,{field: 'date', title: '申请时间', width:200}
+				,{field: 'date', title: '申请时间', width:200,templet:"<div> {{layui.util.toDateString(d.date,'yyyy-MM-dd HH:mm:ss')}}</div>"}
 				,{field: 'state', title: '申请状态', width:150, templet: function (d) {
 						return d.state == '启用' ? '审核通过' : '审核不通过';
 					}}

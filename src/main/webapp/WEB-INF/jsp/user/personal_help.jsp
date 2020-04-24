@@ -14,14 +14,6 @@
 	<title>个人中心-我的收藏</title>
 	<%
 		String path=request.getContextPath();
-		String uname = (String) session.getAttribute("uname");
-		String uaccount = (String) session.getAttribute("uaccount");
-		String utel = (String) session.getAttribute("utel");
-		String phone = utel.substring(0,3)+"****"+utel.substring(7,11);
-		String uaddress = (String) session.getAttribute("uaddress");
-		String uhead = (String) session.getAttribute("uhead");
-		String usex = (String) session.getAttribute("usex");
-		String uage = (String) session.getAttribute("uage");
 	%>
 	<link rel="stylesheet" href=<%=path+"/js/layui/css/layui.css"%>>
 	<link rel="stylesheet" href=<%=path+"/css/personal.css"%>>
@@ -37,34 +29,6 @@
 			<span>公告：</span>
 			<a href="">有实力就不怕平庸 如何离高薪更进一步</a>
 		</div>
-		<div class="Account">
-			<div class="Left">
-				<div class="Info">
-					<font>[28421947]</font>
-					<input type="button">
-					<div id="InfoPopup">
-						<ul>
-							<li><a href="personal_updatepsd.html">修改密码</a></li>
-							<li><a href="personal_updatenum.html">修改手机</a></li>
-							<li><a href="personal_renzheng.html">修改邮箱</a></li>
-							<li><a href="index.html">退出</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="Left">
-				<a class="Mobile" href="">手机版</a>
-			</div>
-			<div class="Left">
-				<div class="Weixin">微信
-					<div id="WeixinPopup">
-						<img src=<%=path+"/images/showqrcode.jpg" %> width="120" height="120">
-						<p>扫一扫完成绑定<br>求职信息接收及时，<br>不再错过好工作！</p>
-					</div>
-				</div>
-			</div>
-
-		</div>
 	</div>
 </div>
 <div class="navTop">
@@ -72,8 +36,8 @@
 		<div class="logo"><a href="index.html"><img src=<%=path+"/images/logo_1.png" %>/><img src=<%=path+"/images/logo_2.png" %> /></a></div>
 		<div class="nav">
 			<div class="navItem"><a href=<%=path+"/user/index" %>>首页</a></div>
-			<div class="navItem"><a href="searchJob.html">职位搜索</a></div>
-			<div class="navItem"><a href="meetingJob.html">招聘会</a></div>
+			<div class="navItem"><a href=<%=path+"/HomePage/searchJob" %>>职位搜索</a></div>
+			<div class="navItem"><a href="">招聘会</a></div>
 			<div class="navItem"><a href="">政府招考</a></div>
 			<div class="navItem"><a href="">校园招聘</a></div>
 			<div class="navItem other">
@@ -81,9 +45,9 @@
 					<span>更多</span>
 					<div id="TopNavMorePopup">
 						<ul>
-							<li><a href="jobnews.html">就业资讯</a></li>
-							<li><a href="download.html">文档下载</a></li>
-							<li><a href="helpJob.html">求职互助</a></li>
+							<li><a href="">敬请期待</a></li>
+							<li><a href="">敬请期待</a></li>
+							<li><a href="">敬请期待</a></li>
 						</ul>
 					</div>
 				</div>
@@ -113,11 +77,6 @@
 			<div class="NavLeftBox active">
 				<a href=<%=path+"/user/help" %> class="a8">帮助中心</a>
 			</div>
-		</div>
-		<div class="navLeftBottom">
-			<span class="sys">扫一扫绑定微信</span><br />
-			<img src=<%=path+"/images/showqrcode.jpg" %> />
-			<span class="Notice">蝶飞人才网<br>找工作更靠谱</span>
 		</div>
 	</div>
 	<div class="perRightcon">

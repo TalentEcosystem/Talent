@@ -191,12 +191,13 @@
 					,cols: [[
 						{field:'positionname', width:'15%', title: '职位名称',style:''}
 						,{field:'companyname', width:'20%', title: '企业名称',}
+						, {field: 'indname', title: '行业', width: 120, hide: true, fixed: 'left', align: 'center'}
 						,{field:'positionaddress', width:'25%', title: '工作地点',}
 						,{field:'money', title: '薪水', width: '10%', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
 						,{field:'positiontime', title: '发布时间', width: '13%', minWidth: 100,
 							templet:"<div>{{layui.util.toDateString(d.positiontime,'MM月dd号 ')}}</div>"
 						} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-						,{field:'j', title: '职位申请',toolbar:"#bar", width: '17%', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+						,{field:'j', title: '查看详情',toolbar:"#bar", width: '17%', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
 
 					]]
 					,page: true,
@@ -218,6 +219,30 @@
 
 					}
 				});
+				//注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+				table.on('tool(test)', function(obj){
+					var data = obj.data; //获得当前行数据
+					var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+					var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+					// var path1 = $("#path").val();
+					console.log("撒飒飒");
+					if(layEvent === 'look'){ //查看
+						$.ajax({
+							async:true,
+							method : "POST",
+							url :path+'/HomePage/checkJob',
+							data: data,
+							dataType : "text",
+							success:function(msg){
+								if ("1111"==msg){
+									location.href=path+"/user/jobDetails"
+								}else {
+									layer.alert("网络繁忙",{icon:2});
+								}
+							}
+						})
+					}
+				});
 			});
 			function company() {
 				var ulcompany=document.getElementById("pro");
@@ -235,8 +260,8 @@
 			}
 		</script>
 		<script type="text/html" id="bar">
-			<button class="layui-btn   layui-btn-danger" lay-event="shen">
-				<i class="layui-icon ">申请</i>
+			<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="look">
+				<i class="layui-icon layui-icon-search ">查看详情</i>
 			</button>
 		</script>
 		<div class="clear"></div>
@@ -250,7 +275,7 @@
 				</div>
 			</ul>
 			<ul id="uljob">
-				<table class="layui-hide" id="ComJob"  ></table>
+				<table class="layui-hide" id="ComJob" lay-filter="test" ></table>
 
 			</ul>
 		</div>

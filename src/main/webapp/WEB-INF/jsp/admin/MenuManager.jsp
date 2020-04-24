@@ -197,8 +197,8 @@
 	<div id="d1">
 		<h3>角色</h3>
 		<input type="button" value="管理员" id="btn1" onclick="admin()"><br/>
-		<input type="button" value="企业人员" id="btn2" onclick="enterprise()"><br/>
-		<input type="button" value="高校人员" id="btn0" onclick="school()">
+<%--		<input type="button" value="企业人员" id="btn2" onclick="enterprise()"><br/>--%>
+<%--		<input type="button" value="高校人员" id="btn0" onclick="school()">--%>
 	</div>
 
 	<div id="d2">

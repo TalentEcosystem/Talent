@@ -243,4 +243,10 @@ public class AdminService
 
 	@Transactional
 	public void configChapter(List list){ adminMapper.configChapter(list);}
+
+	@Transactional
+	public void addCount(String chapterid){ adminMapper.addCount(chapterid);}
+
+	@Transactional
+	public String findVideo(String chapterid){ return adminMapper.findVideo(chapterid);}
 }

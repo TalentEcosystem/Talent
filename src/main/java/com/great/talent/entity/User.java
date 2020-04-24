@@ -24,6 +24,7 @@ public class User
 	private String test;
 	private String uhead;
 	private Date logintime;
+	private String schoolname;
 	public User()
 	{
 	}
@@ -167,7 +168,6 @@ public class User
 	{
 		this.uhead = uhead;
 	}
-
 	public Date getLogintime() {
 		return logintime;
 	}
@@ -175,25 +175,19 @@ public class User
 	public void setLogintime(Date logintime) {
 		this.logintime = logintime;
 	}
+	public String getSchoolname()
+	{
+		return schoolname;
+	}
+
+	public void setSchoolname(String schoolname)
+	{
+		this.schoolname = schoolname;
+	}
 
 	@Override
-	public String toString() {
-		return "User{" +
-				"uid=" + uid +
-				", uaccount='" + uaccount + '\'' +
-				", upassword='" + upassword + '\'' +
-				", uname='" + uname + '\'' +
-				", usex='" + usex + '\'' +
-				", uage='" + uage + '\'' +
-				", utel='" + utel + '\'' +
-				", ustate='" + ustate + '\'' +
-				", uaddress='" + uaddress + '\'' +
-				", uschool='" + uschool + '\'' +
-				", uscore=" + uscore +
-				", udate=" + udate +
-				", test='" + test + '\'' +
-				", uhead='" + uhead + '\'' +
-				", logintime=" + logintime +
-				'}';
+	public String toString()
+	{
+		return "User{" + "uid=" + uid + ", uaccount='" + uaccount + '\'' + ", upassword='" + upassword + '\'' + ", uname='" + uname + '\'' + ", usex='" + usex + '\'' + ", uage='" + uage + '\'' + ", utel='" + utel + '\'' + ", ustate='" + ustate + '\'' + ", uaddress='" + uaddress + '\'' + ", uschool='" + uschool + '\'' + ", uscore='" + uscore + '\'' + ", udate=" + udate + '}';
 	}
 }

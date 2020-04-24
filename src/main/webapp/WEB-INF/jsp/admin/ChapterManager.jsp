@@ -26,7 +26,7 @@
 	</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<label>章节名称</label>&nbsp;&nbsp;
 	<div class="layui-input-inline">
-		<input type="text" name="chname" id="chname" required lay-verify="required" placeholder="请输入企业名称" autocomplete="off" class="layui-input">
+		<input type="text" name="chname" id="chname" required lay-verify="required" placeholder="请输入章节名称" autocomplete="off" class="layui-input">
 	</div>
 	<button class="layui-btn" data-type="reload">查询</button>
 	<button class="layui-btn" data-type="add">增加</button>

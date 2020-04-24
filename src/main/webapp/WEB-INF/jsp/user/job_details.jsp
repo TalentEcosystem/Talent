@@ -21,7 +21,6 @@
 	<link rel="stylesheet" href=<%=path+"/js/layui/css/layui.css"%>>
 	<link rel="stylesheet" href=<%=path+"/css/company.css"%>>
 	<script src=<%=path+"/js/jquery-3.4.1.js" %>></script>
-<%--	<script type="text/javascript" src=<%=path+"/js/front/personals.js" %>></script>--%>
 	<script src=<%=path+"/js/layui/layui.js" %>></script>
 </head>
 <body>
@@ -30,21 +29,15 @@
 <div class="compHeader">
 	<div class="main">
 		<div class="header_l">
-			<a href="index.html">
+			<a href=<%=path+"/user/index" %>>
 				<img src=<%=path+"/images/logo_1.png" %> />
 				<img src=<%=path+"/images/logo_2.png" %> />
 			</a>
-			<span>www.diefeirencai.com</span>
-		</div>
-		<div class="header_c">
-			<input name="" type="text" placeholder="请输入关键字..." class="keyword"/>
-			<input name="" type="button" class="btnsearch"/>
 		</div>
 		<div class="header_r">
-			<a href="login.html">个人登录</a>
-			<a href="zhuce.html">注册</a>
+			<a href=<%=path+"/HomePage/searchJob" %>>找工作</a>
 			<span>|</span>
-			<a href="loginCompany.html">企业登录</a>
+			<a href=<%=path+"/user/index" %>>首页</a>
 		</div>
 	</div>
 </div>
@@ -52,12 +45,12 @@
 <div class="jobtypeBox">
 	<div class="DivLeft">
 		<div class="DivCompany">
-			<div class="DivCompany_img"><img src=<%=path+"/"+jobData.getCompanypic() %> width="180"/></div>
-			<h1><a href="company.html"><%=jobData.getCompanyname()%></a><img src=<%=path+"/images/16.png" %> /></h1>
-			<div class="DivLeft_1">
-				<div class="gz1"><a href="">+关注</a></div>
-				<div class="gz2">答复率<span>100.0%</span></div>
-			</div>
+			<div class="DivCompany_img"><img style="width: 250px;height: 180px" src=<%=path+"/"+jobData.getCompanypic() %> /></div>
+			<h1><a href=""><%=jobData.getCompanyname()%></a><img src=<%=path+"/images/16.png" %> /></h1>
+<%--			<div class="DivLeft_1">--%>
+<%--				<div class="gz1"><a href="">+关注</a></div>--%>
+<%--				<div class="gz2">答复率<span>100.0%</span></div>--%>
+<%--			</div>--%>
 			<div class="clear"></div>
 			<div class="DivLeft_2">
 				<p>行业：<%=jobData.getIndname()%></p>
@@ -77,9 +70,6 @@
 				<div class="divJob_l">
 					<div class="tit">
 						<h2><%=jobData.getPositionname()%></h2>
-						<div class="ly">
-							<a href="">给HR留言</a>
-						</div>
 						<div class="clear"></div>
 					</div>
 					<div class="bqbox">
@@ -130,6 +120,7 @@
 	<p><a href="">**人才</a>旗下<img src=<%=path+"/images/logo_foot.gif" %> />蝶飞人才网版权所有 <a href="">京ICP证0******9号</a><a href=""></a>本网站所有招聘信息，未经书面授权不得转载 投诉电话：400-8**-****</p>
 </div>
 <script>
+ layui.use(['layer'], function () { //导入模块
 	//申请
 	$("#application").click(function () {
 		var path = $("#path").val();
@@ -142,17 +133,19 @@
 			dataType : "text",
 			success:function(msg){
 				if ("1111"==msg){
-					alert("申请成功");
+					layer.alert("申请成功",{icon:6});
 				}else if ("error"==msg) {
-					alert("网络繁忙");
+					layer.alert("网络繁忙",{icon:2});
 				}else if ("notResume"==msg) {
-					alert("您的简历不完整");
-					location.href=path+"/school/findUserResume"
+					layer.alert("您的简历不完整",{icon:2},function () {
+						location.href=path+"/school/findUserResume"
+					});
 				}else if ("notLogin"==msg) {
-					alert("您还没有登录");
-					location.href=path+"/user/login"
+					layer.alert("您还没有登录",{icon:2},function () {
+						location.href=path+"/user/login"
+					});
 				}else if ("2222"==msg) {
-					alert("已申请");
+					layer.alert("您已经申请过啦！",{icon:6});
 				}
 			}
 		})
@@ -169,18 +162,20 @@
 			dataType : "text",
 			success:function(msg){
 				if ("1111"==msg){
-					alert("收藏成功");
+					layer.alert("收藏成功",{icon:6});
 				}else if ("error"==msg) {
-					alert("网络繁忙");
+					layer.alert("网络繁忙",{icon:2});
 				}else if ("notLogin"==msg) {
-					alert("您还没有登录");
-					location.href=path+"/user/login"
+					layer.alert("您还没有登录",{icon:2},function () {
+						location.href=path+"/user/login"
+					});
 				}else if ("2222"==msg) {
-					alert("已收藏");
+					layer.alert("您已经收藏过啦",{icon:2});
 				}
 			}
 		})
 	});
+ });
 </script>
 </body>
 </html>
