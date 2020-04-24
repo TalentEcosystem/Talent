@@ -14,6 +14,8 @@
         String str = (String) session.getAttribute("retrievePhone");
 		String retrievePhone = str.substring(0,3)+"****"+str.substring(7,11);
 	%>
+	<link rel="stylesheet" href=<%=path+"/js/layui/css/layui.css"%>>
+	<script src=<%=path+"/js/layui/layui.js" %>></script>
 	<script src=<%=path+"/js/jquery-3.4.1.js" %>></script>
 	<link rel="stylesheet" href=<%=path+"/css/login.css" %>>
 	<script type="text/javascript" src=<%=path+"/js/front/retrievePassword.js" %>></script>

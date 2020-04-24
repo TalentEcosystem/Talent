@@ -323,7 +323,6 @@
             layer.alert("不是有效的统一社会信用编码！", { icon: 2, offset: "auto", time:1000 });
             $('#tip8').val("win");
             return false;
-
         }  else {
             var Ancode;//统一社会信用代码的每一个值
             var Ancodevalue;//统一社会信用代码每一个值的权重

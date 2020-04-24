@@ -108,9 +108,11 @@ public class AdminController
 	 */
 	@RequestMapping("/userManager")
 	@ResponseBody
-	public String userManager(String limit,String page,String schoolname,String ustate){
+	public String userManager(String limit,String page,String schoolname,String ustate,String uname,String utel){
 		Map map=new HashMap();
 		map.put("schoolname",schoolname);
+		map.put("uname",uname);
+		map.put("utel",utel);
 		map.put("begin",(Integer.parseInt(page)-1)*Integer.parseInt(limit));
 		map.put("end",Integer.parseInt(limit));
 		map.put("ustate",ustate);
@@ -897,9 +899,10 @@ public class AdminController
 	 * @return
 	 */
 	@RequestMapping("/showVideo")
-	public ModelAndView showVideo(HttpSession session,String chapurl,String chapterid){
+	public ModelAndView showVideo(HttpSession session,String chapterid){
 		adminService.addCount(chapterid);
 		ModelAndView mv = new ModelAndView();
+		String chapurl = adminService.findVideo(chapterid);
 		session.setAttribute("chapurl",chapurl);
 		mv.setViewName("/admin/VideoPlayer");
 		return mv;

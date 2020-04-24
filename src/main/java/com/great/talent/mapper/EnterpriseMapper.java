@@ -35,6 +35,7 @@ public interface EnterpriseMapper {
     public List<Interview> findFeedback(Map map);
     public int findFeedbackNum(Map map);
 
+    public int JudgecompanyEmploy(Interview interview);//判断当前岗位是否招满
     public int companyEmploy(Interview interview);//公司录用
     public int findCompanyEmployid(Interview interview);
     public int updateResumeInfo(int uid);
@@ -50,7 +51,7 @@ public interface EnterpriseMapper {
     public int addCompanyMoney(Map map);//充值
     public List<Finance> findFinances(Map map);//查询订单
     public int findFinanceNum(Map map);//查询订单数
-    public int findFinanceInterview(int resumeid);//查询是否有此订单
+    public int findFinanceInterview(Map map);//查询是否有此订单
     public int purchaseResume(Finance finance);//购买简历
     public int reduceCompanyMoney(Admin admin);//账户支出
     public Resume outPutUserResume(Map map);//查找用户简历信息
@@ -156,6 +157,26 @@ public interface EnterpriseMapper {
     @Update("update tbl_admin set money = money + #{money} where aid = #{aid}")
     public int EnterpriseRecharge(Map map);
 
+    /**
+     * 查询简历价格
+     * @return
+     */
     @Select("select paravalue from tbl_para where paraname = '简历价格'")
     public int findPrice();
+
+    /**
+     * 查询已经招满的岗位
+     * @param aid
+     * @return
+     */
+    @Select("select positionid from tbl_position where applicantsnum >= maxnum and aid = #{aid}")
+    public List<Position> findMaxPosition(int aid);
+
+    /**
+     * 修改
+     * @param positionid
+     * @return
+     */
+    @Update("update tbl_position set positionstate = '已招满' where positionid = #{positionid}")
+    public int updatePositionStates(int positionid);
 }

@@ -93,7 +93,7 @@
 
         var tableinf = table.render({
                 elem: '#demo'
-                ,height: 300
+                ,height: 480
                 //设置查询刷新的ID
                 ,id:'table1'
                 ,url: path+"/Enterprise/findPositions" //数据接口
@@ -112,6 +112,7 @@
                     ,{field: 'degreename', title: '学历要求', width:150}
                     ,{field: 'professname', title: '专业要求', width:150}
                     ,{field: 'maxnum', title: '招聘人数', width: 120, sort: true}
+                    ,{field: 'applicantsnum', title: '招聘人数', width: 120, sort: true}
                     ,{field: 'positionstate', title: '发布状态', width: 110}
                     ,{fixed: 'right',title:'操作', width: 150, align:'center', toolbar: '#barDemo'}
                 ]]

@@ -52,11 +52,17 @@
     <select id="findUser" resultType="User" parameterType="java.util.Map">
         select * from tbl_user a left join tbl_school b on a.sid=b.sid
         <where>
-            <if test="schoolname!=null">
+            <if test="schoolname!=null and schoolname!=''">
                 b.schoolname like concat('%',#{schoolname},'%')
             </if>
             <if test="ustate!=null and ustate!='全部'">
                 and a.ustate=#{ustate}
+            </if>
+            <if test="utel!=null and utel!=''">
+                and a.utel=#{utel}
+            </if>
+            <if test="uname!=null and uname!=''">
+                and a.uname like concat('%',#{uname},'%')
             </if>
         </where>
         order by a.udate desc limit #{begin},#{end}
@@ -71,6 +77,12 @@
             </if>
             <if test="ustate!=null and ustate!='全部'">
                 and a.ustate=#{ustate}
+            </if>
+            <if test="utel!=null">
+                and a.utel=#{utel}
+            </if>
+            <if test="uname!=null">
+                and a.uname like concat('%',#{uname},'%')
             </if>
         </where>
     </select>
@@ -479,4 +491,9 @@
 	<update id="addCount" parameterType="java.lang.String">
 		update tbl_chapter set chcount=chcount+1 where chapterid=#{chapterid}
 	</update>
+
+    <!--根据章节id查询视频路径-->
+    <select id="findVideo" parameterType="java.lang.String" resultType="java.lang.String">
+        select chapurl from tbl_chapter where chapterid=#{chapterid}
+    </select>
 </mapper>
