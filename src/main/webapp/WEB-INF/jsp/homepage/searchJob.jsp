@@ -183,10 +183,8 @@
 	<div class="mainWarp">
 		<ul>
 			<li><a href="${pageContext.request.contextPath}/HomePage/index">首页</a></li>
-<%--			<li class="onmenu"><a href="searchJob.html">职位搜索</a></li>--%>
 			<li class="onmenu"><a href="${pageContext.request.contextPath}/HomePage/searchJob">找工作</a></li>
 			<li><a href="${pageContext.request.contextPath}/HomePage/getTechnologyArea?curPage=1">技术成长</a></li>
-			<li><a href="jobnews.html">就业资讯</a></li>
 			<li><a href="${pageContext.request.contextPath}/user/personal" id="personal">个人中心</a></li>
 <%--			<li><a href="helpJob.html">求职互助</a></li>--%>
 			<div class="clear"></div>
@@ -279,6 +277,8 @@
 					provice+="<option data-index="+i+" value='"+jsonList[i].provice+"'>"+jsonList[i].provice+"</option>";
 				}
 				$(".provinceTarget").append(provice);
+
+
 				//薪资下拉框
 				var money='';
 				var moneyList=[
@@ -322,7 +322,6 @@
 					{"name":"201~500人","value":'201-500'},
 					{"name":"501~1000","value":'501-1000'},
 					{"name":"1000以上","value":'1001-99999999'}
-
 				];
 				for(var i=0;i<companynumList.length;i++){
 					companynum+="<option data-index="+i+" value='"+companynumList[i].value+"'>"+companynumList[i].name+"</option>";
@@ -364,22 +363,12 @@
 									}
 									$("#positionexper").empty().append(html);
 								}
-
-
-
-
-
 								form.render('select');
 							},
 							error: function (data) {
 								layer.msg("数据获取失败,重新刷新");
 							}
-
 						});
-
-
-
-
 						form.render();
 					},
 					error: function (data) {

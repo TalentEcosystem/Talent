@@ -92,7 +92,7 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
                     and p.degreeid = '${cond.degreeid}'
                 </if>
                 <if test=" cond.moneybegin != null and cond.moneyend !=null  ">
-                    and p.money between '${cond.moneybegin}' and  '${cond.moneyend}'
+                    and p.money between ${cond.moneybegin} and  ${cond.moneyend}
                 </if>
 
                 <if test=" cond.positionexper != null and cond.positionexper !=''  ">
@@ -124,7 +124,7 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
                     and p.degreeid = '${cond.degreeid}'
                 </if>
                 <if test=" cond.moneybegin != null and cond.moneyend !=null  ">
-                    and p.money between '${cond.moneybegin}' and  '${cond.moneyend}'
+                    and p.money between ${cond.moneybegin} and  ${cond.moneyend}
                 </if>
 
                 <if test=" cond.positionexper != null and cond.positionexper !=''  ">
@@ -136,7 +136,6 @@ where a.cid=c.cid ORDER BY a.date desc limit 3
             </if>
         </where>
     </select>
-
 
     <!--    行业下拉框信息、-->
     <select id="getInSelect" resultType="Industry" >
