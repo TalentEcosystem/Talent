@@ -67,28 +67,5 @@
         sNow += String(vNow.getMilliseconds());
         document.getElementById("tradeno").value = sNow;
     });
-    // layui.use(['form', 'layer', 'jquery'], function() {
-    //     var form = layui.form;
-    //     var layer = layui.layer;
-    //     var $ = layui.jquery;
-    //     form.on('submit(charge)',function () {
-    //         var companyname = $("#companyname").val();
-    //         var cid = $("#cid").val();
-    //         var price = $("#price").val();
-    //         console.log("companyname"+companyname+"cid"+cid+"price"+price)
-    //         $.ajax({
-    //             url: path + "/Enterprise/addFinances",
-    //             async: true,
-    //             type: "post",
-    //             datatype: "text",
-    //             data:{"companyname":companyname,"cid":cid,"price":price},
-    //             success:function (msg) {
-    //
-    //             }
-    //         })
-    //     })
-    //
-    // })
-
 </script>
 </html>

@@ -19,7 +19,7 @@
 <body>
 <input id="path" type="hidden" value="<%=path%>" />
 <div id="layout">
-    <form id="forms" class="layui-form" action="${pageContext.request.contextPath}/Enterprise/uplodFile" method="post"  enctype="multipart/form-data" accept-charset="UTF-8" onsubmit="return false;">
+    <form id="forms" class="layui-form" onsubmit="return false;">
         <input id="aid" type="hidden" value="${sessionScope.admin.aid}" />
         <br>
         <div>
@@ -35,14 +35,28 @@
         <div class="layui-form-item">
             <label class="layui-form-label" >统一社会信用代码:</label>
             <div class="layui-input-inline" >
-                <input name="permit" id="permit" class="layui-input" type="text" placeholder="请输入" autocomplete="off"  lay-verify="required" value="${sessionScope.company.permit}">
+                <input name="permit" id="permit" class="layui-input" type="text" placeholder="请输入" autocomplete="off"  lay-verify="required" value="${sessionScope.company.permit}" disabled>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">注册地址</label>
-            <div class="layui-input-inline" style="width: 190px">
-                <input name="companyadd" id="companyadd" class="layui-input" type="text" placeholder="请输入" autocomplete="off"  lay-verify="required" value="${sessionScope.company.companyadd}">
+<%--            <div class="sea1_2" style="width: 180px">--%>
+                <div class="layui-inline">
+                    <select name="modules"   class="provinceTarget" lay-filter="provinceTarget" id="province" >
+                        <option value="" data-index="-1" >选择省份</option>
+                    </select>
+                </div>
+            <input type="hidden" id="provinces" value="${sessionScope.company.province}">
             </div>
+<%--            <div class="sea1_3" style="width: 180px">--%>
+        <div class="layui-form-item">
+            <label class="layui-form-label">城市</label>
+                <div class="layui-inline">
+                    <select name="modules"  class="cityTarget"  id="city" >
+                        <option value="" data-index="-1" >选择城市</option>
+                    </select>
+                </div>
+            <input type="hidden" id="citys" value="${sessionScope.company.city}">
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">公司类型</label>
@@ -114,7 +128,6 @@
 </body>
 <script>
     var path=$('#path').val();
-
     $("#companynature2").each(function () {
         // this代表的是<option></option>，对option再进行遍历
         $(this).children("option").each(function () {
@@ -126,5 +139,15 @@
         });
     });
 
+    $("#city").each(function () {
+        // this代表的是<option></option>，对option再进行遍历
+        $(this).children("option").each(function () {
+            // 判断需要对那个选项进行回显
+            if (this.value =='${sessionScope.company.city}') {
+                // 进行回显
+                $(this).attr("selected", "selected");
+            }
+        });
+    });
 </script>
 </html>

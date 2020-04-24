@@ -33,12 +33,30 @@ public class Resume
 	private String reexper;
 	private String reeva;
 	private String reset;
+	private String reemploy;
 	private Date operationtime;
 	private List<Social> socialList;
 	private List<Aducational> aducationalList;
+	private Date logintime;
 
 	public Resume()
 	{
+	}
+
+	public Date getLogintime() {
+		return logintime;
+	}
+
+	public void setLogintime(Date logintime) {
+		this.logintime = logintime;
+	}
+
+	public String getReemploy() {
+		return reemploy;
+	}
+
+	public void setReemploy(String reemploy) {
+		this.reemploy = reemploy;
 	}
 
 	public Date getOperationtime() {
@@ -280,9 +298,11 @@ public class Resume
 				", reexper='" + reexper + '\'' +
 				", reeva='" + reeva + '\'' +
 				", reset='" + reset + '\'' +
+				", reemploy='" + reemploy + '\'' +
 				", operationtime=" + operationtime +
 				", socialList=" + socialList +
 				", aducationalList=" + aducationalList +
+				", logintime=" + logintime +
 				'}';
 	}
 }

@@ -32,10 +32,10 @@ public class AlipayConfig {
             "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp7Nps8F5vHkOdY/x8CeH0ySg2dFrwv7SmdJfWRkVuWXwEpUSlRaAlG2TiF9Qd5fdjPrjGmUe9TSZ/GAxPbn/Tw+vZc49waA1B69Uz8YWnqQavwQMMY/Vewgh5u7l6YvRgc+mMBn80KAKHWhg+7XKs/eoKL0ZVwFVsoEObygSO8G7XA8qIKEWWYIcqPcz3vE8R4I2+6radRF72TBJKXsvQq/SM6c8Gb95yxNzWRMUN1LMXdFHgikkMCelKfzPeDxvPqmZGyEWppabbyOMWIE2SMS0/+cAukSsJ9KuTCoe1eG/VlINYZcheZZ35DWANsJ2N/a0IjeOwJKolVOUnDqoDQIDAQAB";
 
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问http://工程公网访问地址/alipay.trade.page.pay-JAVA-UTF-8/notify_url.jsp
-	public static String notify_url = "http://localhost:8300/talent/Enterprise/paymentUrls";
+	public static String notify_url = "http://8.129.170.238:8085/mavendemo-0.0.1-SNAPSHOT/Enterprise/paymentUrls";
     //	http://127.0.0.1:8080/talent/   http://localhost:8080/paymentUr   http://127.0.0.1:8080/talent/paymentUrlS
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问http://工程公网访问地址/alipay.trade.page.pay-JAVA-UTF-8/return_url.jsp
-	public static String return_url = "http://localhost:8300/talent/Enterprise/paymentUrl";
+	public static String return_url = "http://8.129.170.238:8085/mavendemo-0.0.1-SNAPSHOT/Enterprise/paymentUrl";
 	//http://127.0.0.1:8080/talent/paymentUrl
 
 	// 签名方式

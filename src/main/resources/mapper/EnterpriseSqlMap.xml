@@ -152,8 +152,11 @@
             <if test="permit != null">
                 permit = #{permit,jdbcType=VARCHAR},
             </if>
-            <if test="company2 != null">
-                company2 = #{company2,jdbcType=VARCHAR},
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
             </if>
         </set>
         where cid = #{cid,jdbcType=INTEGER}
@@ -240,6 +243,10 @@
             </if>
         </where>
     </select>
+<!-- 判断录用人数  -->
+    <select id="JudgecompanyEmploy" resultType="java.lang.Integer" parameterType="Interview">
+        select count(*) from tbl_position where applicantsnum &lt; maxnum and positionid = #{positonid}
+    </select>
 <!--录用-->
     <update id="companyEmploy" parameterType="Interview">
          update tbl_interview set  employ = #{employ,jdbcType=VARCHAR},endtime = #{endtime} where interviewid = #{interviewid,jdbcType=INTEGER}
@@ -284,7 +291,7 @@
 	</select>
 <!--简历筛选-->
     <select id="ScreeningResume" resultType="Resume" parameterType="java.util.Map">
-        select u.uid,p.*,s.*,r.* from tbl_user u,tbl_profession p,tbl_school s,tbl_resume r
+        select u.uid,u.logintime,p.*,s.*,r.* from tbl_user u,tbl_profession p,tbl_school s,tbl_resume r
         <where>
             r.professid = p.professid and r.sid = s.sid and r.uid = u.uid and r.reset = 1
             <if test="sid != null">
@@ -361,8 +368,8 @@
         </where>
     </select>
 <!--查询是否有订单记录-->
-    <select id="findFinanceInterview" resultType="java.lang.Integer" parameterType="java.lang.Integer">
-        select count(*) from tbl_finance where resumeid = #{resumeid}
+    <select id="findFinanceInterview" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) from tbl_finance where resumeid = #{resumeid} and  cid = #{cid}
     </select>
 <!-- 购买简历-->
     <insert id="purchaseResume" parameterType="Finance">

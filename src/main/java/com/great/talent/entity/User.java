@@ -23,7 +23,7 @@ public class User
 	private Date udate;
 	private String test;
 	private String uhead;
-
+	private Date logintime;
 	public User()
 	{
 	}
@@ -168,9 +168,32 @@ public class User
 		this.uhead = uhead;
 	}
 
+	public Date getLogintime() {
+		return logintime;
+	}
+
+	public void setLogintime(Date logintime) {
+		this.logintime = logintime;
+	}
+
 	@Override
-	public String toString()
-	{
-		return "User{" + "uid=" + uid + ", uaccount='" + uaccount + '\'' + ", upassword='" + upassword + '\'' + ", uname='" + uname + '\'' + ", usex='" + usex + '\'' + ", uage='" + uage + '\'' + ", utel='" + utel + '\'' + ", ustate='" + ustate + '\'' + ", uaddress='" + uaddress + '\'' + ", uschool='" + uschool + '\'' + ", uscore='" + uscore + '\'' + ", udate=" + udate + '}';
+	public String toString() {
+		return "User{" +
+				"uid=" + uid +
+				", uaccount='" + uaccount + '\'' +
+				", upassword='" + upassword + '\'' +
+				", uname='" + uname + '\'' +
+				", usex='" + usex + '\'' +
+				", uage='" + uage + '\'' +
+				", utel='" + utel + '\'' +
+				", ustate='" + ustate + '\'' +
+				", uaddress='" + uaddress + '\'' +
+				", uschool='" + uschool + '\'' +
+				", uscore=" + uscore +
+				", udate=" + udate +
+				", test='" + test + '\'' +
+				", uhead='" + uhead + '\'' +
+				", logintime=" + logintime +
+				'}';
 	}
 }
