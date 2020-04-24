@@ -87,7 +87,7 @@
             valueArr = [];
             $.ajax({
                 method: "POST",
-                url: Path + "/Enterprise/weekJobInfo",
+                url: path + "/Enterprise/weekJobInfo",
                 dataType: "text",
                 // data:{role:0},
                 success: function (msg) {
