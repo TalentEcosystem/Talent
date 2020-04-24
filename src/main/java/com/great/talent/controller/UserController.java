@@ -171,16 +171,18 @@ public class UserController
 	@RequestMapping("/userLogin")
 	@ResponseBody
 	public void userLogin(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		String msg = request.getParameter("User");
 		User user = g.fromJson(msg,User.class);
 		String test = user.getTest();
-		if (vcode.equalsIgnoreCase(test)){
+		if (null!=test&&vcode.equalsIgnoreCase(test)){
 			String userPassword = MD5Utils.md5(user.getUpassword());
 			user.setUpassword(userPassword);
 		    User user1 = userService.login(user);
 		    if (null != user1){
 		    	if (user1.getUstate().equals("启用")){
-				    response.getWriter().print("success");
+				    response.getWriter().print("1111");
 				    request.getSession().setAttribute("uid",user1.getUid());
 				    request.getSession().setAttribute("uname", user1.getUname());
 				    request.getSession().setAttribute("uaccount",user1.getUaccount());
@@ -255,6 +257,8 @@ public class UserController
 	@RequestMapping("/userReg")
 	@ResponseBody
 	public void userReg(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		String msg = request.getParameter("User");
 		User user = g.fromJson(msg,User.class);
 		String userPassword = MD5Utils.md5(user.getUpassword());
@@ -279,6 +283,8 @@ public class UserController
 	@RequestMapping("/findPhoneByAccount")
 	@ResponseBody
 	public void findPhoneByAccount(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		String uaccount = request.getParameter("username");
 		String test = request.getParameter("test");
 		if (vcode.equalsIgnoreCase(test)){
@@ -300,6 +306,8 @@ public class UserController
 	@RequestMapping("/sendMsg")
 	@ResponseBody
 	public void sendMsg(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		String phone = request.getParameter("utel"); //发送短信验证码
 		PhoneCode.getPhonemsg(phone);
 		response.setCharacterEncoding("utf-8");
@@ -310,6 +318,8 @@ public class UserController
 	@RequestMapping("/updatePwd")
 	@ResponseBody
 	public void updatePwd(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		String uaccount = request.getParameter("retrieveName");
 		String upassword = MD5Utils.md5(request.getParameter("newPwd"));
 		User user = new User();
@@ -326,6 +336,8 @@ public class UserController
 	@RequestMapping("/updatePersonal")
 	@ResponseBody
 	public void updatePersonal(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		String str = request.getParameter("userTAT");
 		User user = g.fromJson(str,User.class);
 		String str1 = (String) request.getSession().getAttribute("uaccount");
@@ -345,6 +357,8 @@ public class UserController
 	@RequestMapping("/updatePsd")
 	@ResponseBody
 	public void updatePsd(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		String upsd = MD5Utils.md5(request.getParameter("upsd"));//原密码
 		String cpsd = MD5Utils.md5(request.getParameter("cpsd"));//新密码
 		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
@@ -369,6 +383,8 @@ public class UserController
 	@RequestMapping("/updatePhone")
 	@ResponseBody
 	public void updatePhone(HttpServletRequest request, HttpServletResponse response)throws IOException{
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		String utel = request.getParameter("utel");//新手机号
 		String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
 		User user = new User();
@@ -386,6 +402,8 @@ public class UserController
 	@RequestMapping("/uheadUpLoad")
 	@ResponseBody
 	public void uheadUpLoad(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response)throws IOException {
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		if (file.getOriginalFilename()!=null&&!"".equals(file.getOriginalFilename().trim()))
 		{
 			String str1 = (String) request.getSession().getAttribute("uaccount");//用户名
@@ -411,6 +429,8 @@ public class UserController
 	@RequestMapping("/myCollection")
 	@ResponseBody
 	public Diagis myCollection(HttpServletRequest request, HttpServletResponse response)throws IOException {
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		int page= Integer.parseInt(request.getParameter("page"));
 		int limit= Integer.parseInt(request.getParameter("limit"));
 		String indname= request.getParameter("indname");
@@ -444,6 +464,8 @@ public class UserController
 	@RequestMapping("/myRequestFeedback")
 	@ResponseBody
 	public Diagis myRequestFeedback(HttpServletRequest request, HttpServletResponse response)throws IOException {
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		int page= Integer.parseInt(request.getParameter("page"));
 		int limit= Integer.parseInt(request.getParameter("limit"));
 		String indname= request.getParameter("indname");
@@ -476,22 +498,23 @@ public class UserController
 	//找工作-岗位详情
 	@RequestMapping("/checkJob")
 	@ResponseBody
-	public void checkJob(HttpServletRequest request, HttpServletResponse response)throws IOException,ParseException
-	{
-
+	public void checkJob(HttpServletRequest request, HttpServletResponse response)throws IOException,ParseException {
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		String indname = request.getParameter("indname");
 		String companyname = request.getParameter("companyname");
 		String positionname = request.getParameter("positionname");
 		String positiontime1 = request.getParameter("positiontime");
+		System.out.print("时间："+positiontime1);
+		System.out.print("行业："+indname);
+		System.out.print("公司："+companyname);
+		System.out.print("岗位："+positionname);
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZ");
 //		Date date = sdf.parse(positiontime1);
-//		SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//		String sDate=sdf2.format(date);
-//		Date positiontime = sdf2.parse(sDate);
-		Date date = new Date(positiontime1);
-		System.out.println("==="+date);
+		SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date positiontime = sdf2.parse(positiontime1);
 		JobData jobData1 = new JobData();
-		jobData1.setPositiontime(date);
+		jobData1.setPositiontime(positiontime);
 		jobData1.setPositionname(positionname);
 		jobData1.setCompanyname(companyname);
 		jobData1.setIndname(indname);
@@ -511,6 +534,8 @@ public class UserController
 	@RequestMapping("/jobApplication")
 	@ResponseBody
 	public void jobApplication(HttpServletRequest request, HttpServletResponse response)throws IOException {
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		String positionid1 = request.getParameter("positionid");
 		Integer positionid = Integer.parseInt(positionid1);
 		int uid = (int) request.getSession().getAttribute("uid");//用户名
@@ -546,6 +571,8 @@ public class UserController
 	@RequestMapping("/addCollection")
 	@ResponseBody
 	public void addCollection(HttpServletRequest request, HttpServletResponse response)throws IOException {
+		response.setContentType("text/text;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
 		String positionid1 = request.getParameter("positionid");
 		Integer positionid = Integer.parseInt(positionid1);
 		int uid = (int) request.getSession().getAttribute("uid");//用户名

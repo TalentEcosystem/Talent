@@ -8,7 +8,6 @@ $(function () {
 		async:true,
 		success: function (data) {
 			var study=JSON.parse(data);
-			console.log(study);
 			for (var i = 0; i <study.length ; i++) {
 				$("#con").append(
 					"<a href='"+path+"/HomePage/getCourseDetails?proid="+study[i].productid+"'  >"+
@@ -84,7 +83,6 @@ $(function () {
 				// dataType:"json",
 				data:{"pid":pid},
 				success:function (data) {
-					console.log(data);
 					$("#pinglist").empty();
 					var comcent=JSON.parse(data);
 					for (let i = 0; i <comcent.length ; i++) {
@@ -174,7 +172,6 @@ $(function () {
 										// dataType:"json",
 										data:{"pid":productid},
 										success:function (data) {
-											console.log(data);
 											var comcent=JSON.parse(data);
 											$("#pinglist").empty();
 											for (let i = 0; i <comcent.length ; i++) {
@@ -221,7 +218,7 @@ $(function () {
 
 
 						}else {
-							layer.msg("评论失败",{
+							layer.msg("网络延迟，评论失败",{
 								icon:5,
 								offset: ['100px','600px']
 							})

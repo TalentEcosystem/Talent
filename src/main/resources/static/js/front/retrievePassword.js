@@ -1,3 +1,4 @@
+layui.use(['layer'], function () {
 $(function () {
 	var path = $("#path").val();
 	//用户名验证页面的下一步按钮
@@ -12,20 +13,20 @@ $(function () {
 			datatype:"text",
 			beforeSend:function () {
 				if (null==username||"" == username) {
-					alert("请输入用户名");
+					layer.alert("请输入用户名",{icon:2});
 					return false;
 				}
 			}, success:function (msg) {
 				if(msg === "1111"){
 					location.href=path + "/user/rpassword2"
 				}else if ("error") {
-					alert("用户名不存在！")
+					layer.alert("用户名不存在!",{icon:2});
 				}else if ("testError") {
-					alert("验证码错误！")
+					layer.alert("验证码错误!",{icon:2});
 				}
 			}
 			,error:function () {
-				alert("网络繁忙！");
+				layer.alert("网络繁忙!",{icon:2});
 			}
 		});
 
@@ -36,9 +37,9 @@ $(function () {
 		if (scode==test){
 			location.href=path + "/user/rpassword3"
 		}else if(null ==test || ""==test){
-			alert("请输入验证码");
+			layer.alert("请输入验证码",{icon:2});
 		}else if (test != scode){
-			alert("验证码错误");
+			layer.alert("验证码错误",{icon:2});
 		}
 	});
 	//设置新密码页面的下一步按钮
@@ -54,27 +55,28 @@ $(function () {
 			datatype:"text",
 			beforeSend:function () {
 				if (null==newPwd||"" == newPwd) {
-					alert("新密码不能为空");
+					layer.alert("新密码不能为空",{icon:2});
 					return false;
 				}
 				if (null==newPwd2||"" === newPwd2) {
-					alert("确认密码不能为空");
+					layer.alert("确认密码不能为空",{icon:2});
 					return false;
 				}
 				if (newPwd != newPwd2) {
-					alert("两次输入密码不一致");
+					layer.alert("两次输入密码不一致",{icon:2});
 					return false;
 				}
 			}, success:function (msg) {
 				if (msg == "1111") {
-					alert("修改成功");
-					location.href=path + "/user/rpassword4";
+					layer.alert("修改成功",{icon:6},function () {
+						location.href=path + "/user/rpassword4";
+					});
 				}else {
-					alert("网络繁忙！");
+					layer.alert("网络繁忙",{icon:2});
 				}
 			}
 			,error:function () {
-				alert("网络繁忙！");
+				layer.alert("网络繁忙",{icon:2});
 			}
 		});
 
@@ -92,7 +94,7 @@ $(function () {
 				scode = msg;
             }
 			,error:function () {
-				alert("网络繁忙！");
+				layer.alert("网络繁忙",{icon:2});
 			}
 		});
 
@@ -126,3 +128,4 @@ function settime(val) {
 		settime(val);
 	},1000);
 };
+});

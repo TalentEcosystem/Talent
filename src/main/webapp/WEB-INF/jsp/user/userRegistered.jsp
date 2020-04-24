@@ -12,6 +12,8 @@
 	<%
 		String path=request.getContextPath();
 	%>
+	<link rel="stylesheet" href=<%=path+"/js/layui/css/layui.css"%>>
+	<script src=<%=path+"/js/layui/layui.js" %>></script>
 	<script src=<%=path+"/js/jquery-3.4.1.js" %>></script>
 	<link rel="stylesheet" href=<%=path+"/css/login.css" %>>
 	<script type="text/javascript" src=<%=path+"/js/front/userRegistered.js" %>></script>
@@ -22,8 +24,6 @@
 		<div class="logo"><a href="index.html"><img src=<%=path+"/images/log.png" %> /></a></div>
 		<div class="welcome">会员中心</div>
 		<div class="headerright">
-			<div class="r1">手机触屏版<a href="">m.diefeirencai.com</a></div>
-			<div class="r2"><a href="">Android客户端下载</a></div>
 			<div class="r3"><a href=<%=path+"/user/login" %>>用户登录</a></div>
 			<div class="r4"><a href=<%=path+"/user/index" %>>返回首页</a></div>
 		</div>
