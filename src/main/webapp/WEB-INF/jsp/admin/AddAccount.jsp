@@ -73,7 +73,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">手机号码</label>
             <div class="layui-input-inline">
-                <input name="tel" class="layui-input" type="password" id="tel" placeholder="请输入手机号码" autocomplete="off" onblur="checkTel(this.value)" lay-verify="number" lay-verType="tips">
+                <input name="tel" class="layui-input" type="text" id="tel" placeholder="请输入手机号码" autocomplete="off" onblur="checkTel(this.value)" lay-verify="number" lay-verType="tips">
             </div>
             <div class="layui-form-mid ">请填写11位手机号码</div>
 <%--            <div id="tip5" style="display: none;"></div>--%>

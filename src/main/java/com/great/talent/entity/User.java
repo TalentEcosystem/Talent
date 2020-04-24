@@ -23,6 +23,7 @@ public class User
 	private Date udate;
 	private String test;
 	private String uhead;
+	private String schoolname;
 
 	public User()
 	{
@@ -166,6 +167,16 @@ public class User
 	public void setUhead(String uhead)
 	{
 		this.uhead = uhead;
+	}
+
+	public String getSchoolname()
+	{
+		return schoolname;
+	}
+
+	public void setSchoolname(String schoolname)
+	{
+		this.schoolname = schoolname;
 	}
 
 	@Override
