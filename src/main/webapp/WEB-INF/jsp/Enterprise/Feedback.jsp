@@ -37,7 +37,7 @@
 
         var tableinf = table.render({
             elem: '#demo'
-            ,height: 300
+            ,height: 520
             //设置查询刷新的ID
             ,id:'table1'
             ,url: path+"/Enterprise/findFeedbackInfo" //数据接口
@@ -193,7 +193,10 @@
                             if (msg === 'success'){
                                 alert("应聘成功！");
                                 window.location.reload();
-                            }else{
+                            }else if(msg ==="NumError"){
+                                layer.alert("该职位已招满！")
+                            }
+                            else{
                                 alert("录用失败")
                             }
                         },

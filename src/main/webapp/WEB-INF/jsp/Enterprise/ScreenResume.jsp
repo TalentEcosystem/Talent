@@ -74,7 +74,7 @@
 
         var tableinf = table.render({
             elem: '#demo'
-            ,height: 300
+            ,height: 400
             //设置查询刷新的ID
             ,id:'table1'
             ,url: path+"/Enterprise/findScreenResumeInfo" //数据接口
@@ -84,11 +84,13 @@
             ,cols: [[ //表头
                 {field: 'uid', title: '应聘者', width:200,hide:true}
                 ,{field: 'resumeid', title: '应聘者', width:200,hide:true}
-                ,{field: 'resname', title: '应聘者', width:150}
+                ,{field: 'resname', title: '姓名', width:150}
                 ,{field: 'professname', title: '专业', width:100}
                 ,{field: 'sid', title: '学校id', width:200,hide:true}
                 ,{field: 'schoolname', title: '高校名称', width:150}
+                ,{field: 'schoolname', title: '高校名称', width:150}
                 ,{field: 'operationtime', title: '发布时间', width:200,templet:"<div> {{layui.util.toDateString(d.operationtime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
+                ,{field: 'logintime', title: '用户近期活跃时间', width:200,templet:"<div> {{layui.util.toDateString(d.logintime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
                 ,{fixed: 'right',title:'操作', width: 200, align:'center', toolbar: '#barDemo'}
             ]]
         })
@@ -217,15 +219,16 @@
                                     type: 2,
                                     area: ['300px','200px'],
                                     offset: ['10%','10%'],
-                                    content: path+'/Enterprise/path/Password',
+                                    content: path+'/Enterprise/path/Payment',
                                     btn: ['确定','返回'],
                                     btn1:function(index, layero){
                                         var body=layer.getChildFrame('body',index);
-                                       var password = body.find("#password").val();
+                                       var payment = body.find("#payment").val();
+                                        if (payment != ''){
                                        $.ajax({
                                            url:'${pageContext.request.contextPath}/Enterprise/JudgePassword',
                                            type:'post',
-                                           data:"password="+password,
+                                           data:"payment="+payment,
                                            dataType:'text',
                                            success:function(msg){
                                                if (msg ==="success"){
@@ -249,7 +252,7 @@
                                                                window.location.reload();
                                                            }else if (msg ==="deficiency"){
                                                                alert("余额不足，请先充值！")
-                                                               window.location.href = path +'Enterprise/CompanyRecharge';
+                                                               window.location.href = path +'/Enterprise/CompanyRecharge';
                                                            }else{
                                                                alert("付费失败")
                                                            }
@@ -266,6 +269,9 @@
                                                alert("网络繁忙！")
                                            }
                                        })
+                                        }else{
+                                            layer.alert("支付密码不能为空")
+                                        }
                                     },
                                     btn2: function(index, layero){
                                         layer.close(index);
@@ -321,6 +327,7 @@
                                     btn1:function(index, layero){
                                         var body=layer.getChildFrame('body',index);
                                         var payment = body.find("#payment").val();
+                                        if (payment != ''){
                                         $.ajax({
                                             url:'${pageContext.request.contextPath}/Enterprise/JudgePassword',
                                             type:'post',
@@ -348,7 +355,7 @@
                                                                 window.location.reload();
                                                             }else if (msg ==="deficiency"){
                                                                 alert("余额不足，请先充值！")
-                                                                window.location.href = path +'Enterprise/CompanyRecharge';
+                                                                window.location.href = path +'/Enterprise/CompanyRecharge';
                                                             }else{
                                                                 alert("付费失败")
                                                             }
@@ -365,6 +372,9 @@
                                                 alert("网络繁忙！")
                                             }
                                         })
+                                        }else{
+                                            layer.alert("支付密码不能为空")
+                                        }
                                     },
                                     btn2: function(index, layero){
                                         layer.close(index);

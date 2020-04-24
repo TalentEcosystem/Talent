@@ -1,3 +1,4 @@
+layui.use(['layer'], function () {
 $(function () {
 
     $("#bu1").click(function () {
@@ -61,15 +62,16 @@ $(function () {
 		    success:function(msg)
 		    {
 			    if(msg === "1111"){
-				    alert("注册成功！");
-				    location.href=path+"/user/login";
+				    layer.alert("注册成功!",{icon:6},function () {
+					    location.href=path+"/user/login";
+				    });
 			    }else if (msg === "error"){
-				    alert("网络繁忙！")
+				    layer.alert("网络繁忙!",{icon:2});
 			    } else if (msg === "UserAlreadyExists"){
-				    alert("用户名已存在")
+				    layer.alert("用户名已存在!",{icon:2});
 			    }
 		    }, error: function () {
-			    alert("网络繁忙！");
+			    layer.alert("网络繁忙!",{icon:2});
 		    }
 	    })
 	});
@@ -181,4 +183,5 @@ $(function () {
 			$("#bu1").attr("disabled", true);
 		}
 	});
+});
 });

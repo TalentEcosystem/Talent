@@ -85,6 +85,7 @@
         $("#week").click(function () {
             nameArr = [];
             valueArr = [];
+
             $.ajax({
                 method: "POST",
                 url: path + "/Enterprise/weekJobInfo",

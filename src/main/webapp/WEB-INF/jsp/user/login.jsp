@@ -12,6 +12,8 @@
 	<%
 		String path=request.getContextPath();
 	%>
+	<link rel="stylesheet" href=<%=path+"/js/layui/css/layui.css"%>>
+	<script src=<%=path+"/js/layui/layui.js" %>></script>
 	<script src=<%=path+"/js/jquery-3.4.1.js" %>></script>
 	<link rel="stylesheet" href=<%=path+"/css/login.css" %>>
 	<script type="text/javascript" src=<%=path+"/js/front/login.js" %>></script>
@@ -23,7 +25,7 @@
 		<div class="logo"><a href="index.html"><img src=<%=path+"/images/log.png" %>/></a></div>
 		<div class="welcome">欢迎登录</div>
 		<div class="headerright">
-			<a href="loginCompany.html">企业登录</a>
+			<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin">企业登录</a>
 			<span>|</span>
 			<a href="${pageContext.request.contextPath}/HomePage/index">返回首页</a>
 		</div>

@@ -21,6 +21,10 @@ public class UserService
 	}
 
 	@Transactional
+	public int updateUserTime(User user){
+		return deptMapper.updateUserTime(user);
+	}
+	@Transactional
 	public Integer userNameCheck(String uaccount){
 		return deptMapper.userNameCheck(uaccount);
 	}

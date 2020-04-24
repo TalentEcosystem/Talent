@@ -64,7 +64,7 @@
 
         var tableinf = table.render({
             elem: '#demo'
-            ,height: 300
+            ,height: 500
             //设置查询刷新的ID
             ,id:'table1'
             ,url: path+"/Enterprise/findInterviews" //数据接口
