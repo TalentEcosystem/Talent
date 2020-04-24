@@ -68,10 +68,10 @@ $(document).ready(function () {
 // 	   }
 //    }
 
-   
-});
 
-$(function () {
+});
+layui.use(['layer'], function () {
+
 	$('#but1').click(function(){
 	    var path = $("#path").val();
 		var uaccount = $("#uaccount").val();
@@ -87,18 +87,18 @@ $(function () {
 			datatype:"text",
 			success:function(msg)
 			{
-				if(msg === "success")
+				if(msg === "1111")
 				{
 					location.href=path+"/user/index";
 				}else if (msg === "stateError"){
-					alert("该账号已被冻结")
+					layer.alert("该账号已被冻结!",{icon:2});
 				} else if (msg === "userError"){
-					alert("用户名或密码错误")
+					layer.alert("用户名或密码错误!",{icon:2});
 				}else if (msg === "testError"){
-					alert("验证码错误")
+					layer.alert("验证码错误!",{icon:2});
 				}
 			}, error: function () {
-				alert("网络繁忙！");
+				layer.alert("网络繁忙!",{icon:2});
 			}
 		})
     });
@@ -114,4 +114,5 @@ $(function () {
 		var code = document.getElementById("bu2");
 		code.src = path + "/user/loginCode?"+Math.random();
 	});
+
 });

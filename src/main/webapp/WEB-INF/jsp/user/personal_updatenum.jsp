@@ -31,34 +31,6 @@
 			<span>公告：</span>
 			<a href="">有实力就不怕平庸 如何离高薪更进一步</a>
 		</div>
-		<div class="Account">
-			<div class="Left">
-				<div class="Info">
-					<font>[28421947]</font>
-					<input type="button">
-					<div id="InfoPopup">
-						<ul>
-							<li><a href="personal_updatepsd.html">修改密码</a></li>
-							<li><a href="personal_updatenum.html">修改手机</a></li>
-							<li><a href="personal_renzheng.html">修改邮箱</a></li>
-							<li><a href="index.html">退出</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="Left">
-				<a class="Mobile" href="">手机版</a>
-			</div>
-			<div class="Left">
-				<div class="Weixin">微信
-					<div id="WeixinPopup">
-						<img src=<%=path+"/images/showqrcode.jpg" %> width="120" height="120">
-						<p>扫一扫完成绑定<br>求职信息接收及时，<br>不再错过好工作！</p>
-					</div>
-				</div>
-			</div>
-
-		</div>
 	</div>
 </div>
 <div class="navTop">
@@ -66,8 +38,8 @@
 		<div class="logo"><a href="index.html"><img src=<%=path+"/images/logo_1.png" %>/><img src=<%=path+"/images/logo_2.png" %> /></a></div>
 		<div class="nav">
 			<div class="navItem"><a href=<%=path+"/user/index" %>>首页</a></div>
-			<div class="navItem"><a href="searchJob.html">职位搜索</a></div>
-			<div class="navItem"><a href="meetingJob.html">招聘会</a></div>
+			<div class="navItem"><a href=<%=path+"/HomePage/searchJob" %>>职位搜索</a></div>
+			<div class="navItem"><a href="">招聘会</a></div>
 			<div class="navItem"><a href="">政府招考</a></div>
 			<div class="navItem"><a href="">校园招聘</a></div>
 			<div class="navItem other">
@@ -75,9 +47,9 @@
 					<span>更多</span>
 					<div id="TopNavMorePopup">
 						<ul>
-							<li><a href="jobnews.html">就业资讯</a></li>
-							<li><a href="download.html">文档下载</a></li>
-							<li><a href="helpJob.html">求职互助</a></li>
+							<li><a href="">敬请期待</a></li>
+							<li><a href="">敬请期待</a></li>
+							<li><a href="">敬请期待</a></li>
 						</ul>
 					</div>
 				</div>
@@ -107,11 +79,6 @@
 			<div class="NavLeftBox">
 				<a href=<%=path+"/user/help" %> class="a8">帮助中心</a>
 			</div>
-		</div>
-		<div class="navLeftBottom">
-			<span class="sys">扫一扫绑定微信</span><br />
-			<img src=<%=path+"/images/showqrcode.jpg" %> />
-			<span class="Notice">蝶飞人才网<br>找工作更靠谱</span>
 		</div>
 	</div>
 	<div class="perRightcon">
@@ -158,9 +125,9 @@
 	<p><a href="">**人才</a>旗下<img src=<%=path+"/images/logo_foot.gif" %> />蝶飞人才网版权所有 <a href="">京ICP证0******9号</a><a href=""></a>本网站所有招聘信息，未经书面授权不得转载 投诉电话：400-8**-****</p>
 </div>
 <script>
-	var path = $("#path").val();
-	$(function () {
-		$("#hqbtn").click(function () {
+ layui.use(['layer'], function () {
+	 var path = $("#path").val();
+    $("#hqbtn").click(function () {
 			var phoneNum = $("#phoneNum").val();
 			$.ajax({
 				url:path+"/user/sendMsg",
@@ -172,15 +139,16 @@
 					scode = msg;
 				}
 				,error:function () {
-					alert("网络繁忙！");
+					layer.alert("网络繁忙",{icon:2});
 				}
 			});
 		});
+
 		$("#sure").click(function () {
 			var test = $("#test").val();
 			var phoneNum = $("#phoneNum").val();
 			if (test!=scode) {
-				alert("验证码错误！")
+				layer.alert("验证码错误",{icon:2});
 			}else {
 				$.ajax({
 					url:path+"/user/updatePhone",
@@ -192,16 +160,16 @@
 						if (msg=="1111"){
 							location.href=path + "/user/updateComplete";
 						}else {
-							alert("修改失败！");
+							layer.alert("修改失败!",{icon:2});
 						}
 					}
 					,error:function () {
-						alert("网络繁忙！");
+						layer.alert("网络繁忙!",{icon:2});
 					}
 				});
 			}
-		})
-	});
+		});
+ });
 	var countdown=60;        //初始值
 	var scode = "";
 	function settime(val) {
