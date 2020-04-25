@@ -91,6 +91,7 @@
                 ,{field: 'schoolname', title: '高校名称', width:150}
                 ,{field: 'operationtime', title: '发布时间', width:200,templet:"<div> {{layui.util.toDateString(d.operationtime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
                 ,{field: 'logintime', title: '用户近期活跃时间', width:200,templet:"<div> {{layui.util.toDateString(d.logintime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
+                ,{field: 'reemploy', title: '是否已就业', width:150}
                 ,{fixed: 'right',title:'操作', width: 200, align:'center', toolbar: '#barDemo'}
             ]]
         })
