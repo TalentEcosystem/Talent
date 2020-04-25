@@ -120,7 +120,7 @@
                                 dataType:'text',
                                 success:function(msg){
                                     resume=JSON.parse(msg.split("%")[0]);
-                                    console.log(resume)
+                                    console.log(resume);
                                     if(JSON.parse(msg.split("%")[1]).length!=0){
                                         if(JSON.parse(msg.split("%")[1]).length>1){
                                             social2=JSON.parse(msg.split("%")[1])[1];
