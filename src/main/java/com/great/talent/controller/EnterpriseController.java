@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -125,30 +126,30 @@ public class EnterpriseController {
      */
     @RequestMapping("/adminLogin")
     @ResponseBody
-    public String adminLogin(Admin admin, HttpSession session) {
+    public String adminLogin(Admin admin, HttpSession session){
         String sessionCode = (String) session.getAttribute("vcode");
-        System.out.println(sessionCode);
-        System.out.println(admin.toString());
         if (!admin.getCode().equalsIgnoreCase(sessionCode)) {
             return "noCode";
         }
         Admin admins = enterpriseService.adminLogin(admin.getAccount());
+        System.out.println(admins.toString());
         if (null == admins) {
             return "noAccount";
         }
         if (!MD5Utils.checkpassword(admin.getPassword(), admins.getPassword())) {
-            return "error";
+                return "error";
         }
-        if (admins.getState() == "禁用") {
-            return "forbidden";
-        } else if (admins.getState() == "删除") {
-            return "delete";
-        }
-        session.setAttribute("admin", admins);
-        List<RoleMenu> list=adminService.selectRoleMenu(admins.getRole().getRoleid()+"");
-        System.out.println(list);
-        session.setAttribute("menuMap",list);
-        return "success";
+        if (admins.getState().equals("禁用")) {
+                return "forbidden";
+            } else if (admins.getState().equals("删除")) {
+                return "delete";
+            }
+                session.setAttribute("admin", admins);
+                List<RoleMenu> list = adminService.selectRoleMenu(admins.getRole().getRoleid() + "");
+                System.out.println(list);
+                session.setAttribute("menuMap", list);
+                return "success";
+
     }
 
     //根据用户名查用户手机号
