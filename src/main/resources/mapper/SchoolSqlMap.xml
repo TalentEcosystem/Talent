@@ -287,7 +287,7 @@
         intertime
         )values (
         #{uid},
-        #{professid},
+        #{positionid},
        #{intertime}
         )
     </insert>
@@ -369,6 +369,13 @@
         SELECT aducationid,adtime,sname,profession from tbl_aducational
         <where>
             uid=#{uid}
+        </where>
+    </select>
+    <select id="findUserInterview" resultType="Interview" parameterType="Recomend">
+        select * from tbl_interview
+        <where>
+            uid=#{uid} and
+            positionid=#{positionid}
         </where>
     </select>
 </mapper>

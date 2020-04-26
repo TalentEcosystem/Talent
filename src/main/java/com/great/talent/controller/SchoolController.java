@@ -394,15 +394,22 @@ public class SchoolController
 		recomend.setPresenter(schoolService.findSchoolnameBySid(admin.getSid()));
 		for (int i = 0; i < ids.length; i++)
 		{
+
 			recomend.setUid(Integer.valueOf(ids[i]));
-			schoolService.insertRecommend(recomend);
-			//还要插入面试表
-			interview.setUid(Integer.valueOf(ids[i]));
-			interview.setPositionid(Integer.valueOf(positionid));
-			interview.setIntertime(new Date());
-			schoolService.userInsertInterview(interview);
+			Interview interview1=schoolService.findUserInterview(recomend);
+			if(interview1!=null){
+				continue;
+			}else{
+				schoolService.insertRecommend(recomend);
+				//还要插入面试表
+				interview.setUid(Integer.valueOf(ids[i]));
+				interview.setPositionid(Integer.valueOf(positionid));
+				interview.setIntertime(new Date());
+				schoolService.userInsertInterview(interview);
+				ResponseUtils.outJson(response, "推荐成功");
+			}
+
 		}
-		ResponseUtils.outJson(response, "推荐成功");
 	}
 
 	//用户端的简历显示

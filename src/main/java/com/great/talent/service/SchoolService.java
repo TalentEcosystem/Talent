@@ -118,6 +118,7 @@ public class SchoolService
 	public int findUserResumeStatusCount(int uid){
 		return schoolMapper.findUserResumeStatusCount(uid);
 	}
+	@Transactional
 	public int userInsertInterview(Interview interview){
 		return schoolMapper.userInsertInterview(interview);
 	}
@@ -139,5 +140,7 @@ public class SchoolService
 	public List<Aducational> outPutUserAducation(Resume resume){
 		return schoolMapper.outPutUserAducation(resume);
 	}
-
+	public Interview findUserInterview(Recomend resume){
+		return schoolMapper.findUserInterview(resume);
+	}
 }
