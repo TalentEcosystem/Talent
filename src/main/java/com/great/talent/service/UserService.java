@@ -98,7 +98,7 @@ public class UserService
 	}
 
 	@Transactional
-	public Integer findSidByUid(int uid){
+	public String findSidByUid(int uid){
 		return deptMapper.findSidByUid(uid);
 	}
 

@@ -30,7 +30,7 @@
 		<div class="headerright">
 			<a href=<%=path+"/user/login" %>>个人登录 </a>
 			<span>|</span>
-			<a href="zhuceCompany.html">企业注册 </a>
+			<a href=<%=path+"/Enterprise/path/EnterpriseRegister"%>>企业注册 </a>
 			<span>|</span>
 			<a href=<%=path+"/user/index" %>>返回首页</a>
 		</div>
@@ -63,7 +63,7 @@
 			<div class="box1">
 				<span>验证码：</span>
 				<input id="tsted" type="text" class="yzm"/>
-				<button id="sendMsg" class="phonenum" onclick="settime(this)">获取短信验证码</button>
+				<button id="hqbtn" class="hqbtn" onclick="settime(this)" style="width: 100px;text-align: center;height: 40px;border: 1px #F2CEB4 solid;border-radius: 3px;font-family: 微软雅黑;font-size: 12px;line-height: 40px;float: left;background: #FFE6D5;color: #EB5A2B;cursor: pointer; margin-left:5px">发送验证码</button>
 				<div class="clear"></div>
 			</div>
 			<div class="box1">

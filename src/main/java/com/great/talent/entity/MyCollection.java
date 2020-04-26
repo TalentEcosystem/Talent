@@ -79,7 +79,6 @@ public class MyCollection
 	@Override
 	public String toString()
 	{
-		return "MyCollection{" + "indname='" + indname + '\'' + ", companyname='" + companyname + '\'' + ", positionname='" + positionname + '\'' + ", positiontime=" + positiontime + '}';
+		return "MyCollection{" + "indname='" + indname + '\'' + ", companyname='" + companyname + '\'' + ", positionname='" + positionname + '\'' + ", positiontime=" + positiontime + ", uid=" + uid + ", positionid=" + positionid + '}';
 	}
-
 }

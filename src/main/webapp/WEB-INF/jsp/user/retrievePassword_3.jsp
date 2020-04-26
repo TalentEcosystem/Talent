@@ -29,7 +29,7 @@
 		<div class="headerright">
 			<a href=<%=path+"/user/login" %>>个人登录 </a>
 			<span>|</span>
-			<a href="zhuceCompany.html">企业注册 </a>
+			<a href=<%=path+"/Enterprise/path/EnterpriseRegister"%>>企业注册 </a>
 			<span>|</span>
 			<a href=<%=path+"/user/index" %>>返回首页</a>
 		</div>

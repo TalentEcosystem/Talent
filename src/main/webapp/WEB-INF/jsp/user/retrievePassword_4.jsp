@@ -11,6 +11,7 @@
 	<title>忘记密码-完成</title>
 	<%
 		String path=request.getContextPath();
+		String retrieveName = (String) session.getAttribute("retrieveName");
 	%>
 	<link rel="stylesheet" href=<%=path+"/js/layui/css/layui.css"%>>
 	<script src=<%=path+"/js/layui/layui.js" %>></script>
@@ -27,7 +28,7 @@
 		<div class="headerright">
 			<a href=<%=path+"/user/login" %>>个人登录 </a>
 			<span>|</span>
-			<a href="zhuceCompany.html">企业注册 </a>
+			<a href=<%=path+"/Enterprise/path/EnterpriseRegister"%>>企业注册 </a>
 			<span>|</span>
 			<a href=<%=path+"/user/index" %>>返回首页</a>
 		</div>
@@ -57,7 +58,7 @@
 		<div class="clear"></div>
 		<div class="restInfo2">
 			<div class="SucTitle">恭喜您，您的密码设置成功！</div>
-			<p>您的用户名是：HEB5_14@your_email.com</p>
+			<p>您的用户名是：<%=retrieveName%></p>
 			<p>您可以使用新密码登录人才网<a href=<%=path+"/user/login" %>>立即登录</a></p>
 		</div>
 	</div>
