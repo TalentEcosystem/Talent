@@ -18,9 +18,9 @@ $(function () {
 			}, success:function (msg) {
 				if(msg === "1111"){
 					location.href=path + "/Enterprise/path/retrievePassword_2"
-				}else if ("error") {
+				}else if (msg ==="error") {
 					alert("用户名不存在！")
-				}else if ("testError") {
+				}else if (msg ==="testError") {
 					alert("验证码错误！")
 				}
 			}
