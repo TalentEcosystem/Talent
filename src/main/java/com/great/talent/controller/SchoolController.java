@@ -595,6 +595,8 @@ public class SchoolController
 		}
 		//简历就更新就行
 		int degreeid = schoolService.findDegreeidByDegreeName(resume);
+		//先插入专业表再查
+		schoolService.insertProfessname(resume);
 		int professid = schoolService.findProfessidByProfessName(resume);
 		int sid = schoolService.findSidBySchoolName(resume);
 		resume.setDegreeid(degreeid);

@@ -129,10 +129,10 @@
 				<label style="clear: both;float: left;margin-left: 58px;margin-top: 10px">电话：</label><input type="text"  style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" name="retel" value="<%=utel%>" >
 				<label style="float: left;margin-left: 58px;margin-top: 10px">住址：</label><input type="text" style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" name="readdress" value="${resume.readdress}" >
 				<div style="float: right;width: 140px;height: 137px;margin-right: 50px;border: 1px black solid;margin-top: -97px">
-					<img src="${pageContext.request.contextPath}/${resume.repic}" name="repic" style="width: 135px;height: 80px">
-					<%--			<label style="clear: both;float: left">选择图片：</label><input type="file" name="filea">--%>
+					<img src="${pageContext.request.contextPath}/${resume.repic}" name="repic" id="repic" style="width: 135px;height: 80px">
+					<div class="layui-upload-list" id="img_upload"></div>
 					<div class="layui-upload-inline">
-						<div class="layui-upload-list" id="img_upload"></div>
+
 						<button type="button" class="layui-btn" id="test8">
 							<i class="layui-icon">&#xe67c;</i>上传图片
 						</button><%--			上传绑定按钮--%>
@@ -274,6 +274,7 @@
 			,choose: function(obj){
 				//预读本地文件示例，不支持ie8
 				obj.preview(function(index, file, result){
+					$('#repic').css("display","none");
 					$('#img_upload').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" style="width: 135px;height: 80px">');
 				});
 			}

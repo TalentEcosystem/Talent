@@ -143,4 +143,8 @@ public class SchoolService
 	public Interview findUserInterview(Recomend resume){
 		return schoolMapper.findUserInterview(resume);
 	}
+	@Transactional
+	public int insertProfessname(Resume resume){
+		return schoolMapper.insertProfessname(resume);
+	}
 }

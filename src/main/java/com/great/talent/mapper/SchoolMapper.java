@@ -88,4 +88,6 @@ public interface SchoolMapper
 	public List<Aducational> outPutUserAducation(Resume resume);
 
 	public Interview findUserInterview(Recomend resume);
+
+	public int insertProfessname(Resume resume);
 }

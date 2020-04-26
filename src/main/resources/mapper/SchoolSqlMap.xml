@@ -201,6 +201,13 @@
             professname=#{professname}
         </where>
     </select>
+    <insert id="insertProfessname" parameterType="Resume">
+        insert into tbl_profession (
+        professname
+        )values(
+        #{professname}
+        )
+    </insert>
 
     <update id="updateSocial" parameterType="Social">
         update tbl_social
