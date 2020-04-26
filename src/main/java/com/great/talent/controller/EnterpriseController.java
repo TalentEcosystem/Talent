@@ -537,7 +537,7 @@ public class EnterpriseController {
             company.setCid(admin.getCid());
             String filename = file.getOriginalFilename();
             String savePath = request.getSession().getServletContext().getRealPath("/images");
-            String projectPath = savePath + "\\" + filename;
+            String projectPath = savePath + "/" + filename;
             if (file.getOriginalFilename().split("\\.")[1].equals("png")
                     || file.getOriginalFilename().split("\\.")[1].equals("jpg")
                     || file.getOriginalFilename().split("\\.")[1].equals("jpeg")) {
