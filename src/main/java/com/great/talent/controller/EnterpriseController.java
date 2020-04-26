@@ -537,7 +537,7 @@ public class EnterpriseController {
             company.setCid(admin.getCid());
             String filename = file.getOriginalFilename();
             String savePath = request.getSession().getServletContext().getRealPath("/images");
-            String projectPath = savePath + "\\" + filename;
+            String projectPath = savePath + "/" + filename;
             if (file.getOriginalFilename().split("\\.")[1].equals("png")
                     || file.getOriginalFilename().split("\\.")[1].equals("jpg")
                     || file.getOriginalFilename().split("\\.")[1].equals("jpeg")) {
@@ -912,6 +912,7 @@ public class EnterpriseController {
             interview.setIntertime(new Date());
             interview.setCheck("已查看");
             interview.setInvate("已邀请");
+            interview.setEndtime(new Date());
             int flag = enterpriseService.addInterViews(interview);
             if (flag > 0){
                 response.getWriter().print("success");
@@ -1024,6 +1025,23 @@ public class EnterpriseController {
         }
         return mv;
     }
+
+    /**
+     * 跳转订单页面
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/findAdminMoney")
+    public ModelAndView findAdminMoney(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        Admin admins = enterpriseService.adminLogin(admin.getAccount());
+        mv.addObject("money",admins.getMoney());
+        mv.setViewName("/Enterprise/EnterpriseFinance");
+        return mv;
+    }
+
 
     /**
      * 查询订单信息
@@ -1187,7 +1205,7 @@ public class EnterpriseController {
             map.put("socials", socials);
             map.put("aducations",aducationals);
             System.out.println(imagePath+"\\"+resumes.getRepic().split("/")[1]);
-            map.put("repic",this.getImageBase(imagePath+"\\"+resumes.getRepic().split("/")[1]));
+            map.put("repic",this.getImageBase(imagePath+"/"+resumes.getRepic().split("/")[1]));
             try {
                 WordUtil.exportMillCertificateWord(request, response, map, "简历", "template.ftl");
             } catch (IOException e) {

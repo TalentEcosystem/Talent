@@ -47,10 +47,6 @@
 		<div class="DivCompany">
 			<div class="DivCompany_img"><img style="width: 250px;height: 180px" src=<%=path+"/"+jobData.getCompanypic() %> /></div>
 			<h1><a href=""><%=jobData.getCompanyname()%></a><img src=<%=path+"/images/16.png" %> /></h1>
-<%--			<div class="DivLeft_1">--%>
-<%--				<div class="gz1"><a href="">+关注</a></div>--%>
-<%--				<div class="gz2">答复率<span>100.0%</span></div>--%>
-<%--			</div>--%>
 			<div class="clear"></div>
 			<div class="DivLeft_2">
 				<p>行业：<%=jobData.getIndname()%></p>

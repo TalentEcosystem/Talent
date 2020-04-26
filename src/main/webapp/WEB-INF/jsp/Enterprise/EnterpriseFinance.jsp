@@ -28,7 +28,7 @@
         <div>
         <button class="layui-btn" lay-submit lay-filter="subForm">查询</button>
         </div>
-        <label class="layui-form-label username-lable" style="width: 200px">公司当前余额: ${sessionScope.admin.money}</label>
+        <label class="layui-form-label username-lable" style="width: 200px">公司当前余额: ${money}</label>
 
     </div>
 </form>

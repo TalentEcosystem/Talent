@@ -103,7 +103,7 @@
 		<label class="layui-form-label">验证码：</label>
 		<div class="layui-input-inline">
 			<input type="text" id="code" required  lay-verify="required" placeholder="请输入验证码" autocomplete="on" class="layui-input">
-			<input type="text" id="scode" value="${code12}">
+			<input type="hidden" id="scode" value="${code12}">
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -239,13 +239,15 @@
 	var scode = "";
 	function settime(val) {
 		if (countdown == 0) {
+			$("#findCode").removeAttribute("disabled");
 			val.innerHTML="获取验证码";
 			countdown = 60;
 			scode = "";
 			return false;
+
 		} else {
 			val.innerHTML="重新发送(" + countdown + ")";
-			$("#findCode").css("disabled","disabled");
+			$("#findCode").setAttribute("disabled",true);
 			console.log(countdown);
 			countdown--;
 		}
