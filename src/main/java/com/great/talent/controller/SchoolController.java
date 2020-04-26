@@ -668,7 +668,7 @@ public class SchoolController
 				{
 					resume.setRepic("images/" + fileaot.getOriginalFilename());
 					InputStream in = fileaot.getInputStream();// 獲得上傳的輸入流
-					FileOutputStream out = new FileOutputStream(savePath + "\\" + filename);// 指定web-inf目錄下的images文件
+					FileOutputStream out = new FileOutputStream(savePath + "/" + filename);// 指定web-inf目錄下的images文件
 					request.setAttribute("path", "images" + "\\" + filename);
 					int len = 0;
 					byte buffer[] = new byte[1024];
@@ -695,7 +695,6 @@ public class SchoolController
 
 		resume.setUid(uid);
 		int i = schoolService.userInsertResume(resume);
-
 
 		System.out.println("保存==" + i);
 		if (i > 0)
@@ -779,7 +778,7 @@ public class SchoolController
 			String uploadpath = request.getServletContext().getRealPath("/excel");
 
 			// 得到要下载的文件
-			File file = new File(uploadpath + "\\" + destinationfileName);
+			File file = new File(uploadpath + "/" + destinationfileName);
 
 			System.out.println(file.getAbsoluteFile());
 			HttpHeaders httpHeaders=new HttpHeaders();
@@ -818,7 +817,7 @@ public class SchoolController
 			{
 			if (fileaot.getOriginalFilename().split("\\.")[1].equals("xls") || fileaot.getOriginalFilename().split("\\.")[1].equals("xlsx") || fileaot.getOriginalFilename().split("\\.")[1].equals("excel"))
 			{InputStream in = fileaot.getInputStream();// 獲得上傳的輸入流
-				FileOutputStream out = new FileOutputStream(savePath + "\\" + "upload"+filename);// 指定web-inf目錄下的images文件
+				FileOutputStream out = new FileOutputStream(savePath + "/" + "upload"+filename);// 指定web-inf目錄下的images文件
 				request.setAttribute("path", "excel" + "\\" + filename);
 				int len = 0;
 				byte buffer[] = new byte[1024];
@@ -933,7 +932,7 @@ public class SchoolController
 			map.put("resume", resumes.get(i));
 			map.put("socials", socials);
 			map.put("aducations",aducationals);
-			map.put("repic",this.getImageBase(imagePath+"\\"+resumes.get(i).getRepic().split("/")[1]));
+			map.put("repic",this.getImageBase(imagePath+"/"+resumes.get(i).getRepic().split("/")[1]));
 			tittlelist.add("resume"+resumes.get(i).getResname());
 			mapList.add(map);
 		}

@@ -1026,6 +1026,23 @@ public class EnterpriseController {
     }
 
     /**
+     * 跳转订单页面
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/findAdminMoney")
+    public ModelAndView findAdminMoney(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        Admin admins = enterpriseService.adminLogin(admin.getAccount());
+        mv.addObject("money",admins.getMoney());
+        mv.setViewName("/Enterprise/EnterpriseFinance");
+        return mv;
+    }
+
+
+    /**
      * 查询订单信息
      * @param request
      * @param response
