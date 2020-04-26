@@ -190,7 +190,7 @@ public class SchoolController
 		{
 			String filename = null;
 			// 设置上传图片的保存路径
-			String savePath = request.getServletContext().getRealPath("/images");
+			String savePath = request.getServletContext().getRealPath("/images/");
 			File file = new File(savePath);
 			// 判断上传文件的保存目录是否存在
 			if (!file.exists() && !file.isDirectory())
@@ -221,8 +221,8 @@ public class SchoolController
 				{
 					schoolMsg.setSchoolpic("images/" + fileaot.getOriginalFilename());
 					InputStream in = fileaot.getInputStream();// 獲得上傳的輸入流
-					FileOutputStream out = new FileOutputStream(savePath + "\\" + filename);// 指定web-inf目錄下的images文件
-					request.setAttribute("path", "images" + "\\" + filename);
+					FileOutputStream out = new FileOutputStream(savePath + filename);// 指定web-inf目錄下的images文件
+					request.setAttribute("path", "images" + "/" + filename);
 					int len = 0;
 					byte buffer[] = new byte[1024];
 					while ((len = in.read(buffer)) > 0)// 每次讀取
@@ -384,7 +384,6 @@ public class SchoolController
 	{
 		//这里需要获取登录高校账号的学校id
 		Admin admin = (Admin) request.getSession().getAttribute("admin");
-
 		String[] ids = request.getParameterValues("ids");
 		String cid = request.getParameter("cid");
 		String positionid = request.getParameter("positionid");
@@ -438,7 +437,7 @@ public class SchoolController
 		{
 			String filename = null;
 			// 设置上传图片的保存路径
-			String savePath = request.getServletContext().getRealPath("/images");
+			String savePath = request.getServletContext().getRealPath("/images/");
 			File file = new File(savePath);
 			// 判断上传文件的保存目录是否存在
 			if (!file.exists() && !file.isDirectory())
@@ -469,8 +468,8 @@ public class SchoolController
 				{
 					resume.setRepic("images/" + fileaot.getOriginalFilename());
 					InputStream in = fileaot.getInputStream();// 獲得上傳的輸入流
-					FileOutputStream out = new FileOutputStream(savePath + "\\" + filename);// 指定web-inf目錄下的images文件
-					request.setAttribute("path", "images" + "\\" + filename);
+					FileOutputStream out = new FileOutputStream(savePath + filename);// 指定web-inf目錄下的images文件
+					request.setAttribute("path", "images" + "/" + filename);
 					int len = 0;
 					byte buffer[] = new byte[1024];
 					while ((len = in.read(buffer)) > 0)// 每次讀取
@@ -637,7 +636,7 @@ public class SchoolController
 		{
 			String filename = null;
 			// 设置上传图片的保存路径
-			String savePath = request.getServletContext().getRealPath("/images");
+			String savePath = request.getServletContext().getRealPath("/images/");
 			File file = new File(savePath);
 			// 判断上传文件的保存目录是否存在
 			if (!file.exists() && !file.isDirectory())
@@ -668,8 +667,8 @@ public class SchoolController
 				{
 					resume.setRepic("images/" + fileaot.getOriginalFilename());
 					InputStream in = fileaot.getInputStream();// 獲得上傳的輸入流
-					FileOutputStream out = new FileOutputStream(savePath + "/" + filename);// 指定web-inf目錄下的images文件
-					request.setAttribute("path", "images" + "\\" + filename);
+					FileOutputStream out = new FileOutputStream(savePath +filename);// 指定web-inf目錄下的images文件
+					request.setAttribute("path", "images" + "/" + filename);
 					int len = 0;
 					byte buffer[] = new byte[1024];
 					while ((len = in.read(buffer)) > 0)// 每次讀取
@@ -818,7 +817,7 @@ public class SchoolController
 			if (fileaot.getOriginalFilename().split("\\.")[1].equals("xls") || fileaot.getOriginalFilename().split("\\.")[1].equals("xlsx") || fileaot.getOriginalFilename().split("\\.")[1].equals("excel"))
 			{InputStream in = fileaot.getInputStream();// 獲得上傳的輸入流
 				FileOutputStream out = new FileOutputStream(savePath + "/" + "upload"+filename);// 指定web-inf目錄下的images文件
-				request.setAttribute("path", "excel" + "\\" + filename);
+				request.setAttribute("path", "excel" + "/" + filename);
 				int len = 0;
 				byte buffer[] = new byte[1024];
 				while ((len = in.read(buffer)) > 0)// 每次讀取
@@ -828,7 +827,7 @@ public class SchoolController
 				in.close();
 				out.close();
 				try {
-					String fileName = savePath + "\\" + "upload"+filename;
+					String fileName = savePath + "/" + "upload"+filename;
 					List<Object[]> list = ExcelUtil.importExcel(fileName);
 					for (int i = 0; i < list.size(); i++) {
 						//先去查手机号是否重复，不重复插入，重复return
@@ -891,7 +890,7 @@ public class SchoolController
 	}
 	@RequestMapping("/outputTalent")
 	public void outputTalent(HttpServletRequest request,HttpServletResponse response){
-		String imagePath=request.getServletContext().getRealPath("/images");
+		String imagePath=request.getServletContext().getRealPath("/images/");
 		//查询当前页
 		HashMap<String, Object> condition = new HashMap<>();
 		String mindate = request.getParameter("mindate");
@@ -932,7 +931,7 @@ public class SchoolController
 			map.put("resume", resumes.get(i));
 			map.put("socials", socials);
 			map.put("aducations",aducationals);
-			map.put("repic",this.getImageBase(imagePath+"/"+resumes.get(i).getRepic().split("/")[1]));
+			map.put("repic",this.getImageBase(imagePath+resumes.get(i).getRepic().split("/")[1]));
 			tittlelist.add("resume"+resumes.get(i).getResname());
 			mapList.add(map);
 		}

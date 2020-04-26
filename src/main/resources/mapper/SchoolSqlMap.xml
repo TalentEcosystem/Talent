@@ -283,7 +283,7 @@
     <insert id="userInsertInterview" parameterType="Interview">
         insert into tbl_interview(
         uid,
-        professid,
+        positionid,
         intertime
         )values (
         #{uid},
