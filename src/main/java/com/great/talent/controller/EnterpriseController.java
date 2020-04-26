@@ -912,6 +912,7 @@ public class EnterpriseController {
             interview.setIntertime(new Date());
             interview.setCheck("已查看");
             interview.setInvate("已邀请");
+            interview.setEndtime(new Date());
             int flag = enterpriseService.addInterViews(interview);
             if (flag > 0){
                 response.getWriter().print("success");
