@@ -669,8 +669,8 @@ public class AdminController
 	@ResponseBody
 	public String addChapter(@RequestParam("file") MultipartFile file,Chapter chapter,HttpServletRequest request){
 		String name=file.getOriginalFilename();
-		String savePath=request.getSession().getServletContext().getRealPath("/images");
-		String Path=savePath+"\\"+name;
+		String savePath=request.getSession().getServletContext().getRealPath("/images/");
+		String Path=savePath+name;
 		chapter.setChapurl("images/"+name);
 		adminService.addChapter(chapter);
 		try
@@ -709,8 +709,8 @@ public class AdminController
 	@ResponseBody
 	public String updateChapter(@RequestParam("file") MultipartFile file,Chapter chapter,HttpServletRequest request){
 		String name=file.getOriginalFilename();
-		String savePath=request.getSession().getServletContext().getRealPath("/images");
-		String Path=savePath+"\\"+name;
+		String savePath=request.getSession().getServletContext().getRealPath("/images/");
+		String Path=savePath+name;
 		chapter.setChapurl("images/"+name);
 		adminService.updateChapter(chapter);
 		try
@@ -767,8 +767,8 @@ public class AdminController
 	@ResponseBody
 	public String addProduct(@RequestParam("file") MultipartFile file,Product product,HttpServletRequest request){
 		String name=file.getOriginalFilename();
-		String savePath=request.getSession().getServletContext().getRealPath("/images");
-		String Path=savePath+"\\"+name;
+		String savePath=request.getSession().getServletContext().getRealPath("/images/");
+		String Path=savePath+name;
 		product.setPropic("images/"+name);
 		Date date=new Date();
 		product.setStarttime(date);
@@ -800,8 +800,8 @@ public class AdminController
 	@ResponseBody
 	public String updateProduct(@RequestParam("file") MultipartFile file,Product product,HttpServletRequest request){
 		String name=file.getOriginalFilename();
-		String savePath=request.getSession().getServletContext().getRealPath("/images");
-		String Path=savePath+"\\"+name;
+		String savePath=request.getSession().getServletContext().getRealPath("/images/");
+		String Path=savePath+name;
 		product.setPropic("images/"+name);
 		Date date=new Date();
 		product.setStarttime(date);

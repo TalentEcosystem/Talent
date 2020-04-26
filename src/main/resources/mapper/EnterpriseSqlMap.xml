@@ -318,7 +318,7 @@
     </select>
 
     <insert id="addInterViews" parameterType="Interview">
-        insert into tbl_interview(uid,positionid,sid,intertime,`check`,invate) values (#{uid},#{positionid},#{sid},#{intertime},#{check},#{invate})
+        insert into tbl_interview(uid,positionid,sid,intertime,`check`,invate,endtime) values (#{uid},#{positionid},#{sid},#{intertime},#{check},#{invate},#{endtime})
     </insert>
 
 <!-- 充值插入订单   -->

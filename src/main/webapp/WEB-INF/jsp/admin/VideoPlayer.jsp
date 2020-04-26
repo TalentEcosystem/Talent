@@ -35,14 +35,6 @@
 							<img src="${pageContext.request.contextPath}/vimage/images/logo.png" alt="">
 						</a>
 					</div><!--menu_logo end-->
-					<div class="search_form">
-						<form>
-							<input type="text" name="search">
-							<button type="submit">
-								<i class="icon-search"></i>
-							</button>
-						</form>
-					</div><!--search_form end-->
 					<ul class="controls-lv">
 						<li>
 							<a href="#" title=""><i class="icon-message"></i></a>
@@ -138,18 +130,6 @@
 		<div class="btm_bar">
 			<div class="container">
 				<div class="btm_bar_content">
-					<nav>
-						<ul>
-							<li><a href="#" title="">目录</a>
-
-							</li>
-							<li><a href="#" title="">分类</a></li>
-							<li><a href="#" title="">推荐</a></li>
-							<li><a href="#" title="">趋势</a></li>
-							<li><a href="#" title="">直播</a></li>
-							<li><a href="#" title="">视频</a></li>
-						</ul>
-					</nav><!--navigation end-->
 					<ul class="shr_links">
 						<li>
 							<h3>Go to : </h3>
@@ -793,9 +773,6 @@
 									<span>686K 播放 .<small class="posted_dt">1 week ago</small></span>
 								</div>
 							</div><!--videoo end-->
-							<div class="ad-rw">
-								<img src="${pageContext.request.contextPath}/vimage/images/th10.jpg" alt="">
-							</div>
 							<div class="videoo">
 								<div class="vid_thumbainl">
 									<a href="#" title="">

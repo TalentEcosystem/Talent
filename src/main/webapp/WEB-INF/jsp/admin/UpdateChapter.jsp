@@ -107,7 +107,7 @@
 					chapterid:$("#chapterid").val()
 				}
 			}
-			,url: path+"/admin/UpdateChapter"
+			,url: path+"/admin/updateChapter"
 			,done: function(res){
 				alert(res.msg);
 				var index = parent.layer.getFrameIndex(window.name);
