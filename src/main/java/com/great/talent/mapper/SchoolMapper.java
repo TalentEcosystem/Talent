@@ -86,4 +86,8 @@ public interface SchoolMapper
 	public List<Social> outPutUserSocial(Resume resume);
 
 	public List<Aducational> outPutUserAducation(Resume resume);
+
+	public Interview findUserInterview(Recomend resume);
+
+	public int insertProfessname(Resume resume);
 }

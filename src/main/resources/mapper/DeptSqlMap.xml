@@ -148,7 +148,7 @@
         WHERE T1.productid=T2.productid AND T1.uid=#{uid}
     </select>
     <!--    找工作-查用户简历中的学校-->
-    <select id="findSidByUid" resultType="int" parameterType="int">
+    <select id="findSidByUid" resultType="String" parameterType="int">
          SELECT sid FROM tbl_resume WHERE uid=#{uid}
     </select>
     <!--    找工作-岗位申请-->
@@ -159,7 +159,7 @@
     <select id="checkInterview" resultType="Interview" parameterType="Interview">
          SELECT * FROM tbl_interview WHERE uid=#{uid} AND positionid=#{positionid}
     </select>
-    <!--    找工作-查是否已经申请过该工作-->
+    <!--    找工作-查是否已经收藏过该工作-->
     <select id="checkCollection" resultType="MyCollection" parameterType="MyCollection">
          SELECT * FROM tbl_collection WHERE uid=#{uid} AND positionid=#{positionid}
     </select>

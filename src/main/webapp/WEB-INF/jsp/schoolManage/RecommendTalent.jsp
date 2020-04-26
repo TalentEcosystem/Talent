@@ -74,8 +74,7 @@
 		});
 		$('.layui-btn').on('click',function () {
 			var type=$(this).data('type');//指改按钮的类型
-			var cid=$("#cid").val();
-			var positionid=$("#positionid").val();
+
 			if(type=='reload'){
 				table.reload('demotable',{//上面设置的表格的特殊标识
 					page:{
@@ -109,7 +108,7 @@
 					$.ajax({
 						url:'${pageContext.request.contextPath}/school/recommend',
 						type:'post',
-						data: {"ids":ids,"cid":cid,"positionid":positionid},
+						data: {"ids":ids,"cid":$("#cid").val(),"positionid":$("#positionid").val()},
 						traditional: true,
 						dataType:'json',
 						success:function(msg){
