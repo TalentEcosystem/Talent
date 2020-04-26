@@ -12,7 +12,7 @@ public interface DeptMapper
 	User userLogin(User user);
 	Integer userNameCheck(String uaccount);
 	Integer findUserIdByUaccount(String uaccount);
-	Integer findSidByUid(int uid);
+	String findSidByUid(int uid);
 	Boolean addUser(User user);
 	String findPhoneByAccount(String uaccount);
 	Boolean updateUser(User user);

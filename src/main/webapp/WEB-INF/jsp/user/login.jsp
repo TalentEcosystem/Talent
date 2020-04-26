@@ -22,10 +22,10 @@
 <input type="hidden" id="path" value="<%=path%>">
 <div class="header">
 	<div class="mainwarp">
-		<div class="logo"><a href="index.html"><img src=<%=path+"/images/log.png" %>/></a></div>
+		<div class="logo"><a href="${pageContext.request.contextPath}/HomePage/index"><img src=<%=path+"/images/log.png" %>/></a></div>
 		<div class="welcome">欢迎登录</div>
 		<div class="headerright">
-			<a href="loginCompany.html">企业登录</a>
+			<a href=<%=path+"/Enterprise/path/EnterpriseRegister"%>>企业登录</a>
 			<span>|</span>
 			<a href="${pageContext.request.contextPath}/HomePage/index">返回首页</a>
 		</div>
@@ -38,11 +38,6 @@
 		<div class="logoLeft">
 			<div class="leftimg">
 				<img src=<%=path+"/images/log1.gif" %> />
-			</div>
-			<div class="leftcon">
-				<a href="" class="a1">手机触屏版 m.diefeirencai.com</a>
-				<a href="" class="a2">Android客户端下载</a>
-				<a href="" class="a3">iPhone客户端下载</a>
 			</div>
 		</div>
 		<div class="logoRight">
@@ -64,8 +59,6 @@
 					<a id="bu1" class="pasd">看不清，换一张</a>
 				</div>
 				<div class="autoLogo">
-<%--					<span class="CheckBox"></span>--%>
-<%--					<span>七天内自动登录</span>--%>
 					<a href=<%=path+"/user/rpassword" %> class="pasd">忘记密码？</a>
 				</div>
 				<div class="autoLogo">
@@ -78,25 +71,6 @@
 				<div class="zcbtn">
 					<a href=<%=path+"/user/registered" %>>还没有账号？立即注册</a>
 				</div>
-<%--				<div class="thirdLogin">--%>
-<%--					<span>使用其他账号登录：</span>--%>
-<%--					<div class="third">--%>
-<%--						<div class="third_con third_1">QQ</div>--%>
-<%--						<div class="third_con third_2">微博</div>--%>
-<%--						<div class="third_con third_3">百度</div>--%>
-<%--					</div>--%>
-<%--				</div>--%>
-			</div>
-			<div class="weixinLogin">
-				<div class="weixinQr">
-					<img src=<%=path+"/images/showqrcode.jpg" %> width="150" class="useHelpcon"/>
-					<p>使用微信扫描上方二维码</p>
-					<p class="useHelp useHelpcon">使用帮助</p>
-				</div>
-				<div class="zcbtn">
-					<a href=<%=path+"/user/registered" %>>还没有账号？立即注册</a>
-				</div>
-				<img src=<%=path+"/images/log16.png" %> class="usehelpimg"/>
 			</div>
 		</div>
 	</div>
