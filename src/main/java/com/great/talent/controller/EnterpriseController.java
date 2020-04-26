@@ -1205,7 +1205,7 @@ public class EnterpriseController {
             map.put("socials", socials);
             map.put("aducations",aducationals);
             System.out.println(imagePath+"\\"+resumes.getRepic().split("/")[1]);
-            map.put("repic",this.getImageBase(imagePath+"\\"+resumes.getRepic().split("/")[1]));
+            map.put("repic",this.getImageBase(imagePath+"/"+resumes.getRepic().split("/")[1]));
             try {
                 WordUtil.exportMillCertificateWord(request, response, map, "简历", "template.ftl");
             } catch (IOException e) {
