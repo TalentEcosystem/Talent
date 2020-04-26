@@ -2,6 +2,7 @@ package com.great.talent.mapper;
 
 import com.great.talent.entity.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -38,4 +39,12 @@ public interface DeptMapper
 	MyCollection checkCollection(MyCollection myCollection);
 	//岗位收藏
 	Boolean addCollection(MyCollection myCollection);
+
+	/**
+	 * 修改登录时间
+	 * @param user
+	 * @return
+	 */
+	@Update("update tbl_user set logintime = #{logintime} where uid = #{uid}")
+	int updateUserTime(User user);
 }

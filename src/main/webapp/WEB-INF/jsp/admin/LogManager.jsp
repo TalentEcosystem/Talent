@@ -45,7 +45,7 @@
 			,cols: [[ //表头
 				{field: 'zizeng', title: '序号', width:100, sort: true, fixed: 'left',templet:'#zizeng'}
 				,{field: 'logname', title: '操作人', width:200}
-				,{field: 'logdate', title: '操作时间', width:300}
+				,{field: 'logdate', title: '操作时间', width:300,templet:"<div> {{layui.util.toDateString(d.logdate,'yyyy-MM-dd HH:mm:ss')}}</div>"}
 				,{field: 'logtype', title: '操作事项', width:200}
 			]]
 		});

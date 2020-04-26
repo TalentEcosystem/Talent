@@ -64,6 +64,24 @@ public class EnterpriseService {
     }
 
     /**
+     * 查询已经招满的岗位
+     * @param aid
+     * @return
+     */
+    public List<Position> findMaxPosition(int aid){
+        return enterpriseMapper.findMaxPosition(aid);
+    }
+
+    /**
+     * 修改已招满岗位的状态
+     * @param positionid
+     * @return
+     */
+    @Transactional
+    public int Initialize(int positionid){
+        return enterpriseMapper.updatePositionStates(positionid);
+    }
+    /**
      * 查询发布岗位记录
      * @param map
      * @return
@@ -225,6 +243,14 @@ public class EnterpriseService {
     }
 
     /**
+     * 判断岗位是否招聘满了
+     * @param interview
+     * @return
+     */
+    public int JudgecompanyEmploy(Interview interview){
+        return enterpriseMapper.JudgecompanyEmploy(interview);
+    }
+    /**
      * 公司录用
      * @param interview
      * @return
@@ -372,11 +398,11 @@ public class EnterpriseService {
 
     /**
      * 查询是否有此订单
-     * @param resumeid
+     * @param map
      * @return
      */
-    public int findFinanceInterview(int resumeid){
-        return enterpriseMapper.findFinanceInterview(resumeid);
+    public int findFinanceInterview(Map map){
+        return enterpriseMapper.findFinanceInterview(map);
     }
 
     /**

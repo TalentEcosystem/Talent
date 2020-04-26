@@ -137,4 +137,6 @@ public interface AdminMapper {
 	public void configChapter(List list);
 
 	public void addCount(@Param("chapterid") String chapterid);
+
+	public String findVideo(@Param("chapterid") String chapterid);
 }

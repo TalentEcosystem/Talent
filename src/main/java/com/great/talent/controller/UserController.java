@@ -180,6 +180,8 @@ public class UserController
 			String userPassword = MD5Utils.md5(user.getUpassword());
 			user.setUpassword(userPassword);
 		    User user1 = userService.login(user);
+			user1.setLogintime(new Date());
+		    userService.updateUserTime(user1);
 		    if (null != user1){
 		    	if (user1.getUstate().equals("启用")){
 				    response.getWriter().print("1111");

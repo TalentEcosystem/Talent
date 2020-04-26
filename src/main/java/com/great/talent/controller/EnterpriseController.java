@@ -127,6 +127,8 @@ public class EnterpriseController {
     @ResponseBody
     public String adminLogin(Admin admin, HttpSession session) {
         String sessionCode = (String) session.getAttribute("vcode");
+        System.out.println(sessionCode);
+        System.out.println(admin.toString());
         if (!admin.getCode().equalsIgnoreCase(sessionCode)) {
             return "noCode";
         }
@@ -267,11 +269,13 @@ public class EnterpriseController {
     @ResponseBody
     public void RegisterAdmin(Admin admin, HttpServletRequest request, HttpServletResponse response) throws IOException {
         admin.setRoleid(2);
-        admin.setState("启用");
+        admin.setState("禁用");
         admin.setDate(new Date());
         admin.setMoney(0);
         String pwd = MD5Utils.md5(admin.getPassword());
+        String payment = MD5Utils.md5(admin.getPayment());
         admin.setPassword(pwd);
+        admin.setPayment(payment);
         Company company = new Company();
         company.setCompanyname(admin.getCompanyname());
         company.setPermit(admin.getPermit());
@@ -288,6 +292,21 @@ public class EnterpriseController {
             }
         } else {
             response.getWriter().print("noCode");
+        }
+    }
+
+    /**
+     * 对公司的岗位进行初始化处理
+     * @param request
+     */
+    @RequestMapping("/Initialize")
+    public void Initialize(HttpServletRequest request){
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        List<Position> positionList = enterpriseService.findMaxPosition(admin.getAid());
+        if (positionList !=null){
+            for (int i =0;i<positionList.size();i++){
+                enterpriseService.Initialize(positionList.get(i).getPositionid());
+            }
         }
     }
 
@@ -518,13 +537,13 @@ public class EnterpriseController {
             company.setCid(admin.getCid());
             String filename = file.getOriginalFilename();
             String savePath = request.getSession().getServletContext().getRealPath("/images");
-            String projectPath = savePath + "\\" + filename;
+            String projectPath = savePath + "/" + filename;
             if (file.getOriginalFilename().split("\\.")[1].equals("png")
                     || file.getOriginalFilename().split("\\.")[1].equals("jpg")
                     || file.getOriginalFilename().split("\\.")[1].equals("jpeg")) {
                 file.transferTo(new File(projectPath));
                 company.setCompanypic("images/" + file.getOriginalFilename());
-//                System.out.println(company.toString());
+                System.out.println(company.toString());
                 int flag = enterpriseService.updateCompanyInfo(company);
                 if (flag > 0) {
                     return "{\"code\":0, \"msg\":\"\", \"data\":{}}";
@@ -666,13 +685,18 @@ public class EnterpriseController {
     @ResponseBody
     public String companyEmploy(Interview interview){
         interview.setEndtime(new Date());
-        int uid = enterpriseService.companyEmploy(interview);
-        int flag = enterpriseService.updateResumeInfo(uid);
-        if (flag>0){
-            enterpriseService.updateApplicantsNum(interview.getPositionid());
-            return "success";
+        int flags = enterpriseService.JudgecompanyEmploy(interview);
+        if (flags>0) {
+            int uid = enterpriseService.companyEmploy(interview);
+            int flag = enterpriseService.updateResumeInfo(uid);
+            if (flag > 0) {
+                enterpriseService.updateApplicantsNum(interview.getPositionid());
+                return "success";
+            } else {
+                return "error";
+            }
         }else{
-            return "error";
+            return "NumError";
         }
     }
 
@@ -888,6 +912,7 @@ public class EnterpriseController {
             interview.setIntertime(new Date());
             interview.setCheck("已查看");
             interview.setInvate("已邀请");
+            interview.setEndtime(new Date());
             int flag = enterpriseService.addInterViews(interview);
             if (flag > 0){
                 response.getWriter().print("success");
@@ -937,15 +962,10 @@ public class EnterpriseController {
      * @param request
      * @param out_trade_no
      * @param total_amount
-     * @param subject
-     * @param body
-     * @param lows
-     * @param highs
-     * @param kcname
      * @return
      */
     @RequestMapping("/paymentUrl")
-    public ModelAndView returnUrl(HttpServletRequest request,String out_trade_no,String total_amount,String subject,String body,String lows,String highs,String kcname){
+    public ModelAndView returnUrl(HttpServletRequest request,String out_trade_no,String total_amount){
         System.out.println("同步通知支付成功");
         Finance finance = new Finance();
         Company company = (Company) request.getSession().getAttribute("company");
@@ -982,9 +1002,46 @@ public class EnterpriseController {
     public ModelAndView paymentUrlS(HttpServletRequest request,String out_trade_no,String total_amount){
         ModelAndView mv = new ModelAndView();
         System.out.println("异步通知支付成功");
-        mv.setViewName("/Enterprise/Transition");
+        Finance finance = new Finance();
+        Company company = (Company) request.getSession().getAttribute("company");
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        finance.setCid(company.getCid());
+        finance.setCompanyname(company.getCompanyname());
+        finance.setFinancetype("充值");
+        finance.setFinancetime(new Date());
+        finance.setTradeno(out_trade_no);
+        finance.setPrice(Double.valueOf(total_amount).intValue());
+        finance.setFinancestate("正常");
+        System.out.println(finance.toString());
+        int flag = enterpriseService.addFinances(finance);
+        Map map = new HashMap();
+        map.put("money",Double.valueOf(total_amount).intValue());
+        map.put("aid",admin.getAid());
+        if (flag>0){
+            enterpriseService.EnterpriseRecharge(map);
+            mv.setViewName("/Enterprise/Transition");
+        }else{
+            mv.setViewName("/Enterprise/Error");
+        }
         return mv;
     }
+
+    /**
+     * 跳转订单页面
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/findAdminMoney")
+    public ModelAndView findAdminMoney(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        Admin admins = enterpriseService.adminLogin(admin.getAccount());
+        mv.addObject("money",admins.getMoney());
+        mv.setViewName("/Enterprise/EnterpriseFinance");
+        return mv;
+    }
+
 
     /**
      * 查询订单信息
@@ -1039,7 +1096,11 @@ public class EnterpriseController {
     @ResponseBody
     public void JudgeResume(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String resumeid = request.getParameter("resumeid");
-        int count = enterpriseService.findFinanceInterview(Integer.parseInt(resumeid));
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        Map map = new HashMap();
+        map.put("cid",admin.getCid());
+        map.put("resumeid",resumeid);
+        int count = enterpriseService.findFinanceInterview(map);
         if (count != 0){
             response.getWriter().print("success");
         }else{
@@ -1101,7 +1162,12 @@ public class EnterpriseController {
             response.getWriter().print("deficiency");
         }
     }
-    //查找用户简历
+
+    /**
+     * 查询用户简历
+     * @param request
+     * @param response
+     */
     @RequestMapping("/findResume")
     public void findResume(HttpServletRequest request, HttpServletResponse response){
         String jsonStr=request.getParameter("uid");
@@ -1114,6 +1180,13 @@ public class EnterpriseController {
         ResponseUtils.outJson1(response,g.toJson(resume)+"%"+g.toJson(socials)+"%"+g.toJson(aducationals));
 
     }
+
+    /**
+     * 导出简历
+     * @param request
+     * @param response
+     * @throws ParseException
+     */
     @RequestMapping("/outputTalent")
     @ResponseBody
     public void  outputTalent(HttpServletRequest request,HttpServletResponse response) throws ParseException{
@@ -1132,7 +1205,7 @@ public class EnterpriseController {
             map.put("socials", socials);
             map.put("aducations",aducationals);
             System.out.println(imagePath+"\\"+resumes.getRepic().split("/")[1]);
-            map.put("repic",this.getImageBase(imagePath+"\\"+resumes.getRepic().split("/")[1]));
+            map.put("repic",this.getImageBase(imagePath+"/"+resumes.getRepic().split("/")[1]));
             try {
                 WordUtil.exportMillCertificateWord(request, response, map, "简历", "template.ftl");
             } catch (IOException e) {

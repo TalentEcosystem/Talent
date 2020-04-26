@@ -266,7 +266,7 @@ public class HomePageController
 	 */
 	@RequestMapping("/checkJob")
 	@ResponseBody
-	public String checkJob(JobData jobData1,HttpServletRequest request)throws IOException, ParseException {
+	public String checkJob(JobData jobData1,HttpServletRequest request) {
 		String Str= homePageService.findWelfare(jobData1,request);
 		return Str;
 	}

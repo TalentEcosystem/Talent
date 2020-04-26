@@ -18,11 +18,11 @@
 <input type="hidden" id="path" value="<%=path%>">
 <h1  style="background-color: #d2d2d2;font-weight:bold;text-align:center;margin-top: 15px">已录用人员信息</h1>
 <table id="demo" lay-filter="test"></table>
-<span>
-	<button type="button" class="layui-btn layui-btn-primary layui-btn-radius" style="right: auto">
-		<a href="javascript:history.back(-1)">返回</a>
-	</button>
-</span>
+<%--<span>--%>
+<%--	<button type="button" class="layui-btn layui-btn-primary layui-btn-radius" style="right: auto">--%>
+<%--		<a href="javascript:history.back(-1)">返回</a>--%>
+<%--	</button>--%>
+<%--</span>--%>
 </body>
 <script>
     var path=$('#path').val();
@@ -34,7 +34,7 @@
 
         var tableinf = table.render({
             elem: '#demo'
-            ,height: 300
+            ,height: 500
             //设置查询刷新的ID
             ,id:'table1'
             ,url: path+"/Enterprise/findCompanyEmployInfo" //数据接口

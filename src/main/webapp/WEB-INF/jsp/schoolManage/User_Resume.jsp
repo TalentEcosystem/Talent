@@ -13,6 +13,7 @@
 	<title>用户端的简历</title>
 	<%
 		String path=request.getContextPath();
+		String utel=(String)request.getSession().getAttribute("utel");
 	%>
 	<script src=<%=path+"/js/jquery-3.4.1.js" %>></script>
 	<script src=<%=path+"/js/jquery-form.js" %>></script>
@@ -121,17 +122,17 @@
 			<form action="${pageContext.request.contextPath}/school/updateResume"  id="form2" method="post"  enctype="multipart/form-data" accept-charset="UTF-8">
 				<label style="float: left;margin-left: 58px;margin-top: 20px">姓名：</label><input type="text" name="resname" style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 16px" value="${resume.resname}" >
 				<label style="float: left;margin-left: 30px;margin-top: 20px">学校名称：</label><input type="text" id="schoolname" name="schoolname" style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 16px" value="${resume.schoolname}" >
-				<label style="clear: both;float: left;margin-left: 30px;margin-top: 10px">出生年月：</label><input type="text"  style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" placeholder="xx年xx月" name="rebirth" value="${resume.rebirth}" >
+				<label style="clear: both;float: left;margin-left: 30px;margin-top: 10px">出生年月：</label><input type="text"  style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" name="rebirth" value="${resume.rebirth}" >
 				<label style="float: left;margin-left: 58px;margin-top: 10px">专业：</label><input type="text" style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" name="professname" value="${resume.professname}" >
 				<label style="clear: both;float: left;margin-left: 30px;margin-top: 10px">政治面貌：</label><input type="text"  style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" name="repol" value="${resume.repol}" >
 				<label style="float: left;margin-left: 58px;margin-top: 10px">学历：</label><input type="text" style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" name="degreename" value="${resume.degreename}" >
-				<label style="clear: both;float: left;margin-left: 58px;margin-top: 10px">电话：</label><input type="text"  style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" name="retel" value="${resume.retel}" >
+				<label style="clear: both;float: left;margin-left: 58px;margin-top: 10px">电话：</label><input type="text"  style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" name="retel" value="<%=utel%>" >
 				<label style="float: left;margin-left: 58px;margin-top: 10px">住址：</label><input type="text" style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" name="readdress" value="${resume.readdress}" >
 				<div style="float: right;width: 140px;height: 137px;margin-right: 50px;border: 1px black solid;margin-top: -97px">
-					<img src="${pageContext.request.contextPath}/${resume.repic}" name="repic" style="width: 135px;height: 80px">
-					<%--			<label style="clear: both;float: left">选择图片：</label><input type="file" name="filea">--%>
+					<img src="${pageContext.request.contextPath}/${resume.repic}" name="repic" id="repic" style="width: 135px;height: 80px">
+					<div class="layui-upload-list" id="img_upload"></div>
 					<div class="layui-upload-inline">
-						<div class="layui-upload-list" id="img_upload"></div>
+
 						<button type="button" class="layui-btn" id="test8">
 							<i class="layui-icon">&#xe67c;</i>上传图片
 						</button><%--			上传绑定按钮--%>
@@ -208,7 +209,7 @@
 				<input type="text" value="${resume.reskill}" style="clear: both;float: left;width: 500px;height: 30px;margin-left: 58px" name="reskill">
 				<h2 style="clear: both;float: left;margin-left: 58px">自我评价</h2>
 				<input type="text" value="${resume.reeva}" name="reeva" style="clear: both;float: left;width: 500px;height: 30px;margin-left: 58px">
-				<input type="submit" id="save12" value="保存" style="lear: both;float: left;width: 120px;height: 35px;margin-left: 45%">
+				<input type="submit"  value="保存" style="lear: both;float: left;width: 120px;height: 35px;margin-left: 45%">
 			</form>
 		</div>
 	</div>
@@ -273,12 +274,14 @@
 			,choose: function(obj){
 				//预读本地文件示例，不支持ie8
 				obj.preview(function(index, file, result){
+					$('#repic').css("display","none");
 					$('#img_upload').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" style="width: 135px;height: 80px">');
 				});
 			}
 			,done: function(res){
 				//上传完毕回调
-				layer.msg(res);
+				layer.msg("上传成功");
+				window.location.reload();
 			}
 			,error: function(){
 				//请求异常回调

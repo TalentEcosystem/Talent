@@ -23,6 +23,14 @@
 	<label>高校名称</label>&nbsp;&nbsp;
 	<div class="layui-input-inline">
 		<input type="text" name="schoolname" id="schoolname" placeholder="请输入高校名称" class="layui-input">
+	</div>&nbsp;&nbsp;
+	<label>用户昵称</label>&nbsp;&nbsp;
+	<div class="layui-input-inline">
+		<input type="text" name="uname" id="uname" placeholder="请输入用户昵称" class="layui-input">
+	</div>&nbsp;&nbsp;
+	<label>手机号</label>&nbsp;&nbsp;
+	<div class="layui-input-inline">
+		<input type="text" name="utel" id="utel" placeholder="请输入手机号" class="layui-input">
 	</div>
 	<button class="layui-btn" data-type="reload">查询</button>
 </div>
@@ -32,6 +40,7 @@
 	<div class="layui-btn-group">
 		<button type="button" class="layui-btn layui-btn-sm" lay-event="forbid">禁用</button>
 		<button type="button" class="layui-btn layui-btn-sm" lay-event="enable">启用</button>
+		<button type="button" class="layui-btn layui-btn-sm" lay-event="see">查看简历</button>
 	</div>
 </script>
 <script type="text/html" id="zizeng">
@@ -55,7 +64,7 @@
 				,{field: 'uname', title: '用户名', width:100}
 				,{field: 'utel', title: '联系方式', width:250}
 				,{field: 'schoolname', title: '学校名称', width:250}
-				,{field: 'udate', title: '注册时间', width:250}
+				,{field: 'udate', title: '注册时间', width:250,templet:"<div> {{layui.util.toDateString(d.udate,'yyyy-MM-dd HH:mm:ss')}}</div>"}
 				,{field: 'ustate', title: '帐号状态', width:100}
 				,{field: 'right', title: '操作', width:200, align:'center', toolbar:'#barDemo'}
 			]]
@@ -72,7 +81,9 @@
 					,
 					where: {
 						ustate: $("#ustate").val(),
-						schoolname: $("#schoolname").val()
+						schoolname: $("#schoolname").val(),
+						uname: $("#uname").val(),
+						utel: $("#utel").val()
 					}
 				});
 			}
@@ -115,6 +126,105 @@
 							alert("网络繁忙！")
 						}
 					})
+				});
+			}else if(obj.event === 'see'){
+				var uid={'uid':data.uid};
+				uid=JSON.stringify(uid);
+				$.ajax({
+					url:'${pageContext.request.contextPath}/school/findResume',
+					type:'post',
+					data:'uid='+uid,
+					dataType:'text',
+					success:function(msg){
+						resume=JSON.parse(msg.split("%")[0]);
+						if(JSON.parse(msg.split("%")[1]).length!=0){
+							if(JSON.parse(msg.split("%")[1]).length>1){
+								social2=JSON.parse(msg.split("%")[1])[1];
+							}
+							social1=JSON.parse(msg.split("%")[1])[0];
+						}
+						if(JSON.parse(msg.split("%")[2]).length!=0){
+							aducation2=JSON.parse(msg.split("%")[2])[0];
+							if(JSON.parse(msg.split("%")[2]).length>1){
+								aducation2=JSON.parse(msg.split("%")[2])[1];
+							}
+						}
+						layer.open({
+							type: 2,
+							area: ['90%', '90%'],
+							offset: ['10%', '10%'],
+							btn: ['返回'],
+							btn1: function(index, layero){
+								layer.close(index);
+							},
+							content: path+'/school/useResume' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+							,success: function(layero, index){
+								console.log(social1.length);
+								var form=layui.form;
+								var body=layer.getChildFrame('body',index);
+								body.find("input[id=resname1]").empty();
+								body.find("input[id=schoolname1]").empty();
+								body.find("input[id=rebirth1]").empty();
+								body.find("input[id=professname]").empty();
+								body.find("input[id=repol]").empty();
+								body.find("input[id=degreename]").empty();
+								body.find("input[id=retel]").empty();
+								body.find("input[id=readdress]").empty();
+								body.find("input[id=hidepic]").empty();
+								body.find("input[id=reskill12]").empty();
+								body.find("input[id=reeva12]").empty();
+								body.find("input[id=resname1]").val(resume.resname);
+								body.find("input[id=schoolname1]").val(resume.schoolname);
+								body.find("input[id=rebirth1]").val(resume.rebirth);
+								body.find("input[id=professname]").val(resume.professname);
+								body.find("input[id=repol]").val(resume.repol);
+								body.find("input[id=degreename]").val(resume.degreename);
+								body.find("input[id=retel]").val(resume.retel);
+								body.find("input[id=readdress]").val(resume.readdress);
+								body.find("input[id=hidepic]").val(resume.repic);
+								body.find("input[id=reskill12]").val(resume.reskill);
+								body.find("input[id=reeva12]").val(resume.reeva);
+								if(social1!=null){
+									body.find("input[id=socialtime1]").val(social1.socialtime);
+									body.find("input[id=company1]").val(social1.company);
+									body.find("input[id=content1]").val(social1.content);
+									if(social2!=null){
+										body.find("input[id=socialtime2]").val(social2.socialtime);
+										body.find("input[id=company2]").val(social2.company);
+										body.find("input[id=content2]").val(social2.content);
+									}else{
+										body.find("input[id=socialtime2]").val("");
+										body.find("input[id=company2]").val("");
+										body.find("input[id=content2]").val("");
+									}
+								}else{
+									body.find("input[id=socialtime1]").val("");
+									body.find("input[id=company1]").val("");
+									body.find("input[id=content1]").val("");
+								}
+								if(aducation1!=null){
+									body.find("input[id=adtime1]").val(aducation1.adtime);
+									body.find("input[id=sname1]").val(aducation1.sname);
+									body.find("input[id=profession1]").val(aducation1.profession);
+									if(aducation2!=null){
+										body.find("input[id=adtime2]").val(aducation2.adtime);
+										body.find("input[id=sname2]").val(aducation2.sname);
+										body.find("input[id=profession2]").val(aducation2.profession);
+									}else{
+										body.find("input[id=adtime2]").val("");
+										body.find("input[id=sname2]").val("");
+										body.find("input[id=profession2]").val("");
+									}
+								}else{
+									body.find("input[id=adtime1]").val("");
+									body.find("input[id=sname1]").val("");
+									body.find("input[id=profession1]").val("");
+								}
+							}
+						});
+					},error:function (err) {
+						console.log(err);
+					}
 				});
 			}
 		});

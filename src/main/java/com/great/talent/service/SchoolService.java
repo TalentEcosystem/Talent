@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +42,7 @@ public class SchoolService
 	public SchoolMsg findSchoolInfo(int sid){
 		return schoolMapper.findSchoolInfo(sid);
 	}
+	@Transactional
 	public int updateSchool(SchoolMsg schoolMsg){
 		return schoolMapper.updateSchool(schoolMsg);
 	}
@@ -61,14 +64,14 @@ public class SchoolService
 	public int findTalentCount1(HashMap<String, Object> condition){
 		return schoolMapper.findTalentCount1(condition);
 	}
-
+	@Transactional
 	public int insertRecommend(Recomend recomend){
 		return schoolMapper.insertRecommend(recomend);
 	}
 	public String findSchoolnameBySid(int sid){
 		return schoolMapper.findSchoolnameBySid(sid);
 	}
-
+	@Transactional
 	public int updateUserresume(Resume resume){
 		return schoolMapper.updateUserresume(resume);
 	}
@@ -84,17 +87,19 @@ public class SchoolService
 	public int findProfessidByProfessName(Resume resume){
 		return schoolMapper.findProfessidByProfessName(resume);
 	}
-
+	@Transactional
 	public int updateSocial(Social social){
 		return schoolMapper.updateSocial(social);
 	}
+	@Transactional
 	public int insertSocial(Social social){
 		return schoolMapper.insertSocial(social);
 	}
+	@Transactional
 	public int updateAducation(Aducational aducational){
 		return schoolMapper.updateAducation(aducational);
 	}
-
+	@Transactional
 	public int insertAducation(Aducational aducational){
 		return schoolMapper.insertAducation(aducational);
 	}
@@ -113,12 +118,14 @@ public class SchoolService
 	public int findUserResumeStatusCount(int uid){
 		return schoolMapper.findUserResumeStatusCount(uid);
 	}
+	@Transactional
 	public int userInsertInterview(Interview interview){
 		return schoolMapper.userInsertInterview(interview);
 	}
 	public Resume findResumeTel(String tel){
 		return schoolMapper.findResumeTel(tel);
 	}
+	@Transactional
 	public int insertresume(Resume resume){
 		return schoolMapper.insertresume(resume);
 	}
@@ -133,5 +140,11 @@ public class SchoolService
 	public List<Aducational> outPutUserAducation(Resume resume){
 		return schoolMapper.outPutUserAducation(resume);
 	}
-
+	public Interview findUserInterview(Recomend resume){
+		return schoolMapper.findUserInterview(resume);
+	}
+	@Transactional
+	public int insertProfessname(Resume resume){
+		return schoolMapper.insertProfessname(resume);
+	}
 }

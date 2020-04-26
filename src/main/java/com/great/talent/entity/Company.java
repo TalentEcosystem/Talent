@@ -18,7 +18,8 @@ public class Company {
     private String companybusiness;
     //营业执照
     private String permit;
-    private String company2;
+    private String province;
+    private String city;
     //招收总人数
     private int num;
 
@@ -36,7 +37,23 @@ public class Company {
         this.companynum = companynum;
         this.companybusiness = companybusiness;
         this.permit = permit;
-        this.company2 = company2;
+        this.province = company2;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public Integer getCid() {
@@ -127,14 +144,6 @@ public class Company {
         this.permit = permit == null ? null : permit.trim();
     }
 
-    public String getCompany2() {
-        return company2;
-    }
-
-    public void setCompany2(String company2) {
-        this.company2 = company2 == null ? null : company2.trim();
-    }
-
     @Override
     public String toString() {
         return "Company{" +
@@ -148,7 +157,8 @@ public class Company {
                 ", companynum=" + companynum +
                 ", companybusiness='" + companybusiness + '\'' +
                 ", permit='" + permit + '\'' +
-                ", company2='" + company2 + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
                 ", num=" + num +
                 '}';
     }
