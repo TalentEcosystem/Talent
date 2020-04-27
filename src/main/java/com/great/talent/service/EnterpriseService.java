@@ -250,6 +250,15 @@ public class EnterpriseService {
     public int JudgecompanyEmploy(Interview interview){
         return enterpriseMapper.JudgecompanyEmploy(interview);
     }
+
+    /**
+     * 面试状态更改
+     * @param interview
+     * @return
+     */
+    public int updateInterstate(Interview interview){
+        return enterpriseMapper.updateInterstate(interview);
+    }
     /**
      * 公司录用
      * @param interview
