@@ -22,6 +22,9 @@
     <button lay-event="detail" type="button" class="layui-btn layui-btn-xs layui-btn-radius">
         查看简历
     </button>
+    <button lay-event="updates" type="button" class="layui-btn layui-btn-xs layui-btn-radius">
+        已面试
+    </button>
     <button lay-event="update" type="button" class="layui-btn layui-btn-xs layui-btn-radius">
         应聘
     </button>
@@ -173,6 +176,25 @@
                     }
                 });
 
+            }else if(event ==='updates'){
+                var interviewid = data.interviewid;
+                $.ajax({
+                    url:path+"/Enterprise/updateInterstate",
+                    dataType:"text",
+                    type:"POST",
+                    data:{"interviewid":interviewid,"interstate":'已面试'},
+                    success:function (msg) {
+                        if (msg === 'success'){
+                            alert("修改成功！");
+                            window.location.reload();
+                        }else{
+                            alert("录用失败")
+                        }
+                    },
+                    error:function () {
+                        alert("网络繁忙！")
+                    }
+                })
             }
             else if (event ==='update'){
                 if (data.interstate ==='未面试'){
@@ -188,7 +210,7 @@
                         url:path+"/Enterprise/companyEmploy",
                         dataType:"text",
                         type:"POST",
-                        data:{"interviewid":interviewid,"employ":'录用',"positionid":positionid},
+                        data:{"interviewid":interviewid,"employ":'已录用',"positionid":positionid},
                         success:function (msg) {
                             if (msg === 'success'){
                                 alert("应聘成功！");

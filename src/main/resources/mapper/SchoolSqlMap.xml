@@ -208,6 +208,13 @@
         #{professname}
         )
     </insert>
+    <insert id="insertDegreeName" parameterType="Resume">
+        insert into tbl_degree (
+        degreename
+        )values(
+        #{degreename}
+        )
+    </insert>
 
     <update id="updateSocial" parameterType="Social">
         update tbl_social
@@ -385,4 +392,37 @@
             positionid=#{positionid}
         </where>
     </select>
+    <insert id="insertUserResume" parameterType="Resume">
+        insert into tbl_resume(
+        uid,
+        resname,
+        rebirth,
+        retel,
+        readdress,
+        repol,
+        repic,
+        retel,
+        reskill,
+        repic,
+        reeva,
+        sid,
+        degreeid,
+        professid,
+        operationtime
+        )values (
+        #{uid},
+        #{resname},
+        #{rebirth},
+        #{retel},
+        #{readdress},
+        #{repol},
+        #{reskill},
+        #{repic},
+        #{reeva},
+        #{sid},
+        #{degreeid},
+        #{professid},
+        DATE_FORMAT(NOW(),'%Y-%m-%d %H:%m:%s')
+        )
+    </insert>
 </mapper>

@@ -59,13 +59,13 @@
 			,id:'demotable'
 			,cols: [[ //表头
 				{type:'checkbox'},
-				{field: 'uid', title: 'id', width:120,hide: true },
-				{field: 'uaccount', title: '账号', width:120},
-				{field: 'resname', title: '姓名', width:80},
-				{field: 'schoolname', title: '学校名称', width:120},
-				{field: 'professname', title: '专业', width:80},
+				{field: 'uid', title: 'id', width:160,hide: true },
+				{field: 'uaccount', title: '账号', width:160},
+				{field: 'resname', title: '姓名', width:160},
+				{field: 'schoolname', title: '学校名称', width:160},
+				{field: 'professname', title: '专业', width:160},
 				{
-					field: 'reemploy', title: '是否就业', width: 120
+					field: 'reemploy', title: '是否就业', width: 160
 
 				},
 

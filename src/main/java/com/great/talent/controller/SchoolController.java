@@ -593,18 +593,43 @@ public class SchoolController
 				schoolService.insertAducation(aducational2);
 			}
 		}
-		//简历就更新就行
-		int degreeid = schoolService.findDegreeidByDegreeName(resume);
-		//先插入专业表再查
-		schoolService.insertProfessname(resume);
-		int professid = schoolService.findProfessidByProfessName(resume);
-		int sid = schoolService.findSidBySchoolName(resume);
-		resume.setDegreeid(degreeid);
-		resume.setSid(sid);
-		resume.setProfessid(professid);
-		resume.setUid(uid);
-		System.out.println(resume);
-		schoolService.updateUserresume(resume);
+		if(resume.getResname()==null&&resume.getRepic()==null&&resume.getReaddress()==null){
+			//插入简历表
+			//简历就更新就行
+			int degreeid = schoolService.findDegreeidByDegreeName(resume);
+			if(degreeid==0){
+				schoolService.insertDegreeName(resume);
+				degreeid = schoolService.findDegreeidByDegreeName(resume);
+			}
+			int professid = schoolService.findProfessidByProfessName(resume);
+			if(professid==0){
+				//先插入专业表再查
+				schoolService.insertProfessname(resume);
+				professid = schoolService.findProfessidByProfessName(resume);
+			}
+			int sid = schoolService.findSidBySchoolName(resume);
+			resume.setDegreeid(degreeid);
+			resume.setSid(sid);
+			resume.setProfessid(professid);
+			resume.setUid(uid);
+			schoolService.insertUserResume(resume);
+		}else{
+			//简历就更新就行
+			int degreeid = schoolService.findDegreeidByDegreeName(resume);
+			int professid = schoolService.findProfessidByProfessName(resume);
+			if(professid==0){
+				//先插入专业表再查
+				schoolService.insertProfessname(resume);
+				professid = schoolService.findProfessidByProfessName(resume);
+			}
+			int sid = schoolService.findSidBySchoolName(resume);
+			resume.setDegreeid(degreeid);
+			resume.setSid(sid);
+			resume.setProfessid(professid);
+			resume.setUid(uid);
+			schoolService.updateUserresume(resume);
+		}
+
 		ResponseUtils.outJson(response, "保存成功");
 	}
 

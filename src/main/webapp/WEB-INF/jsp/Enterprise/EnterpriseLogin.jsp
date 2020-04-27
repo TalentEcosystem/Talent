@@ -41,7 +41,7 @@
 		</div>
 		<div class="logoRight">
 			<div class="normalLogin">
-				<form class="layui-form">
+				<form class="layui-form" onsubmit="return false;">
 				<div class="username">
 					<span></span>
 					<input id="account"  type="text" name="account"
@@ -113,6 +113,7 @@
 				dataType: "text",
 				data: data.field,
 				success: function (msg){
+					console.log(msg);
 					if (msg == 'success'){
 						layer.msg('<a style =color:black >登录成功</a>', {icon: 1});
 						$("#account").val('');
