@@ -55,9 +55,9 @@ public interface SchoolMapper
 
 	public int findSidBySchoolName(Resume resume);
 
-	public int findDegreeidByDegreeName(Resume resume);
+	public Degree findDegreeidByDegreeName(Resume resume);
 
-	public int findProfessidByProfessName(Resume resume);
+	public Profession findProfessidByProfessName(Resume resume);
 
 	public int updateSocial(Social social);
 
@@ -93,4 +93,6 @@ public interface SchoolMapper
 	public int insertUserResume(Resume resume);
 
 	public int insertDegreeName(Resume resume);
+
+	public Resume findResumeByUid(int uid);
 }

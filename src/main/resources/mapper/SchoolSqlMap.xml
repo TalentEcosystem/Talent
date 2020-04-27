@@ -189,13 +189,13 @@
             schoolname=#{schoolname}
         </where>
     </select>
-    <select id="findDegreeidByDegreeName" parameterType="Resume" resultType="int">
-        select degreeid from tbl_degree
+    <select id="findDegreeidByDegreeName" parameterType="Resume" resultType="Degree">
+        select * from tbl_degree
         <where>
             degreename=#{degreename}
         </where>
     </select>
-    <select id="findProfessidByProfessName" parameterType="Resume" resultType="int">
+    <select id="findProfessidByProfessName" parameterType="Resume" resultType="Profession">
         select professid from tbl_profession
         <where>
             professname=#{professname}
@@ -401,9 +401,7 @@
         readdress,
         repol,
         repic,
-        retel,
         reskill,
-        repic,
         reeva,
         sid,
         degreeid,
@@ -416,13 +414,19 @@
         #{retel},
         #{readdress},
         #{repol},
-        #{reskill},
         #{repic},
+        #{reskill},
         #{reeva},
         #{sid},
         #{degreeid},
         #{professid},
-        DATE_FORMAT(NOW(),'%Y-%m-%d %H:%m:%s')
+        NOW()
         )
     </insert>
+    <select id="findResumeByUid" resultType="Resume" parameterType="int">
+        select * from tbl_resume
+        <where>
+            uid=#{uid}
+        </where>
+    </select>
 </mapper>
