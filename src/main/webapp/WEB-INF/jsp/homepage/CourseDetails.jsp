@@ -96,7 +96,7 @@
 	<div class="part2">
 		<div class="part2main">
 			<div class="meetsx" id="meetsx1" >
-				<img style="padding-left: 70px;" src="${pageContext.request.contextPath}/${product.propic}">
+				<img style="padding-left: 70px;max-width: 80%;max-height: 80%" src="${pageContext.request.contextPath}/${product.propic}">
 			</div>
 			<div class="meetsx" id="meetsx2" >
 				<p >${product.proname}</p>
@@ -105,7 +105,7 @@
 				<p >
 					<img src="${pageContext.request.contextPath}/images/9.png" alt=""/>${product.num}章节
 					<img src="${pageContext.request.contextPath}/images/04.gif" />${product.procount}次播放
-					<img src="${pageContext.request.contextPath}/images/09.gif" alt=""/>2人共同学习
+<%--					<img src="${pageContext.request.contextPath}/images/09.gif" alt=""/>2人共同学习--%>
 				</p>
 				<p >
 <%--					<button class="">--%>
