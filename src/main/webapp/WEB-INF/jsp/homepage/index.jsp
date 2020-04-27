@@ -129,7 +129,7 @@
 				<a href="#" class="lo" style="width: 200px" >登录</a>
 				<ul>
 					<a href="${pageContext.request.contextPath}/user/login"><li class="ll">用户登录</li></a>
-					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin"><li class="ll">企业登录</li></a>
+					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin"><li class="ll">后台登录</li></a>
 				</ul>
 				</div>
 					<div class="reg">
@@ -338,18 +338,22 @@
 
 				<%--城市选择器--%>
 				<script type="text/javascript">
+					//百度地图api接口
+					$.getScript("http://api.map.baidu.com/location/ip?ak=TeBonvj42xc1nTC1Cqg0BV5wONn0uAhI&callback=showLocation");
+
 					//接口定位方法
 					function showLocation(data) {
 						var test=new Vcity.CitySelector({input:'citySelect'});
 						if($("#citySelect").val() == ""){
 							//获取当前的城市
-							$("#citySelect").val(data.content.address_detail.city)
+							$("#citySelect").val(data.content.address_detail.city);
+							console.log("ssss="+data.content.address_detail.city)
 						}else {
 						}
 
 					}
-					//百度地图api接口
-					$.getScript("http://api.map.baidu.com/location/ip?ak=TeBonvj42xc1nTC1Cqg0BV5wONn0uAhI&callback=showLocation");
+
+
 
 				</script>
 			</div>

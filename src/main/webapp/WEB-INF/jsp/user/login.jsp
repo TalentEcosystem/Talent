@@ -25,7 +25,7 @@
 		<div class="logo"><a href="index.html"><img src=<%=path+"/images/log.png" %>/></a></div>
 		<div class="welcome">欢迎登录</div>
 		<div class="headerright">
-			<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin">企业登录</a>
+			<a href=<%=path+"/Enterprise/path/EnterpriseLogin"%>>企业登录</a>
 			<span>|</span>
 			<a href="${pageContext.request.contextPath}/HomePage/index">返回首页</a>
 		</div>

@@ -59,13 +59,13 @@
 			,id:'demotable'
 			,cols: [[ //表头
 				{type:'checkbox'},
-				{field: 'uid', title: 'id', width:120,hide: true },
-				{field: 'uaccount', title: '账号', width:120},
-				{field: 'resname', title: '姓名', width:80},
-				{field: 'schoolname', title: '学校名称', width:120},
-				{field: 'professname', title: '专业', width:80},
+				{field: 'uid', title: 'id', width:160,hide: true },
+				{field: 'uaccount', title: '账号', width:160},
+				{field: 'resname', title: '姓名', width:160},
+				{field: 'schoolname', title: '学校名称', width:160},
+				{field: 'professname', title: '专业', width:160},
 				{
-					field: 'reemploy', title: '是否就业', width: 120
+					field: 'reemploy', title: '是否就业', width: 160
 
 				},
 
@@ -74,8 +74,7 @@
 		});
 		$('.layui-btn').on('click',function () {
 			var type=$(this).data('type');//指改按钮的类型
-			var cid=$("#cid").val();
-			var positionid=$("#positionid").val();
+
 			if(type=='reload'){
 				table.reload('demotable',{//上面设置的表格的特殊标识
 					page:{
@@ -109,7 +108,7 @@
 					$.ajax({
 						url:'${pageContext.request.contextPath}/school/recommend',
 						type:'post',
-						data: {"ids":ids,"cid":cid,"positionid":positionid},
+						data: {"ids":ids,"cid":$("#cid").val(),"positionid":$("#positionid").val()},
 						traditional: true,
 						dataType:'json',
 						success:function(msg){

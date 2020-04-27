@@ -245,11 +245,15 @@
     </select>
 <!-- 判断录用人数  -->
     <select id="JudgecompanyEmploy" resultType="java.lang.Integer" parameterType="Interview">
-        select count(*) from tbl_position where applicantsnum &lt; maxnum and positionid = #{positonid}
+        select count(*) from tbl_position where applicantsnum &lt; maxnum and positionid = #{positionid}
     </select>
 <!--录用-->
     <update id="companyEmploy" parameterType="Interview">
          update tbl_interview set  employ = #{employ,jdbcType=VARCHAR},endtime = #{endtime} where interviewid = #{interviewid,jdbcType=INTEGER}
+    </update>
+<!--  面试状态更改  -->
+    <update id="updateInterstate" parameterType="Interview">
+        update tbl_interview set interstate = #{interstate,jdbcType=VARCHAR},endtime = #{endtime} where interviewid = #{interviewid,jdbcType=INTEGER}
     </update>
 <!--  公司录用的用户id  -->
     <select id="findCompanyEmployid" parameterType="Interview" resultType="java.lang.Integer">

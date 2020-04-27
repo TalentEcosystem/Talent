@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -125,30 +126,30 @@ public class EnterpriseController {
      */
     @RequestMapping("/adminLogin")
     @ResponseBody
-    public String adminLogin(Admin admin, HttpSession session) {
+    public String adminLogin(Admin admin, HttpSession session){
         String sessionCode = (String) session.getAttribute("vcode");
-        System.out.println(sessionCode);
-        System.out.println(admin.toString());
         if (!admin.getCode().equalsIgnoreCase(sessionCode)) {
             return "noCode";
         }
         Admin admins = enterpriseService.adminLogin(admin.getAccount());
+        System.out.println(admins.toString());
         if (null == admins) {
             return "noAccount";
         }
         if (!MD5Utils.checkpassword(admin.getPassword(), admins.getPassword())) {
-            return "error";
+                return "error";
         }
-        if (admins.getState() == "禁用") {
-            return "forbidden";
-        } else if (admins.getState() == "删除") {
-            return "delete";
-        }
-        session.setAttribute("admin", admins);
-        List<RoleMenu> list=adminService.selectRoleMenu(admins.getRole().getRoleid()+"");
-        System.out.println(list);
-        session.setAttribute("menuMap",list);
-        return "success";
+        if (admins.getState().equals("禁用")) {
+                return "forbidden";
+            } else if (admins.getState().equals("删除")) {
+                return "delete";
+            }
+                session.setAttribute("admin", admins);
+                List<RoleMenu> list = adminService.selectRoleMenu(admins.getRole().getRoleid() + "");
+                System.out.println(list);
+                session.setAttribute("menuMap", list);
+                return "success";
+
     }
 
     //根据用户名查用户手机号
@@ -310,6 +311,8 @@ public class EnterpriseController {
         }
     }
 
+
+
     /**
      * 查询下拉框的信息,并跳转查询岗位的页面
      *
@@ -375,6 +378,7 @@ public class EnterpriseController {
         int pageInt = Integer.valueOf(page);
         int limitInt = Integer.parseInt(limit);
         Admin admin = (Admin) request.getSession().getAttribute("admin");
+        Initializes(admin);
         HashMap<String, Object> condition = new HashMap<>();
         if (null != industryid && !"".equals((industryid.trim())) && !"0".equals(industryid.trim())) {
             condition.put("industryid", industryid);
@@ -401,7 +405,14 @@ public class EnterpriseController {
             ResponseUtils.outJson(response, diagis);
         }
     }
-
+    public void Initializes(Admin admin){
+        List<Position> positionList = enterpriseService.findMaxPosition(admin.getAid());
+        if (positionList !=null){
+            for (int i =0;i<positionList.size();i++){
+                enterpriseService.Initialize(positionList.get(i).getPositionid());
+            }
+        }
+    }
     /**
      * 发布岗位记录
      *
@@ -675,6 +686,25 @@ public class EnterpriseController {
             ResponseUtils.outJson(response, diagis);
         }
     }
+
+    /**
+     * 公司录用
+     * @param interview
+     * @return
+     */
+    @RequestMapping("/updateInterstate")
+    @ResponseBody
+    public String updateInterstate(Interview interview){
+        interview.setEndtime(new Date());
+        System.out.println(interview.getInterviewid());
+            int flag = enterpriseService.updateInterstate(interview);
+            if (flag > 0) {
+                return "success";
+            }else {
+                return "error";
+            }
+    }
+
 
     /**
      * 公司录用
@@ -1138,7 +1168,8 @@ public class EnterpriseController {
         String resumeid = request.getParameter("resumeid");
         String tradeno = request.getParameter("tradeno");
         Admin admin = (Admin) request.getSession().getAttribute("admin");
-        Company company = enterpriseService.findCompanyInfo(admin.getAid());
+        Admin admins = enterpriseService.adminLogin(admin.getAccount());
+        Company company = enterpriseService.findCompanyInfo(admins.getAid());
         Finance finances = new Finance();
         int prices = enterpriseService.findPrice();
         finances.setPrice(prices);
@@ -1149,11 +1180,11 @@ public class EnterpriseController {
         finances.setResumeid(Integer.parseInt(resumeid));
         finances.setCid(company.getCid());
         finances.setCompanyname(company.getCompanyname());
-        if (admin.getMoney()>=10){
+        if (admins.getMoney()>= prices){
             int flag = enterpriseService.purchaseResume(finances);
             if(flag > 0){
-                admin.setMoney(10);
-                enterpriseService.reduceCompanyMoney(admin);
+                admins.setMoney(prices);
+                enterpriseService.reduceCompanyMoney(admins);
                 response.getWriter().print("success");
             }else{
                 response.getWriter().print("error");

@@ -30,33 +30,6 @@
 			<span>公告：</span>
 			<a href="">有实力就不怕平庸 如何离高薪更进一步</a>
 		</div>
-		<div class="Account">
-			<div class="Left">
-				<div class="Info">
-					<font>[28421947]</font>
-					<input type="button">
-					<div id="InfoPopup">
-						<ul>
-							<li><a href="personal_updatepsd.html">修改密码</a></li>
-							<li><a href="personal_updatenum.html">修改手机</a></li>
-							<li><a href="personal_renzheng.html">修改邮箱</a></li>
-							<li><a href="index.html">退出</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="Left">
-				<a class="Mobile" href="">手机版</a>
-			</div>
-			<div class="Left">
-				<div class="Weixin">微信
-					<div id="WeixinPopup">
-						<img src=<%=path+"/images/showqrcode.jpg" %> width="120" height="120">
-						<p>扫一扫完成绑定<br>求职信息接收及时，<br>不再错过好工作！</p>
-					</div>
-				</div>
-			</div>
-
 		</div>
 	</div>
 </div>
@@ -65,8 +38,8 @@
 		<div class="logo"><a href="index.html"><img src=<%=path+"/images/logo_1.png" %>/><img src=<%=path+"/images/logo_2.png" %> /></a></div>
 		<div class="nav">
 			<div class="navItem"><a href=<%=path+"/user/index" %>>首页</a></div>
-			<div class="navItem"><a href="searchJob.html">职位搜索</a></div>
-			<div class="navItem"><a href="meetingJob.html">招聘会</a></div>
+			<div class="navItem"><a href=<%=path+"/HomePage/searchJob" %>>职位搜索</a></div>
+			<div class="navItem"><a href="">招聘会</a></div>
 			<div class="navItem"><a href="">政府招考</a></div>
 			<div class="navItem"><a href="">校园招聘</a></div>
 			<div class="navItem other">
@@ -74,9 +47,9 @@
 					<span>更多</span>
 					<div id="TopNavMorePopup">
 						<ul>
-							<li><a href="jobnews.html">就业资讯</a></li>
-							<li><a href="download.html">文档下载</a></li>
-							<li><a href="helpJob.html">求职互助</a></li>
+							<li><a href="">敬请期待</a></li>
+							<li><a href="">敬请期待</a></li>
+							<li><a href="">敬请期待</a></li>
 						</ul>
 					</div>
 				</div>
@@ -104,13 +77,8 @@
 				<a href=<%=path+"/user/requestFeedback" %> class="a6">求职反馈</a>
 			</div>
 			<div class="NavLeftBox">
-				<a href="personal_help.html" class="a8">帮助中心</a>
+				<a href=<%=path+"/user/help" %> class="a8">帮助中心</a>
 			</div>
-		</div>
-		<div class="navLeftBottom">
-			<span class="sys">扫一扫绑定微信</span><br />
-			<img src=<%=path+"/images/showqrcode.jpg" %> />
-			<span class="Notice">蝶飞人才网<br>找工作更靠谱</span>
 		</div>
 	</div>
 	<div class="perRightcon">
@@ -129,10 +97,10 @@
 				<label style="clear: both;float: left;margin-left: 58px;margin-top: 10px">电话：</label><input type="text"  style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" name="retel" value="<%=utel%>" >
 				<label style="float: left;margin-left: 58px;margin-top: 10px">住址：</label><input type="text" style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 6px" name="readdress" value="${resume.readdress}" >
 				<div style="float: right;width: 140px;height: 137px;margin-right: 50px;border: 1px black solid;margin-top: -97px">
-					<img src="${pageContext.request.contextPath}/${resume.repic}" name="repic" style="width: 135px;height: 80px">
-					<%--			<label style="clear: both;float: left">选择图片：</label><input type="file" name="filea">--%>
+					<img src="${pageContext.request.contextPath}/${resume.repic}" name="repic" id="repic" style="width: 135px;height: 80px">
+					<div class="layui-upload-list" id="img_upload"></div>
 					<div class="layui-upload-inline">
-						<div class="layui-upload-list" id="img_upload"></div>
+
 						<button type="button" class="layui-btn" id="test8">
 							<i class="layui-icon">&#xe67c;</i>上传图片
 						</button><%--			上传绑定按钮--%>
@@ -274,6 +242,7 @@
 			,choose: function(obj){
 				//预读本地文件示例，不支持ie8
 				obj.preview(function(index, file, result){
+					$('#repic').css("display","none");
 					$('#img_upload').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" style="width: 135px;height: 80px">');
 				});
 			}

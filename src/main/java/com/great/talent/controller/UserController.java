@@ -292,8 +292,6 @@ public class UserController
 		if (vcode.equalsIgnoreCase(test)){
 			String utel = userService.findPhoneByAccount(uaccount);
 			if (null!=utel){
-//				String phone = utel; //发送短信验证码
-//				PhoneCode.getPhonemsg(phone);
 				response.getWriter().print("1111");
 				request.getSession().setAttribute("retrieveName",uaccount);
 				request.getSession().setAttribute("retrievePhone",utel);
@@ -507,12 +505,6 @@ public class UserController
 		String companyname = request.getParameter("companyname");
 		String positionname = request.getParameter("positionname");
 		String positiontime1 = request.getParameter("positiontime");
-		System.out.print("时间："+positiontime1);
-		System.out.print("行业："+indname);
-		System.out.print("公司："+companyname);
-		System.out.print("岗位："+positionname);
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZ");
-//		Date date = sdf.parse(positiontime1);
 		SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date positiontime = sdf2.parse(positiontime1);
 		JobData jobData1 = new JobData();
@@ -540,11 +532,13 @@ public class UserController
 		response.setCharacterEncoding("UTF-8");
 		String positionid1 = request.getParameter("positionid");
 		Integer positionid = Integer.parseInt(positionid1);
-		int uid = (int) request.getSession().getAttribute("uid");//用户名
-		if (uid>0){
-			int sid = userService.findSidByUid(uid);
+		String str = (String) request.getSession().getAttribute("uaccount");//用户名
+		if (!"".equals(str)&&null!=str){
+			int uid = userService.findUserIdByUaccount(str);
+			String sid1 = userService.findSidByUid(uid);
 			Date intertime = new Date();
-			if (sid>0){
+			if (!"".equals(sid1)&&null!=sid1){
+				int sid = Integer.parseInt(sid1);
 				Interview interview = new Interview();
 				interview.setUid(uid);
 				interview.setSid(sid);
@@ -573,18 +567,17 @@ public class UserController
 	@RequestMapping("/addCollection")
 	@ResponseBody
 	public void addCollection(HttpServletRequest request, HttpServletResponse response)throws IOException {
-		response.setContentType("text/text;charset=utf-8");
-		response.setCharacterEncoding("UTF-8");
 		String positionid1 = request.getParameter("positionid");
 		Integer positionid = Integer.parseInt(positionid1);
-		int uid = (int) request.getSession().getAttribute("uid");//用户名
-		if (uid>0){
+		String str = (String) request.getSession().getAttribute("uaccount");//用户名
+		if (!"".equals(str)&&null!=str){
+			int uid = userService.findUserIdByUaccount(str);
 			MyCollection myCollection1 = new MyCollection();
 			myCollection1.setUid(uid);
 			myCollection1.setPositionid(positionid);
 			MyCollection myCollection = userService.checkCollection(myCollection1);
-			if (null==myCollection){
-				Boolean flag = userService.addCollection(myCollection);
+			if(null==myCollection){
+				Boolean flag = userService.addCollection(myCollection1);
 				if (flag){
 					response.getWriter().print("1111");
 				}else {

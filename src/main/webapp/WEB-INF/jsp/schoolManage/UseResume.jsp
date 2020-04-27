@@ -21,7 +21,7 @@
 
 <body>
 
-<div style="border: 1px black solid;width: 750px;height: 100%;margin-left: 20%">
+<div style="border: 1px black solid;width: 730px;height: 550px;margin-left: 15%">
 <form >
 	<label style="float: left;margin-left: 58px;margin-top: 20px">姓名：</label><input type="text" id="resname1" style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 20px" disabled>
 	<label style="float: left;margin-left: 30px;margin-top: 20px">学校名称：</label><input type="text" id="schoolname1" style="width: 120px;height: 30px;margin-left: 10px;float: left;margin-top: 20px"  disabled>

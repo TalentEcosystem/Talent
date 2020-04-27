@@ -55,14 +55,14 @@
 			,id:'demotable'
 			,cols: [[ //表头
 
-				{field: 'zizeng', title: '序列', width:80, sort: true, fixed: 'left',templet:'#zizeng'},
-				{field: 'cid', title: '公司', width:120,hide: true },
-				{field: 'positionid', title: '岗位id', width:120,hide: true },
-				{field: 'indname', title: '行业', width:120},
-				{field: 'companyname', title: '发布者', width:120},
-				{field: 'positionname', title: '岗位', width:120},
-				{field: 'positiontime', title: '发布时间', width:120,templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
-				{fixed: 'right', title: '操作', width: 80, align:'center', toolbar: '#barDemo'}
+				{field: 'zizeng', title: '序列', width:160, sort: true, fixed: 'left',templet:'#zizeng'},
+				{field: 'cid', title: '公司', width:160,hide: true },
+				{field: 'positionid', title: '岗位id', width:160,hide: true },
+				{field: 'indname', title: '行业', width:160},
+				{field: 'companyname', title: '发布者', width:160},
+				{field: 'positionname', title: '岗位', width:160},
+				{field: 'positiontime', title: '发布时间', width:160,templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
+				{fixed: 'right', title: '操作', width: 160, align:'center', toolbar: '#barDemo'}
 			]]
 
 		});

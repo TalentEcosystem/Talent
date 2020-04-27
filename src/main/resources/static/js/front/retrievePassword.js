@@ -19,9 +19,9 @@ $(function () {
 			}, success:function (msg) {
 				if(msg === "1111"){
 					location.href=path + "/user/rpassword2"
-				}else if ("error") {
+				}else if (msg === "error") {
 					layer.alert("用户名不存在!",{icon:2});
-				}else if ("testError") {
+				}else if (msg === "testError") {
 					layer.alert("验证码错误!",{icon:2});
 				}
 			}
@@ -82,7 +82,7 @@ $(function () {
 
 	});
 
-	$("#sendMsg").click(function () {
+	$("#hqbtn").click(function () {
 		var utel = $("#utel").val();
 		$.ajax({
 			url:path+"/user/sendMsg",
@@ -110,6 +110,7 @@ $(function () {
 	});
 
 });
+});
 var countdown=60;        //初始值
 var scode = "";
 function settime(val) {
@@ -128,4 +129,3 @@ function settime(val) {
 		settime(val);
 	},1000);
 };
-});
