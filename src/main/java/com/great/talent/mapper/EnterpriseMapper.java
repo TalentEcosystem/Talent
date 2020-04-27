@@ -36,6 +36,7 @@ public interface EnterpriseMapper {
     public int findFeedbackNum(Map map);
 
     public int JudgecompanyEmploy(Interview interview);//判断当前岗位是否招满
+    public int updateInterstate(Interview interview);//已面试
     public int companyEmploy(Interview interview);//公司录用
     public int findCompanyEmployid(Interview interview);
     public int updateResumeInfo(int uid);
