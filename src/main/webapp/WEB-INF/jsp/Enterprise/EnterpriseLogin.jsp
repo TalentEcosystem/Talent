@@ -41,7 +41,7 @@
 		</div>
 		<div class="logoRight">
 			<div class="normalLogin">
-				<form class="layui-form">
+				<form class="layui-form" onsubmit="return false;">
 				<div class="username">
 					<span></span>
 					<input id="account"  type="text" name="account"

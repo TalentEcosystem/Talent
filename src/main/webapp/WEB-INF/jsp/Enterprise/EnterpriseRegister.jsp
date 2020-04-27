@@ -19,7 +19,7 @@
 <body>
 <input type="hidden" id="path" value="<%=path%>">
   <div id="layout">
-    <form class="layui-form" action="" >
+    <form class="layui-form" action="" onsubmit="return false;">
         <br>
         <div>
             <h1 align="center">企业注册，广收人才</h1>
@@ -60,7 +60,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">手机号码</label>
             <div class="layui-input-inline">
-                <input name="tel" class="layui-input" type="password" id="tel" placeholder="请输入手机号码" autocomplete="off" onblur="checkTel(this.value)" lay-verify="number" lay-verType="tips">
+                <input name="tel" class="layui-input" type="text" id="tel" placeholder="请输入手机号码" autocomplete="off" onblur="checkTel(this.value)" lay-verify="number" lay-verType="tips">
             </div>
             <div class="layui-form-mid ">请填写11位手机号码</div>
             <div id="tip5" style="display: none;"></div>
@@ -90,7 +90,7 @@
         <div class="layui-form-item" >
             <label class="layui-form-label" id="label2">支付密码</label>
             <div class="layui-input-inline" style="width:400px">
-                <input name="payment" class="layui-input" type="password" placeholder="请输入统一社会信用代码" autocomplete="off" onblur="checkPayment(this.value)">
+                <input name="payment" class="layui-input" type="password" placeholder="请输入支付密码" autocomplete="off" onblur="checkPayment(this.value)">
             </div>
             <div id="tip9" style="display: none;"></div>
         </div>
@@ -292,6 +292,7 @@
                   layer.alert("该手机可注册", { icon: 1, offset: "auto", time:1000 });
                   $('#tip5').val("success");
               }else{
+                  layer.alert("该手机已被注册", { icon: 2, offset: "auto", time:1000 });
                   $('#tip5').val("win");
               }
            }
