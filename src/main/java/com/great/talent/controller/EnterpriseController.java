@@ -133,22 +133,27 @@ public class EnterpriseController {
             return "noCode";
         }
         Admin admins = enterpriseService.adminLogin(admin.getAccount());
-        if (null == admins) {
-            return "noAccount";
-        }
+        System.out.println("admins="+admins);
+        System.out.println(admins.getState());
         if (!MD5Utils.checkpassword(admin.getPassword(), admins.getPassword())) {
             return "error";
         }
-        if (admins.getState() == "禁用") {
-            return "forbidden";
-        } else if (admins.getState() == "删除") {
-            return "delete";
+        if (null == admins) {
+            return "noAccount";
         }
-        session.setAttribute("admin", admins);
-        List<RoleMenu> list=adminService.selectRoleMenu(admins.getRole().getRoleid()+"");
-        System.out.println(list);
-        session.setAttribute("menuMap",list);
-        return "success";
+        else{
+            if (admins.getState().equals("禁用")) {
+                return "forbidden";
+            } else if (admins.getState().equals("删除")) {
+                return "delete";
+            }else{
+                session.setAttribute("admin", admins);
+                List<RoleMenu> list=adminService.selectRoleMenu(admins.getRole().getRoleid()+"");
+                System.out.println(list);
+                session.setAttribute("menuMap",list);
+                return "success";
+            }
+        }
     }
 
     //根据用户名查用户手机号

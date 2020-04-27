@@ -65,16 +65,16 @@
 			,limit:5
 			,id:'demotable'
 			,cols: [[ //表头
-				{field: 'zizeng', title: '序列', width:80, sort: true, fixed: 'left',templet:'#zizeng'},
-				{field: 'uid', title: 'id', width:120,hide: true },
-				{field: 'uaccount', title: '账号', width:120},
-				{field: 'resname', title: '姓名', width:80},
-				{field: 'chname', title: '当前学习', width:120},
-				{field: 'professname', title: '专业', width:80},
+				{field: 'zizeng', title: '序列', width:160, sort: true, fixed: 'left',templet:'#zizeng'},
+				{field: 'uid', title: 'id', width:160,hide: true },
+				{field: 'uaccount', title: '账号', width:160},
+				{field: 'resname', title: '姓名', width:160},
+				{field: 'chname', title: '当前学习', width:160},
+				{field: 'professname', title: '专业', width:160},
 				{
-					field: 'reemploy', title: '是否就业', width: 120,
+					field: 'reemploy', title: '是否就业', width: 160,
 				},
-				{fixed: 'right', title: '操作', width: 80, align:'center', toolbar: '#barDemo'}
+				{fixed: 'right', title: '操作', width: 160, align:'center', toolbar: '#barDemo'}
 			]]
 
 		});

@@ -90,4 +90,7 @@ public interface SchoolMapper
 	public Interview findUserInterview(Recomend resume);
 
 	public int insertProfessname(Resume resume);
+	public int insertUserResume(Resume resume);
+
+	public int insertDegreeName(Resume resume);
 }

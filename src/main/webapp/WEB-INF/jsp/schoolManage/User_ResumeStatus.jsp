@@ -39,11 +39,11 @@
 			,limit:3
 			,id:'demotable'
 			,cols: [[ //表头
-				{field: 'zizeng', title: '序列', width:80, sort: true, fixed: 'left',templet:'#zizeng'},
-				{field: 'interviewid', title: 'id', width:120,hide: true },
-				{field: 'positionname', title: '岗位名称', width:120},
-				{field: 'companyname', title: '公司名称', width:120},
-				{field: 'companynature', title: '企业性质', width:120},
+				{field: 'zizeng', title: '序列', width:160, sort: true, fixed: 'left',templet:'#zizeng'},
+				{field: 'interviewid', title: 'id', width:160,hide: true },
+				{field: 'positionname', title: '岗位名称', width:160},
+				{field: 'companyname', title: '公司名称', width:160},
+				{field: 'companynature', title: '企业性质', width:160},
 				// {fixed: 'right', title: '操作', width: 80, align:'center', toolbar: '#barDemo'}
 				]]
 

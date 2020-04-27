@@ -147,4 +147,13 @@ public class SchoolService
 	public int insertProfessname(Resume resume){
 		return schoolMapper.insertProfessname(resume);
 	}
+	@Transactional
+	public int insertUserResume(Resume resume){
+		return schoolMapper.insertUserResume(resume);
+	}
+	@Transactional
+	public int insertDegreeName(Resume resume){
+		return schoolMapper.insertDegreeName(resume);
+	}
+
 }
