@@ -61,8 +61,8 @@
 			,id: 'demotable'
 			,cols: [[ //表头
 				{field: 'zizeng', title: '序号', width:100, sort: true, fixed: 'left',templet:'#zizeng'}
-				,{field: 'uname', title: '用户名', width:100}
-				,{field: 'utel', title: '联系方式', width:250}
+				,{field: 'uname', title: '用户名', width:150}
+				,{field: 'utel', title: '联系方式', width:200}
 				,{field: 'schoolname', title: '学校名称', width:250}
 				,{field: 'udate', title: '注册时间', width:250,templet:"<div> {{layui.util.toDateString(d.udate,'yyyy-MM-dd HH:mm:ss')}}</div>"}
 				,{field: 'ustate', title: '帐号状态', width:100}

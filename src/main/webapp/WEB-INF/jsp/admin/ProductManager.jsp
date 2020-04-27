@@ -61,6 +61,7 @@
 			,cols: [[ //表头
 				{field: 'zizeng', title: '序号', width:100, sort: true, fixed: 'left',templet:'#zizeng'}
 				,{field: 'proname', title: '产品名', width:150}
+				,{field: 'prostate', title: '状态', width:100}
 				,{field: 'starttime', title: '发布时间', width:200,templet:"<div> {{layui.util.toDateString(d.starttime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
 				,{field: 'endtime', title: '结束时间', width:200,templet:"<div> {{layui.util.toDateString(d.endtime,'yyyy-MM-dd HH:mm:ss')}}</div>"}
 				,{field: 'period', title: '学习周期', width:150}
