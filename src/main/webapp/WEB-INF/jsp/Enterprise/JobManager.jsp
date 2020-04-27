@@ -205,8 +205,6 @@
             }
             else if(event === 'update'){
               var interviewid = data.interviewid;
-              var check = data.check;
-              if (check ==='已查看'){
               console.log(interviewid);
               $.ajax({
                   type:"POST",
@@ -225,9 +223,6 @@
                       alert("服务器繁忙!");
                   }
               })
-            }else{
-                alert("需要先查看简历才能决定是否进行面试邀请")
-              }
             }
             else if(event === 'updates'){
                 var interviewid = data.interviewid;
