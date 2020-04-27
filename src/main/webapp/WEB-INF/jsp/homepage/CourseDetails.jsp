@@ -56,7 +56,7 @@
 				<a href="#" class="lo" style="width: 90px;margin-left: 200px;" >登录</a>
 				<ul>
 					<a href="${pageContext.request.contextPath}/user/login"><li class="ll">用户登录</li></a>
-					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin"><li class="ll">企业登录</li></a>
+					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin"><li class="ll">后台登录</li></a>
 				</ul>
 
 			</div>

@@ -55,7 +55,7 @@
 			,id: 'demotable'
 			,cols: [[ //表头
 				{field: 'zizeng', title: '序号', width:100, sort: true, fixed: 'left',templet:'#zizeng'}
-				,{field: 'domainname', title: '领域', width:100}
+				,{field: 'domainname', title: '领域', width:200}
 				,{field: 'knowname', title: '名称', width:100}
 				,{field: 'knowintro', title: '详情介绍', width:400}
 				,{field: 'right', title: '操作', width:200, align:'center', toolbar:'#barDemo'}

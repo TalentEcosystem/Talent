@@ -118,7 +118,7 @@
 				<a href="#" class="lo" style="width: 90px;margin-left: 200px;" >登录</a>
 				<ul>
 					<a href="${pageContext.request.contextPath}/user/login"><li class="ll" style="padding: 20px">用户登录</li></a>
-					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin"><li class="ll" style="padding: 20px">企业登录</li></a>
+					<a href="${pageContext.request.contextPath}/Enterprise/path/EnterpriseLogin"><li class="ll" style="padding: 20px">后台登录</li></a>
 				</ul>
 
 			</div>
@@ -404,8 +404,7 @@
 			<input id="searchJob" type="button" style="color: #FFF;width: 116px;height: 37px;background-color:transparent" value="搜工作" />
 		</div>
 		<div class="sea1_5">
-			<span class="span1"><a href="javascript:void()">历史记录</a></span>
-			<span class="span2"><a href="javascript:void()">职位分布图</a></span>
+
 		</div>
 	</div>
 	<div class="search2">
@@ -572,15 +571,15 @@
 	<div class="listtop">
 		<div class="tj1">
 			<span class="list on">列表</span>
-			<span class="zhaoyao">摘要</span>
+<%--			<span class="zhaoyao">摘要</span>--%>
 		</div>
 		<div class="tj2">
-			<input name="" type="checkbox" value="" />
-			<span>只显示在线 </span>
+<%--			<input name="" type="checkbox" value="" />--%>
+<%--			<span>只显示在线 </span>--%>
 		</div>
 		<div class="tj2">
-			<input name="" type="checkbox" value="" />
-			<span>只显示有环境照片 </span>
+<%--			<input name="" type="checkbox" value="" />--%>
+<%--			<span>只显示有环境照片 </span>--%>
 		</div>
 		<div class="tj3">
 
