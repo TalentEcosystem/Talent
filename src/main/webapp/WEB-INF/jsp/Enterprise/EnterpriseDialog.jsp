@@ -85,8 +85,8 @@
         <div class="layui-inline">
             <label class="layui-form-label">要求专业:</label>
             <div class="layui-input-inline">
-                <select name="profession" id="profession" lay-filter="">
-                    <option value="0" >请选择专业</option>
+                <select name="profession" id="profession" lay-verify="required">
+                    <option value="" >请选择专业</option>
                     <c:if test="${profession!=null}">
                         <c:forEach items="${profession}" begin="0" var="k">
                             <option  value="${k.professid}">${k.professname}</option>
@@ -165,7 +165,7 @@
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button type="button" class="submit layui-btn layui-btn-primary" lay-submit lay-filter="release" >发布</button>
-                <button class="layui-btn layui-btn-primary" type="reset">返回</button>
+<%--                <button class="layui-btn layui-btn-primary" type="reset">重置</button>--%>
             </div>
         </div>
     </form>
@@ -254,38 +254,44 @@
 
             var positioncontent = $("#positioncontent").val();
 
-            var postInfo = {"industryid":industryid,"positionname":positionname,"companyname":companyname,"name":name,"positionexper":positionexper,
-            "degreeid":degreeid,"professid":professid,"positionaddress":positionaddress,"money":money,"maxnum":maxnum,"request":request,"positionstate":'发布',
-            "positioncontent":positioncontent};
-            console.log("postInfo="+postInfo);
-            console.log("welname="+welname)
-            postInfo = JSON.stringify(postInfo);
-            $.ajax({
-                url: path + "/Enterprise/addPositionInfo",
-                async: true,
-                type: "POST",
-                data: {"postInfo":postInfo,"welname":welname},
-                datatype: "text",
-                traditional: true,
-                success: function (datas) {
-                    if (datas == 1111){
-                        layer.msg('<a style =color:black >发布成功</a>',{icon:1})
-                    $("#company").empty();
-                    $("#name").empty();
-                    $("#address").empty();
-                    $("#money").empty();
-                    $("#maxnum").empty();
-                    $("#request").empty();
-                    $("#positioncontent").empty();
-                    window.location.href=path+'/Enterprise/path/PostManager'
-                    }else{
-                        layer.msg('<a style =color:black >发布失败</a>',{icon:2})
+            if (industryid != "" && positionname != "" && companyname != "" && name !="" && positionexper != ""&&
+                degreeid != "" && professid != "" && positionaddress != "" && money !="" && maxnum != "" && request != "" &&
+                positioncontent != ""){
+                var postInfo = {"industryid":industryid,"positionname":positionname,"companyname":companyname,"name":name,"positionexper":positionexper,
+                    "degreeid":degreeid,"professid":professid,"positionaddress":positionaddress,"money":money,"maxnum":maxnum,"request":request,"positionstate":'发布',
+                    "positioncontent":positioncontent};
+                postInfo = JSON.stringify(postInfo);
+                $.ajax({
+                    url: path + "/Enterprise/addPositionInfo",
+                    async: true,
+                    type: "POST",
+                    data: {"postInfo":postInfo,"welname":welname},
+                    datatype: "text",
+                    traditional: true,
+                    success: function (datas) {
+                        if (datas == 1111){
+                            layer.msg('<a style =color:black >发布成功</a>',{icon:1})
+                            $("#company").empty();
+                            $("#name").empty();
+                            $("#address").empty();
+                            $("#money").empty();
+                            $("#maxnum").empty();
+                            $("#request").empty();
+                            $("#positioncontent").empty();
+                            window.location.href=path+'/Enterprise/path/PostManager'
+                        }else{
+                            layer.msg('<a style =color:black >发布失败</a>',{icon:2})
+                        }
+                    },
+                    error:function () {
+                        layer.msg('<a style =color:black >服务器繁忙</a>',{icon:2})
                     }
-                },
-                error:function () {
-                    layer.msg('<a style =color:black >服务器繁忙</a>',{icon:2})
-                }
-            })
+                })
+            }else{
+                layer.alert("请将信息填完整在进行发布!")
+            }
+
+
 
 
         })
