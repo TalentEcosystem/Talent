@@ -80,11 +80,11 @@ public class SchoolService
 		return schoolMapper.findSidBySchoolName(resume);
 	}
 
-	public int findDegreeidByDegreeName(Resume resume){
+	public Degree findDegreeidByDegreeName(Resume resume){
 		return schoolMapper.findDegreeidByDegreeName(resume);
 	}
 
-	public int findProfessidByProfessName(Resume resume){
+	public Profession findProfessidByProfessName(Resume resume){
 		return schoolMapper.findProfessidByProfessName(resume);
 	}
 	@Transactional

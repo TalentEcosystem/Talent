@@ -597,36 +597,40 @@ public class SchoolController
 		if(resume1==null){
 			//插入简历表
 			//简历就更新就行
-			int degreeid = schoolService.findDegreeidByDegreeName(resume);
-			if(degreeid==0){
+			Degree degreeid = schoolService.findDegreeidByDegreeName(resume);
+			if(degreeid==null){
 				schoolService.insertDegreeName(resume);
 				degreeid = schoolService.findDegreeidByDegreeName(resume);
 			}
-			int professid = schoolService.findProfessidByProfessName(resume);
-			if(professid==0){
+			Profession professid = schoolService.findProfessidByProfessName(resume);
+			if(professid==null){
 				//先插入专业表再查
 				schoolService.insertProfessname(resume);
 				professid = schoolService.findProfessidByProfessName(resume);
 			}
 			int sid = schoolService.findSidBySchoolName(resume);
-			resume.setDegreeid(degreeid);
+			resume.setDegreeid(degreeid.getDegreeid());
 			resume.setSid(sid);
-			resume.setProfessid(professid);
+			resume.setProfessid(professid.getProfessid());
 			resume.setUid(uid);
 			schoolService.insertUserResume(resume);
 		}else{
 			//简历就更新就行
-			int degreeid = schoolService.findDegreeidByDegreeName(resume);
-			int professid = schoolService.findProfessidByProfessName(resume);
-			if(professid==0){
+			Degree degreeid = schoolService.findDegreeidByDegreeName(resume);
+			Profession professid = schoolService.findProfessidByProfessName(resume);
+			if(degreeid==null){
+				schoolService.insertDegreeName(resume);
+				degreeid = schoolService.findDegreeidByDegreeName(resume);
+			}
+			if(professid==null){
 				//先插入专业表再查
 				schoolService.insertProfessname(resume);
 				professid = schoolService.findProfessidByProfessName(resume);
 			}
 			int sid = schoolService.findSidBySchoolName(resume);
-			resume.setDegreeid(degreeid);
+			resume.setDegreeid(degreeid.getDegreeid());
 			resume.setSid(sid);
-			resume.setProfessid(professid);
+			resume.setProfessid(professid.getProfessid());
 			resume.setUid(uid);
 			schoolService.updateUserresume(resume);
 		}
@@ -872,8 +876,8 @@ public class SchoolController
 						if(resume1==null){
 							resume.setProfessname((String) list.get(i)[3]);
 							resume.setDegreename((String) list.get(i)[5]);
-							int degreeid = schoolService.findDegreeidByDegreeName(resume);
-							int professid = schoolService.findProfessidByProfessName(resume);
+							Degree degreeid = schoolService.findDegreeidByDegreeName(resume);
+							Profession professid = schoolService.findProfessidByProfessName(resume);
 							resume.setResname((String) list.get(i)[0]);
 							resume.setSchoolname((String) list.get(i)[1]);
 							resume.setRebirth((String) list.get(i)[2]);
@@ -882,8 +886,8 @@ public class SchoolController
 							resume.setReaddress((String) list.get(i)[7]);
 							resume.setReskill((String) list.get(i)[8]);
 							resume.setReeva((String) list.get(i)[9]);
-							resume.setDegreeid(degreeid);
-							resume.setProfessid(professid);
+							resume.setDegreeid(degreeid.getDegreeid());
+							resume.setProfessid(professid.getProfessid());
 
 							aducational1.setAdtime((String) list.get(i)[8]);
 							aducational1.setSname((String) list.get(i)[9]);
