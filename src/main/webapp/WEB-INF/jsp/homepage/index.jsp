@@ -464,10 +464,10 @@
 				<div class="adBox0">
 					<div class="layui-carousel " lay-filter="carofilter" id="test10">
 						<div carousel-item="">
-							<a href="${pageContext.request.contextPath}/user/homePage" style="background:url(<%=path+"/images/1.jpg"%>);background-size: 800px;background-repeat: no-repeat;background-position: center;"></a>
-							<a href="${pageContext.request.contextPath}/user/homePage" style="background:url(<%=path+"/images/2.jpg"%>);background-size: cover;background-repeat: no-repeat;background-position: center;"></a>
-							<a href="${pageContext.request.contextPath}/user/homePage" style="background:url(<%=path+"/images/3.gif"%>);background-size: cover;background-repeat: no-repeat;background-position: center;"></a>
-							<a href="${pageContext.request.contextPath}/user/homePage" style="background:url(<%=path+"/images/30.jpg"%>);background-size: cover;background-repeat: no-repeat;background-position: center;"></a>
+							<a href="#" style="background:url(<%=path+"/images/1.jpg"%>);background-size: 800px;background-repeat: no-repeat;background-position: center;"></a>
+							<a href="#" style="background:url(<%=path+"/images/2.jpg"%>);background-size: cover;background-repeat: no-repeat;background-position: center;"></a>
+							<a href="#" style="background:url(<%=path+"/images/3.gif"%>);background-size: cover;background-repeat: no-repeat;background-position: center;"></a>
+							<a href="#" style="background:url(<%=path+"/images/30.jpg"%>);background-size: cover;background-repeat: no-repeat;background-position: center;"></a>
 						</div>
 					</div>
 
