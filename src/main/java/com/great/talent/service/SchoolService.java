@@ -156,4 +156,9 @@ public class SchoolService
 		return schoolMapper.insertDegreeName(resume);
 	}
 
+	public Resume findResumeByUid(int uid){
+		return schoolMapper.findResumeByUid(uid);
+	}
+
+
 }
