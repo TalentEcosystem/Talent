@@ -79,7 +79,7 @@
 			<li><a href="${pageContext.request.contextPath}/HomePage/searchJob">找工作</a></li>
 			<li class="onmenu"><a href="${pageContext.request.contextPath}/HomePage/getTechnologyArea?curPage=1">技术成长</a></li>
 <%--			<li ><a href="meetingJob.html">招聘会</a></li>--%>
-			<li><a href="jobnews.html">就业资讯</a></li>
+<%--			<li><a href="jobnews.html">就业资讯</a></li>--%>
 			<li><a href="${pageContext.request.contextPath}/user/personal" id="personal">个人中心</a></li>
 <%--			<li><a href="helpJob.html">求职互助</a></li>--%>
 			<div class="clear"></div>
