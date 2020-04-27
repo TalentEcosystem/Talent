@@ -23,7 +23,7 @@
         查看简历
     </button>
     <button lay-event="updates" type="button" class="layui-btn layui-btn-xs layui-btn-radius">
-        已面试
+        面试完成
     </button>
     <button lay-event="update" type="button" class="layui-btn layui-btn-xs layui-btn-radius">
         应聘
