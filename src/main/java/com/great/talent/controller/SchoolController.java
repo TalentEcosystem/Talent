@@ -593,7 +593,8 @@ public class SchoolController
 				schoolService.insertAducation(aducational2);
 			}
 		}
-		if(resume.getResname()==null&&resume.getRepic()==null&&resume.getReaddress()==null){
+		Resume resume1=schoolService.findResumeByUid(uid);
+		if(resume1==null){
 			//插入简历表
 			//简历就更新就行
 			int degreeid = schoolService.findDegreeidByDegreeName(resume);

@@ -425,4 +425,10 @@
         DATE_FORMAT(NOW(),'%Y-%m-%d %H:%m:%s')
         )
     </insert>
+    <select id="findResumeByUid" resultType="Resume" parameterType="int">
+        select * from tbl_resume
+        <where>
+            uid=#{uid}
+        </where>
+    </select>
 </mapper>

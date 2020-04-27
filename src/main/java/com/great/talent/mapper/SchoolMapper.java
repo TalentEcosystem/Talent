@@ -93,4 +93,6 @@ public interface SchoolMapper
 	public int insertUserResume(Resume resume);
 
 	public int insertDegreeName(Resume resume);
+
+	public Resume findResumeByUid(int uid);
 }
